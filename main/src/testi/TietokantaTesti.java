@@ -12,8 +12,8 @@ public class TietokantaTesti {
 		
 		//final String URL = "jdbc:mariadb://10.114.32.22:3306/kasino";
 		final String URL = "jdbc:mariadb://10.114.32.22:3306/kasino";
-		final String USERNAME = "r12";
-		final String PASSWORD = "r12";
+		final String USERNAME = "remote";
+		final String PASSWORD = "remote";
 		
 		try {
 			con = DriverManager.getConnection(
@@ -25,6 +25,7 @@ public class TietokantaTesti {
 				System.err.println("SQL-tilakoodi: "+e.getSQLState());
 			} while (e.getNextException() != null);
 		}
+		System.out.println("onnistui");
 		
 		
 	}
