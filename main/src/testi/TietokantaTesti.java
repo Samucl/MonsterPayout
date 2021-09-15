@@ -1,6 +1,9 @@
 package testi;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
+
+import com.google.common.hash.Hashing;
 
 //TÄMÄ LUOKKA PITÄÄ MYÖHEMMIN MUOKATA NIIN ETTEI KÄYTTÄJÄ PUOLELLA SUORAAN PÄÄSTÄ MUUTTAMAAN TIETOKANNAN TIETOAJA
 //VAAN VÄLIKÄTENÄ OILISI PARHAASSA TILANTEESSA PALVELIMELLA PYÖRIVÄ OHJELMA JOKA OTTAA PARAMETRIT VASTAAN (nimi salasana yms)
@@ -21,14 +24,17 @@ public class TietokantaTesti {
 			
 			Statement stmt = con.createStatement();
 			
+			String testiSalasana = "asg123";
+			String hTestiSalasana = Hashing.sha256().hashString(testiSalasana, StandardCharsets.UTF_8).toString();
+			
 			//SQL syöttö kutsu, tehdään Kayttaja tauluun uusi rivi
 			String query = "INSERT INTO Kayttaja (Kayttajanimi, Salasana, Tilinumero, Sahkoposti, Firstname, Lastname) "
-					+ "values ('Testikäyttäjä', 123, 'FI20 40 8950 1253 1250 20', 'testi@testi.fi', 'Mikko', 'Suomalainen')";
+					+ "values ('Testikäyttäjä', SHA2('"+testiSalasana+"',256), 'FI20 40 8950 1253 1250 20', 'testi@testi.fi', 'Mikko', 'Suomalainen')";
 			
 			stmt.executeQuery(query);
 			
 			//Tehdään SQL haku kutsu ja haetaan Testikäyttäjä/käyttäjät
-			query = "SELECT KayttajaID, Kayttajanimi, Sahkoposti FROM Kayttaja WHERE Kayttajanimi = 'Testikäyttäjä'";
+			query = "SELECT KayttajaID, Kayttajanimi, Salasana, Sahkoposti FROM Kayttaja WHERE Kayttajanimi = 'Testikäyttäjä'";
 			
 			ResultSet rs = stmt.executeQuery(query);
 			
@@ -38,6 +44,8 @@ public class TietokantaTesti {
 			+"KayttajaID "+rs.getInt("KayttajaID")
 			+"    Kayttajanimi "+rs.getString("Kayttajanimi")
 			+"    Sahkoposti "+rs.getString("Sahkoposti"));
+				String dSalasana = rs.getString("Salasana");
+				System.out.println(dSalasana+"\n"+hTestiSalasana);
 			}
 			
 			//Poistetaan Kayttaja taulusta mahdolliset "testikäyttäjät"
@@ -55,7 +63,6 @@ public class TietokantaTesti {
 				System.err.println("SQL-tilakoodi: "+e.getSQLState());
 			} while (e.getNextException() != null);
 		}
-		System.out.println("onnistui");
 		
 		
 	}
