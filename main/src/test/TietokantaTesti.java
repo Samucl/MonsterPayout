@@ -1,4 +1,4 @@
-package testi;
+package test;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.*;

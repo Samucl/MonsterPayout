@@ -1,4 +1,4 @@
-package testi;
+package test;
 import java.util.Scanner;
 import model.Kayttaja;
 
