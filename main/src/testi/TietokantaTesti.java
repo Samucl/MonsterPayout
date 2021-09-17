@@ -5,19 +5,72 @@ import java.sql.*;
 
 import com.google.common.hash.Hashing;
 
+import model.Kayttaja;
+import model.Lue;
+import model.Tietokanta;
+
 //T�M� LUOKKA PITÄÄ MYÖHEMMIN MUOKATA NIIN ETTEI KÄYTTÄJÄ PUOLELLA SUORAAN PÄÄSTÄ MUUTTAMAAN TIETOKANNAN TIETOAJA
 //VAAN VÄLIKÄTENÄ OILISI PARHAASSA TILANTEESSA PALVELIMELLA PYÖRIVÄ OHJELMA JOKA OTTAA PARAMETRIT VASTAAN (nimi salasana yms)
 
 public class TietokantaTesti {
-	public static void main(String[] args) {
+	final static String URL = "jdbc:mariadb://10.114.32.22:3306/kasino";
+	final static String USERNAME = "remote";
+	final static String PASSWORD = "remote";
 	
+	public static void main(String[] args) {
+		char select;
+		do {
+			System.out.println("Tietokanta testi\n"
+					+ "---------------------------------\n"
+					+ "1. Kirjautumis testi\n"
+					+ "2. Yleinen testi\n"
+					+ "3. lopeta\n\n");
+			select = Lue.merkki();
+			switch (select) {
+            case '1':
+                loginTesti();
+                break;
+            case '2':
+                yleinenTesti();
+                break;
+            case '3':
+                break;
+            }
+		} while (select != '3');
+	}
+	
+	private static void loginTesti() {
 		Connection con;
 		
-		//final String URL = "jdbc:mariadb://10.114.32.22:3306/kasino";
-		final String URL = "jdbc:mariadb://10.114.32.22:3306/kasino";
-		final String USERNAME = "remote";
-		final String PASSWORD = "remote";
-		
+		try {
+			con = DriverManager.getConnection(
+					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+			
+			Statement stmt = con.createStatement();
+			
+			System.out.println("Syötä käyttäjätunnus: ");
+			String username = new String(Lue.rivi());
+			System.out.println("Syötä salasana: ");
+			String password = new String(Lue.rivi());
+			Kayttaja kayttaja = Tietokanta.login(username, password);
+			
+			if(kayttaja == null)
+				System.out.println("Käyttäjätunnus tai salasana väärä");
+			else {
+				System.out.println("Tervetuloa takaisin "+kayttaja.getFirstname()+" "+kayttaja.getLastname());
+			}
+			
+		} catch (SQLException e) {
+			do {
+				System.err.println("Viesti: "+e.getMessage());
+				System.err.println("Virhekoodi: "+e.getErrorCode());
+				System.err.println("SQL-tilakoodi: "+e.getSQLState());
+			} while (e.getNextException() != null);
+		}
+	}
+	
+	private static void yleinenTesti() {
+		Connection con;
 		try {
 			con = DriverManager.getConnection(
 					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
@@ -63,8 +116,6 @@ public class TietokantaTesti {
 				System.err.println("SQL-tilakoodi: "+e.getSQLState());
 			} while (e.getNextException() != null);
 		}
-		
-		
 	}
 
 }

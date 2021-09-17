@@ -23,6 +23,20 @@ public class Kayttaja {
 		this.id = count;
 	}
 	
+	public Kayttaja(int id, String username, String password,String firstname, String lastname, String email, int tiliId) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+		this.tiliId = tiliId;
+		
+		// Laskee pit�� kirjaa k�ytt�jien m��r�st�
+		count++; 
+		this.id = count;
+	}
+	
 	public String toString() {
 		return firstname + " " + lastname + ", " + email + ", " + password;
 	}
