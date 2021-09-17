@@ -5,8 +5,8 @@ import java.sql.*;
 
 import com.google.common.hash.Hashing;
 
-//TÄMÄ LUOKKA PITÄÄ MYÖHEMMIN MUOKATA NIIN ETTEI KÄYTTÄJÄ PUOLELLA SUORAAN PÄÄSTÄ MUUTTAMAAN TIETOKANNAN TIETOAJA
-//VAAN VÄLIKÄTENÄ OILISI PARHAASSA TILANTEESSA PALVELIMELLA PYÖRIVÄ OHJELMA JOKA OTTAA PARAMETRIT VASTAAN (nimi salasana yms)
+//Tï¿½Mï¿½ LUOKKA PITÃ„Ã„ MYÃ–HEMMIN MUOKATA NIIN ETTEI KÃ„YTTÃ„JÃ„ PUOLELLA SUORAAN PÃ„Ã„STÃ„ MUUTTAMAAN TIETOKANNAN TIETOAJA
+//VAAN VÃ„LIKÃ„TENÃ„ OILISI PARHAASSA TILANTEESSA PALVELIMELLA PYÃ–RIVÃ„ OHJELMA JOKA OTTAA PARAMETRIT VASTAAN (nimi salasana yms)
 
 public class TietokantaTesti {
 	public static void main(String[] args) {
@@ -27,14 +27,14 @@ public class TietokantaTesti {
 			String testiSalasana = "asg123";
 			String hTestiSalasana = Hashing.sha256().hashString(testiSalasana, StandardCharsets.UTF_8).toString();
 			
-			//SQL syöttö kutsu, tehdään Kayttaja tauluun uusi rivi
+			//SQL syÃ¶ttÃ¶kutsu, tehdÃ¤Ã¤n Kayttaja tauluun uusi rivi
 			String query = "INSERT INTO Kayttaja (Kayttajanimi, Salasana, Tilinumero, Sahkoposti, Firstname, Lastname) "
-					+ "values ('Testikäyttäjä', SHA2('"+testiSalasana+"',256), 'FI20 40 8950 1253 1250 20', 'testi@testi.fi', 'Mikko', 'Suomalainen')";
+					+ "values ('TestikÃ¤yttÃ¤jÃ¤', SHA2('"+testiSalasana+"',256), 'FI20 40 8950 1253 1250 20', 'testi@testi.fi', 'Mikko', 'Suomalainen')";
 			
 			stmt.executeQuery(query);
 			
-			//Tehdään SQL haku kutsu ja haetaan Testikäyttäjä/käyttäjät
-			query = "SELECT KayttajaID, Kayttajanimi, Salasana, Sahkoposti FROM Kayttaja WHERE Kayttajanimi = 'Testikäyttäjä'";
+			//TehdÃ¤Ã¤n SQL haku kutsu ja haetaan TestikÃ¤yttÃ¤jÃ¤/kÃ¤yttÃ¤jÃ¤t
+			query = "SELECT KayttajaID, Kayttajanimi, Salasana, Sahkoposti FROM Kayttaja WHERE Kayttajanimi = 'TestikÃ¤yttÃ¤jÃ¤'";
 			
 			ResultSet rs = stmt.executeQuery(query);
 			
@@ -48,12 +48,12 @@ public class TietokantaTesti {
 				System.out.println(dSalasana+"\n"+hTestiSalasana);
 			}
 			
-			//Poistetaan Kayttaja taulusta mahdolliset "testikäyttäjät"
-			query = "DELETE FROM Kayttaja WHERE Kayttajanimi = 'Testikäyttäjä'";
+			//Poistetaan Kayttaja taulusta mahdolliset "testikÃ¤yttÃ¤jÃ¤t"
+			query = "DELETE FROM Kayttaja WHERE Kayttajanimi = 'TestikÃ¤yttÃ¤jÃ¤'";
 			
 			stmt.execute(query);
 			
-			System.out.println("Testikäyttäjä(t) poistettiin tietokannasta.");
+			System.out.println("TestikÃ¤yttÃ¤jÃ¤(t) poistettiin tietokannasta.");
 			
 			
 		} catch (SQLException e) {
