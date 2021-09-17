@@ -7,35 +7,37 @@ public class KayttajaTesti {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner scanner = new Scanner(System.in);  
-	    System.out.println("Syötä etunimi");
+	    System.out.println("Syï¿½tï¿½ etunimi");
 	    String firstName = scanner.nextLine();
 	    
-	    System.out.println("Syötä sukunimi");
+	    System.out.println("Syï¿½tï¿½ sukunimi");
 	    String lastName = scanner.nextLine();
 	    
-	    System.out.println("sähköpostiosoite");
+	    System.out.println("sï¿½hkï¿½postiosoite");
 	    String email = scanner.nextLine();
+	    
+	    int tiliId = 69;
 	    
 	    String password1;
 	    String password2;
 	    while (true) {
-		    System.out.println("Syötä salasana");
+		    System.out.println("Syï¿½tï¿½ salasana");
 		    password1 = scanner.nextLine();
 		    
-		    System.out.println("Syötä salasana uudelleen");
+		    System.out.println("Syï¿½tï¿½ salasana uudelleen");
 		    password2 = scanner.nextLine();
 		    
 		    if (!password1.equals(password2)) {
-		    	System.out.println("Salasanat eivät täsmää, yritä uudelleen");
+		    	System.out.println("Salasanat eivï¿½t tï¿½smï¿½ï¿½, yritï¿½ uudelleen");
 		    } else {
 		    	break;
 		    }
 	    }
 	    try {
-	    	Kayttaja user = new Kayttaja(firstName, lastName, email, password1);
+	    	Kayttaja user = new Kayttaja(firstName, lastName, email, password1, tiliId);
 	    	System.out.println(user);
 	    } catch (Exception e) {
-	    	System.out.println("Antamissa syötteissä on virhe.");
+	    	System.out.println("Antamissa syï¿½tteissï¿½ on virhe.");
 	    }
 	}
 }

@@ -2,26 +2,29 @@ package model;
 
 public class Kayttaja {
 	private int id;
-	private String firstName;
-	private String lastName;
+	private String username;
+	private String firstname;
+	private String lastname;
 	private String password;
 	private String email;
+	private int tiliId;
 	
 	private static int count = 0;
 	
-	public Kayttaja(String firstName, String lastName, String email, String password) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public Kayttaja(String firstName, String lastName, String email, String password, int tiliId) {
+		this.firstname = firstName;
+		this.lastname = lastName;
 		this.email = email;
 		this.password = password;
+		this.tiliId = tiliId;
 		
-		// Laskee pitää kirjaa käyttäjien määrästä
+		// Laskee pitï¿½ï¿½ kirjaa kï¿½yttï¿½jien mï¿½ï¿½rï¿½stï¿½
 		count++; 
 		this.id = count;
 	}
 	
 	public String toString() {
-		return firstName + " " + lastName + ", " + email + ", " + password;
+		return firstname + " " + lastname + ", " + email + ", " + password;
 	}
 
 	public int getId() {
@@ -32,20 +35,20 @@ public class Kayttaja {
 		this.id = id;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstname(String firstName) {
+		this.firstname = firstName;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getLastname() {
+		return lastname;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastname(String lastName) {
+		this.lastname = lastName;
 	}
 
 	public String getPassword() {
@@ -72,7 +75,13 @@ public class Kayttaja {
 		this.email = email;
 	}
 	
+	public int getTiliId() {
+		return tiliId;
+	}
 	
+	public void setTiliId(int tiliId) {
+		this.tiliId = tiliId;
+	}
 	
 	
 }
