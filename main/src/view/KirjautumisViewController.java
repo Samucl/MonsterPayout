@@ -1,5 +1,7 @@
 package view;
 
+import model.Tietokanta;
+import model.Kayttaja;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,9 +21,10 @@ public class KirjautumisViewController {
 		}
 		else {
 			System.out.println("Käyttäjätunnus: " + kayttajatunnusInput.getText() + " Salasana: " + salasanaInput.getText());
+			Kayttaja kayttaja = Tietokanta.login(kayttajatunnusInput.getText(), salasanaInput.getText());
+			if(kayttaja != null) {
+				System.out.println("Tervetuloa: " + kayttaja.getFirstname());
+			}
 		}
-
 	}
-	
-    
 }
