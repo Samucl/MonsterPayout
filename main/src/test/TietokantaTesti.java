@@ -24,7 +24,9 @@ public class TietokantaTesti {
 					+ "---------------------------------\n"
 					+ "1. Kirjautumis testi\n"
 					+ "2. Yleinen testi\n"
-					+ "3. lopeta\n\n");
+					+ "3. Käyttäjänimen tarkistus\n"
+					+ "4. Rekisteröinti\n"
+					+ "5. lopeta\n\n");
 			select = Lue.merkki();
 			switch (select) {
             case '1':
@@ -34,38 +36,67 @@ public class TietokantaTesti {
                 yleinenTesti();
                 break;
             case '3':
+            	kayttajanimiTesti();
                 break;
+            case '4':
+            	kayttajanLuontiTesti();
+            	break;
+            case '5':
+            	break;
             }
-		} while (select != '3');
+		} while (select != '5');
+	}
+	
+	private static void kayttajanLuontiTesti() {
+		System.out.println("Syötä käyttäjätunnus: ");
+		String username = new String(Lue.rivi());
+		System.out.println("Syötä salasana: ");
+		String password = new String(Lue.rivi());
+		System.out.println("Syötä sähköpostiosoite: ");
+		String email = new String(Lue.rivi());
+		System.out.println("Syötä etunimi: ");
+		String firstname = new String(Lue.rivi());
+		System.out.println("Syötä sukunimi: ");
+		String lastname = new String(Lue.rivi());
+		
+		/*
+		 * Varmistetaan ensin Tietokanta-luokan checkUsername metodilla 
+		 * onko luotavan käyttäjän nimi vapaana. Jos on niin siirrytään 
+		 * if-lauseen sisälle.
+		 */
+		if(Tietokanta.checkUsername(username))
+			if(Tietokanta.register(username, password, email, firstname, lastname)) {
+				System.out.println("Uuden käyttäjän luonti onnistui!");
+			} else {
+				System.out.println("Jotain meni pieleen uutta käyttäjää luodessa.");
+			}
+		else {
+			System.out.println("Käyttäjätunnus on jo käytössä");
+		}
+	}
+	
+	private static void kayttajanimiTesti() {
+		System.out.println("Syötä käyttäjätunnus: ");
+		String username = new String(Lue.rivi());
+		
+		if(Tietokanta.checkUsername(username))
+			System.out.println("Käyttäjätunnus on vapaa");
+		else {
+			System.out.println("Käyttäjätunnus on jo käytössä");
+		}
 	}
 	
 	private static void loginTesti() {
-		Connection con;
+		System.out.println("Syötä käyttäjätunnus: ");
+		String username = new String(Lue.rivi());
+		System.out.println("Syötä salasana: ");
+		String password = new String(Lue.rivi());
+		Kayttaja kayttaja = Tietokanta.login(username, password);
 		
-		try {
-			con = DriverManager.getConnection(
-					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
-			
-			Statement stmt = con.createStatement();
-			
-			System.out.println("Syötä käyttäjätunnus: ");
-			String username = new String(Lue.rivi());
-			System.out.println("Syötä salasana: ");
-			String password = new String(Lue.rivi());
-			Kayttaja kayttaja = Tietokanta.login(username, password);
-			
-			if(kayttaja == null)
-				System.out.println("Käyttäjätunnus tai salasana väärä");
-			else {
-				System.out.println("Tervetuloa takaisin "+kayttaja.getFirstname()+" "+kayttaja.getLastname());
-			}
-			
-		} catch (SQLException e) {
-			do {
-				System.err.println("Viesti: "+e.getMessage());
-				System.err.println("Virhekoodi: "+e.getErrorCode());
-				System.err.println("SQL-tilakoodi: "+e.getSQLState());
-			} while (e.getNextException() != null);
+		if(kayttaja == null)
+			System.out.println("Käyttäjätunnus tai salasana väärä");
+		else {
+			System.out.println("Tervetuloa takaisin "+kayttaja.getFirstname()+" "+kayttaja.getLastname());
 		}
 	}
 	
