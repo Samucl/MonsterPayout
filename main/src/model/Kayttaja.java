@@ -97,5 +97,12 @@ public class Kayttaja {
 		this.tiliId = tiliId;
 	}
 	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
 	
 }

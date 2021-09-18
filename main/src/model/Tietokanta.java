@@ -42,7 +42,7 @@ public class Tietokanta {
 				String tLastname = rs.getString("Lastname");
 				String tEmail = rs.getString("Sahkoposti");
 				int tTiliId = rs.getInt("TiliID");
-				return new Kayttaja(tId, tUsername, passwordHash,tFirstname, tLastname, tEmail, tTiliId);
+				return new Kayttaja(tId, tUsername, password,tFirstname, tLastname, tEmail, tTiliId);
 			}
 			
 		} catch (SQLException e) {
@@ -144,6 +144,84 @@ public class Tietokanta {
 			} while (e.getNextException() != null);
 		}
 		return true;
+	}
+	
+	public static int decreaseKolikkoBalance(Kayttaja user, int amount) {
+		
+		/*
+		 * Metodi ottaa parametreina Kayttaja-luokan joka sisältää 
+		 * käyttäjän tiedot, jolloin voidaan varmistaa uudestaan, että 
+		 * käyttäjällä on oikeat kirjautumis tunnukset ennen tiliin 
+		 * käsiksi pääsyä.
+		 * 
+		 * Jos tililtä onnistutaan vähentämään pyydetyn määrän saldoa palauttaa 
+		 * metodi tämän saldon määrän. Muuten 0.
+		 */
+		
+		/*
+		 * Jos vähennettävä saldo on 0 tai pienempi niin 
+		 * lopetetaan metodin suorittaminen tähän ja palautetaan arvo 0
+		 */
+		if(amount <= 0)
+			return 0;
+		
+		if(user != null && user.getUsername() != null && user.getPassword() != null) {
+			try {
+				Connection con;
+				con = DriverManager.getConnection(
+						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				
+				Statement stmt = con.createStatement();
+				
+				//Tehdään SQL haku kutsu ja haetaan Testikäyttäjä/käyttäjät
+				String query = "SELECT TiliID "
+						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ user.getUsername() +"' AND Salasana = SHA2('"+ user.getPassword() +"',256)";
+
+				ResultSet rs = stmt.executeQuery(query);
+				
+				/*
+				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä
+				 */
+				if(rs.next()) {
+					int tiliID = rs.getInt("TiliID");
+					query = "SELECT KolikkoSaldo FROM Tili "
+							+ "WHERE TiliID = "+tiliID;
+					rs = stmt.executeQuery(query);
+					/*
+					 * Jos löytyy seuraava tulosjoukko löytyy tietokannasta käyttäjän tili
+					 */
+					if(rs.next()) {
+						int saldo = rs.getInt("KolikkoSaldo");
+						/*
+						 * Verrataan käyttäjän tilin saldoa vähennettävään määrään. 
+						 * Jos käyttäjän saldo riittää niin vähennetään tietokannasta 
+						 * amount-muuttujan verran kolikko saldoa
+						 */
+						if(saldo >= amount) {
+							query = "UPDATE Tili "
+									+ "SET KolikkoSaldo = KolikkoSaldo - "+amount
+											+ " WHERE TiliID = "+tiliID;
+							int updatedRows = stmt.executeUpdate(query);
+							
+							/*
+							 * Jos SQL-kutsu muokkasi vähintään 1-riviä, 
+							 * niin saldon vähennys kutsu on onnistunut.
+							 */
+							if(updatedRows > 0)
+								return amount;
+						}
+					}
+				}
+				
+			} catch (SQLException e) {
+				do {
+					System.err.println("Viesti: "+e.getMessage());
+					System.err.println("Virhekoodi: "+e.getErrorCode());
+					System.err.println("SQL-tilakoodi: "+e.getSQLState());
+				} while (e.getNextException() != null);
+			}
+		}
+		return 0;
 	}
 	
 }

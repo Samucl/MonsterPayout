@@ -98,6 +98,30 @@ public class TietokantaTesti {
 		else {
 			System.out.println("Tervetuloa takaisin "+kayttaja.getFirstname()+" "+kayttaja.getLastname());
 		}
+		char select;
+		do {
+			System.out.println("Pelaaminen\n"
+					+ "---------------------------------\n"
+					+ "1. Pyöräytä kolikkopeliä\n"
+					+ "2. lopeta\n\n");
+			select = Lue.merkki();
+			switch (select) {
+            case '1':
+                System.out.println("Panoksen koko: ");
+                int balance = Lue.kluku();
+                int returnValue = Tietokanta.decreaseKolikkoBalance(kayttaja, balance);
+                System.out.println("Tilin kolikko saldoa vähennettiin "+returnValue+" verran.");
+                break;
+            case '2':
+                break;
+            case '3':
+                break;
+            case '4':
+            	break;
+            case '5':
+            	break;
+            }
+		} while (select != '2');
 	}
 	
 	private static void yleinenTesti() {
