@@ -7,41 +7,32 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-
 
 public class MainApplication extends Application {
 	
     private Stage primaryStage;
-    private BorderPane rootLayout;
 	
+    /**
+	* start metodissa kaikki ohjelman avautuessa suoritettavat toiminnot
+	*/
 	@Override
 	public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("MonsterPayout");
-        initRoot();
         showKirjautumisView();
 	}
-	
-    public void initRoot() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
-            Scene scene = new Scene(rootLayout);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     
+	/**
+	* Metodi jolla asetetaan kirjautumisView primaryStageen heti ohjelman avaessa.
+	*/
     public void showKirjautumisView() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("KirjautumisView.fxml"));
             AnchorPane kirjautumisView = (AnchorPane) loader.load();
-            rootLayout.setCenter(kirjautumisView);
+            Scene scene = new Scene(kirjautumisView);
+            primaryStage.setScene(scene);
+            primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
