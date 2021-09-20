@@ -8,6 +8,10 @@ public class TuoteTesti {
 		Product[] products = Tietokanta.getProducts();
 		if(products != null) {
 			System.out.println("Tuotteiden määrä: "+products.length);
+			for(int i = 0; i < products.length; i++) {
+				System.out.println("Nimi: "+products[i].getDescription()+"  -  "
+						+ "hinta: "+products[i].getPrice());
+			}
 		} else {
 			System.out.println("Tietokannassa ei ole tuotteita");
 		}
