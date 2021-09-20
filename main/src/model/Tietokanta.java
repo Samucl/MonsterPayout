@@ -56,6 +56,54 @@ public class Tietokanta {
 		return null;
 	}
 	
+	public static Product[] getProducts() {
+		try {
+			Connection con;
+			con = DriverManager.getConnection(
+					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+			
+			Statement stmt = con.createStatement();
+			
+			
+			//SQL syöttökutsu, tehdään Kayttaja tauluun uusi rivi
+			String query = "SELECT * FROM Tuote";
+			
+			stmt.executeQuery(query);
+			
+			ResultSet rs = stmt.executeQuery(query);
+			int size = 0;
+			if (rs.last()) {
+			  size = rs.getRow();
+			  rs.beforeFirst();
+			  Product[] products = new Product[size];
+			  while(rs.next()) {
+				  System.out.println(rs.getRow()+"/"+size);
+				  System.out.println("Tuotenumero: "+rs.getInt("Tuotenumero"));
+				  System.out.println("Kuvaus: "+rs.getString("Kuvaus"));
+				  System.out.println("Hinta: "+rs.getDouble("Hinta"));
+				  System.out.println("Krediittien määrä: "+rs.getDouble("KrediittienMaara"));
+				  System.out.println("Alennuskerroin: "+rs.getDouble("Alennuskerroin"));
+				  products[rs.getRow()-1] = new Product(
+						  rs.getInt("Tuotenumero"),
+						  rs.getString("Kuvaus"),
+						  rs.getDouble("Hinta"),
+						  rs.getDouble("KrediittienMaara"),
+						  rs.getDouble("Alennuskerroin"));
+				}
+			  return products;
+			}
+			
+			
+		} catch (SQLException e) {
+			do {
+				System.err.println("Viesti: "+e.getMessage());
+				System.err.println("Virhekoodi: "+e.getErrorCode());
+				System.err.println("SQL-tilakoodi: "+e.getSQLState());
+			} while (e.getNextException() != null);
+		}
+		return null;
+	}
+	
 	public static boolean register(String username, String password, String email, String firstname, String lastname) {
 		/*
 		 * Jos rekisteröinti onnistuu palauttaa metodi boolean arvon true, muuten false
