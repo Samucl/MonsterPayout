@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SlottiPeli {
 	private int[] reel = new int[] {1, 1, 1, 2, 2, 2, 3, 3, 3, 4};
-	private int[] winnings = new int[] {10, 10, 10, 20, 20, 20, 30, 30, 30, 60};
+	private int[] winnings = new int[] {0, 10, 20, 30, 60};
 	private int[] outcome = new int[3];
 	Random rand = new Random();
 	
