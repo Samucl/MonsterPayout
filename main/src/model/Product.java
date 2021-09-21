@@ -28,7 +28,7 @@ public class Product {
 		return price;
 	}
 
-	public double getCreaditAmout() {
+	public double getCreditAmount() {
 		return creaditAmout;
 	}
 

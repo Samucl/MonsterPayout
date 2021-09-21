@@ -11,8 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-/**
-* Kontrolleri jolla ohjataan KirjautumisViewin toimintoja.
+/** * Kontrolleri jolla ohjataan KirjautumisViewin toimintoja.
 */
 
 public class KirjautumisViewController {
