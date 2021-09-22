@@ -6,7 +6,6 @@ public class SlottiPeli {
 	private int[] reel = new int[] {1, 1, 1, 2, 2, 2, 3, 3, 3, 4};
 	private int[] winnings = new int[] {0, 10, 20, 30, 60};
 	private int[] outcome = new int[3];
-	Random rand = new Random();
 	
 	public SlottiPeli(){}
 	
@@ -25,8 +24,9 @@ public class SlottiPeli {
 	
 	// Pyöräytetään yksi kierros numeroita koneesta
 	public void spin() {
+		Random rand = new Random();
 		for (int i=0;i<3; i++) {
-			outcome[i] = reel[rand.nextInt(9)];
+			outcome[i] = reel[rand.nextInt(reel.length)];
 		}
 		System.out.println(Arrays.toString(outcome));
 
