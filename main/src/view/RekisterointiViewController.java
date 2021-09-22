@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -15,14 +16,14 @@ import model.Tietokanta;
 */
 
 public class RekisterointiViewController {
-	@FXML private TextField kayttajatunnusInput2;
-	@FXML private TextField salasanaInput2;
-	@FXML private Button rekisteroidyButton;
-	@FXML private Button tokirjautumisButton;
+	@FXML private TextField sahkopostiInput;
 	@FXML private TextField etunimiInput;
 	@FXML private TextField sukunimiInput;
-	@FXML private TextField sahkopostiInput;
-	@FXML private TextField salasanauudelleenInput;
+	@FXML private TextField kayttajatunnusInput2;
+	@FXML private PasswordField salasanaInput2;
+	@FXML private PasswordField salasanauudelleenInput;
+	@FXML private Button rekisteroidyButton;
+	@FXML private Button tokirjautumisButton;
 	
 	/**
 	* Metodi käyttäjän rekisteröintiä varten. Lähetetään DAO:lle rekisteröintiin tarvittavat tiedot.
