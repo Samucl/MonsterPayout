@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -16,7 +17,13 @@
       </Text>
       <TextField fx:id="kayttajatunnusInput" layoutX="491.0" layoutY="305.0" prefHeight="25.0" prefWidth="299.0" promptText="Käyttäjätunnus" />
       <PasswordField fx:id="salasanaInput" layoutX="491.0" layoutY="360.0" prefHeight="26.0" prefWidth="299.0" promptText="Salasana" />
-      <Button fx:id="kirjauduButton" layoutX="491.0" layoutY="403.0" mnemonicParsing="false" onAction="#kirjaudu" prefHeight="25.0" prefWidth="299.0" text="Kirjaudu" />
-      <Button fx:id="torekisteroitymisButton" layoutX="491.0" layoutY="451.0" mnemonicParsing="false" onAction="#toRekisteroityminen" text="Luo tili" />
+      <Button fx:id="kirjauduButton" layoutX="491.0" layoutY="403.0" mnemonicParsing="false" onAction="#kirjaudu" prefHeight="25.0" prefWidth="299.0" text="Kirjaudu">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="torekisteroitymisButton" layoutX="491.0" layoutY="451.0" mnemonicParsing="false" onAction="#toRekisteroityminen" text="Luo tili">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </AnchorPane>

@@ -2,9 +2,13 @@ package view;
 import model.Tietokanta;
 import model.User;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -15,11 +19,17 @@ import javafx.stage.Stage;
 /** * Kontrolleri jolla ohjataan KirjautumisViewin toimintoja.
 */
 
-public class KirjautumisViewController {
+public class KirjautumisViewController implements Initializable {
 	@FXML private TextField kayttajatunnusInput;
 	@FXML private PasswordField salasanaInput;
 	@FXML private Button kirjauduButton;
 	@FXML private Button torekisteroitymisButton;
+	
+    @Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+    	kirjauduButton.setDefaultButton(true);
+    }
 	
 	/**
 	* Metodi käyttäjän kirjautumista varten. Lähetetään DAO:lle kirjautumiseen tarvittavat tiedot.

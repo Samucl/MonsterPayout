@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -40,8 +41,18 @@ public class HomepageViewController implements Initializable{
         }
 	}
 	
-	public Label getnameLabel() {
-		return nameLabel;
+	public void logout(ActionEvent e) {
+		//Tanne lisataan tietokannasta logout metodi.
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("KirjautumisView.fxml"));
+            AnchorPane kirjautumisView = (AnchorPane) loader.load();
+            Scene loginScene = new Scene(kirjautumisView);
+			Stage window = (Stage) toStoreButton.getScene().getWindow();
+			window.setScene(loginScene);
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
 	}
 
 	@Override
