@@ -13,7 +13,7 @@ public class Tietokanta {
 	
 	private static boolean loggedIn = false;
 	
-	public static Kayttaja login(String username, String password) {
+	public static boolean login(String username, String password) {
 		
 		try {
 			Connection con;
@@ -44,7 +44,8 @@ public class Tietokanta {
 				String tLastname = rs.getString("Lastname");
 				String tEmail = rs.getString("Sahkoposti");
 				int tTiliId = rs.getInt("TiliID");
-				return new Kayttaja(tId, tUsername, password,tFirstname, tLastname, tEmail, tTiliId);
+				User.setUserData(tId, tUsername, password,tFirstname, tLastname, tEmail, tTiliId);
+				return loggedIn = true;
 			}
 			
 		} catch (SQLException e) {
@@ -55,7 +56,7 @@ public class Tietokanta {
 			} while (e.getNextException() != null);
 		}
 		
-		return null;
+		return loggedIn = false;
 	}
 	
 	public static Product[] getProducts() {
@@ -196,7 +197,7 @@ public class Tietokanta {
 		return true;
 	}
 	
-	public static int decreaseKolikkoBalance(Kayttaja user, int amount) {
+	public static int decreaseKolikkoBalance(int amount) {
 		
 		/*
 		 * Metodi ottaa parametreina Kayttaja-luokan joka sisältää 
@@ -215,7 +216,7 @@ public class Tietokanta {
 		if(amount <= 0)
 			return 0;
 		
-		if(user != null && user.getUsername() != null && user.getPassword() != null) {
+		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con;
 				con = DriverManager.getConnection(
@@ -225,7 +226,7 @@ public class Tietokanta {
 				
 				//Tehdään SQL haku kutsu ja haetaan Testikäyttäjä/käyttäjät
 				String query = "SELECT TiliID "
-						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ user.getUsername() +"' AND Salasana = SHA2('"+ user.getPassword() +"',256)";
+						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
 
 				ResultSet rs = stmt.executeQuery(query);
 				
@@ -274,67 +275,10 @@ public class Tietokanta {
 		return 0;
 	}
 	
-	/*
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * VÄLIAIKAISIJA METODJEA
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-	
-	public static boolean loginNEW(String username, String password) {
-		
-		try {
-			Connection con;
-			con = DriverManager.getConnection(
-					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
-			
-			Statement stmt = con.createStatement();
-			
-			String passwordHash = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
-			
-			//SQL syöttökutsu, tehdään Kayttaja tauluun uusi rivi
-			String query = "INSERT INTO Kayttaja (Kayttajanimi, Salasana, Tilinumero, Sahkoposti, Firstname, Lastname) "
-					+ "values ('Testikäyttäjä', SHA2('"+password+"',256), 'FI20 40 8950 1253 1250 20', 'testi@testi.fi', 'Mikko', 'Suomalainen')";
-			
-			stmt.executeQuery(query);
-			
-			//Tehdään SQL haku kutsu ja haetaan Testikäyttäjä/käyttäjät
-			query = "SELECT KayttajaID, Kayttajanimi, Sahkoposti, Tilinumero, TiliID, Firstname, Lastname "
-					+ "FROM Kayttaja WHERE Kayttajanimi = '"+ username +"' AND Salasana = '"+ passwordHash +"'";
-			
-			ResultSet rs = stmt.executeQuery(query);
-			
-			rs.next();
-			if(rs.getString("Kayttajanimi") != null) {
-				int tId = rs.getInt("KayttajaID");
-				String tUsername = rs.getString("Kayttajanimi");
-				String tFirstname = rs.getString("Firstname");
-				String tLastname = rs.getString("Lastname");
-				String tEmail = rs.getString("Sahkoposti");
-				int tTiliId = rs.getInt("TiliID");
-				User.setUserData(tId, tUsername, password,tFirstname, tLastname, tEmail, tTiliId);
-				return loggedIn = true;
-			}
-			
-		} catch (SQLException e) {
-			do {
-				System.err.println("Viesti: "+e.getMessage());
-				System.err.println("Virhekoodi: "+e.getErrorCode());
-				System.err.println("SQL-tilakoodi: "+e.getSQLState());
-			} while (e.getNextException() != null);
-		}
-		
-		return loggedIn = false;
-	}
-	
 	public static boolean isLogged() {
+		/*
+		 * Tarkistetaan onko käyttäjä kirjautunut sisään
+		 */
 		return loggedIn;
 	}
 	

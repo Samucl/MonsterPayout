@@ -1,6 +1,6 @@
 package view;
 import model.Tietokanta;
-import model.Kayttaja;
+import model.User;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,9 +29,9 @@ public class KirjautumisViewController {
 		}
 		else {
 			System.out.println("Käyttäjätunnus: " + kayttajatunnusInput.getText() + " Salasana: " + salasanaInput.getText());
-			Kayttaja kayttaja = Tietokanta.login(kayttajatunnusInput.getText(), salasanaInput.getText());
-			if(kayttaja != null) {
-				System.out.println("Tervetuloa: " + kayttaja.getFirstname());
+			Tietokanta.login(kayttajatunnusInput.getText(), salasanaInput.getText());
+			if(Tietokanta.isLogged()) {
+				System.out.println("Tervetuloa: " + User.getFirstname());
 			}
 		}
 	}

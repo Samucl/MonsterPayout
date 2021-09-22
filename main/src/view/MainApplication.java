@@ -22,7 +22,7 @@ public class MainApplication extends Application {
         this.primaryStage.setTitle("MonsterPayout");
         showKirjautumisView();
         
-      //  showStoreView();
+        //showStoreView();
 	}
     
 	/**
