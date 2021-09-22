@@ -1,10 +1,13 @@
 package test;
 import java.util.Scanner;
-import model.Kayttaja;
+import model.User;
 
 public class KayttajaTesti {
 
 	public static void main(String[] args) {
+		/*
+		 * VANHA TESTI
+		 * 
 		// TODO Auto-generated method stub
 		Scanner scanner = new Scanner(System.in);  
 	    System.out.println("Sy�t� etunimi");
@@ -34,10 +37,11 @@ public class KayttajaTesti {
 		    }
 	    }
 	    try {
-	    	Kayttaja user = new Kayttaja(firstName, lastName, email, password1, tiliId);
+	    	User user = new User(firstName, lastName, email, password1, tiliId);
 	    	System.out.println(user);
 	    } catch (Exception e) {
 	    	System.out.println("Antamissa sy�tteiss� on virhe.");
 	    }
+	    */
 	}
 }

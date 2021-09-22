@@ -5,7 +5,7 @@ import java.sql.*;
 
 import com.google.common.hash.Hashing;
 
-import model.Kayttaja;
+import model.User;
 import model.Lue;
 import model.Tietokanta;
 import model.User;
@@ -92,7 +92,7 @@ public class TietokantaTesti {
 		String username = new String(Lue.rivi());
 		System.out.println("Syötä salasana: ");
 		String password = new String(Lue.rivi());
-		Tietokanta.loginNEW(username, password);
+		Tietokanta.login(username, password);
 		if(Tietokanta.isLogged()) {
 			System.out.println("Tervetuloa takaisin "+User.getFirstname()+" "+User.getLastname());
 		} else {
