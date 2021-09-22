@@ -51,6 +51,7 @@ public class Tietokanta {
 					int tTiliId = rs.getInt("TiliID");
 					query = "SELECT KolikkoSaldo, KrediittiSaldo FROM Tili "
 							+ "WHERE TiliID = " + tTiliId;
+					rs = stmt.executeQuery(query);
 					if(rs.next()) {
 						double tCredits = rs.getDouble("KrediittiSaldo");
 						int tCoins = rs.getInt("KolikkoSaldo");
@@ -267,6 +268,7 @@ public class Tietokanta {
 							int updatedRows = stmt.executeUpdate(query);
 							query = "SELECT KolikkoSaldo FROM Tili "
 									+ "WHERE TiliID = "+tiliID;
+							rs = stmt.executeQuery(query);
 							if(rs.next())
 								User.setCoins(rs.getInt("KolikkoSaldo"));
 							
@@ -326,6 +328,7 @@ public class Tietokanta {
 										+ " WHERE TiliID = "+tiliID;
 						query = "SELECT KrediittiSaldo FROM Tili "
 								+ "WHERE TiliID = "+tiliID;
+						rs = stmt.executeQuery(query);
 						if(rs.next())
 							User.setCredits(rs.getDouble("KrediittiSaldo"));
 						int updatedRows = stmt.executeUpdate(query);
@@ -366,15 +369,16 @@ public class Tietokanta {
 					if(rs.getInt("Status")==1) {
 						query = "INSERT INTO Tuote (Kuvaus, Hinta, KrediittienMaara, Alennuskerroin)"
 								+ "values('"+description+"',"+price+","+creditAmount+","+saleMultiplier+")";
+						rs = stmt.executeQuery(query);
+						/*
+						 * Jos löytyy seuraava tulosjoukko on tietokantaan lisätty onnistuneesti
+						 */
+						if(rs.next()) {
+							return true;
+								
+						}
 					}
-					rs = stmt.executeQuery(query);
-					/*
-					 * Jos löytyy seuraava tulosjoukko on tietokantaan lisätty onnistuneesti
-					 */
-					if(rs.next()) {
-						return true;
-							
-					}
+					
 				}
 				
 			} catch (SQLException e) {
@@ -412,14 +416,15 @@ public class Tietokanta {
 								+ "KrediittienMaara = "+creditAmount+", "
 								+ "Alennuskerroin = "+saleMultiplier+" "
 								+ "WHERE Tuotenumero = "+productNumber;
-					}
-					rs = stmt.executeQuery(query);
-					/*
-					 * Jos löytyy seuraava tulosjoukko on tietokantaan päivitetty tuote onnistuneesti
-					 */
-					if(rs.next()) {
-						return true;
-							
+						rs = stmt.executeQuery(query);
+
+						/*
+						 * Jos löytyy seuraava tulosjoukko on tietokantaan päivitetty tuote onnistuneesti
+						 */
+						if(rs.next()) {
+							return true;
+								
+						}
 					}
 				}
 				
@@ -453,14 +458,15 @@ public class Tietokanta {
 				if(rs.next()) {
 					if(rs.getInt("Status")==1) {
 						query = "DELETE FROM Tuote WHERE Tuotenumero = "+productNumber;
+						rs = stmt.executeQuery(query);
+						/*
+						 * Jos löytyy seuraava tulosjoukko on valittu tuote poistettu tietokannasta
+						 */
+						if(rs.next()) {
+							return true;
+						}
 					}
-					rs = stmt.executeQuery(query);
-					/*
-					 * Jos löytyy seuraava tulosjoukko on valittu tuote poistettu tietokannasta
-					 */
-					if(rs.next()) {
-						return true;
-					}
+					
 				}
 				
 			} catch (SQLException e) {
