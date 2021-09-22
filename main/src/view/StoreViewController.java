@@ -1,5 +1,7 @@
 package view;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Product;
 import model.Tietokanta;
@@ -43,6 +46,19 @@ public class StoreViewController {
 		productTF2.setText("\n\n" + String.valueOf(products[1].getCreditAmount()) + " krediittiä\n\n"
 				+  "Hinta: " + String.valueOf(products[1].getPrice()) + " €!");
 		
+	}
+	
+	public void toHomepage(ActionEvent e) {
+		try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));
+            AnchorPane homepageView = (AnchorPane) loader.load();
+            Scene homepageScene = new Scene(homepageView);
+			Stage window = (Stage) toMainBtn.getScene().getWindow();
+			window.setScene(homepageScene);
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
 	}
 	
 	public void purchaseOffer(ActionEvent e) {

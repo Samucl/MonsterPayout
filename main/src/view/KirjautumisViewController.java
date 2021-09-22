@@ -31,6 +31,18 @@ public class KirjautumisViewController {
 			System.out.println("Käyttäjätunnus: " + kayttajatunnusInput.getText() + " Salasana: " + salasanaInput.getText());
 			Kayttaja kayttaja = Tietokanta.login(kayttajatunnusInput.getText(), salasanaInput.getText());
 			if(kayttaja != null) {
+				
+				try {
+		            FXMLLoader loader = new FXMLLoader();
+		            loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));
+		            AnchorPane homepageView = (AnchorPane) loader.load();
+		            Scene homepageScene = new Scene(homepageView);
+					Stage window = (Stage) kirjauduButton.getScene().getWindow();
+					window.setScene(homepageScene);
+		        } catch (IOException iOE) {
+		            iOE.printStackTrace();
+		        }
+				
 				System.out.println("Tervetuloa: " + kayttaja.getFirstname());
 			}
 		}
@@ -51,4 +63,5 @@ public class KirjautumisViewController {
             iOE.printStackTrace();
         }
 	}
+	
 }
