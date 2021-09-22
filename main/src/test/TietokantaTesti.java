@@ -8,6 +8,7 @@ import com.google.common.hash.Hashing;
 import model.Kayttaja;
 import model.Lue;
 import model.Tietokanta;
+import model.User;
 
 //T�M� LUOKKA PITÄÄ MYÖHEMMIN MUOKATA NIIN ETTEI KÄYTTÄJÄ PUOLELLA SUORAAN PÄÄSTÄ MUUTTAMAAN TIETOKANNAN TIETOAJA
 //VAAN VÄLIKÄTENÄ OILISI PARHAASSA TILANTEESSA PALVELIMELLA PYÖRIVÄ OHJELMA JOKA OTTAA PARAMETRIT VASTAAN (nimi salasana yms)
@@ -91,6 +92,16 @@ public class TietokantaTesti {
 		String username = new String(Lue.rivi());
 		System.out.println("Syötä salasana: ");
 		String password = new String(Lue.rivi());
+		Tietokanta.loginNEW(username, password);
+		if(Tietokanta.isLogged()) {
+			System.out.println("Tervetuloa takaisin "+User.getFirstname()+" "+User.getLastname());
+		} else {
+			System.out.println("Käyttäjätunnus tai salasana väärä");
+		}
+		
+		/*
+		 * VANHAA KOODIA
+		 * 
 		Kayttaja kayttaja = Tietokanta.login(username, password);
 		
 		if(kayttaja == null)
@@ -122,6 +133,7 @@ public class TietokantaTesti {
             	break;
             }
 		} while (select != '2');
+		*/
 	}
 	
 	private static void yleinenTesti() {
