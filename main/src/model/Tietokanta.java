@@ -326,6 +326,7 @@ public class Tietokanta {
 						query = "UPDATE Tili "
 								+ "SET KrediittiSaldo = KrediittiSaldo + "+amount
 										+ " WHERE TiliID = "+tiliID;
+						rs = stmt.executeQuery(query);
 						query = "SELECT KrediittiSaldo FROM Tili "
 								+ "WHERE TiliID = "+tiliID;
 						rs = stmt.executeQuery(query);
