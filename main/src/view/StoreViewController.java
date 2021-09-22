@@ -66,12 +66,32 @@ public class StoreViewController {
 	}
 	
 	public void purchaseProduct1(ActionEvent e) {
-		
+		double amount = products[0].getCreditAmount();
+		int updatedRows = Tietokanta.addCredits(amount);
+		System.out.println(updatedRows + " rows updated.");
 	}
 	
 	public void purchaseProduct2(ActionEvent e) {
-		
+		double amount = products[1].getCreditAmount();
+		int updatedRows = Tietokanta.addCredits(amount);
+		System.out.println(updatedRows + " rows updated.");
 	}
+	
+	public void toMainView(ActionEvent e) {
+		
+		try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));
+            AnchorPane mainView = (AnchorPane) loader.load();
+            Scene mainScene = new Scene(mainView);
+			Stage window = (Stage) toMainBtn.getScene().getWindow();
+			window.setScene(mainScene);
+			
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
+	}
+
 	
 	
 }

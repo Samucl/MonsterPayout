@@ -275,6 +275,57 @@ public class Tietokanta {
 		return 0;
 	}
 	
+	public static int addCredits(double amount) {
+		
+		
+		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+			try {
+				Connection con = DriverManager.getConnection(
+						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				
+				Statement stmt = con.createStatement();
+				
+				String query = "SELECT TiliID "
+						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
+
+				ResultSet rs = stmt.executeQuery(query);
+				
+				/*
+				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä
+				 */
+				if(rs.next()) {
+					int tiliID = rs.getInt("TiliID");
+					query = "SELECT KrediittiSaldo FROM Tili "
+							+ "WHERE TiliID = "+tiliID;
+					rs = stmt.executeQuery(query);
+					/*
+					 * Jos löytyy seuraava tulosjoukko löytyy tietokannasta käyttäjän tili
+					 */
+					if(rs.next()) {
+						double saldo = rs.getDouble("KrediittiSaldo");
+						
+						// Lisätään saldoa
+						query = "UPDATE Tili "
+								+ "SET KrediittiSaldo = KrediittiSaldo + "+amount
+										+ " WHERE TiliID = "+tiliID;
+						int updatedRows = stmt.executeUpdate(query);
+						return updatedRows;
+							
+					}
+				}
+				
+			} catch (SQLException e) {
+				do {
+					System.err.println("Viesti: "+e.getMessage());
+					System.err.println("Virhekoodi: "+e.getErrorCode());
+					System.err.println("SQL-tilakoodi: "+e.getSQLState());
+				} while (e.getNextException() != null);
+			}
+		}
+		return 0;
+		
+	}
+	
 	public static boolean isLogged() {
 		/*
 		 * Tarkistetaan onko käyttäjä kirjautunut sisään

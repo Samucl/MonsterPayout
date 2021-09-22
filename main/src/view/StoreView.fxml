@@ -31,7 +31,7 @@
    <children>
       <ImageView fx:id="product1ImageView" fitHeight="89.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <ImageView fx:id="product2ImageView" fitHeight="89.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <Button fx:id="purchaseOfferBtn" mnemonicParsing="false" style="-fx-background-color: white;" text="OSTA!" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+      <Button fx:id="purchaseOfferBtn" mnemonicParsing="false" onAction="#purchaseOffer" style="-fx-background-color: white;" text="OSTA!" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
          <font>
             <Font name="Broadway" size="24.0" />
          </font>
@@ -70,7 +70,7 @@
             <Insets top="8.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="purchaseBtn1" mnemonicParsing="false" style="-fx-background-color: white;" text="OSTA!" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+      <Button fx:id="purchaseBtn1" mnemonicParsing="false" onAction="#purchaseProduct1" style="-fx-background-color: white;" text="OSTA!" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
          <font>
             <Font name="Broadway" size="24.0" />
          </font>
@@ -103,7 +103,7 @@
             <Insets top="8.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="purchaseBtn2" mnemonicParsing="false" style="-fx-background-color: white;" text="OSTA!" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+      <Button fx:id="purchaseBtn2" mnemonicParsing="false" onAction="#purchaseProduct2" style="-fx-background-color: white;" text="OSTA!" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
          <font>
             <Font name="Broadway" size="24.0" />
          </font>
@@ -136,7 +136,9 @@
             <Insets top="8.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="toMainBtn" mnemonicParsing="false" onAction="#toHomepage" style="-fx-background-color: gold;" text="Pelivalikkoon" GridPane.columnIndex="2">
+
+      <Button fx:id="toMainBtn" mnemonicParsing="false" onAction="#toMainView" style="-fx-background-color: gold;" text="Pelivalikkoon" GridPane.columnIndex="2">
+
          <GridPane.margin>
             <Insets left="86.0" />
          </GridPane.margin>

@@ -23,6 +23,8 @@ public class MainApplication extends Application {
         showKirjautumisView();
         
         //showStoreView();
+
+
 	}
     
 	/**
@@ -48,9 +50,6 @@ public class MainApplication extends Application {
     		GridPane storeView = (GridPane) loader.load();
     		Scene scene = new Scene(storeView);
     		primaryStage.setScene(scene);
-    		
-    		StoreViewController svController = loader.getController();
-    		svController.initialize();
     		
     		primaryStage.show();
     		
