@@ -27,6 +27,8 @@ public class HomepageViewController implements Initializable{
 	
 	private void init() {
 		nameLabel.setText(User.getUsername());
+		kolikotLabel.setText("Kolikot: " + User.getCoins());
+		krediititLabel.setText("Krediitit: " + User.getCredits());
 	}
 	
 	public void toStore(ActionEvent e) {
@@ -43,7 +45,6 @@ public class HomepageViewController implements Initializable{
 	}
 	
 	public void logout(ActionEvent e) {
-		//Tanne lisataan tietokannasta logout metodi.
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("KirjautumisView.fxml"));
