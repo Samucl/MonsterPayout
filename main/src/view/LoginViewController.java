@@ -16,10 +16,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-/** * Kontrolleri jolla ohjataan KirjautumisViewin toimintoja.
+/** * Kontrolleri jolla ohjataan LoginViewin toimintoja.
 */
 
-public class KirjautumisViewController implements Initializable {
+public class LoginViewController implements Initializable {
 	@FXML private TextField kayttajatunnusInput;
 	@FXML private PasswordField salasanaInput;
 	@FXML private Button kirjauduButton;

@@ -11,7 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -47,9 +47,9 @@ public class HomepageViewController implements Initializable{
 	public void logout(ActionEvent e) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("KirjautumisView.fxml"));
-            AnchorPane kirjautumisView = (AnchorPane) loader.load();
-            Scene loginScene = new Scene(kirjautumisView);
+            loader.setLocation(MainApplication.class.getResource("LoginView.fxml"));
+            BorderPane loginView = (BorderPane) loader.load();
+            Scene loginScene = new Scene(loginView);
 			Stage window = (Stage) toStoreButton.getScene().getWindow();
 			Tietokanta.logout();
 			window.setScene(loginScene);

@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.Tietokanta;
 
@@ -55,16 +55,16 @@ public class RekisterointiViewController {
 	}
 	
 	/**
-	* Metodi jolla asetetaan kirjautumisiScene nykyiseen Stageen
+	* Metodi jolla asetetaan loginScene nykyiseen Stageen
 	*/
 	public void toKirjautuminen(ActionEvent e) {	
 		try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("KirjautumisView.fxml"));
-            AnchorPane kirjautumisView = (AnchorPane) loader.load();
-            Scene kirjautumisScene = new Scene(kirjautumisView);
+            loader.setLocation(MainApplication.class.getResource("LoginView.fxml"));
+            BorderPane loginView = (BorderPane) loader.load();
+            Scene loginScene = new Scene(loginView);
 			Stage window = (Stage) tokirjautumisButton.getScene().getWindow();
-			window.setScene(kirjautumisScene);
+			window.setScene(loginScene);
         } catch (IOException iOE) {
             iOE.printStackTrace();
         }
