@@ -7,11 +7,13 @@ public class User {
 	private static String lastname;
 	private static String password;
 	private static String email;
+	private static int coins;
+	private static double credits;
 	private static int tiliId;
 	
 	private static int count = 0;
 	
-	public static void setUserData(int id, String username, String password,String firstname, String lastname, String email, int tiliId) {
+	public static void setUserData(int id, String username, String password,String firstname, String lastname, String email, int tiliId, int coins, double credits) {
 		User.id = id;
 		User.username = username;
 		User.password = password;
@@ -19,10 +21,27 @@ public class User {
 		User.lastname = lastname;
 		User.email = email;
 		User.tiliId = tiliId;
+		User.coins = coins;
+		User.credits = credits;
 		
 		// Laskee pit�� kirjaa k�ytt�jien m��r�st�
 		count++; 
 		User.id = count;
+	}
+	
+	public static void setCoins(int coins) {
+		User.coins = coins;
+	}
+	public static void setCredits(double credits) {
+		User.credits = credits;
+	}
+	
+	public static int getCoins() {
+		return User.coins;
+	}
+	
+	public static double getCredits() {
+		return User.credits;
 	}
 	
 	public String toString() {
@@ -91,6 +110,16 @@ public class User {
 	
 	public static String getUsername() {
 		return username;
+	}
+	
+	public static void logout() {
+		id = 0;
+		username = null;
+		firstname = null;
+		lastname = null;
+		password = null;
+		email = null;
+		tiliId = 0;
 	}
 	
 	

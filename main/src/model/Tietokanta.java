@@ -13,6 +13,11 @@ public class Tietokanta {
 	
 	private static boolean loggedIn = false;
 	
+	public static void logout() {
+		User.logout();
+		loggedIn = false;
+	}
+	
 	public static boolean login(String username, String password) {
 		
 		try {
@@ -36,17 +41,24 @@ public class Tietokanta {
 			
 			ResultSet rs = stmt.executeQuery(query);
 			
-			rs.next();
-			if(rs.getString("Kayttajanimi") != null) {
-				int tId = rs.getInt("KayttajaID");
-				String tUsername = rs.getString("Kayttajanimi");
-				String tFirstname = rs.getString("Firstname");
-				String tLastname = rs.getString("Lastname");
-				String tEmail = rs.getString("Sahkoposti");
-				int tTiliId = rs.getInt("TiliID");
-				User.setUserData(tId, tUsername, password,tFirstname, tLastname, tEmail, tTiliId);
-				return loggedIn = true;
-			}
+			if(rs.next())
+				if(rs.getString("Kayttajanimi") != null) {
+					int tId = rs.getInt("KayttajaID");
+					String tUsername = rs.getString("Kayttajanimi");
+					String tFirstname = rs.getString("Firstname");
+					String tLastname = rs.getString("Lastname");
+					String tEmail = rs.getString("Sahkoposti");
+					int tTiliId = rs.getInt("TiliID");
+					query = "SELECT KolikkoSaldo, KrediittiSaldo FROM Tili "
+							+ "WHERE TiliID = " + tTiliId;
+					if(rs.next()) {
+						double tCredits = rs.getDouble("KrediittiSaldo");
+						int tCoins = rs.getInt("KolikkoSaldo");
+						User.setUserData(tId, tUsername, password,tFirstname, tLastname, tEmail, tTiliId, tCoins, tCredits);
+						return loggedIn = true;
+					}
+					
+				}
 			
 		} catch (SQLException e) {
 			do {
@@ -253,6 +265,10 @@ public class Tietokanta {
 									+ "SET KolikkoSaldo = KolikkoSaldo - "+amount
 											+ " WHERE TiliID = "+tiliID;
 							int updatedRows = stmt.executeUpdate(query);
+							query = "SELECT KolikkoSaldo FROM Tili "
+									+ "WHERE TiliID = "+tiliID;
+							if(rs.next())
+								User.setCoins(rs.getInt("KolikkoSaldo"));
 							
 							/*
 							 * Jos SQL-kutsu muokkasi vähintään 1-riviä, 
@@ -308,6 +324,10 @@ public class Tietokanta {
 						query = "UPDATE Tili "
 								+ "SET KrediittiSaldo = KrediittiSaldo + "+amount
 										+ " WHERE TiliID = "+tiliID;
+						query = "SELECT KrediittiSaldo FROM Tili "
+								+ "WHERE TiliID = "+tiliID;
+						if(rs.next())
+							User.setCredits(rs.getDouble("KrediittiSaldo"));
 						int updatedRows = stmt.executeUpdate(query);
 						return updatedRows;
 							
@@ -324,6 +344,134 @@ public class Tietokanta {
 		}
 		return 0;
 		
+	}
+	
+	public static boolean createProduct(String description, double price, double creditAmount, double saleMultiplier) {
+		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+			try {
+				Connection con = DriverManager.getConnection(
+						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				
+				Statement stmt = con.createStatement();
+				
+				String query = "SELECT Status "
+						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
+
+				ResultSet rs = stmt.executeQuery(query);
+				
+				/*
+				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä statuksella 1 (admin)
+				 */
+				if(rs.next()) {
+					if(rs.getInt("Status")==1) {
+						query = "INSERT INTO Tuote (Kuvaus, Hinta, KrediittienMaara, Alennuskerroin)"
+								+ "values('"+description+"',"+price+","+creditAmount+","+saleMultiplier+")";
+					}
+					rs = stmt.executeQuery(query);
+					/*
+					 * Jos löytyy seuraava tulosjoukko on tietokantaan lisätty onnistuneesti
+					 */
+					if(rs.next()) {
+						return true;
+							
+					}
+				}
+				
+			} catch (SQLException e) {
+				do {
+					System.err.println("Viesti: "+e.getMessage());
+					System.err.println("Virhekoodi: "+e.getErrorCode());
+					System.err.println("SQL-tilakoodi: "+e.getSQLState());
+				} while (e.getNextException() != null);
+			}
+		}
+		return false;
+	}
+	
+	public static boolean editProduct(int productNumber, String description, double price, double creditAmount, double saleMultiplier) {
+		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+			try {
+				Connection con = DriverManager.getConnection(
+						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				
+				Statement stmt = con.createStatement();
+				
+				String query = "SELECT Status "
+						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
+
+				ResultSet rs = stmt.executeQuery(query);
+				
+				/*
+				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä statuksella 1 (admin)
+				 */
+				if(rs.next()) {
+					if(rs.getInt("Status")==1) {
+						query = "UPDATE Tuote SET "
+								+ "Kuvaus = '"+description+"', "
+								+ "Hinta = "+price+", "
+								+ "KrediittienMaara = "+creditAmount+", "
+								+ "Alennuskerroin = "+saleMultiplier+" "
+								+ "WHERE Tuotenumero = "+productNumber;
+					}
+					rs = stmt.executeQuery(query);
+					/*
+					 * Jos löytyy seuraava tulosjoukko on tietokantaan päivitetty tuote onnistuneesti
+					 */
+					if(rs.next()) {
+						return true;
+							
+					}
+				}
+				
+			} catch (SQLException e) {
+				do {
+					System.err.println("Viesti: "+e.getMessage());
+					System.err.println("Virhekoodi: "+e.getErrorCode());
+					System.err.println("SQL-tilakoodi: "+e.getSQLState());
+				} while (e.getNextException() != null);
+			}
+		}
+		return false;
+	}
+	
+	public static boolean deleteProduct(int productNumber) {
+		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+			try {
+				Connection con = DriverManager.getConnection(
+						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				
+				Statement stmt = con.createStatement();
+				
+				String query = "SELECT Status "
+						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
+
+				ResultSet rs = stmt.executeQuery(query);
+				
+				/*
+				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä statuksella 1 (admin)
+				 */
+				if(rs.next()) {
+					if(rs.getInt("Status")==1) {
+						query = "DELETE FROM Tuote WHERE Tuotenumero = "+productNumber;
+					}
+					rs = stmt.executeQuery(query);
+					/*
+					 * Jos löytyy seuraava tulosjoukko on valittu tuote poistettu tietokannasta
+					 */
+					if(rs.next()) {
+						return true;
+					}
+				}
+				
+			} catch (SQLException e) {
+				do {
+					System.err.println("Viesti: "+e.getMessage());
+					System.err.println("Virhekoodi: "+e.getErrorCode());
+					System.err.println("SQL-tilakoodi: "+e.getSQLState());
+				} while (e.getNextException() != null);
+			}
+		}
+		return false;
 	}
 	
 	public static boolean isLogged() {

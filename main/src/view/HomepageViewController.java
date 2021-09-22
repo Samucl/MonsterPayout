@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.Tietokanta;
 import model.User;
 
 public class HomepageViewController implements Initializable{
@@ -49,6 +50,7 @@ public class HomepageViewController implements Initializable{
             AnchorPane kirjautumisView = (AnchorPane) loader.load();
             Scene loginScene = new Scene(kirjautumisView);
 			Stage window = (Stage) toStoreButton.getScene().getWindow();
+			Tietokanta.logout();
 			window.setScene(loginScene);
         } catch (IOException iOE) {
             iOE.printStackTrace();
