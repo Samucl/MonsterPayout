@@ -293,10 +293,10 @@ public class Tietokanta {
 		return 0;
 	}
 	
-	public static int addCredits(double amount) {
+	public static int increaseCreditBalance(double amount) {
 		
-		
-		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+			
 			try {
 				Connection con = DriverManager.getConnection(
 						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
@@ -320,19 +320,20 @@ public class Tietokanta {
 					 * Jos löytyy seuraava tulosjoukko löytyy tietokannasta käyttäjän tili
 					 */
 					if(rs.next()) {
-						double saldo = rs.getDouble("KrediittiSaldo");
 						
 						// Lisätään saldoa
 						query = "UPDATE Tili "
-								+ "SET KrediittiSaldo = KrediittiSaldo + "+amount
-										+ " WHERE TiliID = "+tiliID;
+								+ "SET KrediittiSaldo = KrediittiSaldo + " + amount
+										+ " WHERE TiliID = " + tiliID;
+						int updatedRows = stmt.executeUpdate(query); // Tallennetaan palautusta varten päivitettyjen alkioiden lkm (1 jos onnistui, 0 jos ei)
+						
 						rs = stmt.executeQuery(query);
 						query = "SELECT KrediittiSaldo FROM Tili "
 								+ "WHERE TiliID = "+tiliID;
 						rs = stmt.executeQuery(query);
 						if(rs.next())
 							User.setCredits(rs.getDouble("KrediittiSaldo"));
-						int updatedRows = stmt.executeUpdate(query);
+						
 						return updatedRows;
 							
 					}

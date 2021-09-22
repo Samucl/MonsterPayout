@@ -67,13 +67,13 @@ public class StoreViewController {
 	
 	public void purchaseProduct1(ActionEvent e) {
 		double amount = products[0].getCreditAmount();
-		int updatedRows = Tietokanta.addCredits(amount);
+		int updatedRows = Tietokanta.increaseCreditBalance(amount);
 		System.out.println(updatedRows + " rows updated.");
 	}
 	
 	public void purchaseProduct2(ActionEvent e) {
 		double amount = products[1].getCreditAmount();
-		int updatedRows = Tietokanta.addCredits(amount);
+		int updatedRows = Tietokanta.increaseCreditBalance(amount);
 		System.out.println(updatedRows + " rows updated.");
 	}
 	
