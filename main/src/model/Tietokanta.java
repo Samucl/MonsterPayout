@@ -327,7 +327,6 @@ public class Tietokanta {
 										+ " WHERE TiliID = " + tiliID;
 						int updatedRows = stmt.executeUpdate(query); // Tallennetaan palautusta varten päivitettyjen alkioiden lkm (1 jos onnistui, 0 jos ei)
 						
-						rs = stmt.executeQuery(query);
 						query = "SELECT KrediittiSaldo FROM Tili "
 								+ "WHERE TiliID = "+tiliID;
 						rs = stmt.executeQuery(query);
