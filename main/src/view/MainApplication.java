@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
@@ -20,9 +21,10 @@ public class MainApplication extends Application {
 	public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("MonsterPayout");
-        showKirjautumisView();
+        //showKirjautumisView();
         
         //showStoreView();
+        showUserInfo();
 
 
 	}
@@ -41,6 +43,21 @@ public class MainApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public void showUserInfo() {
+    	try {
+    		FXMLLoader loader = new FXMLLoader();
+    		loader.setLocation(MainApplication.class.getResource("UserInfoView.fxml"));
+    		AnchorPane userInfoView = (AnchorPane) loader.load();
+    		Scene scene = new Scene(userInfoView);
+    		primaryStage.setScene(scene);
+    		
+    		primaryStage.show();
+    		
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
     }
     
     public void showStoreView() {

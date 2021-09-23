@@ -29,14 +29,8 @@ public class Tietokanta {
 			
 			String passwordHash = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
 			
-			//SQL syöttökutsu, tehdään Kayttaja tauluun uusi rivi
-			String query = "INSERT INTO Kayttaja (Kayttajanimi, Salasana, Tilinumero, Sahkoposti, Firstname, Lastname) "
-					+ "values ('Testikäyttäjä', SHA2('"+password+"',256), 'FI20 40 8950 1253 1250 20', 'testi@testi.fi', 'Mikko', 'Suomalainen')";
-			
-			stmt.executeQuery(query);
-			
 			//Tehdään SQL haku kutsu ja haetaan Testikäyttäjä/käyttäjät
-			query = "SELECT KayttajaID, Kayttajanimi, Sahkoposti, Tilinumero, TiliID, Firstname, Lastname "
+			String query = "SELECT KayttajaID, Kayttajanimi, Sahkoposti, Tilinumero, TiliID, Firstname, Lastname, Login_streak, Last_login "
 					+ "FROM Kayttaja WHERE Kayttajanimi = '"+ username +"' AND Salasana = '"+ passwordHash +"'";
 			
 			ResultSet rs = stmt.executeQuery(query);
@@ -48,14 +42,16 @@ public class Tietokanta {
 					String tFirstname = rs.getString("Firstname");
 					String tLastname = rs.getString("Lastname");
 					String tEmail = rs.getString("Sahkoposti");
+					String tTilinumero = rs.getString("Tilinumero");
 					int tTiliId = rs.getInt("TiliID");
+					int tLogin_streak = rs.getInt("Login_streak");
 					query = "SELECT KolikkoSaldo, KrediittiSaldo FROM Tili "
 							+ "WHERE TiliID = " + tTiliId;
 					rs = stmt.executeQuery(query);
 					if(rs.next()) {
 						double tCredits = rs.getDouble("KrediittiSaldo");
 						int tCoins = rs.getInt("KolikkoSaldo");
-						User.setUserData(tId, tUsername, password,tFirstname, tLastname, tEmail, tTiliId, tCoins, tCredits);
+						User.setUserData(tId, tUsername, password,tFirstname, tLastname, tEmail, tTilinumero,tTiliId, tCoins, tCredits, tLogin_streak);
 						return loggedIn = true;
 					}
 					

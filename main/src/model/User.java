@@ -10,23 +10,21 @@ public class User {
 	private static int coins;
 	private static double credits;
 	private static int tiliId;
+	private static String account_number; //Tilinumero
+	private static int login_streak;
 	
-	private static int count = 0;
-	
-	public static void setUserData(int id, String username, String password,String firstname, String lastname, String email, int tiliId, int coins, double credits) {
+	public static void setUserData(int id, String username, String password,String firstname, String lastname, String email, String account_number, int tiliId, int coins, double credits, int login_streak) {
 		User.id = id;
 		User.username = username;
 		User.password = password;
 		User.firstname = firstname;
 		User.lastname = lastname;
 		User.email = email;
+		User.account_number = account_number;
 		User.tiliId = tiliId;
 		User.coins = coins;
 		User.credits = credits;
-		
-		// Laskee pit�� kirjaa k�ytt�jien m��r�st�
-		count++; 
-		User.id = count;
+		User.login_streak = login_streak;
 	}
 	
 	public static void setCoins(int coins) {
@@ -80,14 +78,6 @@ public class User {
 		User.password = password;
 	}
 
-	public static int getCount() {
-		return count;
-	}
-
-	public static void setCount(int count) {
-		User.count = count;
-	}
-
 	public static String getEmail() {
 		return email;
 	}
@@ -112,6 +102,22 @@ public class User {
 		return username;
 	}
 	
+	public static void setAccountNumber(String account_number) {
+		User.account_number = account_number;
+	}
+	
+	public static String getAccountNumber() {
+		return User.account_number;
+	}
+	
+	public static void setLoginStreak(int login_streak) {
+		User.login_streak = login_streak;
+	}
+	
+	public static int getLoginStreak() {
+		return User.login_streak;
+	}
+	
 	public static void logout() {
 		id = 0;
 		username = null;
@@ -120,6 +126,7 @@ public class User {
 		password = null;
 		email = null;
 		tiliId = 0;
+		account_number = null;
 	}
 	
 	
