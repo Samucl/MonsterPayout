@@ -46,12 +46,12 @@
                                                 <Label text="Sähköpostiosoite:" GridPane.rowIndex="3" />
                                                 <Label text="Tilinumero:" GridPane.rowIndex="4" />
                                                 <Label text="Kirjautumis putki:" GridPane.rowIndex="5" />
-                                                <TextField editable="false" GridPane.columnIndex="1" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <TextField editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <TextField fx:id="username" editable="false" GridPane.columnIndex="1" />
+                                                <TextField fx:id="firstname" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="lastname" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <TextField fx:id="account_number" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <TextField fx:id="login_streak" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                              </children>
                                           </GridPane>
                                        </children>

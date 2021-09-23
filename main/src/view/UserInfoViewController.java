@@ -1,21 +1,21 @@
 package view;
 
-import java.awt.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import model.User;
 
 public class UserInfoViewController implements Initializable {
-	@FXML private TextField username;
-	@FXML private TextField firstname;
-	@FXML private TextField lastname;
-	@FXML private TextField email;
-	@FXML private TextField account_number;
-	@FXML private TextField login_streak;
+	@FXML TextField username;
+	@FXML TextField firstname;
+	@FXML TextField lastname;
+	@FXML TextField email;
+	@FXML TextField account_number;
+	@FXML TextField login_streak;
 	//@FXML private ListView purchase_history;
 	
 	@Override

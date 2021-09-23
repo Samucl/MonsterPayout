@@ -21,10 +21,10 @@ public class MainApplication extends Application {
 	public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("MonsterPayout");
-        //showKirjautumisView();
+        showKirjautumisView();
         
         //showStoreView();
-        showUserInfo();
+        //showUserInfo();
 
 
 	}
