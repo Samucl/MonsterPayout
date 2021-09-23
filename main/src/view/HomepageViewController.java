@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -24,11 +25,25 @@ public class HomepageViewController implements Initializable{
 	@FXML Text krediititLabel;
 	@FXML Button logoutButton;
 	@FXML Button toStoreButton;
+	@FXML Button toUserInfoButton;
 	
 	private void init() {
 		nameLabel.setText(User.getUsername());
 		kolikotLabel.setText("Kolikot: " + User.getCoins());
 		krediititLabel.setText("Krediitit: " + User.getCredits());
+	}
+	
+	public void toUserInfo(ActionEvent e) {
+		try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("UserInfoView.fxml"));
+            AnchorPane userInfoView = (AnchorPane) loader.load();
+            Scene userInfoScene = new Scene(userInfoView);
+			Stage window = (Stage) toUserInfoButton.getScene().getWindow();
+			window.setScene(userInfoScene);
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
 	}
 	
 	public void toStore(ActionEvent e) {
