@@ -16,6 +16,26 @@ public class Product {
 		this.saleMultiplier = saleMultiplier;
 	}
 
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public void setCreaditAmout(double creaditAmout) {
+		this.creaditAmout = creaditAmout;
+	}
+
+	public void setSaleMultiplier(double saleMultiplier) {
+		this.saleMultiplier = saleMultiplier;
+	}
+
 	public int getNumber() {
 		return number;
 	}

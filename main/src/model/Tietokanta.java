@@ -293,6 +293,61 @@ public class Tietokanta {
 		return 0;
 	}
 	
+	public static boolean buyProduct(Product product) {
+if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+			
+			try {
+				Connection con = DriverManager.getConnection(
+						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				
+				Statement stmt = con.createStatement();
+				
+				String query = "SELECT TiliID, KayttajaID "
+						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
+
+				ResultSet rs = stmt.executeQuery(query);
+				
+				/*
+				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä
+				 */
+				if(rs.next()) {
+					int tiliID = rs.getInt("TiliID");
+					int kayttajaID = rs.getInt("KayttajaID");
+					// Lisätään saldoa
+					query = "UPDATE Tili "
+							+ "SET KrediittiSaldo = KrediittiSaldo + " + product.getCreditAmount()
+									+ " WHERE TiliID = " + tiliID;
+					int updatedRows = stmt.executeUpdate(query); // Tallennetaan palautusta varten päivitettyjen alkioiden lkm (1 jos onnistui, 0 jos ei)
+					
+					query = "INSERT INTO Tilaus (Summa, Paivamaara, KayttajaID, Tuotekuvaus, KrediittienMaara) VALUES "
+							+ "("+product.getPrice()+","
+									+ "current_timestamp(),"
+							+kayttajaID+",'"
+									+product.getDescription()+"',"
+							+product.getCreditAmount()+")";
+					
+					stmt.executeQuery(query);
+					
+					query = "SELECT KrediittiSaldo FROM Tili "
+							+ "WHERE TiliID = "+tiliID;
+					rs = stmt.executeQuery(query);
+					if(rs.next())
+						User.setCredits(rs.getDouble("KrediittiSaldo"));
+					
+					return true;
+				}
+				
+			} catch (SQLException e) {
+				do {
+					System.err.println("Viesti: "+e.getMessage());
+					System.err.println("Virhekoodi: "+e.getErrorCode());
+					System.err.println("SQL-tilakoodi: "+e.getSQLState());
+				} while (e.getNextException() != null);
+			}
+		}
+		return false;
+	}
+	
 	public static int increaseCreditBalance(double amount) {
 		
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
@@ -313,29 +368,19 @@ public class Tietokanta {
 				 */
 				if(rs.next()) {
 					int tiliID = rs.getInt("TiliID");
+					// Lisätään saldoa
+					query = "UPDATE Tili "
+							+ "SET KrediittiSaldo = KrediittiSaldo + " + amount
+									+ " WHERE TiliID = " + tiliID;
+					int updatedRows = stmt.executeUpdate(query); // Tallennetaan palautusta varten päivitettyjen alkioiden lkm (1 jos onnistui, 0 jos ei)
+					
 					query = "SELECT KrediittiSaldo FROM Tili "
 							+ "WHERE TiliID = "+tiliID;
 					rs = stmt.executeQuery(query);
-					/*
-					 * Jos löytyy seuraava tulosjoukko löytyy tietokannasta käyttäjän tili
-					 */
-					if(rs.next()) {
-						
-						// Lisätään saldoa
-						query = "UPDATE Tili "
-								+ "SET KrediittiSaldo = KrediittiSaldo + " + amount
-										+ " WHERE TiliID = " + tiliID;
-						int updatedRows = stmt.executeUpdate(query); // Tallennetaan palautusta varten päivitettyjen alkioiden lkm (1 jos onnistui, 0 jos ei)
-						
-						query = "SELECT KrediittiSaldo FROM Tili "
-								+ "WHERE TiliID = "+tiliID;
-						rs = stmt.executeQuery(query);
-						if(rs.next())
-							User.setCredits(rs.getDouble("KrediittiSaldo"));
-						
-						return updatedRows;
-							
-					}
+					if(rs.next())
+						User.setCredits(rs.getDouble("KrediittiSaldo"));
+					
+					return updatedRows;
 				}
 				
 			} catch (SQLException e) {
@@ -350,7 +395,7 @@ public class Tietokanta {
 		
 	}
 	
-	public static boolean createProduct(String description, double price, double creditAmount, double saleMultiplier) {
+	public static boolean createProduct(Product product) {
 		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = DriverManager.getConnection(
@@ -369,7 +414,7 @@ public class Tietokanta {
 				if(rs.next()) {
 					if(rs.getInt("Status")==1) {
 						query = "INSERT INTO Tuote (Kuvaus, Hinta, KrediittienMaara, Alennuskerroin)"
-								+ "values('"+description+"',"+price+","+creditAmount+","+saleMultiplier+")";
+								+ "values('"+product.getDescription()+"',"+product.getPrice()+","+product.getCreditAmount()+","+product.getSaleMultiplier()+")";
 						rs = stmt.executeQuery(query);
 						/*
 						 * Jos löytyy seuraava tulosjoukko on tietokantaan lisätty onnistuneesti
@@ -393,7 +438,7 @@ public class Tietokanta {
 		return false;
 	}
 	
-	public static boolean editProduct(int productNumber, String description, double price, double creditAmount, double saleMultiplier) {
+	public static boolean editProduct(Product product) {
 		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = DriverManager.getConnection(
@@ -412,11 +457,11 @@ public class Tietokanta {
 				if(rs.next()) {
 					if(rs.getInt("Status")==1) {
 						query = "UPDATE Tuote SET "
-								+ "Kuvaus = '"+description+"', "
-								+ "Hinta = "+price+", "
-								+ "KrediittienMaara = "+creditAmount+", "
-								+ "Alennuskerroin = "+saleMultiplier+" "
-								+ "WHERE Tuotenumero = "+productNumber;
+								+ "Kuvaus = '"+product.getDescription()+"', "
+								+ "Hinta = "+product.getPrice()+", "
+								+ "KrediittienMaara = "+product.getCreditAmount()+", "
+								+ "Alennuskerroin = "+product.getSaleMultiplier()+" "
+								+ "WHERE Tuotenumero = "+product.getNumber();
 						rs = stmt.executeQuery(query);
 
 						/*
