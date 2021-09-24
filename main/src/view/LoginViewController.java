@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /** * Kontrolleri jolla ohjataan LoginViewin toimintoja.
@@ -65,11 +66,11 @@ public class LoginViewController implements Initializable {
 	public void toRekisteroityminen(ActionEvent e) {	
 		try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("RekisterointiView.fxml"));
-            AnchorPane rekisterointiView = (AnchorPane) loader.load();
-            Scene rekisterointiScene = new Scene(rekisterointiView);
+            loader.setLocation(MainApplication.class.getResource("RegisterView.fxml"));
+            BorderPane registerView = (BorderPane) loader.load();
+            Scene registerScene = new Scene(registerView);
 			Stage window = (Stage) torekisteroitymisButton.getScene().getWindow();
-			window.setScene(rekisterointiScene);
+			window.setScene(registerScene);
         } catch (IOException iOE) {
             iOE.printStackTrace();
         }

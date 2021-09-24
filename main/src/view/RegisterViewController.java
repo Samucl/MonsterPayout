@@ -15,7 +15,7 @@ import model.Tietokanta;
 * Kontrolleri jolla ohjataan RekisterointiViewin toimintoja.
 */
 
-public class RekisterointiViewController {
+public class RegisterViewController {
 	@FXML private TextField sahkopostiInput;
 	@FXML private TextField etunimiInput;
 	@FXML private TextField sukunimiInput;
