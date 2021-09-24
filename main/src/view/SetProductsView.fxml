@@ -1,8 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="780.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/15.0.1" fx:controller="view.SetProductsViewController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="520.0" minWidth="10.0" prefWidth="520.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="198.0" minWidth="10.0" prefWidth="21.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.0" minWidth="10.0" prefWidth="239.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="127.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="365.0" minHeight="10.0" prefHeight="360.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="148.0" minHeight="10.0" prefHeight="106.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <TableView fx:id="productsTable" prefHeight="339.0" prefWidth="520.0" GridPane.rowIndex="1">
+        <columns>
+          <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="productColumn" prefWidth="210.0" text="Tuote" />
+            <TableColumn fx:id="discountColumn" prefWidth="136.0" text="Alennuskerroin" />
+            <TableColumn fx:id="priceColumn" prefWidth="82.0" text="Hinta" />
+        </columns>
+         <GridPane.margin>
+            <Insets left="16.0" />
+         </GridPane.margin>
+      </TableView>
+      <TextField fx:id="descriptionTF" promptText="Tuotteen kuvaus" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="43.0" left="8.0" right="270.0" />
+         </GridPane.margin>
+      </TextField>
+      <TextField fx:id="creditsTF" promptText="Krediittien määrä" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="16.0" left="8.0" right="270.0" />
+         </GridPane.margin>
+      </TextField>
+      <TextField fx:id="priceTF" promptText="Hinta" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="16.0" left="270.0" />
+         </GridPane.margin>
+      </TextField>
+      <TextField fx:id="discountTF" promptText="Alennuskerroin" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="43.0" left="270.0" />
+         </GridPane.margin>
+      </TextField>
+      <Button fx:id="logOutBtn" mnemonicParsing="false" text="Kirjaudu ulos" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+      <Button fx:id="replaceOfferBtn" mnemonicParsing="false" onAction="#replaceOfferProduct" style="-fx-background-color: gold;" text="vasen" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="30.0" />
+         </GridPane.margin>
+      </Button>
+      <Button fx:id="replaceProductBtn1" mnemonicParsing="false" onAction="#replaceProduct1" style="-fx-background-color: #a1ffa4;" text="keski" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="90.0" />
+         </GridPane.margin>
+      </Button>
+      <Button fx:id="replaceProductBtn2" mnemonicParsing="false" onAction="#replaceProduct2" style="-fx-background-color: #a1ffa4;" text="oikea" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="150.0" />
+         </GridPane.margin>
+      </Button>
+      <TextField prefHeight="25.0" prefWidth="167.0" text="Aseta kauppaan:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets left="30.0" right="40.0" top="120.0" />
+         </GridPane.margin>
+      </TextField>
+      <TextField fx:id="successTF" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets left="30.0" right="40.0" top="210.0" />
+         </GridPane.margin>
+      </TextField>
+      <Button fx:id="addNewBtn" mnemonicParsing="false" onAction="#addNewProduct" text="Lisää uusi..." GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="16.0" />
+         </GridPane.margin>
+      </Button>
+   </children>
 </GridPane>
-

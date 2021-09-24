@@ -30,7 +30,7 @@ public class Tietokanta {
 			String passwordHash = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
 			
 			//Tehdään SQL haku kutsu ja haetaan Testikäyttäjä/käyttäjät
-			String query = "SELECT KayttajaID, Kayttajanimi, Sahkoposti, Tilinumero, TiliID, Firstname, Lastname, Login_streak, Last_login "
+			String query = "SELECT KayttajaID, Kayttajanimi, Sahkoposti, Tilinumero, TiliID, Firstname, Lastname, Login_streak, Last_login, Status "
 					+ "FROM Kayttaja WHERE Kayttajanimi = '"+ username +"' AND Salasana = '"+ passwordHash +"'";
 			
 			ResultSet rs = stmt.executeQuery(query);
@@ -45,13 +45,14 @@ public class Tietokanta {
 					String tTilinumero = rs.getString("Tilinumero");
 					int tTiliId = rs.getInt("TiliID");
 					int tLogin_streak = rs.getInt("Login_streak");
+					int tStatus = rs.getInt("Status");
 					query = "SELECT KolikkoSaldo, KrediittiSaldo FROM Tili "
 							+ "WHERE TiliID = " + tTiliId;
 					rs = stmt.executeQuery(query);
 					if(rs.next()) {
 						double tCredits = rs.getDouble("KrediittiSaldo");
 						int tCoins = rs.getInt("KolikkoSaldo");
-						User.setUserData(tId, tUsername, password,tFirstname, tLastname, tEmail, tTilinumero,tTiliId, tCoins, tCredits, tLogin_streak);
+						User.setUserData(tId, tUsername, password,tFirstname, tLastname, tEmail, tTilinumero,tTiliId, tCoins, tCredits, tLogin_streak, tStatus);
 						return loggedIn = true;
 					}
 					
@@ -457,7 +458,7 @@ if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() !=
 								+ "Hinta = "+product.getPrice()+", "
 								+ "KrediittienMaara = "+product.getCreditAmount()+", "
 								+ "Alennuskerroin = "+product.getSaleMultiplier()+" "
-								+ "WHERE Tuotenumero = "+product.getNumber();
+								+ "WHERE Tuotenumero = "+product.getId();
 						rs = stmt.executeQuery(query);
 
 						/*

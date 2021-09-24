@@ -1,23 +1,23 @@
 package model;
 
 public class Product {
-	private int number;
+	private int id;
 	private String description;
 	private double price;
-	private double creaditAmout;
+	private double creditAmount;
 	private double saleMultiplier;
 	
 	public Product(int number, String description, double price
 			, double creditAmount, double saleMultiplier) {
-		this.number = number;
+		this.id = number;
 		this.description = description;
 		this.price = price;
-		this.creaditAmout = creditAmount;
+		this.creditAmount = creditAmount;
 		this.saleMultiplier = saleMultiplier;
 	}
 
-	public void setNumber(int number) {
-		this.number = number;
+	public void setId(int number) {
+		this.id = number;
 	}
 
 	public void setDescription(String description) {
@@ -28,16 +28,16 @@ public class Product {
 		this.price = price;
 	}
 
-	public void setCreaditAmout(double creaditAmout) {
-		this.creaditAmout = creaditAmout;
+	public void setCreditAmount(double creaditAmout) {
+		this.creditAmount = creaditAmout;
 	}
 
 	public void setSaleMultiplier(double saleMultiplier) {
 		this.saleMultiplier = saleMultiplier;
 	}
 
-	public int getNumber() {
-		return number;
+	public int getId() {
+		return id;
 	}
 
 	public String getDescription() {
@@ -49,7 +49,7 @@ public class Product {
 	}
 
 	public double getCreditAmount() {
-		return creaditAmout;
+		return creditAmount;
 	}
 
 	public double getSaleMultiplier() {

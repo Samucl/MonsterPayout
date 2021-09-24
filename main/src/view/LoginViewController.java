@@ -15,6 +15,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /** * Kontrolleri jolla ohjataan LoginViewin toimintoja.
@@ -42,7 +43,7 @@ public class LoginViewController implements Initializable {
 		else {
 			System.out.println("Käyttäjätunnus: " + kayttajatunnusInput.getText() + " Salasana: " + salasanaInput.getText());
 			Tietokanta.login(kayttajatunnusInput.getText(), salasanaInput.getText());
-			if(Tietokanta.isLogged()) {
+			if(Tietokanta.isLogged() && User.isAdmin() == 0) {
 				
 				try {
 		            FXMLLoader loader = new FXMLLoader();
@@ -56,6 +57,10 @@ public class LoginViewController implements Initializable {
 		        }
 				
 				System.out.println("Tervetuloa: " + User.getFirstname());
+			}
+			
+			else if (Tietokanta.isLogged() && User.isAdmin() == 1) {
+				toSetProductsView();
 			}
 		}
 	}
@@ -71,6 +76,19 @@ public class LoginViewController implements Initializable {
             Scene registerScene = new Scene(registerView);
 			Stage window = (Stage) torekisteroitymisButton.getScene().getWindow();
 			window.setScene(registerScene);
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
+	}
+	
+	public void toSetProductsView() {
+		try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("SetProductsView.fxml"));
+            GridPane spView = (GridPane) loader.load();
+            Scene spScene = new Scene(spView);
+			Stage window = (Stage) kirjauduButton.getScene().getWindow();
+			window.setScene(spScene);
         } catch (IOException iOE) {
             iOE.printStackTrace();
         }

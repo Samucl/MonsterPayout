@@ -12,8 +12,9 @@ public class User {
 	private static int tiliId;
 	private static String account_number; //Tilinumero
 	private static int login_streak;
+	private static int status; // 1 = admin, 0 = normaali käyttäjä
 	
-	public static void setUserData(int id, String username, String password,String firstname, String lastname, String email, String account_number, int tiliId, int coins, double credits, int login_streak) {
+	public static void setUserData(int id, String username, String password,String firstname, String lastname, String email, String account_number, int tiliId, int coins, double credits, int login_streak, int status) {
 		User.id = id;
 		User.username = username;
 		User.password = password;
@@ -25,6 +26,7 @@ public class User {
 		User.coins = coins;
 		User.credits = credits;
 		User.login_streak = login_streak;
+		User.status = status;
 	}
 	
 	public static void setCoins(int coins) {
@@ -116,6 +118,10 @@ public class User {
 	
 	public static int getLoginStreak() {
 		return User.login_streak;
+	}
+	
+	public static int isAdmin() {
+		return status;
 	}
 	
 	public static void logout() {
