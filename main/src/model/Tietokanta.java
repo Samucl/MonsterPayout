@@ -19,6 +19,9 @@ public class Tietokanta {
 	}
 	
 	public static boolean login(String username, String password) {
+		/*
+		 * Luodaan käyttäjän istunto. Samalla haetaan alustavasti kaikki käyttäjän tilaukset yms.
+		 */
 		
 		try {
 			Connection con;
@@ -53,7 +56,12 @@ public class Tietokanta {
 						double tCredits = rs.getDouble("KrediittiSaldo");
 						int tCoins = rs.getInt("KolikkoSaldo");
 						User.setUserData(tId, tUsername, password,tFirstname, tLastname, tEmail, tTilinumero,tTiliId, tCoins, tCredits, tLogin_streak, tStatus);
-						return loggedIn = true;
+						/*
+						 * Lisätään Session-luokkaan käyttäjän tekemät tilaukset
+						 */
+						loggedIn = true;
+						Session.setOrders(Tietokanta.getOrders());
+						return loggedIn;
 					}
 					
 				}
@@ -80,8 +88,6 @@ public class Tietokanta {
 			
 			//SQL syöttökutsu, tehdään Kayttaja tauluun uusi rivi
 			String query = "SELECT * FROM Tuote";
-			
-			stmt.executeQuery(query);
 			
 			ResultSet rs = stmt.executeQuery(query);
 			int size = 0;
@@ -113,6 +119,60 @@ public class Tietokanta {
 				System.err.println("Virhekoodi: "+e.getErrorCode());
 				System.err.println("SQL-tilakoodi: "+e.getSQLState());
 			} while (e.getNextException() != null);
+		}
+		return null;
+	}
+	
+	public static Order[] getOrders() {
+		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+			try {
+				Connection con;
+				con = DriverManager.getConnection(
+						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				
+				Statement stmt = con.createStatement();
+				
+				
+				//SQL syöttökutsu, tehdään Kayttaja tauluun uusi rivi
+				String query = "SELECT KayttajaID FROM Kayttaja WHERE Kayttajanimi = '"
+									+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
+						
+						
+						
+						//"SELECT * FROM Tilaus WHERE KayttajaID = " + kayttajaID;
+				
+				ResultSet rs = stmt.executeQuery(query);
+				if(rs.next()) {
+					String kayttajaID = rs.getString("KayttajaID");
+					query = "SELECT * FROM Tilaus WHERE KayttajaID = " + kayttajaID;
+					
+					rs = stmt.executeQuery(query);
+					int size = 0;
+					if (rs.last()) {
+					  size = rs.getRow();
+					  rs.beforeFirst();
+					  Order[] orders = new Order[size];
+					  while(rs.next()) {
+						  orders[rs.getRow()-1] = new Order(
+								  rs.getInt("TilausID"),
+								  rs.getString("Paivamaara"),
+								  rs.getString("Tuotekuvaus"),
+								  rs.getDouble("Summa"),
+								  rs.getDouble("KrediittienMaara"));
+						}
+					  return orders;
+					}
+				}
+				
+				
+				
+			} catch (SQLException e) {
+				do {
+					System.err.println("Viesti: "+e.getMessage());
+					System.err.println("Virhekoodi: "+e.getErrorCode());
+					System.err.println("SQL-tilakoodi: "+e.getSQLState());
+				} while (e.getNextException() != null);
+			}
 		}
 		return null;
 	}
@@ -291,7 +351,10 @@ public class Tietokanta {
 	}
 	
 	public static boolean buyProduct(Product product) {
-if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		/*
+		 * Toteutetaan käyttäjän tekemä tilaus ja samalla päivitetään Session-luokkaan tilaukset
+		 */
+		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			
 			try {
 				Connection con = DriverManager.getConnection(
@@ -330,6 +393,8 @@ if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() !=
 					rs = stmt.executeQuery(query);
 					if(rs.next())
 						User.setCredits(rs.getDouble("KrediittiSaldo"));
+					
+					Session.setOrders(Tietokanta.getOrders());
 					
 					return true;
 				}
@@ -459,12 +524,13 @@ if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() !=
 								+ "KrediittienMaara = "+product.getCreditAmount()+", "
 								+ "Alennuskerroin = "+product.getSaleMultiplier()+" "
 								+ "WHERE Tuotenumero = "+product.getId();
-						rs = stmt.executeQuery(query);
+						
+						int updatedRows = stmt.executeUpdate(query); // Tallennetaan palautusta varten päivitettyjen alkioiden lkm (1 jos onnistui, 0 jos ei)
 
 						/*
-						 * Jos löytyy seuraava tulosjoukko on tietokantaan päivitetty tuote onnistuneesti
+						 * Jos on muokattu tietokannassa useampaa kuin yhtä riviä niin on päivitys onnistunut
 						 */
-						if(rs.next()) {
+						if(updatedRows > 0) {
 							return true;
 								
 						}
@@ -501,14 +567,62 @@ if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() !=
 				if(rs.next()) {
 					if(rs.getInt("Status")==1) {
 						query = "DELETE FROM Tuote WHERE Tuotenumero = "+productNumber;
-						rs = stmt.executeQuery(query);
+						int updatedRows = stmt.executeUpdate(query); // Tallennetaan palautusta varten päivitettyjen alkioiden lkm (1 jos onnistui, 0 jos ei)
+
 						/*
-						 * Jos löytyy seuraava tulosjoukko on valittu tuote poistettu tietokannasta
+						 * Jos on muokattu tietokannassa useampaa kuin yhtä riviä niin on päivitys onnistunut
 						 */
-						if(rs.next()) {
+						if(updatedRows > 0) {
 							return true;
+								
 						}
 					}
+					
+				}
+				
+			} catch (SQLException e) {
+				do {
+					System.err.println("Viesti: "+e.getMessage());
+					System.err.println("Virhekoodi: "+e.getErrorCode());
+					System.err.println("SQL-tilakoodi: "+e.getSQLState());
+				} while (e.getNextException() != null);
+			}
+		}
+		return false;
+	}
+	
+	public static boolean saveProfileChanges() {
+		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+			try {
+				Connection con = DriverManager.getConnection(
+						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				
+				Statement stmt = con.createStatement();
+				
+				String query = "SELECT KayttajaID "
+						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
+
+				ResultSet rs = stmt.executeQuery(query);
+				
+				/*
+				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjän id
+				 */
+				if(rs.next()) {
+					int kayttajaID = rs.getInt("KayttajaID");
+					System.out.println(kayttajaID);
+						query = "UPDATE Kayttaja SET "+ "Firstname = '" + User.getFirstname()+"', "
+										+ "Lastname = '" + User.getLastname()+"', "
+												+ "Sahkoposti = '" + User.getEmail()+"', "
+														+ "Tilinumero = '" + User.getAccountNumber()
+														+"' WHERE KayttajaID = " + kayttajaID;
+						int updatedRows = stmt.executeUpdate(query); // Tallennetaan palautusta varten päivitettyjen alkioiden lkm (1 jos onnistui, 0 jos ei)
+
+						/*
+						 * Jos on muokattu tietokannassa useampaa kuin yhtä riviä niin on päivitys onnistunut
+						 */
+						if(updatedRows > 0) {
+							return true;
+						}
 					
 				}
 				
