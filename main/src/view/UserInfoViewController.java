@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Order;
@@ -30,6 +31,7 @@ public class UserInfoViewController implements Initializable {
 	@FXML Button save_button;
 	@FXML Button cancel_button;
 	@FXML Button home_button;
+	@FXML ImageView profile_picture;
 	
 	@Override
     public void initialize(URL location, ResourceBundle resources)
@@ -99,6 +101,7 @@ public class UserInfoViewController implements Initializable {
 	private void init() {
 		setTexts();
 		setOrders();
+		loadProfilePicture();
 	}
 	
 	private void setTexts() {
@@ -121,6 +124,10 @@ public class UserInfoViewController implements Initializable {
 		for(int i = orders.length - 1; i >= 0; i--) {
 			purchase_history.getItems().add(orders[i].toString());
 		}
+	}
+	
+	public void loadProfilePicture() {
+		profile_picture.setImage(Session.getAvatar(0));
 	}
 	
 	public void toMainView(ActionEvent e) {
