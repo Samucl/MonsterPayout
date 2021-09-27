@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -39,6 +40,13 @@ public class Session {
 		//File path = new File("./res/avatars");
 		File path = new File("./main/src/res/avatars");
 		File[] allAvatarFiles = path.listFiles();
+		/*
+		 * Lajitellaan sijainnin tiedostot aakkos järjestykseen
+		 */
+		Arrays.sort(allAvatarFiles);
+		for(File file : allAvatarFiles) {
+		    System.out.println(file);
+		}
 		System.out.println("Löytyi "+allAvatarFiles.length+" kuvaa");
 		
 		avatarImages = new Image[allAvatarFiles.length];
