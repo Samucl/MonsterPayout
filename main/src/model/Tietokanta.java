@@ -267,7 +267,7 @@ public class Tietokanta {
 		return true;
 	}
 	
-	public static int decreaseKolikkoBalance(int amount) {
+	public static int decreaseCoinBalance(int amount) {
 		
 		/*
 		 * Metodi ottaa parametreina Kayttaja-luokan joka sisältää 
@@ -349,6 +349,53 @@ public class Tietokanta {
 		}
 		return 0;
 	}
+	
+	public static int increaseCoinBalance(int amount) {
+			
+			if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+				
+				try {
+					Connection con = DriverManager.getConnection(
+							URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+					
+					Statement stmt = con.createStatement();
+					
+					String query = "SELECT TiliID "
+							+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
+	
+					ResultSet rs = stmt.executeQuery(query);
+					
+					/*
+					 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä
+					 */
+					if(rs.next()) {
+						int tiliID = rs.getInt("TiliID");
+						// Lisätään saldoa
+						query = "UPDATE Tili "
+								+ "SET KolikkoSaldo = KolikkoSaldo + " + amount
+										+ " WHERE TiliID = " + tiliID;
+						int updatedRows = stmt.executeUpdate(query); // Tallennetaan palautusta varten päivitettyjen alkioiden lkm (1 jos onnistui, 0 jos ei)
+						
+						query = "SELECT KolikkoSaldo FROM Tili "
+								+ "WHERE TiliID = "+tiliID;
+						rs = stmt.executeQuery(query);
+						if(rs.next())
+							User.setCoins(rs.getInt("KolikkoSaldo"));
+						
+						return updatedRows;
+					}
+					
+				} catch (SQLException e) {
+					do {
+						System.err.println("Viesti: "+e.getMessage());
+						System.err.println("Virhekoodi: "+e.getErrorCode());
+						System.err.println("SQL-tilakoodi: "+e.getSQLState());
+					} while (e.getNextException() != null);
+				}
+			}
+			return 0;
+			
+		}
 	
 	public static boolean buyProduct(Product product) {
 		/*

@@ -26,11 +26,25 @@ public class HomepageViewController implements Initializable{
 	@FXML Button logoutButton;
 	@FXML Button toStoreButton;
 	@FXML Button toUserInfoButton;
+	@FXML Button toArcadeBlackjack1;
 	
 	private void init() {
 		nameLabel.setText(User.getUsername());
 		kolikotLabel.setText("Kolikot: " + User.getCoins());
 		krediititLabel.setText("Krediitit: " + User.getCredits());
+	}
+	
+	public void toArcadeBlackjack1(ActionEvent e) {
+		try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("ArcadeBlackjack1View.fxml"));
+            AnchorPane blackjackView = (AnchorPane) loader.load();
+            Scene blackjackScene = new Scene(blackjackView);
+			Stage window = (Stage) toArcadeBlackjack1.getScene().getWindow();
+			window.setScene(blackjackScene);
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
 	}
 	
 	public void toUserInfo(ActionEvent e) {
