@@ -14,5 +14,6 @@
       <Label fx:id="nameLabel" layoutX="1176.0" layoutY="30.0" text="presetNimi" />
       <Button fx:id="toUserInfoButton" layoutX="160.0" layoutY="603.0" mnemonicParsing="false" onAction="#toUserInfo" prefHeight="70.0" prefWidth="150.0" text="Käyttäjä tiedot" />
       <Button fx:id="toArcadeBlackjack1" layoutX="565.0" layoutY="402.0" mnemonicParsing="false" onAction="#toArcadeBlackjack1" prefHeight="70.0" prefWidth="150.0" text="Arcade_blackjack_1" />
+      <Button fx:id="toMoneyRain" layoutX="841.0" layoutY="402.0" mnemonicParsing="false" onAction="#toMoneyRain" prefHeight="70.0" prefWidth="150.0" text="MoneyRain" />
    </children>
 </AnchorPane>

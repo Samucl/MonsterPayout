@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import moneyrain.MoneyRain;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,6 +46,10 @@ public class HomepageViewController implements Initializable{
         } catch (IOException iOE) {
             iOE.printStackTrace();
         }
+	}
+	
+	public void toMoneyRain(ActionEvent e) {
+		MoneyRain game = new MoneyRain(new Stage());
 	}
 	
 	public void toUserInfo(ActionEvent e) {
