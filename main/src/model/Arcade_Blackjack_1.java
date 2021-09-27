@@ -106,6 +106,7 @@ public class Arcade_Blackjack_1 implements ICoinGame {
 	public boolean playerHit() {
 		if(playersTurn) {
 			playersHand.addCard(cardDeck.takeCard());
+			ArrayList<Card> hand = playersHand.getCards();
 			if(playersHand.calculateTotalBlackjack()>21) {
 				playerLoose();
 			} else if(playersHand.calculateTotalBlackjack() == 21) {
@@ -156,6 +157,14 @@ public class Arcade_Blackjack_1 implements ICoinGame {
 	
 	public int getWinnings() {
 		return win;
+	}
+	
+	public ArrayList<Card> getPlayersCards(){
+		return playersHand.getCards();
+	}
+	
+	public ArrayList<Card> getDealersCards(){
+		return dealersHand.getCards();
 	}
 	
 	public boolean playerBlackjack() {

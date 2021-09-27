@@ -2,6 +2,7 @@ package view;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -11,10 +12,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Arcade_Blackjack_1;
+import model.Card;
 
 public class AcradeBlackjack1ViewController implements Initializable {
 	@FXML
@@ -33,6 +36,34 @@ public class AcradeBlackjack1ViewController implements Initializable {
 	public Text player_hand_total;
 	@FXML
 	public Text dealer_hand_total;
+	@FXML
+	public ImageView pcard0;
+	@FXML
+	public ImageView pcard1;
+	@FXML
+	public ImageView pcard2;
+	@FXML
+	public ImageView pcard3;
+	@FXML
+	public ImageView pcard4;
+	@FXML
+	public ImageView pcard5;
+	@FXML
+	public ImageView pcard6;
+	@FXML
+	public ImageView dcard0;
+	@FXML
+	public ImageView dcard1;
+	@FXML
+	public ImageView dcard2;
+	@FXML
+	public ImageView dcard3;
+	@FXML
+	public ImageView dcard4;
+	@FXML
+	public ImageView dcard5;
+	@FXML
+	public ImageView dcard6;
 	
 	private Arcade_Blackjack_1 game = new Arcade_Blackjack_1();
 	
@@ -70,9 +101,12 @@ public class AcradeBlackjack1ViewController implements Initializable {
 	}
 	
 	public void gameStarted() {
+		clearCard();
 		win_field.setText("0");
 		player_hand_total.setText(Integer.toString(game.playerHandTotal()));
 		dealer_hand_total.setText(Integer.toString(game.dealersHandFirstCard()));
+		updatePlayersCards();
+		updateDealersCards();
 		if(game.isGameOver()) {
 			/*
 			 * Pelaaja on tässä vaiheessa saanut blackjackin tai jotain korttien summa 
@@ -86,13 +120,36 @@ public class AcradeBlackjack1ViewController implements Initializable {
 	public void playerHit() {
 		disableButtons();
 		game.playerHit();
+		updatePlayersCards();
 		checkGame();
 	}
 	
 	public void playerStay() {
 		disableButtons();
 		game.playerStay();
+		updateDealersCards();
 		checkGame();
+	}
+	
+	private void updatePlayersCards() {
+		ImageView[] pcard_img = {pcard0,pcard1,pcard2,pcard3,pcard4,pcard5,pcard6};
+		ArrayList<Card> cards = game.getPlayersCards();
+		for(int i = 0; i < cards.size(); i++) {
+			//pcard0.setImage(cards.get(i).getImage());
+			
+			if(i<pcard_img.length)
+				pcard_img[i].setImage(cards.get(i).getImage());
+				
+		}
+	}
+	
+	private void updateDealersCards() {
+		ImageView[] dcard_img = {dcard0,dcard1,dcard2,dcard3,dcard4,dcard5,dcard6};
+		ArrayList<Card> cards = game.getDealersCards();
+		for(int i = 0; i < cards.size(); i++) {
+			if(i<dcard_img.length)
+				dcard_img[i].setImage(cards.get(i).getImage());
+		}
 	}
 	
 	private void checkGame() {
@@ -103,6 +160,15 @@ public class AcradeBlackjack1ViewController implements Initializable {
 			enableButtons();
 		if(game.isGameOver())
 			showOutcome();
+	}
+	
+	private void clearCard() {
+		ImageView[] pcard_img = {pcard0,pcard1,pcard2,pcard3,pcard4,pcard5,pcard6};
+		ImageView[] dcard_img = {dcard0,dcard1,dcard2,dcard3,dcard4,dcard5,dcard6};
+		for(int i=0; i < pcard_img.length;i++)
+			pcard_img[i].setImage(null);
+		for(int i=0; i < dcard_img.length;i++)
+			dcard_img[i].setImage(null);
 	}
 	
 	private void showOutcome() {
