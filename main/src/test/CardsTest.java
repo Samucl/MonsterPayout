@@ -1,6 +1,6 @@
 package test;
 
-import model.DeckOfCards;
+import cardgames.DeckOfCards;
 
 public class CardsTest {
 

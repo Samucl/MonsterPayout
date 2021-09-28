@@ -5,6 +5,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+
+import cardgames.Arcade_Blackjack_1;
+import cardgames.Card;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,10 +17,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.Arcade_Blackjack_1;
-import model.Card;
 
 public class AcradeBlackjack1ViewController implements Initializable {
 	@FXML
@@ -67,6 +69,7 @@ public class AcradeBlackjack1ViewController implements Initializable {
 	
 	private Arcade_Blackjack_1 game = new Arcade_Blackjack_1();
 	
+	
 	@Override
     public void initialize(URL location, ResourceBundle resources)
     {
@@ -106,7 +109,7 @@ public class AcradeBlackjack1ViewController implements Initializable {
 		player_hand_total.setText(Integer.toString(game.playerHandTotal()));
 		dealer_hand_total.setText(Integer.toString(game.dealersHandFirstCard()));
 		updatePlayersCards();
-		updateDealersCards();
+		showDealersBeginningHand();
 		if(game.isGameOver()) {
 			/*
 			 * Pelaaja on tässä vaiheessa saanut blackjackin tai jotain korttien summa 
@@ -147,6 +150,15 @@ public class AcradeBlackjack1ViewController implements Initializable {
 		ImageView[] dcard_img = {dcard0,dcard1,dcard2,dcard3,dcard4,dcard5,dcard6};
 		ArrayList<Card> cards = game.getDealersCards();
 		for(int i = 0; i < cards.size(); i++) {
+			if(i<dcard_img.length)
+				dcard_img[i].setImage(cards.get(i).getImage());
+		}
+	}
+	
+	private void showDealersBeginningHand() {
+		ImageView[] dcard_img = {dcard0,dcard1,dcard2,dcard3,dcard4,dcard5,dcard6};
+		ArrayList<Card> cards = game.getDealersCards();
+		for(int i = 0; i < cards.size()-1; i++) {
 			if(i<dcard_img.length)
 				dcard_img[i].setImage(cards.get(i).getImage());
 		}
