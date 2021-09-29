@@ -18,6 +18,27 @@ public class Tietokanta {
 		loggedIn = false;
 	}
 	
+	public static boolean testConnection() {
+		try {
+			Connection con;
+			con = DriverManager.getConnection(
+					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+			
+			Statement stmt = con.createStatement();
+			
+			return true;
+			
+		} catch (SQLException e) {
+			do {
+				System.err.println("Viesti: "+e.getMessage());
+				System.err.println("Virhekoodi: "+e.getErrorCode());
+				System.err.println("SQL-tilakoodi: "+e.getSQLState());
+			} while (e.getNextException() != null);
+		}
+		
+		return false;
+	}
+	
 	public static boolean login(String username, String password) {
 		/*
 		 * Luodaan käyttäjän istunto. Samalla haetaan alustavasti kaikki käyttäjän tilaukset yms.
