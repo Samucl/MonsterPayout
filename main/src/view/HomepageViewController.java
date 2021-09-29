@@ -53,9 +53,14 @@ public class HomepageViewController implements Initializable{
 		try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("MoneyRainMenuView.fxml"));
-            GridPane moneyrainmenuView = (GridPane) loader.load();
+            AnchorPane moneyrainmenuView = (AnchorPane) loader.load();
             Scene moneyrainmenuScene = new Scene(moneyrainmenuView);
 			Stage window = new Stage();
+			window.setOnCloseRequest(evt -> {
+				if(MoneyRain.getTl() != null) {
+					MoneyRain.getTl().stop();//Pysäyttää pelin timelinen jos suljetaan ikkuna kesken pelin.
+				}
+			});
 			window.setScene(moneyrainmenuScene);
 			window.show();
         } catch (IOException iOE) {

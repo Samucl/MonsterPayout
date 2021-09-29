@@ -2,31 +2,35 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MoneyRainDeadViewController">
    <children>
-      <Button fx:id="toMenuButton" mnemonicParsing="false" onAction="#toMenu" prefHeight="41.0" prefWidth="241.0" text="Palaa takaisin valikkoon" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <ImageView fitHeight="605.0" fitWidth="720.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../res/moneyrain/deadbg.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="toMenu" layoutX="224.0" layoutY="371.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="39.0" prefWidth="273.0" style="-fx-background-color: black;" text="Palaa takaisin valikkoon" textFill="#006fff">
          <font>
-            <Font size="17.0" />
+            <Font name="Calibri Light" size="17.0" />
          </font>
+         <effect>
+            <Bloom threshold="0.0" />
+         </effect>
       </Button>
-      <Label fx:id="finalscoreLabel" text="Score" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <Label fx:id="pointsLabel" layoutX="353.0" layoutY="309.0" prefHeight="37.0" prefWidth="176.0" text="0" textFill="WHITE">
          <font>
-            <Font size="33.0" />
+            <Font name="Arial Black" size="29.0" />
          </font>
+         <effect>
+            <Glow level="0.91" />
+         </effect>
       </Label>
    </children>
-</GridPane>
+</AnchorPane>

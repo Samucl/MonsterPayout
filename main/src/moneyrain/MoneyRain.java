@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -28,7 +27,7 @@ public class MoneyRain extends Canvas {
 	
 	private Stage stage;
 	
-	private Timeline tl;
+	private static Timeline tl;
 	private int timeInMillis;
 	private static final int height = 605;
 	private static final int width = 720;
@@ -40,7 +39,6 @@ public class MoneyRain extends Canvas {
 	private double playerYPos = height - PLAYER_HEIGHT;
 	private Image bg;
 	private Image bgfullcar;
-	private Image deathscreen;
 	private Image player;
 	private Image bill;
 	private Image click;
@@ -75,32 +73,33 @@ public class MoneyRain extends Canvas {
 		bill = new Image(new FileInputStream("./main/src/res/moneyrain/bill.png"));
 		poison = new Image(new FileInputStream("./main/src/res/moneyrain/poison.png"));
 		megis = new Image(new FileInputStream("./main/src/res/moneyrain/megis.png"));
+		player = new Image(new FileInputStream("./main/src/res/moneyrain/playerRight.png"));
 		Canvas canvas = new Canvas(width, height);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		tl = new Timeline(new KeyFrame(Duration.millis(10), e -> run(gc)));
+		tl = new Timeline(new KeyFrame(Duration.millis(10), e -> {
+			try {
+				run(gc);
+			} catch (FileNotFoundException e2) {
+				e2.printStackTrace();
+			}
+		}));
 		tl.setCycleCount(Timeline.INDEFINITE);
-		
 		
 		/**
 		 * Pelaajan controlleri
-		 */
+		*/
 		canvas.setOnMouseMoved(e -> {
 			
 			//Pelaajan kuvaa vaihdetaan riippuen siitä liiktaanko vasemmalle tai oikealle
-			if(e.getX() - (PLAYER_WIDTH/2) < playerXPos)
-				try {
-					player = new Image(new FileInputStream("./main/src/res/moneyrain/playerLeft.png"));
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			if(e.getX() - (PLAYER_WIDTH/2) > playerXPos)
-				try {
-					player = new Image(new FileInputStream("./main/src/res/moneyrain/playerRight.png"));
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+			try {
+				if(e.getX() - (PLAYER_WIDTH/2) < playerXPos)
+						player = new Image(new FileInputStream("./main/src/res/moneyrain/playerLeft.png"));
+				if(e.getX() - (PLAYER_WIDTH/2) > playerXPos)
+						player = new Image(new FileInputStream("./main/src/res/moneyrain/playerRight.png"));
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+
 			
 			//Asetetaan pelaaja seuraamaan hiirtä ja rajoitukset kuinka pikälle pelaaja voi siirtyä ruudulla
 			//PLAYER_WIDTH/2, jotta hiiri olisi pelaaja-kuvan keskellä, eikä pelaaja-kuvan vasemmalla
@@ -112,6 +111,31 @@ public class MoneyRain extends Canvas {
 				playerXPos = e.getX() - (PLAYER_WIDTH/2);
 			
 		});
+
+		
+		/* 										PELAAJAN KONTROLLERI NUOLINÄPPÄIMILLÄ (
+		canvas.setOnKeyPressed(event -> {
+			System.out.println("keypressed");
+			switch(event.getCode()) {
+			case LEFT:
+				System.out.println("left");
+				playerXPos = playerXPos - 1;
+				try {
+					player = new Image(new FileInputStream("./main/src/res/moneyrain/playerLeft.png"));
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				break;
+			case RIGHT:
+				playerXPos = playerXPos + 1;
+				try {
+					player = new Image(new FileInputStream("./main/src/res/moneyrain/playerRight.png"));
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+				break;
+			}});
+			*/
 		
 		/*
 		 * Hiiren klikkauksesta tapahtuvat asiat
@@ -149,7 +173,7 @@ public class MoneyRain extends Canvas {
 		tl.play();
 	}
 	
-	private void run(GraphicsContext gc) {
+	private void run(GraphicsContext gc) throws FileNotFoundException {
 		if(collectedCash == 5) 
 			gc.drawImage(bgfullcar, 0, 0);
 		else
@@ -177,7 +201,7 @@ public class MoneyRain extends Canvas {
 			}
 			
 			//Tehdään asioita kerran per 2s
-			if(timeInMillis % 500 == 0) {
+			if(timeInMillis % 2000 == 0) {
 				createPoison(); //Luodaan myrkkypullo
 			}
 			
@@ -197,7 +221,6 @@ public class MoneyRain extends Canvas {
 							collectedCash++;
 						if(item.isDangerous()) { //Jos item on vaarallinen
 							health--;
-							System.out.println("Health: " + health);
 							if(health <= 0) {
 								dead = true;
 							}
@@ -218,17 +241,14 @@ public class MoneyRain extends Canvas {
 				}
 				try {
 				     FXMLLoader loader = new FXMLLoader();
-				     loader.setLocation(MainApplication.class.getResource("MoneyRainMenuView.fxml"));
-				     GridPane moneyrainmenuView;
-				     moneyrainmenuView = (GridPane) loader.load();
-				     Scene moneyrainmenuScene = new Scene(moneyrainmenuView);
-				     stage.setScene(moneyrainmenuScene);
+				     loader.setLocation(MainApplication.class.getResource("MoneyRainDeadView.fxml"));
+				     AnchorPane moneyraindeadView = (AnchorPane) loader.load();
+				     Scene moneyraindeadScene = new Scene(moneyraindeadView);
+				     stage.setScene(moneyraindeadScene);
 				     stage.show();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-
-
 			}
 			
 			//Poistetaan tippuva item
@@ -244,12 +264,7 @@ public class MoneyRain extends Canvas {
 		}
 		//Ennen pelin alkamista suoritettavat rivit
 		else {
-			try {
-				click = new Image(new FileInputStream("./main/src/res/moneyrain/click.png"));
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			click = new Image(new FileInputStream("./main/src/res/moneyrain/click.png"));
 			gc.drawImage(click, 0, 0);
 		}
 	}
@@ -279,6 +294,11 @@ public class MoneyRain extends Canvas {
 		Item item = new Item(megis, 25, 57, xPos, 0, false, true);
 		items.add(item);
 	}
+	
+	public static Timeline getTl() {
+		return tl;
+	}
+	
 	
 }
 
