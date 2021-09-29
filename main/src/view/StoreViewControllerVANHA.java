@@ -2,76 +2,48 @@ package view;
 
 import java.io.IOException;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Product;
 import model.Tietokanta;
 
-public class StoreViewController {
+public class StoreViewControllerVANHA {
 	
 	private Product[] products;
 	
-	
+	@FXML private Button purchaseOfferBtn;
+	@FXML private Button purchaseBtn1;
+	@FXML private Button purchaseBtn2;
 	@FXML private Button toMainBtn;
-	
-	@FXML private TableView<Product> productsTable;
-	@FXML private TableColumn<Product, String> nameColumn; //Tuotenimi
-	@FXML private TableColumn<Product, Double> creditColumn; //Kuinka monta krediittiä ostoksesta saa
-	@FXML private TableColumn<Product, Integer> coinColumn; //Kuinka monta kolikkoa ostoksesta saa
-	@FXML private TableColumn<Product, Double> priceColumn; //Hinta
-	@FXML private TableColumn<Product, Boolean> buy; //Tarkoitus toimia osto-"buttonina"
-	
+	@FXML private TextArea offerTF;
+	@FXML private TextArea productTF1;
+	@FXML private TextArea productTF2;
 	
 	@FXML
 	public void initialize() {
-		
-		//Mitä muuttujaa mikäkin kolumni vastaa Product-luokassa
-		nameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("description"));
-		creditColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("creditAmount"));
-		coinColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("coinAmount"));
-		priceColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
-		
-		Product[] allProducts = Tietokanta.getProducts();
-		products = new Product[allProducts.length];
-		
-		int j = 0;
-		for (int i = 0; i < allProducts.length; i++) {
-			
-			if (allProducts[i].getForSaleStatus()) { //Jos myynnissä, lisätään products-taulukkoon
-				products[j++] = allProducts[i];
-			}
-			
-		}
+		products = Tietokanta.getProducts();
+		System.out.println(products);
 		
 		showProducts();
 	}
 	
-	//Asettaa tuotteiden tiedot TableColumneihin
+	//Asettaa tuotteiden tiedot TextFieldeihin
+	
 	@FXML
 	public void showProducts() {
+		offerTF.setText("\n\nTähän joku \nsuperhyvä tarjous");
 		
-		ObservableList<Product> productOL = FXCollections.observableArrayList();
+		productTF1.setText("\n\n" + String.valueOf(products[0].getCreditAmount()) + " krediittiä\n\n"
+				+  "Hinta: " + String.valueOf(products[0].getPrice()) + " €!");
 		
-		for (Product p : products) {
-			productOL.add(p);
-			
-		}
-		
-		productsTable.setItems(productOL);
-		
-		/*
 		productTF2.setText("\n\n" + String.valueOf(products[1].getCreditAmount()) + " krediittiä\n\n"
-				+  "Hinta: " + String.valueOf(products[1].getPrice()) + " €!");  */
+				+  "Hinta: " + String.valueOf(products[1].getPrice()) + " €!");
 		
 	}
 	

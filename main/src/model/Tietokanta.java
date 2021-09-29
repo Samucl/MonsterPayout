@@ -122,13 +122,18 @@ public class Tietokanta {
 				  System.out.println("Kuvaus: "+rs.getString("Kuvaus"));
 				  System.out.println("Hinta: "+rs.getDouble("Hinta"));
 				  System.out.println("Krediittien määrä: "+rs.getDouble("KrediittienMaara"));
+				  System.out.println("Kolikoiden määrä: "+rs.getDouble("KolikoidenMaara"));
 				  System.out.println("Alennuskerroin: "+rs.getDouble("Alennuskerroin"));
+				  System.out.println("Myynnissä: "+rs.getBoolean("Myynnissa"));
 				  products[rs.getRow()-1] = new Product(
 						  rs.getInt("Tuotenumero"),
 						  rs.getString("Kuvaus"),
 						  rs.getDouble("Hinta"),
 						  rs.getDouble("KrediittienMaara"),
-						  rs.getDouble("Alennuskerroin"));
+						  rs.getInt("KolikoidenMaara"),
+						  rs.getDouble("Alennuskerroin"),
+						  rs.getBoolean("Myynnissa"));
+						  
 				}
 			  return products;
 			}
@@ -143,6 +148,7 @@ public class Tietokanta {
 		}
 		return null;
 	}
+	
 	
 	public static Order[] getOrders() {
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {

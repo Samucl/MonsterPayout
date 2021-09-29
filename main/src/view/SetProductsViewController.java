@@ -37,6 +37,7 @@ public class SetProductsViewController {
 	//Alustetaan TableView
 	public void initialize() {
 		
+		//Mitä muuttujaa mikäkin kolumni vastaa Product-luokassa
 		idColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("id"));
 		productColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("description"));
 		discountColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("saleMultiplier"));

@@ -5,15 +5,20 @@ public class Product {
 	private String description;
 	private double price;
 	private double creditAmount;
+	private int coinAmount;
 	private double saleMultiplier;
+	private boolean forSale;
 	
 	public Product(int number, String description, double price
-			, double creditAmount, double saleMultiplier) {
+			, double creditAmount, int coinAmount, double saleMultiplier, boolean forSale) {
 		this.id = number;
 		this.description = description;
 		this.price = price;
 		this.creditAmount = creditAmount;
+		this.coinAmount = coinAmount;
 		this.saleMultiplier = saleMultiplier;
+		this.forSale = forSale;
+		
 	}
 
 	public void setId(int number) {
@@ -46,6 +51,10 @@ public class Product {
 
 	public double getPrice() {
 		return price;
+	}
+	
+	public boolean getForSaleStatus() {
+		return forSale;
 	}
 
 	public double getCreditAmount() {
