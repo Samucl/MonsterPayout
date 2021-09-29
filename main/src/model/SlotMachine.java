@@ -2,14 +2,14 @@ package model;
 
 import java.util.*;
 
-public class SlottiPeli {
+public class SlotMachine {
 	private int[] reel = new int[] {1, 1, 1, 2, 2, 2, 3, 3, 3, 4};
 	private int[] winnings = new int[] {0, 10, 20, 30, 60};
 	private int[] outcome = new int[3];
 	
-	public SlottiPeli(){}
+	public SlotMachine(){}
 	
-	public SlottiPeli(int[] reel, int[] winnings) {
+	public SlotMachine(int[] reel, int[] winnings) {
 		this.reel = reel;
 		this.winnings = winnings;
 	}

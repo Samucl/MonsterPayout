@@ -1,11 +1,11 @@
 import model.Session;
-import model.SlottiPeli;
+import model.SlotMachine;
 
 public class Main {
 	public static void main(String args[]) {
 		// VÄLIAIKAINEN: Testataan slotin toimintaa
 		Session.loadAvatarImages();
-		SlottiPeli peli = new SlottiPeli();
+		SlotMachine peli = new SlotMachine();
 		for (int i=0;i<100;i++) {
 			peli.play();
 		}

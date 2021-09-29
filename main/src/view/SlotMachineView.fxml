@@ -9,9 +9,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16">
+<AnchorPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <ImageView fitHeight="400.0" fitWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../res/velvetBackground.jpg" />
+         </image>
+      </ImageView>
       <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SlottiMasiina 4000" wrappingWidth="329.6953125">
          <font>
             <Font size="24.0" />
@@ -64,19 +68,19 @@
          </font>
       </Text>
       <Button layoutX="89.0" layoutY="166.0" mnemonicParsing="false" text="Nosta panosta (25)" />
-      <ImageView fitHeight="240.0" fitWidth="180.0" layoutX="244.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="203.0" fitWidth="174.0" layoutX="238.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../OneDrive/Tiedostot/Metropolia/reel1.png" />
+            <Image url="@../res/slot_icons/slotmachine.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="240.0" fitWidth="180.0" layoutX="424.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="203.0" fitWidth="174.0" layoutX="418.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../OneDrive/Tiedostot/Metropolia/reel2.png" />
+            <Image url="@../res/slot_icons/slotmachine.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="240.0" fitWidth="180.0" layoutX="604.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="203.0" fitWidth="174.0" layoutX="598.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../OneDrive/Tiedostot/Metropolia/reel3.png" />
+            <Image url="@../res/slot_icons/slotmachine.png" />
          </image>
       </ImageView>
    </children>
