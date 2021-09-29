@@ -28,6 +28,7 @@ public class HomepageViewController implements Initializable{
 	@FXML Button toStoreButton;
 	@FXML Button toUserInfoButton;
 	@FXML Button toArcadeBlackjack1;
+	@FXML Button toMoneyRain;
 	
 	private void init() {
 		nameLabel.setText(User.getUsername());
@@ -49,7 +50,17 @@ public class HomepageViewController implements Initializable{
 	}
 	
 	public void toMoneyRain(ActionEvent e) {
-		MoneyRain game = new MoneyRain(new Stage());
+		try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("MoneyRainMenuView.fxml"));
+            GridPane moneyrainmenuView = (GridPane) loader.load();
+            Scene moneyrainmenuScene = new Scene(moneyrainmenuView);
+			Stage window = new Stage();
+			window.setScene(moneyrainmenuScene);
+			window.show();
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
 	}
 	
 	public void toUserInfo(ActionEvent e) {

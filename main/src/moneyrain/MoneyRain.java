@@ -1,16 +1,24 @@
 package moneyrain;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import view.MainApplication;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -45,6 +53,7 @@ public class MoneyRain extends Canvas {
 	private int points;
 	private int collectedCash;
 	private int health = 3;
+	private boolean dead = false;
 	private List<Item> items = new ArrayList<>();
 	
 	public MoneyRain(Stage stage) {
@@ -58,14 +67,14 @@ public class MoneyRain extends Canvas {
 	public void start(Stage stage) throws Exception{
 		this.stage = stage;
 		this.stage.setTitle("MoneyRain");
-		bg = new Image(getClass().getResourceAsStream("bg.jpg"));
-		bgfullcar = new Image(getClass().getResourceAsStream("bgfullcar.jpg"));
-		heart1 = new Image(getClass().getResourceAsStream("heart1.png"));
-		heart2 = new Image(getClass().getResourceAsStream("heart2.png"));
-		heart3 = new Image(getClass().getResourceAsStream("heart3.png"));
-		bill = new Image(getClass().getResourceAsStream("bill.png"));
-		poison = new Image(getClass().getResourceAsStream("poison.png"));
-		megis = new Image(getClass().getResourceAsStream("megis.png"));
+		bg = new Image(new FileInputStream("./main/src/res/moneyrain/bg.jpg"));
+		bgfullcar = new Image(new FileInputStream("./main/src/res/moneyrain/bgfullcar.jpg"));
+		heart1 = new Image(new FileInputStream("./main/src/res/moneyrain/heart1.png"));
+		heart2 = new Image(new FileInputStream("./main/src/res/moneyrain/heart2.png"));
+		heart3 = new Image(new FileInputStream("./main/src/res/moneyrain/heart3.png"));
+		bill = new Image(new FileInputStream("./main/src/res/moneyrain/bill.png"));
+		poison = new Image(new FileInputStream("./main/src/res/moneyrain/poison.png"));
+		megis = new Image(new FileInputStream("./main/src/res/moneyrain/megis.png"));
 		Canvas canvas = new Canvas(width, height);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		tl = new Timeline(new KeyFrame(Duration.millis(10), e -> run(gc)));
@@ -79,9 +88,19 @@ public class MoneyRain extends Canvas {
 			
 			//Pelaajan kuvaa vaihdetaan riippuen siitä liiktaanko vasemmalle tai oikealle
 			if(e.getX() - (PLAYER_WIDTH/2) < playerXPos)
-				player = new Image(getClass().getResourceAsStream("playerLeft.png"));
+				try {
+					player = new Image(new FileInputStream("./main/src/res/moneyrain/playerLeft.png"));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			if(e.getX() - (PLAYER_WIDTH/2) > playerXPos)
-				player = new Image(getClass().getResourceAsStream("playerRight.png"));
+				try {
+					player = new Image(new FileInputStream("./main/src/res/moneyrain/playerRight.png"));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			
 			//Asetetaan pelaaja seuraamaan hiirtä ja rajoitukset kuinka pikälle pelaaja voi siirtyä ruudulla
 			//PLAYER_WIDTH/2, jotta hiiri olisi pelaaja-kuvan keskellä, eikä pelaaja-kuvan vasemmalla
@@ -158,7 +177,7 @@ public class MoneyRain extends Canvas {
 			}
 			
 			//Tehdään asioita kerran per 2s
-			if(timeInMillis % 2000 == 0) {
+			if(timeInMillis % 500 == 0) {
 				createPoison(); //Luodaan myrkkypullo
 			}
 			
@@ -180,9 +199,7 @@ public class MoneyRain extends Canvas {
 							health--;
 							System.out.println("Health: " + health);
 							if(health <= 0) {
-								deathscreen = new Image(getClass().getResourceAsStream("deathscreen.png"));
-								gc.drawImage(deathscreen, 0, 0);
-								tl.stop();
+								dead = true;
 							}
 						}
 						if(item.isGivesHp() && health <= 2) //Jos item antaa elämän
@@ -191,6 +208,28 @@ public class MoneyRain extends Canvas {
 				item.fall(); //Laitetaan item tippumaan
 				gc.drawImage(item.getImg(), item.getXPos(), item.getYPos(), item.getWidth(), item.getHeight()); //Tulostetaan item
 			});
+			
+			if(dead) {
+				tl.stop();
+				try {
+					TimeUnit.SECONDS.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				try {
+				     FXMLLoader loader = new FXMLLoader();
+				     loader.setLocation(MainApplication.class.getResource("MoneyRainMenuView.fxml"));
+				     GridPane moneyrainmenuView;
+				     moneyrainmenuView = (GridPane) loader.load();
+				     Scene moneyrainmenuScene = new Scene(moneyrainmenuView);
+				     stage.setScene(moneyrainmenuScene);
+				     stage.show();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+
+			}
 			
 			//Poistetaan tippuva item
 			items.removeIf(item -> 
@@ -205,7 +244,12 @@ public class MoneyRain extends Canvas {
 		}
 		//Ennen pelin alkamista suoritettavat rivit
 		else {
-			click = new Image(getClass().getResourceAsStream("click.png"));
+			try {
+				click = new Image(new FileInputStream("./main/src/res/moneyrain/click.png"));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			gc.drawImage(click, 0, 0);
 		}
 	}
