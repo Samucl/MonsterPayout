@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import view.MainApplication;
+import view.MoneyRainDeadViewController;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -186,6 +187,7 @@ public class MoneyRain extends Canvas {
 			timeInMillis += 10; //Laskuri jolla seurataan pelissä käytettyä aikaa
 			gc.setFill(Color.WHITE);
 			gc.drawImage(player, playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
+			gc.setFont(Font.font ("Arial Black", 20));
 			gc.fillText("Pisteet: " +  points + "    Rahat kädessä: " + collectedCash + "/5", 10, 30);
 			
 			if(health == 3)
@@ -243,6 +245,8 @@ public class MoneyRain extends Canvas {
 				     FXMLLoader loader = new FXMLLoader();
 				     loader.setLocation(MainApplication.class.getResource("MoneyRainDeadView.fxml"));
 				     AnchorPane moneyraindeadView = (AnchorPane) loader.load();
+				     MoneyRainDeadViewController c = loader.getController();
+				     c.setPoints(points);
 				     Scene moneyraindeadScene = new Scene(moneyraindeadView);
 				     stage.setScene(moneyraindeadScene);
 				     stage.show();

@@ -31,7 +31,7 @@ public class MoneyRainMenuViewController implements Initializable {
 	private void init() {
 		nameLabel.setText(User.getUsername());
 		highscoreLabel.setText("0");
-		coinsLabel.setText("Coins: " + User.getCoins());
+		coinsLabel.setText("Kolikot: " + User.getCoins());
 	}
 	
 	public void play(ActionEvent e) {
