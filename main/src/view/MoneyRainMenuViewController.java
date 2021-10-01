@@ -10,6 +10,7 @@ import moneyrain.MoneyRain;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import model.Tietokanta;
 import model.User;
 
 public class MoneyRainMenuViewController implements Initializable {
@@ -32,6 +33,7 @@ public class MoneyRainMenuViewController implements Initializable {
 		nameLabel.setText(User.getUsername());
 		highscoreLabel.setText("0");
 		coinsLabel.setText("Kolikot: " + User.getCoins());
+		highscoreLabel.setText("" + Tietokanta.getHighScore("MoneyRain"));
 	}
 	
 	public void play(ActionEvent e) {

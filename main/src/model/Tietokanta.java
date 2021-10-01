@@ -711,6 +711,35 @@ public class Tietokanta {
 		return false;
 	}
 	
+	public static int getHighScore(String peli) {
+		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+			try {
+				Connection con = DriverManager.getConnection(
+						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				
+				Statement stmt = con.createStatement();
+				
+				String query = "SELECT HighScore "
+						+ "FROM Leaderboards WHERE KayttajaID = '"+ User.getId() +"' AND PelinNimi = '"+ peli +"'";
+				
+				ResultSet rs = stmt.executeQuery(query);
+				
+				if(rs.next()) {
+					int highscore = rs.getInt("HighScore");
+					return highscore;
+				}
+				
+			} catch (SQLException e) {
+				do {
+					System.err.println("Viesti: "+e.getMessage());
+					System.err.println("Virhekoodi: "+e.getErrorCode());
+					System.err.println("SQL-tilakoodi: "+e.getSQLState());
+				} while (e.getNextException() != null);
+			}
+		}
+		return 0;
+	}
+	
 	public static boolean isLogged() {
 		/*
 		 * Tarkistetaan onko käyttäjä kirjautunut sisään
