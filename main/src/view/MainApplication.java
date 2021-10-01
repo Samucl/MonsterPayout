@@ -64,7 +64,7 @@ public class MainApplication extends Application {
     	try {
     		FXMLLoader loader = new FXMLLoader();
     		loader.setLocation(MainApplication.class.getResource("StoreView.fxml"));
-    		GridPane storeView = (GridPane) loader.load();
+    		BorderPane storeView = (BorderPane) loader.load();
     		Scene scene = new Scene(storeView);
     		primaryStage.setScene(scene);
     		

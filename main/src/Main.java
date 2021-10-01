@@ -9,6 +9,6 @@ public class Main {
 		for (int i=0;i<100;i++) {
 			peli.play();
 		}
-		view.MainApplication.main(args);
+		view.MainApplication.main(args); 
 	}
 }

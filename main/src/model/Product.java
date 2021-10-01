@@ -1,6 +1,6 @@
 package model;
 
-public class Product {
+public class Product implements Comparable<Product> { 
 	private int id;
 	private String description;
 	private double price;
@@ -8,6 +8,15 @@ public class Product {
 	private int coinAmount;
 	private double saleMultiplier;
 	private boolean forSale;
+	
+	public Product(String description, double creditAmount, int coinAmount, double saleMultiplier, double price, boolean forSale) {
+		this.description = description;
+		this.price = price;
+		this.creditAmount = creditAmount;
+		this.coinAmount = coinAmount;
+		this.saleMultiplier = saleMultiplier;
+		this.forSale = forSale;
+	}
 	
 	public Product(int number, String description, double price
 			, double creditAmount, int coinAmount, double saleMultiplier, boolean forSale) {
@@ -18,8 +27,12 @@ public class Product {
 		this.coinAmount = coinAmount;
 		this.saleMultiplier = saleMultiplier;
 		this.forSale = forSale;
-		
 	}
+	
+    @Override 
+    public int compareTo(Product p){
+        return (int) ((int)(this.saleMultiplier * 100) - (p.getSaleMultiplier() * 100)); //K
+    }
 
 	public void setId(int number) {
 		this.id = number;
@@ -39,6 +52,11 @@ public class Product {
 
 	public void setSaleMultiplier(double saleMultiplier) {
 		this.saleMultiplier = saleMultiplier;
+	}
+	
+	public void setForSaleStatus(boolean b) {
+		this.forSale = b;
+		
 	}
 
 	public int getId() {
@@ -64,5 +82,11 @@ public class Product {
 	public double getSaleMultiplier() {
 		return saleMultiplier;
 	}
+
+	public int getCoinAmount() {
+		return coinAmount;
+	}
+
+	
 	
 }

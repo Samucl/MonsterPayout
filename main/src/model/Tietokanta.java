@@ -148,6 +148,7 @@ public class Tietokanta {
 		}
 		return null;
 	}
+			
 	
 	
 	public static Order[] getOrders() {
@@ -549,8 +550,8 @@ public class Tietokanta {
 				 */
 				if(rs.next()) {
 					if(rs.getInt("Status")==1) {
-						query = "INSERT INTO Tuote (Kuvaus, Hinta, KrediittienMaara, Alennuskerroin)"
-								+ "values('"+product.getDescription()+"',"+product.getPrice()+","+product.getCreditAmount()+","+product.getSaleMultiplier()+")";
+						query = "INSERT INTO Tuote (Kuvaus, Hinta, KrediittienMaara, KolikoidenMaara, Alennuskerroin, Myynnissa)"
+								+ "values('"+product.getDescription()+"',"+product.getPrice()+","+product.getCreditAmount()+","+product.getCoinAmount()+","+product.getSaleMultiplier()+","+product.getForSaleStatus()+")";
 						rs = stmt.executeQuery(query);
 						/*
 						 * Jos löytyy seuraava tulosjoukko on tietokantaan lisätty onnistuneesti
@@ -592,11 +593,15 @@ public class Tietokanta {
 				 */
 				if(rs.next()) {
 					if(rs.getInt("Status")==1) {
+						
 						query = "UPDATE Tuote SET "
 								+ "Kuvaus = '"+product.getDescription()+"', "
 								+ "Hinta = "+product.getPrice()+", "
 								+ "KrediittienMaara = "+product.getCreditAmount()+", "
-								+ "Alennuskerroin = "+product.getSaleMultiplier()+" "
+								+ "KolikoidenMaara = "+product.getCoinAmount()+", "
+								+ "Alennuskerroin = "+product.getSaleMultiplier()+", "
+								+ "Myynnissa = "+product.getForSaleStatus()+" "
+								
 								+ "WHERE Tuotenumero = "+product.getId();
 						
 						int updatedRows = stmt.executeUpdate(query); // Tallennetaan palautusta varten päivitettyjen alkioiden lkm (1 jos onnistui, 0 jos ei)
@@ -740,11 +745,12 @@ public class Tietokanta {
 		return 0;
 	}
 	
+	
 	public static boolean isLogged() {
 		/*
 		 * Tarkistetaan onko käyttäjä kirjautunut sisään
 		 */
 		return loggedIn;
 	}
-	
+
 }

@@ -1,6 +1,8 @@
+
 package view;
 
 import java.io.IOException;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -20,7 +22,8 @@ import javafx.stage.Stage;
 import model.Tietokanta;
 import model.User;
 
-public class HomepageViewController implements Initializable{
+
+public class HomepageViewController implements Initializable {
 	@FXML Label nameLabel;
 	@FXML Text kolikotLabel;
 	@FXML Text krediititLabel;
@@ -85,7 +88,7 @@ public class HomepageViewController implements Initializable{
 		try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("StoreView.fxml"));
-            GridPane storeView = (GridPane) loader.load();
+            BorderPane storeView = (BorderPane) loader.load();
             Scene storeScene = new Scene(storeView);
 			Stage window = (Stage) toStoreButton.getScene().getWindow();
 			window.setScene(storeScene);
@@ -113,3 +116,4 @@ public class HomepageViewController implements Initializable{
 		init();
 	}
 }
+
