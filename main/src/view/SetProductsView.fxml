@@ -50,7 +50,7 @@
             <Insets bottom="49.0" left="270.0" />
          </GridPane.margin>
       </TextField>
-      <Button fx:id="logOutBtn" mnemonicParsing="false" text="Kirjaudu ulos" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+      <Button fx:id="logOutBtn" mnemonicParsing="false" onAction="#logout" text="Kirjaudu ulos" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
          <GridPane.margin>
             <Insets right="16.0" />
          </GridPane.margin></Button>
