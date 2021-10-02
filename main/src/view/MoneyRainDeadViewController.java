@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Tietokanta;
 
 public class MoneyRainDeadViewController{
 	
@@ -34,6 +35,7 @@ public class MoneyRainDeadViewController{
 	
 	public void setPoints(int pointsFromGame) {
 		points = pointsFromGame;
+		Tietokanta.setHighScore(points, "MoneyRain");
 		pointsLabel.setText("" + points);
 	}
 	

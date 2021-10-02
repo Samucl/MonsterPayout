@@ -725,7 +725,7 @@ public class Tietokanta {
 				Statement stmt = con.createStatement();
 				
 				String query = "SELECT HighScore "
-						+ "FROM Leaderboards WHERE KayttajaID = '"+ User.getId() +"' AND PelinNimi = '"+ peli +"'";
+						+ "FROM Saavuttaa WHERE KayttajaID = '"+ User.getId() +"' AND PelinNimi = '"+ peli +"'";
 				
 				ResultSet rs = stmt.executeQuery(query);
 				
@@ -745,6 +745,71 @@ public class Tietokanta {
 		return 0;
 	}
 	
+	public static boolean setHighScore(int highScore, String peli) {
+		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+			try {
+				Connection con = DriverManager.getConnection(
+						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				
+				Statement stmt = con.createStatement();
+				if(getHighScore(peli) < highScore) {
+					/*
+					 * Jos käyttäjällä on jo highScore taulussa se ensin poistetaan
+					 */
+					if(getHighScore(peli) != 0) {
+						String query = "DELETE FROM Saavuttaa WHERE KayttajaID = '" + User.getId() + "'";
+						stmt.executeQuery(query);
+					}
+					String query = "INSERT INTO Saavuttaa (HighScore, KayttajaID, PelinNimi) VALUES ('"+ highScore +"', '"+ User.getId() +"', '" + peli + "')";
+					stmt.executeQuery(query);	
+				}
+				
+			} catch (SQLException e) {
+				do {
+					System.err.println("Viesti: "+e.getMessage());
+					System.err.println("Virhekoodi: "+e.getErrorCode());
+					System.err.println("SQL-tilakoodi: "+e.getSQLState());
+				} while (e.getNextException() != null);
+			}
+		}
+		return false;
+	}
+	
+	public static String[] getTop10(String peli) {
+		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+			try {
+				Connection con = DriverManager.getConnection(
+						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				
+				Statement stmt = con.createStatement();
+				/*
+				 * Haetaan Saavuttaa taulusta 10 isointa highScorea ja Kayttaja taulusta vastaavia kayttajanimiä.
+				 */
+				String query = "SELECT Saavuttaa.HighScore, Kayttaja.Kayttajanimi"
+						+ " FROM Saavuttaa INNER JOIN Kayttaja ON Saavuttaa.KayttajaID = Kayttaja.KayttajaID"
+						+ " WHERE PelinNimi = '" + peli + "' ORDER BY highScore DESC LIMIT 10;";
+				ResultSet rs = stmt.executeQuery(query);
+				
+				int size = 0;
+				if (rs.last()) {
+				  size = rs.getRow();
+				  rs.beforeFirst();
+				  String[] top10 = new String[size];
+				  while(rs.next()) {
+					  top10[rs.getRow()-1] = rs.getString("Kayttajanimi") + ": " + rs.getInt("HighScore");
+				  }
+				  return top10;
+				}
+			} catch (SQLException e) {
+				do {
+					System.err.println("Viesti: "+e.getMessage());
+					System.err.println("Virhekoodi: "+e.getErrorCode());
+					System.err.println("SQL-tilakoodi: "+e.getSQLState());
+				} while (e.getNextException() != null);
+			}
+		}
+		return null;
+	}
 	
 	public static boolean isLogged() {
 		/*

@@ -19,6 +19,7 @@ public class MoneyRainMenuViewController implements Initializable {
 	@FXML private Button playButton;
 	@FXML private Label coinsLabel;
 	@FXML private Label top1;
+	@FXML private Label top2;
 	@FXML private Label top3;
 	@FXML private Label top4;
 	@FXML private Label top5;
@@ -34,6 +35,17 @@ public class MoneyRainMenuViewController implements Initializable {
 		highscoreLabel.setText("0");
 		coinsLabel.setText("Kolikot: " + User.getCoins());
 		highscoreLabel.setText("" + Tietokanta.getHighScore("MoneyRain"));
+		String[] top10List = Tietokanta.getTop10("MoneyRain");
+		top1.setText(top10List[0]);
+		top2.setText(top10List[1]);
+		top3.setText(top10List[2]);
+		top4.setText(top10List[3]);
+		top5.setText(top10List[4]);
+		top6.setText(top10List[5]);
+		top7.setText(top10List[6]);
+		top8.setText(top10List[7]);
+		top9.setText(top10List[8]);
+		top10.setText(top10List[9]);
 	}
 	
 	public void play(ActionEvent e) {

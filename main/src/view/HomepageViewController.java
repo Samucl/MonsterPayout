@@ -65,6 +65,7 @@ public class HomepageViewController implements Initializable {
 				}
 			});
 			window.setScene(moneyrainmenuScene);
+			window.setResizable(false);
 			window.show();
         } catch (IOException iOE) {
             iOE.printStackTrace();

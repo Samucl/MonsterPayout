@@ -30,6 +30,7 @@ public class MoneyRain extends Canvas {
 	
 	private static Timeline tl;
 	private int timeInMillis;
+	private int gameTime = 60000;
 	private static final int height = 605;
 	private static final int width = 720;
 	private static final int PLAYER_WIDTH = 85;
@@ -185,10 +186,11 @@ public class MoneyRain extends Canvas {
 		//Mitä tapahtuu pelin aikana
 		if(gameStarted) {
 			timeInMillis += 10; //Laskuri jolla seurataan pelissä käytettyä aikaa
+			gameTime -= 10;
 			gc.setFill(Color.WHITE);
 			gc.drawImage(player, playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 			gc.setFont(Font.font ("Arial Black", 20));
-			gc.fillText("Pisteet: " +  points + "    Rahat kädessä: " + collectedCash + "/5", 10, 30);
+			gc.fillText("Pisteet: " +  points + "    Rahat kädessä: " + collectedCash + "/5      Aikaa jäljellä: " + gameTime/1000 + "s", 10, 30);
 			
 			if(health == 3)
 				gc.drawImage(heart3, 630, 10);
@@ -198,19 +200,19 @@ public class MoneyRain extends Canvas {
 				gc.drawImage(heart1, 630, 10);
 
 			//Tehdään asioita kerran per 1s
-			if(timeInMillis % 1000 == 0) {
+			if(timeInMillis % 1000 == 0)
 				createBill(); //Luodaan seteli
-			}
 			
 			//Tehdään asioita kerran per 2s
-			if(timeInMillis % 2000 == 0) {
+			if(timeInMillis % 2000 == 0)
 				createPoison(); //Luodaan myrkkypullo
-			}
 			
 			//Tehdään asioita kerran per 20s
-			if(timeInMillis % 20000 == 0) {
+			if(timeInMillis % 20000 == 0)
 				createMegis(); //Luodaan megis
-			}
+			
+			if(gameTime <= 0)
+				dead = true;
 			
 			items.forEach(item -> {
 				
