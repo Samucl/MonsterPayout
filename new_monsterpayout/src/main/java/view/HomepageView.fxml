@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomepageViewController">
+   <children>
+      <Text fx:id="kolikotLabel" layoutX="909.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="presetKolikot" />
+      <Button fx:id="logoutButton" layoutX="1101.0" layoutY="603.0" mnemonicParsing="false" onAction="#logout" prefHeight="69.0" prefWidth="150.0" text="Kirjaudu ulos" />
+      <Button fx:id="toStoreButton" layoutX="565.0" layoutY="603.0" mnemonicParsing="false" onAction="#toStore" prefHeight="70.0" prefWidth="150.0" text="Kauppaan" />
+      <Text fx:id="krediititLabel" layoutX="1039.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="presetKrediitit" />
+      <Label fx:id="nameLabel" layoutX="1176.0" layoutY="30.0" text="presetNimi" />
+      <Button fx:id="toUserInfoButton" layoutX="160.0" layoutY="603.0" mnemonicParsing="false" onAction="#toUserInfo" prefHeight="70.0" prefWidth="150.0" text="Käyttäjä tiedot" />
+      <Button fx:id="toArcadeBlackjack1" layoutX="565.0" layoutY="402.0" mnemonicParsing="false" onAction="#toArcadeBlackjack1" prefHeight="70.0" prefWidth="150.0" text="Arcade_blackjack_1" />
+      <Button fx:id="toMoneyRain" layoutX="841.0" layoutY="402.0" mnemonicParsing="false" onAction="#toMoneyRain" prefHeight="70.0" prefWidth="150.0" text="MoneyRain" />
+   </children>
+</AnchorPane>

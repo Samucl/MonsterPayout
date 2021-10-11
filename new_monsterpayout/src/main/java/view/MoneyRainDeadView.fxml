@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MoneyRainDeadViewController">
+   <children>
+      <ImageView fitHeight="605.0" fitWidth="720.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@/moneyrain/deadbg.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="toMenu" layoutX="224.0" layoutY="371.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="39.0" prefWidth="273.0" style="-fx-background-color: black;" text="Palaa takaisin valikkoon" textFill="#006fff">
+         <font>
+            <Font name="Calibri Light" size="17.0" />
+         </font>
+         <effect>
+            <Bloom threshold="0.0" />
+         </effect>
+      </Button>
+      <Label fx:id="pointsLabel" layoutX="353.0" layoutY="309.0" prefHeight="37.0" prefWidth="176.0" text="0" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="29.0" />
+         </font>
+         <effect>
+            <Glow level="0.91" />
+         </effect>
+      </Label>
+   </children>
+</AnchorPane>
