@@ -344,7 +344,7 @@ public class SlalomMadnessGame extends Application {
 			if (Tietokanta.getHighScoreTime("Slalom Madness") == 0 || Tietokanta.getHighScoreTime("Slalom Madness") > score) {
 				gc.setFill(Color.GOLD);
 				gc.setFont(Font.font ("Arial Black", 24));
-				gc.fillText("UUSI ENNÄTYS!", 350, 380);
+				gc.fillText("UUSI ENNÄTYS!", 350, 390);
 			}
 
 			Tietokanta.setHighScoreTime(score, "Slalom Madness");
