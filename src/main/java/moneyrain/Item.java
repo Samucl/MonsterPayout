@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 
 public class Item {
 	private Image img;
+	private String name;
 	private int width;
 	private int height;
 	private int xPos;
@@ -21,9 +22,24 @@ public class Item {
 		this.isDangerous = isDangerous;
 		this.givesHp = givesHp;
 	}
+	
+	public Item(String name, Image img, int width, int height, int xPos, int yPos, boolean isDangerous, boolean givesHp) {
+		this.name = name;
+		this.img = img;
+		this.width = width;
+		this.height = height;
+		this.xPos = xPos;
+		this.yPos = yPos;
+		this.isDangerous = isDangerous;
+		this.givesHp = givesHp;
+	}
 
 	public Image getImg() {
 		return img;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 	public int getWidth() {
@@ -44,6 +60,10 @@ public class Item {
 	
 	public void fall() {
 		yPos+=1;
+	}
+	
+	public void ascend(int speed) {
+		yPos = yPos - speed;
 	}
 	
 	public boolean isDangerous() {

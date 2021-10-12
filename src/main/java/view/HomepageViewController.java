@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import moneyrain.MoneyRain;
+import slalommadness.SlalomMadnessGame;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +33,7 @@ public class HomepageViewController implements Initializable {
 	@FXML Button toUserInfoButton;
 	@FXML Button toArcadeBlackjack1;
 	@FXML Button toMoneyRain;
+	@FXML Button toSlalomMadness;
 	
 	private void init() {
 		nameLabel.setText(User.getUsername());
@@ -69,6 +71,15 @@ public class HomepageViewController implements Initializable {
 			window.show();
         } catch (IOException iOE) {
             iOE.printStackTrace();
+        }
+	}
+	
+	public void toSlalomMadness(ActionEvent e) {
+		try {
+			Stage window = (Stage) toSlalomMadness.getScene().getWindow();
+			new SlalomMadnessGame(window);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 	}
 	
