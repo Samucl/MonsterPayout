@@ -238,10 +238,9 @@ public class SlalomMadnessGame extends Application {
 				} else if (item.isDangerous()) {
 					if ((item.getYPos() + item.getHeight() - item.getHeight()/5 <= playerYPos + PLAYER_HEIGHT) 
 							&& (item.getYPos() + item.getHeight() >= playerYPos + PLAYER_HEIGHT / 1.5)) {
-						if (item.getXPos() + item.getWidth()/4 <= playerXPos + PLAYER_WIDTH && item.getXPos() + item.getWidth() * (3/4) >= playerXPos) {
+						if (item.getXPos() + item.getWidth() / 2 <= playerXPos + PLAYER_WIDTH && item.getXPos() + item.getWidth() / 2 >= playerXPos) {
 							dead = true;
 							running = false;
-							System.out.println(item.getName() + ", " + item.getXPos());
 						}
 					}
 					
@@ -257,6 +256,7 @@ public class SlalomMadnessGame extends Application {
 				
 				gc.clearRect(item.getXPos(), item.getYPos(), item.getWidth(), item.getHeight());
 				item.ascend(speed); //Laitetaan item liikkumaan vertikaalisesti
+				
 				gc.drawImage(skier, playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 				
 				if (item.getYPos() < 0) { //Jos item häviää kuvaruudusta niin poistetaan
@@ -268,8 +268,14 @@ public class SlalomMadnessGame extends Application {
 			
 			//----------------------------------------------------
 			
+			//Kolmiulotteisuuden tuntua lisäävä koodi
 			items.forEach(item -> {
-				gc.drawImage(item.getImg(), item.getXPos(), item.getYPos(), item.getWidth(), item.getHeight());
+				gc.drawImage(item.getImg(), item.getXPos(), item.getYPos(), item.getWidth(), item.getHeight()); //Piirretään item päällimmäiseksi, eli pelaaja jää esim. kuusen taakse
+				
+				if (item.getYPos() + item.getHeight() > playerYPos - PLAYER_HEIGHT / 2        //Mutta jos pelaajan koordinaatit ovat tarpeeksi alhaalla itemiin nähden, niin pelaaja piirtyy sen päälle
+						&& item.getYPos() + item.getHeight() / 2.5 < playerYPos) {
+					gc.drawImage(skier, playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
+				}
 			});
 			
 			gc.fillText("Pisteet: " + points, 400, 30);
@@ -295,6 +301,7 @@ public class SlalomMadnessGame extends Application {
 			}
 
 		} else if (!running && finished) { //Jos maaliin on tultu
+			tl.stop();
 			gc.setFont(Font.font ("Arial Black", 30));
 			if (points < poleCount * 2) {
 				int missedPoles = poleCount * 2 - points;
@@ -308,14 +315,13 @@ public class SlalomMadnessGame extends Application {
 			
 		} else if (dead) {
 			gc.setFont(Font.font ("Arial Black", 30));
-			gc.fillText("GAME OVER", 350, 240);
+			gc.fillText("GAME OVER", 354, 240);
 			tl.stop();
 			try {
 				TimeUnit.SECONDS.sleep(1);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
 		}
 	}
 
