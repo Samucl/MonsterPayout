@@ -31,12 +31,19 @@ public class SlalomMadnessMenuViewController implements Initializable {
 	@FXML private Label top10;
 	private Stage window;
 	
+	private SlalomMadnessGame game;
+	
 	private void init() {
 		nameLabel.setText(User.getUsername());
 		highscoreLabel.setText("0");
 		coinsLabel.setText("Kolikot: " + User.getCoins());
 		highscoreLabel.setText("" + Tietokanta.getHighScore("Slalom Madness"));
 		String[] top10List = Tietokanta.getTop10("Slalom Madness");
+		
+		if (game != null) {
+			game = null;
+		}
+		
 		/*
 		top1.setText(top10List[0]);
 		top2.setText(top10List[1]);
@@ -55,7 +62,8 @@ public class SlalomMadnessMenuViewController implements Initializable {
 		window = (Stage) playButton.getScene().getWindow();
 		window.setX(300); //Koordinaatit näytöllä, mihin ikkuna aukeaa (vasemmasta yläkulmasta)
 		window.setY(8);
-		new SlalomMadnessGame(window);
+
+		game = new SlalomMadnessGame(window);
 	}
 	
 	@Override

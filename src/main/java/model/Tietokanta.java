@@ -776,18 +776,33 @@ public class Tietokanta {
 	}
 	
 	public static String[] getTop10(String peli) {
+		
+		boolean isSpeedGame = false;
+		if (peli.equals("Slalom Madness")) {
+			isSpeedGame = true;
+		}
+		
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = DriverManager.getConnection(
 						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
 				
 				Statement stmt = con.createStatement();
-				/*
-				 * Haetaan Saavuttaa taulusta 10 isointa highScorea ja Kayttaja taulusta vastaavia kayttajanimiä.
-				 */
-				String query = "SELECT Saavuttaa.HighScore, Kayttaja.Kayttajanimi"
-						+ " FROM Saavuttaa INNER JOIN Kayttaja ON Saavuttaa.KayttajaID = Kayttaja.KayttajaID"
-						+ " WHERE PelinNimi = '" + peli + "' ORDER BY highScore DESC LIMIT 10;";
+				String query;
+				
+				if (!isSpeedGame) {
+					/*
+					 * Haetaan Saavuttaa taulusta 10 isointa highScorea ja Kayttaja taulusta vastaavia kayttajanimiä.
+					 */
+					query = "SELECT Saavuttaa.HighScore, Kayttaja.Kayttajanimi"
+							+ " FROM Saavuttaa INNER JOIN Kayttaja ON Saavuttaa.KayttajaID = Kayttaja.KayttajaID"
+							+ " WHERE PelinNimi = '" + peli + "' ORDER BY highScore DESC LIMIT 10;";
+				} else {
+					query = "SELECT Saavuttaa.AikaScore, Kayttaja.Kayttajanimi"
+							+ " FROM Saavuttaa INNER JOIN Kayttaja ON Saavuttaa.KayttajaID = Kayttaja.KayttajaID"
+							+ " WHERE PelinNimi = '" + peli + "' ORDER BY AikaScore ASC LIMIT 10;";
+				}
+				
 				ResultSet rs = stmt.executeQuery(query);
 				
 				int size = 0;
@@ -795,11 +810,19 @@ public class Tietokanta {
 				  size = rs.getRow();
 				  rs.beforeFirst();
 				  String[] top10 = new String[size];
-				  while(rs.next()) {
-					  top10[rs.getRow()-1] = rs.getString("Kayttajanimi") + ": " + rs.getInt("HighScore");
+				  
+				  if (!isSpeedGame) {
+					  while(rs.next()) {
+						  top10[rs.getRow()-1] = rs.getString("Kayttajanimi") + ": " + rs.getInt("HighScore");
+					  }
+				  } else {
+					  while(rs.next()) {
+						  top10[rs.getRow()-1] = rs.getString("Kayttajanimi") + ": " + rs.getDouble("AikaScore");
+					  }
 				  }
 				  return top10;
 				}
+				
 			} catch (SQLException e) {
 				do {
 					System.err.println("Viesti: "+e.getMessage());
@@ -810,6 +833,71 @@ public class Tietokanta {
 		}
 		return null;
 	}
+	
+	//Palauttaa nopeimman ajan jossakin pelissä
+	public static double getHighScoreTime(String game) {
+		
+		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+			try {
+				Connection con = DriverManager.getConnection(
+						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				
+				Statement stmt = con.createStatement();
+				
+				String query = "SELECT AikaScore "
+						+ "FROM Saavuttaa WHERE KayttajaID = '"+ User.getId() +"' AND PelinNimi = '"+ game +"'";
+				
+				ResultSet rs = stmt.executeQuery(query);
+				
+				if(rs.next()) {
+					double highscore = rs.getDouble("AikaScore");
+					return highscore;
+				}
+				
+			} catch (SQLException e) {
+				do {
+					System.err.println("Viesti: "+e.getMessage());
+					System.err.println("Virhekoodi: "+e.getErrorCode());
+					System.err.println("SQL-tilakoodi: "+e.getSQLState());
+				} while (e.getNextException() != null);
+			}
+		}
+		return 0;
+	}
+	
+	public static boolean setHighScoreTime(double time, String game) {
+		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+			try {
+				Connection con = DriverManager.getConnection(
+						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				
+				Statement stmt = con.createStatement();
+				if(getHighScoreTime(game) > time && getHighScoreTime(game) != 0) {
+					
+					String query = "DELETE FROM Saavuttaa WHERE KayttajaID = '" + User.getId() + "'";
+					stmt.executeQuery(query);
+					query = "INSERT INTO Saavuttaa (AikaScore, KayttajaID, PelinNimi) "
+							+ "VALUES ('"+ time +"', '"+ User.getId() +"', '" + game + "')";
+					stmt.executeQuery(query);	
+					
+				} else if (getHighScoreTime(game) == 0) {
+
+					String query = "INSERT INTO Saavuttaa (AikaScore, KayttajaID, PelinNimi) "
+							+ "VALUES ('"+ time +"', '"+ User.getId() +"', '" + game + "')";
+					stmt.executeQuery(query);	
+				}
+				
+			} catch (SQLException e) {
+				do {
+					System.err.println("Viesti: "+e.getMessage());
+					System.err.println("Virhekoodi: "+e.getErrorCode());
+					System.err.println("SQL-tilakoodi: "+e.getSQLState());
+				} while (e.getNextException() != null);
+			}
+		}
+		return false;
+	}
+	
 	
 	public static boolean isLogged() {
 		/*

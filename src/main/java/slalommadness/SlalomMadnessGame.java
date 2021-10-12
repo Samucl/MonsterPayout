@@ -36,14 +36,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Tietokanta;
 
 public class SlalomMadnessGame extends Application {
 	
-	private static int timeInMillis;
-	private static int poleCount;
-	private static long startTime;
-	private static long finishTime;
-	private static Timeline tl;
+	private int timeInMillis;
+	private int poleCount;
+	private long startTime;
+	private long finishTime;
+	private Timeline tl;
 	
 	private static final int polesBeforeFinishLine = 10; //Pelin pituus
 	private static final int width = 920;
@@ -76,6 +77,9 @@ public class SlalomMadnessGame extends Application {
 	
 	
 	public SlalomMadnessGame(Stage stage) {
+		this.timeInMillis = 0;
+		this.poleCount = 0;
+		
 		try {
 			start(stage);
 		} catch (Exception e) {
@@ -105,12 +109,14 @@ public class SlalomMadnessGame extends Application {
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
 					case ENTER: 
-						if (!running && !dead) {
+						if (!running && !dead && !finished) {
 							running = true; 
 							startTime = System.currentTimeMillis();
-						} else if (dead) {
-							toSlalomMadnessMenu();
+							
+						} else if (dead || finished) {
 							stage.close();
+							toSlalomMadnessMenu();
+							
 						}	
 						break;	
 						
@@ -316,19 +322,40 @@ public class SlalomMadnessGame extends Application {
 
 		} else if (!running && finished) { //Jos maaliin on tultu
 			tl.stop();
+			
 			gc.setFont(Font.font ("Arial Black", 30));
-			if (points < poleCount * 2) {
+			
+			double score;
+			
+			if (points < poleCount * 2) { //Jos on tullut ohilaskuja
 				int missedPoles = poleCount * 2 - points;
+				score = (finishTime / 1000.0 + missedPoles * 2);
+				
 				gc.setFill(Color.RED);
 				gc.fillText("Sanktio: " + missedPoles + " ohilaskua = " + missedPoles * 2 + " s", 250, 280);
 				gc.setFill(Color.BLACK);
-				gc.fillText("Aika: " + (finishTime / 1000.0 + missedPoles * 2) + " s", 350, 340);
+				gc.fillText("Aika: " + score + " s", 350, 340);
+				
 			} else {
-				gc.fillText("Aika: " + finishTime / 1000.0 + " s", 350, 220);
+				score = finishTime / 1000.0;
+				gc.fillText("Aika: " + score + " s", 350, 220);
 			}
+			
+			if (Tietokanta.getHighScoreTime("Slalom Madness") == 0 || Tietokanta.getHighScoreTime("Slalom Madness") > score) {
+				gc.setFill(Color.GOLD);
+				gc.setFont(Font.font ("Arial Black", 24));
+				gc.fillText("UUSI ENNÄTYS!", 350, 370);
+			}
+
+			Tietokanta.setHighScoreTime(score, "Slalom Madness");
+			
+			gc.setFill(Color.BLACK);
+			gc.setFont(Font.font ("Arial Black", 24));
+			gc.fillText("Palaa menuun painamalla  ↵", 294, 740);
 			
 		} else if (dead) { //Jos pelaaja törmännyt esteeseen
 			tl.stop();
+			
 			gc.setFont(Font.font ("Arial Black", 30));
 			gc.fillText("GAME OVER", 356, 240);
 			gc.setFont(Font.font ("Arial Black", 24));
@@ -447,8 +474,9 @@ public class SlalomMadnessGame extends Application {
             Scene slalomMenuScene = new Scene(slalomMenuView);
 			Stage window = new Stage();
 			window.setOnCloseRequest(evt -> {
-				if(SlalomMadnessGame.getTl() != null) {
-					SlalomMadnessGame.getTl().stop();//Pysäyttää pelin timelinen jos suljetaan ikkuna kesken pelin.
+				if(tl != null) {
+					tl.stop();//Pysäyttää pelin timelinen jos suljetaan ikkuna kesken pelin.
+					tl = null;
 				}
 			});
 			window.setScene(slalomMenuScene);
@@ -459,7 +487,7 @@ public class SlalomMadnessGame extends Application {
         }
 	}
 	
-	public static Timeline getTl() {
+	public Timeline getTl() {
 		return tl;
 	}
 	
