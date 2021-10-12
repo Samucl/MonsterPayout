@@ -11,9 +11,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Order;
 import model.Session;
@@ -21,6 +23,11 @@ import model.Tietokanta;
 import model.User;
 
 public class UserInfoViewController implements Initializable {
+	@FXML Text profile_username;
+	@FXML Text profile_firstname;
+	@FXML ImageView profile_image;
+	@FXML Text profile_kredits;
+	@FXML Text profile_coins;
 	@FXML TextField username;
 	@FXML TextField firstname;
 	@FXML TextField lastname;
@@ -31,6 +38,7 @@ public class UserInfoViewController implements Initializable {
 	@FXML Button save_button;
 	@FXML Button cancel_button;
 	@FXML Button home_button;
+	@FXML Tab to_home_tab;
 	@FXML ImageView profile_picture;
 	
 	@Override
@@ -91,6 +99,7 @@ public class UserInfoViewController implements Initializable {
 			System.out.println("Päivitys onnistui");
 		else
 			System.out.println("Päivitys ei tainnut onnistua");
+		profileInit();
 	}
 	
 	public void cancelChanges() {
@@ -102,6 +111,15 @@ public class UserInfoViewController implements Initializable {
 		setTexts();
 		setOrders();
 		loadProfilePicture();
+		profileInit();
+	}
+	
+	private void profileInit() {
+		profile_username.setText(User.getUsername());
+		//profile_image;
+		profile_kredits.setText(String.valueOf(User.getCredits()));;
+		profile_coins.setText(String.valueOf(User.getCoins()));;
+		profile_firstname.setText(User.getFirstname());
 	}
 	
 	private void setTexts() {
@@ -128,6 +146,13 @@ public class UserInfoViewController implements Initializable {
 	
 	public void loadProfilePicture() {
 		profile_picture.setImage(Session.getAvatar(0));
+	}
+	
+	public void toHomeTabPress() {
+		/*
+		 * Pakotetaan napin painallus
+		 */
+		home_button.fire();
 	}
 	
 	public void toMainView(ActionEvent e) {

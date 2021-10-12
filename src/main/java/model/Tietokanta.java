@@ -2,6 +2,9 @@ package model;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 
 import com.google.common.hash.Hashing;
 
@@ -61,6 +64,13 @@ public class Tietokanta {
 			
 			if(rs.next())
 				if(rs.getString("Kayttajanimi") != null) {
+					
+					/*
+					 * Katsotaan milloin käyttäjä on viimeksi kirjautunut, 
+					 * sekä suoritetaan sen vaatimat toimenpiteet
+					 */
+					lastLogin(rs);
+					
 					int tId = rs.getInt("KayttajaID");
 					String tUsername = rs.getString("Kayttajanimi");
 					String tFirstname = rs.getString("Firstname");
@@ -96,6 +106,65 @@ public class Tietokanta {
 		}
 		
 		return loggedIn = false;
+	}
+	
+	private static void lastLogin(ResultSet rs) {
+		
+		try {
+			Connection con;
+			con = DriverManager.getConnection(
+					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+			Statement stmt = con.createStatement();
+			Date last_login = rs.getDate("Last_login");
+			
+			if(last_login != null) {
+				
+				/*
+				 * Jos viime kerta on sama kuin nykyinen päivä niin poistutaan metodista
+				 */
+				if(
+						last_login.getYear()==Instant.now().atZone(ZoneId.systemDefault()).getYear()&&
+						last_login.getMonth()==Instant.now().atZone(ZoneId.systemDefault()).getMonthValue()&&
+						last_login.getDay()==Instant.now().atZone(ZoneId.systemDefault()).getDayOfMonth()
+						) {
+					return;
+					
+				}
+				
+				/*
+				 * Verrataan viime kertaa eiliseen päivään, jos on niin tehdään vaadittavat toimenpiteet
+				 */
+				Instant yesterday = Instant.now().minus(1, ChronoUnit.DAYS);
+				if(
+						last_login.getYear()==yesterday.atZone(ZoneId.systemDefault()).getYear()&&
+						last_login.getMonth()==yesterday.atZone(ZoneId.systemDefault()).getMonthValue()&&
+						last_login.getDay()==yesterday.atZone(ZoneId.systemDefault()).getDayOfMonth()
+						) {
+					String query = "Update Kayttaja SET Login_streak = Login_streak + 1 "
+							+ "WHERE Kayttajanimi = '"+rs.getString("Kayttajanimi")+"'";
+					stmt.executeUpdate(query);
+					
+				} else {
+					String query = "Update Kayttaja SET Login_streak = 0 "
+							+ "WHERE Kayttajanimi = '"+rs.getString("Kayttajanimi")+"'";
+					stmt.executeUpdate(query);
+				}
+				
+			} else {
+				String query = "Update Kayttaja SET Login_streak = 0 "
+						+ "WHERE Kayttajanimi = '"+rs.getString("Kayttajanimi")+"'";
+				stmt.executeUpdate(query);
+			}
+			String query = "Update Kayttaja SET Last_login = current_date() "
+					+ "WHERE Kayttajanimi = '"+rs.getString("Kayttajanimi")+"'";
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			do {
+				System.err.println("Viesti: "+e.getMessage());
+				System.err.println("Virhekoodi: "+e.getErrorCode());
+				System.err.println("SQL-tilakoodi: "+e.getSQLState());
+			} while (e.getNextException() != null);
+		}
 	}
 	
 	public static Product[] getProducts() {
