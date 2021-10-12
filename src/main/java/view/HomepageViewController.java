@@ -76,10 +76,21 @@ public class HomepageViewController implements Initializable {
 	
 	public void toSlalomMadness(ActionEvent e) {
 		try {
-			Stage window = (Stage) toSlalomMadness.getScene().getWindow();
-			new SlalomMadnessGame(window);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("SlalomMadnessMenuView.fxml"));
+            AnchorPane slalomMenuView = (AnchorPane) loader.load();
+            Scene slalomMenuScene = new Scene(slalomMenuView);
+			Stage window = new Stage();
+			window.setOnCloseRequest(evt -> {
+				if(SlalomMadnessGame.getTl() != null) {
+					SlalomMadnessGame.getTl().stop();//Pysäyttää pelin timelinen jos suljetaan ikkuna kesken pelin.
+				}
+			});
+			window.setScene(slalomMenuScene);
+			window.setResizable(false);
+			window.show();
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
         }
 	}
 	

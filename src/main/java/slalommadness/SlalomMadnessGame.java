@@ -1,10 +1,16 @@
 package slalommadness;
 
 import moneyrain.Item;
+import view.MainApplication;
+
 import java.io.FileInputStream;
+import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,9 +22,11 @@ import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
@@ -96,10 +104,16 @@ public class SlalomMadnessGame extends Application {
 			@Override
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
-					case ENTER: if (!running) {
-						running = true; 
-						startTime = System.currentTimeMillis();
-					} break;
+					case ENTER: 
+						if (!running && !dead) {
+							running = true; 
+							startTime = System.currentTimeMillis();
+						} else if (dead) {
+							toSlalomMadnessMenu();
+							stage.close();
+						}	
+						break;	
+						
 					case UP: if (running) {
 						goSlower = true;
 					} break;
@@ -155,8 +169,6 @@ public class SlalomMadnessGame extends Application {
 			timeInMillis += speed * 10; //Laskuri jolla seurataan pelissä käytettyä aikaa
 
 			gc.clearRect(0, 0, width, height); //Tyhjennetään näyttö
-			gc.setFont(Font.font ("Arial Black", 20));
-			gc.fillText("Pisteet: " + points, 400, 30);
 			gc.drawImage(skier, playerXPos , playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 			
 			//Pelaajan liikuttaminen ruudulla
@@ -273,13 +285,15 @@ public class SlalomMadnessGame extends Application {
 				gc.drawImage(item.getImg(), item.getXPos(), item.getYPos(), item.getWidth(), item.getHeight()); //Piirretään item päällimmäiseksi, eli pelaaja jää esim. kuusen taakse
 				
 				if (item.getYPos() + item.getHeight() > playerYPos - PLAYER_HEIGHT / 2        //Mutta jos pelaajan koordinaatit ovat tarpeeksi alhaalla itemiin nähden, niin pelaaja piirtyy sen päälle
-						&& item.getYPos() + item.getHeight() / 2.5 < playerYPos) {
+						&& item.getYPos() + item.getHeight() / 2.7 < playerYPos) {
 					gc.drawImage(skier, playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 				}
 			});
+			//-----------------------------------------------------
 			
-			gc.fillText("Pisteet: " + points, 400, 30);
-			
+			gc.setFont(Font.font ("Arial Black", 20));
+			gc.fillText("Pisteet: " + points, 320, 30);
+			gc.fillText("Aika: " + String.valueOf((System.currentTimeMillis() - startTime) / 1000.0) + " s", 460, 30);
 			
 		} else if (!running && !finished && !dead) { //Jos peli ei vielä käynnissä 
 			
@@ -313,15 +327,12 @@ public class SlalomMadnessGame extends Application {
 				gc.fillText("Aika: " + finishTime / 1000.0 + " s", 350, 220);
 			}
 			
-		} else if (dead) {
-			gc.setFont(Font.font ("Arial Black", 30));
-			gc.fillText("GAME OVER", 354, 240);
+		} else if (dead) { //Jos pelaaja törmännyt esteeseen
 			tl.stop();
-			try {
-				TimeUnit.SECONDS.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			gc.setFont(Font.font ("Arial Black", 30));
+			gc.fillText("GAME OVER", 356, 240);
+			gc.setFont(Font.font ("Arial Black", 24));
+			gc.fillText("Palaa menuun painamalla  ↵", 294, 292);
 		}
 	}
 
@@ -428,8 +439,31 @@ public class SlalomMadnessGame extends Application {
 
 	}
 	
+	public void toSlalomMadnessMenu() {
+		try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("SlalomMadnessMenuView.fxml"));
+            AnchorPane slalomMenuView = (AnchorPane) loader.load();
+            Scene slalomMenuScene = new Scene(slalomMenuView);
+			Stage window = new Stage();
+			window.setOnCloseRequest(evt -> {
+				if(SlalomMadnessGame.getTl() != null) {
+					SlalomMadnessGame.getTl().stop();//Pysäyttää pelin timelinen jos suljetaan ikkuna kesken pelin.
+				}
+			});
+			window.setScene(slalomMenuScene);
+			window.setResizable(false);
+			window.show();
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
+	}
+	
+	public static Timeline getTl() {
+		return tl;
+	}
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
 }
