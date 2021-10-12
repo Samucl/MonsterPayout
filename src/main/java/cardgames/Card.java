@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 /*
  * Peleissä käytettävä kortti, esim. hertta 5
  */
-public class Card {
+public class Card implements Comparable<Card>{
 
 	private final String suit;
 	private final int rank;
@@ -43,4 +43,8 @@ public class Card {
 		return suit + " " + rank;
 	}
 	
+	@Override
+	public int compareTo(Card card) {
+		return this.rank - card.rank;
+	}
 }

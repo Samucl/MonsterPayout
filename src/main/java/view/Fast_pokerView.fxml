@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="420.0" minWidth="980.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(to bottom,#94001b, #4a000e);" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Fast_pokerViewController">
+   <bottom>
+      <GridPane prefHeight="124.0" prefWidth="1280.0" style="-fx-background-color: #0d0606;" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="recoverButton" mnemonicParsing="false" onAction="#recover" prefHeight="39.0" prefWidth="181.0" style="-fx-background-color: #cf8600;" text="Voitot talteen" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="19.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <effect>
+                  <DropShadow height="37.82" radius="21.560000000000002" width="50.42">
+                     <color>
+                        <Color red="1.0" green="0.75" opacity="0.552173912525177" />
+                     </color>
+                  </DropShadow>
+               </effect></Button>
+            <Button fx:id="doubleButton" mnemonicParsing="false" onAction="#doubles" prefHeight="61.0" prefWidth="159.0" style="-fx-background-color: #0300a3;" text="TUPLAA" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="22.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <effect>
+                  <DropShadow height="56.58" radius="29.2725" width="62.51">
+                     <color>
+                        <Color green="0.05000000074505806" blue="1.0" opacity="0.4217391312122345" />
+                     </color>
+                  </DropShadow>
+               </effect></Button>
+            <Button fx:id="playButton" mnemonicParsing="false" onAction="#play" prefHeight="91.0" prefWidth="183.0" style="-fx-background-color: #52a400;" text="PELAA" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="SansSerif Bold" size="26.0" />
+               </font>
+               <effect>
+                  <DropShadow blurType="GAUSSIAN" height="35.77" radius="20.365000000000002" width="47.69">
+                     <color>
+                        <Color green="1.0" blue="0.25" opacity="0.269565224647522" />
+                     </color>
+                  </DropShadow>
+               </effect></Button>
+            <Button fx:id="betButton" mnemonicParsing="false" onAction="#bet" prefHeight="39.0" prefWidth="157.0" style="-fx-background-color: #8f0000;" text="Panos 1.00" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="18.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <effect>
+                  <DropShadow height="38.8" radius="19.64" width="41.76">
+                     <color>
+                        <Color red="1.0" green="0.15000000596046448" opacity="0.47826087474823" />
+                     </color>
+                  </DropShadow>
+               </effect></Button>
+         </children>
+      </GridPane>
+   </bottom>
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView fx:id="card1" fitHeight="216.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+               <image>
+                  <Image url="@../res/card_deck_1/hertta1.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow blurType="ONE_PASS_BOX" height="70.0" radius="34.5" width="70.0">
+                     <color>
+                        <Color red="0.19607843458652496" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </ImageView>
+            <ImageView fx:id="card2" fitHeight="216.0" fitWidth="160.0" onMousePressed="#clickCard2" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+               <image>
+                  <Image url="@../res/card_deck_1/hertta1.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow height="70.0" radius="34.5" width="70.0">
+                     <color>
+                        <Color red="0.19607843458652496" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </ImageView>
+            <ImageView fx:id="card3" fitHeight="216.0" fitWidth="160.0" onMousePressed="#clickCard3" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+               <image>
+                  <Image url="@../res/card_deck_1/hertta1.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow height="70.0" radius="34.5" width="70.0">
+                     <color>
+                        <Color red="0.19607843458652496" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </ImageView>
+            <ImageView fx:id="card4" fitHeight="216.0" fitWidth="160.0" onMousePressed="#clickCard4" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER">
+               <image>
+                  <Image url="@../res/card_deck_1/hertta1.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow height="70.0" radius="34.5" width="70.0">
+                     <color>
+                        <Color red="0.19607843458652496" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </ImageView>
+            <ImageView fx:id="card5" fitHeight="216.0" fitWidth="160.0" onMousePressed="#clickCard5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.halignment="CENTER">
+               <image>
+                  <Image url="@../res/card_deck_1/hertta1.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow height="70.0" radius="34.5" width="70.0">
+                     <color>
+                        <Color red="0.19607843458652496" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </ImageView>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="50.0" />
+         </BorderPane.margin>
+      </GridPane>
+   </center>
+   <top>
+      <GridPane prefHeight="316.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="96.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <GridPane GridPane.rowIndex="1">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="997.0" minWidth="10.0" prefWidth="960.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="781.0" minWidth="10.0" prefWidth="320.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <GridPane prefHeight="161.0" prefWidth="640.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <GridPane minHeight="200.0" prefHeight="161.0" prefWidth="460.0" style="-fx-background-color: rgba(0, 0, 0, 0.2);" GridPane.columnIndex="1" GridPane.valignment="TOP">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #400207;" GridPane.rowIndex="1">
+                                 <effect>
+                                    <Lighting diffuseConstant="0.93" specularConstant="1.08" specularExponent="6.51" surfaceScale="1.27">
+                                       <bumpInput>
+                                          <Shadow height="29.14875" radius="14.2596875" width="29.89" />
+                                       </bumpInput>
+                                       <light>
+                                          <Light.Distant>
+                                             <color>
+                                                <Color red="0.9300000071525574" green="0.09300000220537186" blue="0.2046000063419342" opacity="0.7956521511077881" />
+                                             </color>
+                                          </Light.Distant>
+                                       </light>
+                                    </Lighting>
+                                 </effect>
+                              </Pane>
+                              <Label fx:id="winLabel" text="Voitto" textFill="WHITE" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="38.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                                 <effect>
+                                    <DropShadow height="29.9" radius="14.45" width="29.9">
+                                       <color>
+                                          <Color red="1.0" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </Label>
+                              <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #400207;">
+                                 <effect>
+                                    <Lighting diffuseConstant="0.93" specularConstant="1.08" specularExponent="6.51" surfaceScale="1.27">
+                                       <bumpInput>
+                                          <Shadow height="29.14875" radius="14.2596875" width="29.89" />
+                                       </bumpInput>
+                                       <light>
+                                          <Light.Distant>
+                                             <color>
+                                                <Color red="0.9300000071525574" green="0.09300000220537186" blue="0.2046000063419342" opacity="0.917391300201416" />
+                                             </color>
+                                          </Light.Distant>
+                                       </light>
+                                    </Lighting>
+                                 </effect>
+                              </Pane>
+                              <Label fx:id="handLabel" text="Käsi" textFill="WHITE" GridPane.halignment="LEFT">
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="38.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                                 <effect>
+                                    <DropShadow height="28.17" radius="13.9575" width="29.66">
+                                       <color>
+                                          <Color red="1.0" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </Label>
+                           </children>
+                           <GridPane.margin>
+                              <Insets bottom="100.0" left="10.0" right="10.0" top="10.0" />
+                           </GridPane.margin>
+                        </GridPane>
+                        <ImageView fitHeight="150.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
+                           <image>
+                              <Image url="@/fastpoker/fastpokerlogo.png" />
+                           </image>
+                           <GridPane.margin>
+                              <Insets bottom="40.0" />
+                           </GridPane.margin>
+                        </ImageView>
+                     </children>
+                  </GridPane>
+                  <GridPane maxHeight="200.0" prefHeight="300.0" prefWidth="290.0" style="-fx-background-color: rgba(0, 0, 0, 0.2);" GridPane.columnIndex="1" GridPane.valignment="TOP">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="169.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="1.0" prefWidth="96.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Kuningasvärisuora" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="winLabel1" text="1000" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Värisuora" textFill="WHITE" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Neloset" textFill="WHITE" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Täyskäsi" textFill="WHITE" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Väri" textFill="WHITE" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Suora" textFill="WHITE" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Kolmoset" textFill="WHITE" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Kaksi paria" textFill="WHITE" GridPane.rowIndex="7">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="10-A Pari" textFill="WHITE" GridPane.rowIndex="8">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="winLabel2" text="750" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="winLabel3" text="500" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="winLabel4" text="200" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="winLabel5" text="100" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="winLabel6" text="80" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="winLabel7" text="60" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="winLabel8" text="20" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="winLabel9" text="5" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
+                     </GridPane.margin>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="15.0" top="10.0" />
+                     </padding>
+                  </GridPane>
+               </children>
+            </GridPane>
+            <GridPane prefWidth="1280.0" style="-fx-background-color: #0d0606;">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="balanceLabel" text="Saldo:" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </Label>
+                  <ImageView fitHeight="38.0" fitWidth="123.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@/smallLogo.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <Button fx:id="toMenu" mnemonicParsing="false" onAction="#toMenu" prefHeight="27.0" prefWidth="85.0" style="-fx-background-color: #8f0000;" text="Takaisin" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="15.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <effect>
+                  <DropShadow height="38.8" radius="19.64" width="41.76">
+                     <color>
+                        <Color red="1.0" green="0.15000000596046448" opacity="0.47826087474823" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <GridPane.margin>
+                  <Insets left="15.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+      </GridPane>
+   </top>
+</BorderPane>

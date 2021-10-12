@@ -34,6 +34,7 @@ public class HomepageViewController implements Initializable {
 	@FXML Button toArcadeBlackjack1;
 	@FXML Button toMoneyRain;
 	@FXML Button toSlalomMadness;
+	@FXML Button toFastPoker;
 	
 	private void init() {
 		nameLabel.setText(User.getUsername());
@@ -89,6 +90,19 @@ public class HomepageViewController implements Initializable {
 			window.setScene(slalomMenuScene);
 			window.setResizable(false);
 			window.show();
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
+	}
+	
+	public void toFastPoker(ActionEvent e) {
+		try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("Fast_pokerView.fxml"));
+            BorderPane fastPokerView = (BorderPane) loader.load();
+            Scene fastPokerScene = new Scene(fastPokerView);
+			Stage window = (Stage) toUserInfoButton.getScene().getWindow();
+			window.setScene(fastPokerScene);
         } catch (IOException iOE) {
             iOE.printStackTrace();
         }

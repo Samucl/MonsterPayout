@@ -16,5 +16,6 @@
       <Button fx:id="toArcadeBlackjack1" layoutX="565.0" layoutY="402.0" mnemonicParsing="false" onAction="#toArcadeBlackjack1" prefHeight="70.0" prefWidth="150.0" text="Arcade_blackjack_1" />
       <Button fx:id="toMoneyRain" layoutX="841.0" layoutY="402.0" mnemonicParsing="false" onAction="#toMoneyRain" prefHeight="70.0" prefWidth="150.0" text="MoneyRain" />
       <Button fx:id="toSlalomMadness" layoutX="216.0" layoutY="402.0" mnemonicParsing="false" onAction="#toSlalomMadness" prefHeight="70.0" prefWidth="150.0" text="Slalom Madness" />
+      <Button fx:id="toFastPoker" layoutX="216.0" layoutY="236.0" mnemonicParsing="false" onAction="#toFastPoker" prefHeight="70.0" prefWidth="150.0" text="Fast poker" />
    </children>
 </AnchorPane>
