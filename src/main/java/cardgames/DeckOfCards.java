@@ -32,7 +32,7 @@ public class DeckOfCards {
 		for(int i = 0; i < suits.length; i++) {
 			for(int j = 0; j < ranks.length; j++) {
 				Card newCard = new Card(suits[i], ranks[j]);
-				File image = new File(filepath+"/"+suits[i]+ranks[j]);
+				File image = new File(filepath+"/"+suits[i]+ranks[j]+".png");
 				System.out.println(filepath+"/"+suits[i]+ranks[j]);
 				if(image.exists())
 					try {
