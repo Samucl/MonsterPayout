@@ -218,11 +218,11 @@ public class SlalomMadnessGame extends Application {
 				createPoleRight();
 			}
 			
-			if (timeInMillis % 190 == 0 && poleCount < polesBeforeFinishLine) {
+			if (timeInMillis % 180 == 0 && poleCount < polesBeforeFinishLine) {
 				createObject();
 			}
 			
-			if (timeInMillis % 200 == 0) {
+			if (timeInMillis % 200 == 0 || timeInMillis == 10) {
 				createSprucesOnSides(2);
 			}
 			
@@ -359,7 +359,7 @@ public class SlalomMadnessGame extends Application {
 			gc.setFont(Font.font ("Arial Black", 30));
 			gc.fillText("GAME OVER", 356, 240);
 			gc.setFont(Font.font ("Arial Black", 24));
-			gc.fillText("Palaa menuun painamalla  ↵", 294, 292);
+			gc.fillText("Palaa menuun painamalla  ↵", 294, 302);
 		}
 	}
 
