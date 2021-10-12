@@ -344,14 +344,14 @@ public class SlalomMadnessGame extends Application {
 			if (Tietokanta.getHighScoreTime("Slalom Madness") == 0 || Tietokanta.getHighScoreTime("Slalom Madness") > score) {
 				gc.setFill(Color.GOLD);
 				gc.setFont(Font.font ("Arial Black", 24));
-				gc.fillText("UUSI ENNÄTYS!", 350, 370);
+				gc.fillText("UUSI ENNÄTYS!", 350, 380);
 			}
 
 			Tietokanta.setHighScoreTime(score, "Slalom Madness");
 			
 			gc.setFill(Color.BLACK);
 			gc.setFont(Font.font ("Arial Black", 24));
-			gc.fillText("Palaa menuun painamalla  ↵", 294, 740);
+			gc.fillText("Palaa menuun painamalla  ↵", 294, 730);
 			
 		} else if (dead) { //Jos pelaaja törmännyt esteeseen
 			tl.stop();
