@@ -50,11 +50,14 @@ public class Fast_poker {
 	}
 	
 	public boolean checkDouble(Card[] wCards, int i) {
+		if(wCards[i].getRank() == 1) { //Jos klikattu kortti on ässä, tuplauksen voittaa aina.
+			return true;
+		}
 		if(wCards[0].getRank() == 1) {
 			return i != 0 && wCards[i].getRank() == 14; //Jos tuplauksessa tulee ässä, niin on saatava ässä jotta tuplauksen voittaa.
 		}
 		else
-			return i != 0 && wCards[i].getRank() >= wCards[0].getRank();
+			return i != 0 && wCards[i].getRank() >= wCards[0].getRank(); // muu kortti kuin ässä
 	}
 	
 	private int checkWinnings(Card[] wCards) {
