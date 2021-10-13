@@ -60,7 +60,7 @@ public class Fast_poker {
 			return i != 0 && wCards[i].getRank() >= wCards[0].getRank(); // muu kortti kuin ässä
 	}
 	
-	private int checkWinnings(Card[] wCards) {
+	public int checkWinnings(Card[] wCards) {
 		Arrays.sort(wCards);
 		for(int i = 0; i < wCards.length; i++) {
 			System.out.println("Sorted: " + wCards[i]);
