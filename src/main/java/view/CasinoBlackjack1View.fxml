@@ -7,17 +7,28 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CasinoBlackjack1ViewController1">
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CasinoBlackjack1ViewController1">
    <children>
-      <AnchorPane minHeight="720.0" minWidth="1200.0" prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color: #30b33b;">
+      <AnchorPane minHeight="720.0" minWidth="1200.0" prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color: #2a8c44;">
          <children>
-            <Button fx:id="exit_button" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toMainView" prefHeight="72.0" prefWidth="150.0" text="Poistu" />
-            <Button fx:id="play_button" layoutX="272.0" layoutY="638.0" mnemonicParsing="false" onAction="#insertBet" prefHeight="60.0" prefWidth="125.0" text="Pelaa" />
+            <ImageView fitHeight="720.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="exit_button" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toMainView" opacity="0.85" prefHeight="72.0" prefWidth="150.0" style="-fx-background-color: #e32209;" text="Poistu">
+               <font>
+                  <Font name="Calibri Bold" size="32.0" />
+               </font></Button>
+            <Button fx:id="play_button" layoutX="269.0" layoutY="630.0" mnemonicParsing="false" onAction="#insertBet" prefHeight="60.0" prefWidth="125.0" text="Pelaa">
+               <font>
+                  <Font size="32.0" />
+               </font></Button>
             <TextField fx:id="bet_field" layoutX="25.0" layoutY="660.0" prefHeight="38.0" prefWidth="226.0" promptText="Panos" />
-            <TextField fx:id="win_field" editable="false" layoutX="25.0" layoutY="611.0" prefHeight="38.0" prefWidth="226.0" promptText="Voitto" />
-            <Button fx:id="hit_button" layoutX="467.0" layoutY="551.0" mnemonicParsing="false" onAction="#playerHit" prefHeight="60.0" prefWidth="125.0" text="Iske" />
+            <TextField fx:id="win_field" editable="false" focusTraversable="false" layoutX="25.0" layoutY="611.0" prefHeight="38.0" prefWidth="226.0" promptText="Voitto" />
+            <Button fx:id="hit_button" layoutX="467.0" layoutY="564.0" mnemonicParsing="false" onAction="#playerHit" prefHeight="60.0" prefWidth="125.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-color: transparent;" text="Iske">
+               <font>
+                  <Font name="Calibri" size="32.0" />
+               </font></Button>
             <GridPane layoutX="206.0" layoutY="412.0" prefHeight="116.0" prefWidth="873.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -78,11 +89,31 @@
                   <ImageView fx:id="dcard5" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
                </children>
             </GridPane>
-            <Text fx:id="player_hand_total" layoutX="558.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Koritten summa" />
-            <Text fx:id="dealer_hand_total" layoutX="558.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Koritten summa" />
-            <Button fx:id="stay_button" layoutX="609.0" layoutY="551.0" mnemonicParsing="false" onAction="#playerStay" prefHeight="60.0" prefWidth="125.0" text="Pysy" />
-            <Text layoutX="25.0" layoutY="577.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Krediitti saldo: " />
-            <Text fx:id="balance" layoutX="104.0" layoutY="577.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100.0" />
+            <Text fx:id="player_hand_total" layoutX="558.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Koritten summa">
+               <font>
+                  <Font name="Calibri" size="12.0" />
+               </font></Text>
+            <Text fx:id="dealer_hand_total" layoutX="558.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Koritten summa">
+               <font>
+                  <Font name="Calibri" size="12.0" />
+               </font></Text>
+            <Button fx:id="stay_button" layoutX="609.0" layoutY="564.0" mnemonicParsing="false" onAction="#playerStay" prefHeight="60.0" prefWidth="125.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-color: transparent;" text="Pysy">
+               <font>
+                  <Font name="Calibri" size="32.0" />
+               </font></Button>
+            <Text layoutX="25.0" layoutY="577.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Krediitti saldo: ">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font></Text>
+            <Text fx:id="balance" layoutX="138.0" layoutY="577.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100.0">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font></Text>
+            <Text fill="#eded02" layoutX="370.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BLACKJACK PAYS 3 TO 2">
+               <font>
+                  <Font name="Calibri" size="46.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
    </children>

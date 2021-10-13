@@ -9,14 +9,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AcradeBlackjack1ViewController">
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AcradeBlackjack1ViewController">
    <children>
       <AnchorPane minHeight="720.0" minWidth="1200.0" prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color: #30b33b;">
          <children>
             <Button fx:id="exit_button" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toMainView" prefHeight="72.0" prefWidth="150.0" text="Poistu" />
             <Button fx:id="play_button" layoutX="272.0" layoutY="638.0" mnemonicParsing="false" onAction="#insertBet" prefHeight="60.0" prefWidth="125.0" text="Pelaa" />
             <TextField fx:id="bet_field" layoutX="25.0" layoutY="660.0" prefHeight="38.0" prefWidth="226.0" promptText="Panos" />
-            <TextField fx:id="win_field" editable="false" layoutX="25.0" layoutY="611.0" prefHeight="38.0" prefWidth="226.0" promptText="Voitto" />
+            <TextField fx:id="win_field" editable="false" focusTraversable="false" layoutX="25.0" layoutY="611.0" prefHeight="38.0" prefWidth="226.0" promptText="Voitto" />
             <Button fx:id="hit_button" layoutX="467.0" layoutY="551.0" mnemonicParsing="false" onAction="#playerHit" prefHeight="60.0" prefWidth="125.0" text="Iske" />
             <GridPane layoutX="206.0" layoutY="412.0" prefHeight="116.0" prefWidth="873.0">
               <columnConstraints>
