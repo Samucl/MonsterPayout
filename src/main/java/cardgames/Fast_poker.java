@@ -116,11 +116,7 @@ public class Fast_poker {
 	}
 	
 	private boolean flush(Card[] wCards) {
-		if(wCards[1].getSuit() == wCards[2].getSuit() && wCards[2].getSuit() == wCards[3].getSuit() && wCards[3].getSuit() == wCards[4].getSuit() ||
-				wCards[0].getSuit() == wCards[2].getSuit() && wCards[2].getSuit() == wCards[3].getSuit() && wCards[3].getSuit() == wCards[4].getSuit() ||
-				wCards[0].getSuit() == wCards[1].getSuit() && wCards[1].getSuit() == wCards[3].getSuit() && wCards[3].getSuit() == wCards[4].getSuit() ||
-				wCards[0].getSuit() == wCards[1].getSuit() && wCards[1].getSuit() == wCards[2].getSuit() && wCards[2].getSuit() == wCards[4].getSuit() ||
-				wCards[0].getSuit() == wCards[1].getSuit() && wCards[1].getSuit() == wCards[2].getSuit() && wCards[2].getSuit() == wCards[3].getSuit())
+		if(wCards[0].getSuit() == wCards[1].getSuit() && wCards[1].getSuit() == wCards[2].getSuit() && wCards[2].getSuit() == wCards[3].getSuit() && wCards[3].getSuit() == wCards[4].getSuit())
 			return true;
 		return false;
 	}
