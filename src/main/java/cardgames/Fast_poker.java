@@ -51,7 +51,7 @@ public class Fast_poker {
 	
 	public boolean checkDouble(Card[] wCards, int i) {
 		if(wCards[0].getRank() == 1) {
-			return i != 0 && wCards[i].getRank() == 13; //Jos tuplauksessa tulee ässä, niin on saatava ässä jotta tuplauksen voittaa.
+			return i != 0 && wCards[i].getRank() == 14; //Jos tuplauksessa tulee ässä, niin on saatava ässä jotta tuplauksen voittaa.
 		}
 		else
 			return i != 0 && wCards[i].getRank() >= wCards[0].getRank();

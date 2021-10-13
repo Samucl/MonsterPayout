@@ -32,6 +32,7 @@ public class HomepageViewController implements Initializable {
 	@FXML Button toStoreButton;
 	@FXML Button toUserInfoButton;
 	@FXML Button toArcadeBlackjack1;
+	@FXML Button toCasinoBlackjack1;
 	@FXML Button toMoneyRain;
 	@FXML Button toSlalomMadness;
 	@FXML Button toFastPoker;
@@ -46,6 +47,19 @@ public class HomepageViewController implements Initializable {
 		try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("ArcadeBlackjack1View.fxml"));
+            AnchorPane blackjackView = (AnchorPane) loader.load();
+            Scene blackjackScene = new Scene(blackjackView);
+			Stage window = (Stage) toArcadeBlackjack1.getScene().getWindow();
+			window.setScene(blackjackScene);
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
+	}
+	
+	public void toCasinoBlackjack1(ActionEvent e) {
+		try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("CasinoBlackjack1View.fxml"));
             AnchorPane blackjackView = (AnchorPane) loader.load();
             Scene blackjackScene = new Scene(blackjackView);
 			Stage window = (Stage) toArcadeBlackjack1.getScene().getWindow();

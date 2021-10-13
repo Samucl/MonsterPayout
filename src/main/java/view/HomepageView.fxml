@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomepageViewController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomepageViewController">
    <children>
       <Text fx:id="kolikotLabel" layoutX="909.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="presetKolikot" />
       <Button fx:id="logoutButton" layoutX="1101.0" layoutY="603.0" mnemonicParsing="false" onAction="#logout" prefHeight="69.0" prefWidth="150.0" text="Kirjaudu ulos" />
@@ -17,5 +17,6 @@
       <Button fx:id="toMoneyRain" layoutX="841.0" layoutY="402.0" mnemonicParsing="false" onAction="#toMoneyRain" prefHeight="70.0" prefWidth="150.0" text="MoneyRain" />
       <Button fx:id="toSlalomMadness" layoutX="216.0" layoutY="402.0" mnemonicParsing="false" onAction="#toSlalomMadness" prefHeight="70.0" prefWidth="150.0" text="Slalom Madness" />
       <Button fx:id="toFastPoker" layoutX="216.0" layoutY="236.0" mnemonicParsing="false" onAction="#toFastPoker" prefHeight="70.0" prefWidth="150.0" text="Fast poker" />
+      <Button fx:id="toCasinoBlackjack1" layoutX="565.0" layoutY="480.0" mnemonicParsing="false" onAction="#toCasinoBlackjack1" prefHeight="70.0" prefWidth="150.0" text="Casino_blackjack_1" />
    </children>
 </AnchorPane>

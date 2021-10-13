@@ -447,6 +447,74 @@ public class Tietokanta {
 		return 0;
 	}
 	
+	public static double decreaseCreditBalance(double amount) {
+		if(amount <= 0)
+			return 0;
+		
+		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+			try {
+				Connection con;
+				con = DriverManager.getConnection(
+						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				
+				Statement stmt = con.createStatement();
+				
+				//Tehdään SQL haku kutsu ja haetaan Testikäyttäjä/käyttäjät
+				String query = "SELECT TiliID "
+						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
+
+				ResultSet rs = stmt.executeQuery(query);
+				
+				/*
+				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä
+				 */
+				if(rs.next()) {
+					int tiliID = rs.getInt("TiliID");
+					query = "SELECT KrediittiSaldo FROM Tili "
+							+ "WHERE TiliID = "+tiliID;
+					rs = stmt.executeQuery(query);
+					/*
+					 * Jos löytyy seuraava tulosjoukko löytyy tietokannasta käyttäjän tili
+					 */
+					if(rs.next()) {
+						double saldo = rs.getDouble("KrediittiSaldo");
+						/*
+						 * Verrataan käyttäjän tilin saldoa vähennettävään määrään. 
+						 * Jos käyttäjän saldo riittää niin vähennetään tietokannasta 
+						 * amount-muuttujan verran krediitti saldoa
+						 */
+						if(saldo >= amount) {
+							query = "UPDATE Tili "
+									+ "SET KrediittiSaldo = KrediittiSaldo - "+amount
+											+ " WHERE TiliID = "+tiliID;
+							int updatedRows = stmt.executeUpdate(query);
+							query = "SELECT KrediittiSaldo FROM Tili "
+									+ "WHERE TiliID = "+tiliID;
+							rs = stmt.executeQuery(query);
+							if(rs.next())
+								User.setCredits(rs.getDouble("KrediittiSaldo"));
+							
+							/*
+							 * Jos SQL-kutsu muokkasi vähintään 1-riviä, 
+							 * niin saldon vähennys kutsu on onnistunut.
+							 */
+							if(updatedRows > 0)
+								return amount;
+						}
+					}
+				}
+				
+			} catch (SQLException e) {
+				do {
+					System.err.println("Viesti: "+e.getMessage());
+					System.err.println("Virhekoodi: "+e.getErrorCode());
+					System.err.println("SQL-tilakoodi: "+e.getSQLState());
+				} while (e.getNextException() != null);
+			}
+		}
+		return 0;
+	}
+	
 	public static int increaseCoinBalance(int amount) {
 			
 			if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
@@ -886,7 +954,7 @@ public class Tietokanta {
 					  }
 				  } else {
 					  while(rs.next()) {
-						  top10[rs.getRow()-1] = rs.getString("Kayttajanimi") + ": " + rs.getDouble("AikaScore");
+						  top10[rs.getRow()-1] = rs.getString("Kayttajanimi") + ": " + rs.getDouble("AikaScore") + " s";
 					  }
 				  }
 				  return top10;
@@ -973,6 +1041,39 @@ public class Tietokanta {
 		 * Tarkistetaan onko käyttäjä kirjautunut sisään
 		 */
 		return loggedIn;
+	}
+	
+	public static boolean deleteTestUser() {
+		try {
+			Connection con;
+			con = DriverManager.getConnection(
+					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+			
+			Statement stmt = con.createStatement();
+			
+			//Tehdään SQL haku kutsu ja haetaan Testikäyttäjä/käyttäjät
+			String query = "DELETE FROM Kayttaja WHERE Kayttajanimi = 'testikäyttäjä123'";
+			
+			/*
+			 * Jos löytyi tili nimellä 'testikäyttäjä123' niin se poistetaan 
+			 * ja executeUpdate palauttaa kuinka monta riviä poistettiin 
+			 * 0 - jos tämän nimistä käyttäjää ei ole
+			 * 1 - jos tällä nimellä löytyi
+			 * x - luku määärä kuinka monta löytyi ja poistettin
+			 */
+			if(stmt.executeUpdate(query)>0)
+				return true;
+			
+			
+			
+		} catch (SQLException e) {
+			do {
+				System.err.println("Viesti: "+e.getMessage());
+				System.err.println("Virhekoodi: "+e.getErrorCode());
+				System.err.println("SQL-tilakoodi: "+e.getSQLState());
+			} while (e.getNextException() != null);
+		}
+		return false;
 	}
 
 }

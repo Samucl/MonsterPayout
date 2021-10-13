@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AcradeBlackjack1ViewController">
+<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CasinoBlackjack1ViewController1">
    <children>
       <AnchorPane minHeight="720.0" minWidth="1200.0" prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color: #30b33b;">
          <children>
@@ -81,8 +81,8 @@
             <Text fx:id="player_hand_total" layoutX="558.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Koritten summa" />
             <Text fx:id="dealer_hand_total" layoutX="558.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Koritten summa" />
             <Button fx:id="stay_button" layoutX="609.0" layoutY="551.0" mnemonicParsing="false" onAction="#playerStay" prefHeight="60.0" prefWidth="125.0" text="Pysy" />
-            <Text layoutX="25.0" layoutY="586.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kolikko saldo: " />
-            <Text fx:id="balance" layoutX="108.0" layoutY="586.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1000" />
+            <Text layoutX="25.0" layoutY="577.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Krediitti saldo: " />
+            <Text fx:id="balance" layoutX="104.0" layoutY="577.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100.0" />
          </children>
       </AnchorPane>
    </children>

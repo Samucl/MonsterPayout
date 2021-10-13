@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import cardgames.Arcade_Blackjack_1;
 import cardgames.Card;
+import cardgames.Casino_Blackjack_1;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.User;
 
-public class AcradeBlackjack1ViewController implements Initializable {
+public class CasinoBlackjack1ViewController1 implements Initializable {
 	@FXML
 	public Button exit_button;
 	@FXML
@@ -70,7 +71,7 @@ public class AcradeBlackjack1ViewController implements Initializable {
 	@FXML
 	public Text balance;
 	
-	private Arcade_Blackjack_1 game = new Arcade_Blackjack_1();
+	private Casino_Blackjack_1 game = new Casino_Blackjack_1();
 	
 	
 	@Override
@@ -84,19 +85,19 @@ public class AcradeBlackjack1ViewController implements Initializable {
 		updateBalance();
 	}
 	
+	private void updateBalance() {
+		balance.setText(Double.toString(User.getCredits()));
+	}
+	
 	public void insertBet() {
-		int bet = 0;
+		double bet = 0;
 		try {
-			bet = Integer.parseInt(bet_field.getText());
+			bet = Double.parseDouble(bet_field.getText());
 			if(game.startGame(bet))
 				gameStarted();
 		} catch (NumberFormatException e) {
-			System.err.println("Panos ei ole annettu numeroina");
+			System.err.println("Panos ei ole annettu liukunumerona");
 		}
-	}
-	
-	private void updateBalance() {
-		balance.setText(Integer.toString(User.getCoins()));
 	}
 	
 	private void disableButtons() {
@@ -193,7 +194,7 @@ public class AcradeBlackjack1ViewController implements Initializable {
 	}
 	
 	private void showOutcome() {
-		win_field.setText(Integer.toString(game.getWinnings()));
+		win_field.setText(Double.toString(game.getWinnings()));
 		updateBalance();
 	}
 	

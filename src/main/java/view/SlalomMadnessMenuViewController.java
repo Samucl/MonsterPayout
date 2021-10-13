@@ -10,52 +10,41 @@ import moneyrain.MoneyRain;
 import slalommadness.SlalomMadnessGame;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import model.Tietokanta;
 import model.User;
 
 public class SlalomMadnessMenuViewController implements Initializable {
-	@FXML private Label highscoreLabel;
+	@FXML private Label highScoreLabel;
 	@FXML private Label nameLabel;
 	@FXML private Button playButton;
 	@FXML private Label coinsLabel;
-	@FXML private Label top1;
-	@FXML private Label top2;
-	@FXML private Label top3;
-	@FXML private Label top4;
-	@FXML private Label top5;
-	@FXML private Label top6;
-	@FXML private Label top7;
-	@FXML private Label top8;
-	@FXML private Label top9;
-	@FXML private Label top10;
+	@FXML private GridPane top10GridPane;
+	
 	private Stage window;
 	
 	private SlalomMadnessGame game;
 	
 	private void init() {
 		nameLabel.setText(User.getUsername());
-		highscoreLabel.setText("0");
 		coinsLabel.setText("Kolikot: " + User.getCoins());
-		highscoreLabel.setText("" + Tietokanta.getHighScore("Slalom Madness"));
+		highScoreLabel.setText(String.valueOf(Tietokanta.getHighScoreTime("Slalom Madness") + " s"));
 		String[] top10List = Tietokanta.getTop10("Slalom Madness");
 		
-		if (game != null) {
-			game = null;
-		}
-		
-		/*
-		top1.setText(top10List[0]);
-		top2.setText(top10List[1]);
-		top3.setText(top10List[2]);
-		top4.setText(top10List[3]);
-		top5.setText(top10List[4]);
-		top6.setText(top10List[5]);
-		top7.setText(top10List[6]);
-		top8.setText(top10List[7]);
-		top9.setText(top10List[8]);
-		top10.setText(top10List[9]);
-		}	*/
+		for (int i = 0 ; i < top10List.length ; i++) {
+			String[] parts = top10List[i].split(": ");
+			String part1 = parts[0];
+			String part2 = parts[1]; 
+			Label userLabel = new Label(part1);
+			Label scoreLabel = new Label(part2);
+			userLabel.setFont(Font.font("Ariel Black", FontWeight.BOLD, 12));
+			scoreLabel.setFont(Font.font("Ariel Black", FontWeight.BOLD, 12));
+			top10GridPane.add(userLabel, 0, i);
+			top10GridPane.add(scoreLabel, 1, i);
+		}	
 	}
 	
 	public void play(ActionEvent e) {
