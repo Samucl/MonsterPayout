@@ -954,7 +954,7 @@ public class Tietokanta {
 					  }
 				  } else {
 					  while(rs.next()) {
-						  top10[rs.getRow()-1] = rs.getString("Kayttajanimi") + ": " + rs.getDouble("AikaScore");
+						  top10[rs.getRow()-1] = rs.getString("Kayttajanimi") + ": " + rs.getDouble("AikaScore") + " s";
 					  }
 				  }
 				  return top10;
@@ -1041,6 +1041,39 @@ public class Tietokanta {
 		 * Tarkistetaan onko käyttäjä kirjautunut sisään
 		 */
 		return loggedIn;
+	}
+	
+	public static boolean deleteTestUser() {
+		try {
+			Connection con;
+			con = DriverManager.getConnection(
+					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+			
+			Statement stmt = con.createStatement();
+			
+			//Tehdään SQL haku kutsu ja haetaan Testikäyttäjä/käyttäjät
+			String query = "DELETE FROM Kayttaja WHERE Kayttajanimi = 'testikäyttäjä123'";
+			
+			/*
+			 * Jos löytyi tili nimellä 'testikäyttäjä123' niin se poistetaan 
+			 * ja executeUpdate palauttaa kuinka monta riviä poistettiin 
+			 * 0 - jos tämän nimistä käyttäjää ei ole
+			 * 1 - jos tällä nimellä löytyi
+			 * x - luku määärä kuinka monta löytyi ja poistettin
+			 */
+			if(stmt.executeUpdate(query)>0)
+				return true;
+			
+			
+			
+		} catch (SQLException e) {
+			do {
+				System.err.println("Viesti: "+e.getMessage());
+				System.err.println("Virhekoodi: "+e.getErrorCode());
+				System.err.println("SQL-tilakoodi: "+e.getSQLState());
+			} while (e.getNextException() != null);
+		}
+		return false;
 	}
 
 }
