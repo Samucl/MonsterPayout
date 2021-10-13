@@ -1,22 +1,249 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomepageViewController">
-   <children>
-      <Text fx:id="kolikotLabel" layoutX="909.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="presetKolikot" />
-      <Button fx:id="logoutButton" layoutX="1101.0" layoutY="603.0" mnemonicParsing="false" onAction="#logout" prefHeight="69.0" prefWidth="150.0" text="Kirjaudu ulos" />
-      <Button fx:id="toStoreButton" layoutX="565.0" layoutY="603.0" mnemonicParsing="false" onAction="#toStore" prefHeight="70.0" prefWidth="150.0" text="Kauppaan" />
-      <Text fx:id="krediititLabel" layoutX="1039.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="presetKrediitit" />
-      <Label fx:id="nameLabel" layoutX="1176.0" layoutY="30.0" text="presetNimi" />
-      <Button fx:id="toUserInfoButton" layoutX="160.0" layoutY="603.0" mnemonicParsing="false" onAction="#toUserInfo" prefHeight="70.0" prefWidth="150.0" text="Käyttäjä tiedot" />
-      <Button fx:id="toArcadeBlackjack1" layoutX="565.0" layoutY="402.0" mnemonicParsing="false" onAction="#toArcadeBlackjack1" prefHeight="70.0" prefWidth="150.0" text="Arcade_blackjack_1" />
-      <Button fx:id="toMoneyRain" layoutX="841.0" layoutY="402.0" mnemonicParsing="false" onAction="#toMoneyRain" prefHeight="70.0" prefWidth="150.0" text="MoneyRain" />
-      <Button fx:id="toSlalomMadness" layoutX="216.0" layoutY="402.0" mnemonicParsing="false" onAction="#toSlalomMadness" prefHeight="70.0" prefWidth="150.0" text="Slalom Madness" />
-      <Button fx:id="toFastPoker" layoutX="216.0" layoutY="236.0" mnemonicParsing="false" onAction="#toFastPoker" prefHeight="70.0" prefWidth="150.0" text="Fast poker" />
-      <Button fx:id="toCasinoBlackjack1" layoutX="565.0" layoutY="480.0" mnemonicParsing="false" onAction="#toCasinoBlackjack1" prefHeight="70.0" prefWidth="150.0" text="Casino_blackjack_1" />
-   </children>
-</AnchorPane>
+<BorderPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.HomepageViewController">
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <GridPane style="-fx-background-color: linear-gradient(to bottom,#000c2e, #ACB6E5);">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="0.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" onMousePressed="#toArcadeBlackjack1" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <image>
+                        <Image url="@/homeicons/arcadeblackjacklogo.png" />
+                     </image>
+                     <effect>
+                        <DropShadow height="175.19" radius="84.13" width="163.33">
+                           <color>
+                              <Color red="0.6666666865348816" blue="1.0" opacity="0.47826087474823" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="137.0" fitWidth="212.0" onMousePressed="#toMoneyRain" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@/homeicons/moneyrainicon.png" />
+                     </image>
+                     <effect>
+                        <DropShadow height="139.6" radius="76.715" width="169.26">
+                           <color>
+                              <Color red="1.0" green="0.6333333253860474" opacity="0.6078261137008667" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" onMousePressed="#toSlalomMadness" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                     <image>
+                        <Image url="@/homeicons/slalommadnessicon.png" />
+                     </image>
+                     <effect>
+                        <DropShadow height="172.22" radius="75.2325" width="130.71">
+                           <color>
+                              <Color red="0.8199999928474426" green="1.0" blue="0.9819999933242798" opacity="0.6391304135322571" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <Label text="Arcade pelit" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                     <font>
+                        <Font name="Arial" size="19.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+               </children>
+            </GridPane>
+            <GridPane style="-fx-background-color: linear-gradient(to bottom,#2e000b, #a87859);" GridPane.columnIndex="1">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="0.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" onMousePressed="#toCasinoBlackjack1" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                     <image>
+                        <Image url="@/homeicons/casinoblackjacklogo.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets bottom="20.0" />
+                     </GridPane.margin>
+                     <effect>
+                        <DropShadow height="151.46" radius="69.3" width="127.74">
+                           <color>
+                              <Color red="1.0" green="0.4166666567325592" opacity="0.508695662021637" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="123.0" fitWidth="224.0" onMousePressed="#toFastPoker" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                     <image>
+                        <Image url="@/homeicons/fastpokericon.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets top="20.0" />
+                     </GridPane.margin>
+                     <effect>
+                        <DropShadow height="166.29" radius="66.3375" width="101.06">
+                           <color>
+                              <Color red="1.0" opacity="0.5130434632301331" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <Label text="Kasino pelit" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+   </center>
+   <top>
+      <GridPane prefHeight="58.0" prefWidth="1280.0" style="-fx-background-color: #0d0606;" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.0" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.0" minWidth="10.0" prefWidth="10.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text fx:id="kolikotLabel" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Kolikot" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="40.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font></Text>
+            <Text fx:id="krediititLabel" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="presetKrediitit" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="53.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font></Text>
+            <Label fx:id="nameLabel" text="presetNimi" textFill="WHITE" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="200.0" />
+               </GridPane.margin></Label>
+            <ImageView fitHeight="92.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@/coin_1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="113.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@/credit_1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="49.0" fitWidth="186.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@/smallLogo.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </ImageView>
+         </children>
+      </GridPane>
+   </top>
+   <bottom>
+      <GridPane style="-fx-background-color: #0d0606;" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" prefHeight="69.0" prefWidth="150.0" style="-fx-background-color: red;" text="Kirjaudu ulos" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" opacity="0.917391300201416" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <font>
+                  <Font name="Arial" size="19.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets right="20.0" />
+               </GridPane.margin></Button>
+            <Button fx:id="toStoreButton" mnemonicParsing="false" onAction="#toStore" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: blue;" text="Kauppaan" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Arial" size="19.0" />
+               </font>
+               <effect>
+                  <DropShadow height="26.93" radius="12.965" width="26.93">
+                     <color>
+                        <Color green="0.23333333432674408" blue="1.0" opacity="0.8999999761581421" />
+                     </color>
+                  </DropShadow>
+               </effect></Button>
+            <Button fx:id="toUserInfoButton" mnemonicParsing="false" onAction="#toUserInfo" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: darkgreen;" text="Käyttäjä tiedot" textFill="WHITE">
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color green="1.0" blue="0.05000000074505806" opacity="0.6860869526863098" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <font>
+                  <Font name="Arial" size="19.0" />
+               </font></Button>
+         </children>
+         <padding>
+            <Insets bottom="20.0" top="20.0" />
+         </padding>
+      </GridPane>
+   </bottom>
+</BorderPane>

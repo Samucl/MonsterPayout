@@ -14,7 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Order;
@@ -160,7 +160,7 @@ public class UserInfoViewController implements Initializable {
 		try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));
-            AnchorPane mainView = (AnchorPane) loader.load();
+            BorderPane mainView = (BorderPane) loader.load();
             Scene mainScene = new Scene(mainView);
 			Stage window = (Stage) home_button.getScene().getWindow();
 			window.setScene(mainScene);

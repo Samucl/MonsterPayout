@@ -48,7 +48,7 @@ public class LoginViewController implements Initializable {
 				try {
 		            FXMLLoader loader = new FXMLLoader();
 		            loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));
-		            AnchorPane homepageView = (AnchorPane) loader.load();
+		            BorderPane homepageView = (BorderPane) loader.load();
 		            Scene homepageScene = new Scene(homepageView);
 					Stage window = (Stage) kirjauduButton.getScene().getWindow();
 					window.setScene(homepageScene);

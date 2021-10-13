@@ -3,19 +3,15 @@ package view;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -205,7 +201,7 @@ public class StoreViewController {
 		try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));
-            AnchorPane mainView = (AnchorPane) loader.load();
+            BorderPane mainView = (BorderPane) loader.load();
             Scene mainScene = new Scene(mainView);
 			Stage window = (Stage) toMainBtn.getScene().getWindow();
 			window.setScene(mainScene);

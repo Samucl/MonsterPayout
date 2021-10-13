@@ -18,7 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Tietokanta;
@@ -277,7 +277,7 @@ public class Fast_pokerViewController implements Initializable{
 		try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));
-            AnchorPane mainView = (AnchorPane) loader.load();
+            BorderPane mainView = (BorderPane) loader.load();
             Scene mainScene = new Scene(mainView);
 			Stage window = (Stage) toMenu.getScene().getWindow();
 			window.setScene(mainScene);

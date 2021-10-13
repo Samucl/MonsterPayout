@@ -16,8 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.AudioClip;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.User;
@@ -202,7 +201,7 @@ public class AcradeBlackjack1ViewController implements Initializable {
 			try {
 	            FXMLLoader loader = new FXMLLoader();
 	            loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));
-	            AnchorPane mainView = (AnchorPane) loader.load();
+	            BorderPane mainView = (BorderPane) loader.load();
 	            Scene mainScene = new Scene(mainView);
 				Stage window = (Stage) exit_button.getScene().getWindow();
 				window.setScene(mainScene);
