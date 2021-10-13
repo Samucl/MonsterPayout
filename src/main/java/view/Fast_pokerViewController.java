@@ -140,21 +140,23 @@ public class Fast_pokerViewController implements Initializable{
 	}
 	
 	public void play(ActionEvent e) throws FileNotFoundException {
-		hideButtons();
-		//Tietokanta.decreaseCreditBalance(bet);
-		balanceLabel.setText("Krediitit: " + User.getCredits());
-		winLabel.setText("Voitto");
-		handLabel.setText("Käsi");
-		game.setPlay(true);
-		highlightCards();
-		game.makeDeck();
-		cards = game.take6();
-		System.out.println(cards[0].getImage());
-		card1.setImage(cards[0].getImage());
-		card2.setImage(cards[1].getImage());
-		card3.setImage(cards[2].getImage());
-		card4.setImage(cards[3].getImage());
-		card5.setImage(new Image(new FileInputStream("./src/main/resources/card_deck_1/taka.png")));
+		if(User.getCredits() >= bet) {
+			hideButtons();
+			Tietokanta.decreaseCreditBalance((int)bet);
+			winLabel.setText("Voitto");
+			handLabel.setText("Käsi");
+			game.setPlay(true);
+			highlightCards();
+			game.makeDeck();
+			cards = game.take6();
+			balanceLabel.setText("Krediitit: " + User.getCredits());
+			System.out.println(cards[0].getImage());
+			card1.setImage(cards[0].getImage());
+			card2.setImage(cards[1].getImage());
+			card3.setImage(cards[2].getImage());
+			card4.setImage(cards[3].getImage());
+			card5.setImage(new Image(new FileInputStream("./src/main/resources/card_deck_1/taka.png")));
+		}
 	}
 	
 	public void recover(ActionEvent e) throws FileNotFoundException {

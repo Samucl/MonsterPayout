@@ -29,23 +29,34 @@ public class MoneyRainMenuViewController implements Initializable {
 	@FXML private Label top9;
 	@FXML private Label top10;
 	private Stage window;
+	private String[] top10List;
 	
 	private void init() {
 		nameLabel.setText(User.getUsername());
 		highscoreLabel.setText("0");
 		coinsLabel.setText("Kolikot: " + User.getCoins());
 		highscoreLabel.setText("" + Tietokanta.getHighScore("MoneyRain"));
-		String[] top10List = Tietokanta.getTop10("MoneyRain");
-		top1.setText(top10List[0]);
-		top2.setText(top10List[1]);
-		top3.setText(top10List[2]);
-		top4.setText(top10List[3]);
-		top5.setText(top10List[4]);
-		top6.setText(top10List[5]);
-		top7.setText(top10List[6]);
-		top8.setText(top10List[7]);
-		top9.setText(top10List[8]);
-		top10.setText(top10List[9]);
+		top10List = Tietokanta.getTop10("MoneyRain");
+		setTop10(top1, 0);
+		setTop10(top2, 1);
+		setTop10(top3, 2);
+		setTop10(top4, 3);
+		setTop10(top5, 4);
+		setTop10(top6, 5);
+		setTop10(top7, 6);
+		setTop10(top8, 7);
+		setTop10(top9, 8);
+		setTop10(top10, 9);
+	}
+	
+	private void setTop10(Label top, int i) {
+		if(top10List == null) {
+			top10List = new String[10];
+		}
+		else if(top10List.length > i)
+			top.setText(top10List[i]);
+		else
+			top.setText("-");
 	}
 	
 	public void play(ActionEvent e) {
