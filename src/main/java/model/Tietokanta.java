@@ -886,7 +886,7 @@ public class Tietokanta {
 					  }
 				  } else {
 					  while(rs.next()) {
-						  top10[rs.getRow()-1] = rs.getString("Kayttajanimi") + ": " + rs.getDouble("AikaScore");
+						  top10[rs.getRow()-1] = rs.getString("Kayttajanimi") + ": " + rs.getDouble("AikaScore") + " s";
 					  }
 				  }
 				  return top10;
