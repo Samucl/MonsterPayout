@@ -19,6 +19,7 @@
 			<artifactId>jacoco-maven-plugin</artifactId>
 			<version>0.8.8-SNAPSHOT</version>
 		</plugin>
+		
   	
 	    <plugin>
 	        <groupId>org.openjfx</groupId>
@@ -44,6 +45,9 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <version>3.0.0-M1</version>
+            <configuration>
+            <forkCount>0</forkCount>
+            </configuration>
         </plugin>
         
     </plugins>
@@ -110,4 +114,6 @@
 	
 	  
 	</dependencies>
+	
+	
 </project>
