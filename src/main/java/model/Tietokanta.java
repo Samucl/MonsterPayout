@@ -938,7 +938,7 @@ public class Tietokanta {
 					query = "SELECT Saavuttaa.AikaScore, Kayttaja.Kayttajanimi"
 							+ " FROM Saavuttaa INNER JOIN Kayttaja ON Saavuttaa.KayttajaID = Kayttaja.KayttajaID"
 							+ " WHERE PelinNimi = '" + peli + "' ORDER BY AikaScore ASC LIMIT 10;";
-				}
+				} 
 				
 				ResultSet rs = stmt.executeQuery(query);
 				

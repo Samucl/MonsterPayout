@@ -109,7 +109,7 @@
             <Font name="Verdana Bold" size="22.0" />
          </font>
       </Label>
-      <Label layoutX="476.0" layoutY="133.0" text="OMA ENNÄTYS">
+      <Label layoutX="491.0" layoutY="130.0" text="HIGHSCORE">
          <font>
             <Font name="Verdana Bold" size="22.0" />
          </font>

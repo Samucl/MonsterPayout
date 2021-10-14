@@ -34,6 +34,10 @@ public class SlalomMadnessMenuViewController implements Initializable {
 		highScoreLabel.setText(String.valueOf(Tietokanta.getHighScoreTime("Slalom Madness") + " s"));
 		String[] top10List = Tietokanta.getTop10("Slalom Madness");
 		
+		if (top10List == null) {
+			top10List = new String[10];
+		}
+		
 		for (int i = 0 ; i < top10List.length ; i++) {
 			String[] parts = top10List[i].split(": ");
 			String part1 = parts[0];
