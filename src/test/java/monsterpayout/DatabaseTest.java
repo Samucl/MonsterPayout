@@ -66,4 +66,7 @@ public class DatabaseTest {
 		assertTrue(User.getCredits() == 150 + credits);
 	}
 	
+	
+
+	
 }
