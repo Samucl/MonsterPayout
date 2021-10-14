@@ -51,7 +51,7 @@ public class Fast_pokerViewController implements Initializable{
 	private double win;
 	private double bet = 1.00;
 	private final String[] winningTable = {"Pari", "Kaksi paria", "Kolmoset", "Suora", "Väri","Täyskäsi", "Neljä samaa", "Värisuora", "Kuningasvärisuora"};
-	private final double[] coinsTable = {5,20,60,80,100,200,500,750,1000};
+	private final double[] coinsTable = {2,6,10,20,30,50,100,200,300};
 	Fast_poker game;
 	Card[] cards = new Card[6];
 	Card[] winningCards = new Card[5];
@@ -63,6 +63,7 @@ public class Fast_pokerViewController implements Initializable{
 		betButton.setText("Panos: " + bet);
 		game = new Fast_poker();
 		balanceLabel.setText("Krediitit: " + User.getCredits());
+		setWinLabel();
 	}
 
 	public void clickCard2() {
@@ -176,6 +177,11 @@ public class Fast_pokerViewController implements Initializable{
 		bet = Math.round(bet);
 		if(bet > 140)
 			bet = 1;
+		setWinLabel();
+		betButton.setText("Panos: " + bet);
+	}
+	
+	private void setWinLabel() {
 		winLabel1.setText((int)coinsTable[8] * (int)bet + "");
 		winLabel2.setText((int)coinsTable[7] * (int)bet + "");
 		winLabel3.setText((int)coinsTable[6] * (int)bet + "");
@@ -185,7 +191,6 @@ public class Fast_pokerViewController implements Initializable{
 		winLabel7.setText((int)coinsTable[2] * (int)bet + "");
 		winLabel8.setText((int)coinsTable[1] * (int)bet + "");
 		winLabel9.setText((int)coinsTable[0] * (int)bet + "");
-		betButton.setText("Panos: " + bet);
 	}
 	
 	public void doubles(ActionEvent e) throws FileNotFoundException {
