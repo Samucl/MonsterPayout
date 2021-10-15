@@ -235,8 +235,8 @@ public class SlalomMadnessGame extends Application {
 			items.forEach(item -> {
 				
 				if (item.getName().equals("leftPole")) {
-					if (playerYPos-PLAYER_HEIGHT/2 < item.getYPos() && playerYPos-PLAYER_HEIGHT/2 > item.getYPos() - item.getHeight()) { //Jos pelihahmo on kepin kanssa samalla korkeudella
-						if (playerXPos+PLAYER_WIDTH <= (item.getXPos())) { //Jos hahmo on kepin vasemmalla puolella
+					if (playerYPos-PLAYER_HEIGHT/2 < item.getYPos() && playerYPos-PLAYER_HEIGHT/2 > item.getYPos() - item.getHeight() / 2) { //Jos pelihahmo on kepin kanssa samalla korkeudella
+						if (playerXPos+PLAYER_WIDTH < (item.getXPos() + item.getWidth())) { //Jos hahmo on kepin vasemmalla puolella
 							if (!item.checkCollected()) {
 								points++;
 								item.isCollected();
@@ -244,8 +244,8 @@ public class SlalomMadnessGame extends Application {
 						}			
 					} 
 				} else if (item.getName().equals("rightPole")) {
-					if (playerYPos-PLAYER_HEIGHT/2 < item.getYPos() && playerYPos-PLAYER_HEIGHT/2 > item.getYPos() - item.getHeight()) {
-						if ((playerXPos) > (item.getXPos() + item.getWidth() / 2)) {
+					if (playerYPos-PLAYER_HEIGHT/2 < item.getYPos() && playerYPos-PLAYER_HEIGHT/2 > item.getYPos() - item.getHeight() / 2) {
+						if ((playerXPos) > (item.getXPos() + item.getWidth()/2)) {
 							if (!item.checkCollected()) {
 								points++;
 								item.isCollected();
