@@ -122,6 +122,19 @@ public class HomepageViewController implements Initializable {
         }
 	}
 	
+	public void toLuckySpins() {
+		try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("LuckySpinsView.fxml"));
+            GridPane luckySpinsView = (GridPane) loader.load();
+            Scene luckySpinsScene = new Scene(luckySpinsView);
+			Stage window = (Stage) nameLabel.getScene().getWindow();
+			window.setScene(luckySpinsScene);
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
+	}
+	
 	public void toUserInfo(ActionEvent e) {
 		try {
             FXMLLoader loader = new FXMLLoader();
