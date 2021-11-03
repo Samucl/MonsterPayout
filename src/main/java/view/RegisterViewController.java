@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -31,10 +33,13 @@ public class RegisterViewController {
 	public void rekisteroidy(ActionEvent e) {
 		if(!salasanaInput2.getText().equals(salasanauudelleenInput.getText())) {
 			System.out.println("Salasanat eivät täsmää");
+			insufficientInformation("Salasanat eivät täsmää",
+					"Syötetyt salasanat eivät täsmää");
 			
 		} else if(kayttajatunnusInput2.getText().isEmpty() || salasanaInput2.getText().isEmpty() || etunimiInput.getText().isEmpty() || sukunimiInput.getText().isEmpty() 
 				|| sahkopostiInput.getText().isEmpty() || salasanauudelleenInput.getText().isEmpty()) {
-			System.out.println("Kaikki tiedot on syötettävä oikein");
+			insufficientInformation("Täytä kaikki tiedot",
+					"Osa tiedoista jäänyt täyttämättä tai syötetty väärin");
 			
 		} else {
 			System.out.println("Käyttäjätunnus: " + kayttajatunnusInput2.getText());
@@ -47,9 +52,10 @@ public class RegisterViewController {
 			Boolean onnistuiko = Tietokanta.register(kayttajatunnusInput2.getText(), salasanaInput2.getText(), sahkopostiInput.getText(), etunimiInput.getText(), sukunimiInput.getText());
 			
 			if(onnistuiko)
-				System.out.println("kirjautuminen onnistui :)");
+				successfullRegisteration();
 			else
-				System.out.println("kirjautuminen epäonnistui :(");
+				insufficientInformation("Virhe rekisteröitymisessä",
+						"Joku meni pieleen rekisteröimisessä. Kokeile uudelleen.");
 				
 		}
 	}
@@ -68,5 +74,19 @@ public class RegisterViewController {
         } catch (IOException iOE) {
             iOE.printStackTrace();
         }
+	}
+	
+	private void insufficientInformation(String error, String message) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Register eroor");
+		alert.setHeaderText(error);
+		alert.setContentText(message);
+
+		alert.showAndWait();
+	}
+	
+	private void successfullRegisteration() {
+		Tietokanta.login(kayttajatunnusInput2.getText(), salasanaInput2.getText());
+		tokirjautumisButton.fire();
 	}
 }
