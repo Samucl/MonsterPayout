@@ -44,13 +44,19 @@ public class LuckySpinsViewController implements Initializable{
 	@FXML ToggleButton payline2;
 	@FXML ToggleButton payline3;
 	@FXML Label balanceLabel;
+	private Image spin1;
+	private Image spin2;
+	private Image spin3;
 	
-	private void init() {
+	private void init() throws FileNotFoundException {
 		payline1.setSelected(false);
 		payline2.setSelected(true);
 		payline3.setSelected(false);
 		Label balanceLabel = new Label();
 		balanceLabel.setText("Saldo: " + User.getCredits());
+		spin1 = new Image(new FileInputStream("./src/main/resources/slot_icons/spin1.gif"));
+		spin2 = new Image(new FileInputStream("./src/main/resources/slot_icons/spin2.gif"));
+		spin3 = new Image(new FileInputStream("./src/main/resources/slot_icons/spin3.gif"));
 	}
 	
 	public void toMenu(ActionEvent e) {
@@ -74,7 +80,7 @@ public class LuckySpinsViewController implements Initializable{
 		game1.play();
 		game2.play();
 		game3.play();
-		Timeline tl = new Timeline(new KeyFrame(Duration.millis(2000), ea -> {
+		Timeline tl = new Timeline(new KeyFrame(Duration.millis(1000), ea -> {
 				try {showIcons(game1.getOutcome(),game2.getOutcome(),game3.getOutcome());} catch (FileNotFoundException e1) {}
 				spinButton.setDisable(false);
 				int winning = 0;
@@ -122,15 +128,15 @@ public class LuckySpinsViewController implements Initializable{
 		}
 	}
 	private void spinAnimation() throws FileNotFoundException {
-		gif1.setImage(new Image(new FileInputStream("./src/main/resources/slot_icons/spin1.gif")));
-		gif4.setImage(new Image(new FileInputStream("./src/main/resources/slot_icons/spin2.gif")));
-		gif7.setImage(new Image(new FileInputStream("./src/main/resources/slot_icons/spin3.gif")));
-		gif2.setImage(new Image(new FileInputStream("./src/main/resources/slot_icons/spin1.gif")));
-		gif5.setImage(new Image(new FileInputStream("./src/main/resources/slot_icons/spin2.gif")));
-		gif8.setImage(new Image(new FileInputStream("./src/main/resources/slot_icons/spin3.gif")));
-		gif3.setImage(new Image(new FileInputStream("./src/main/resources/slot_icons/spin1.gif")));
-		gif6.setImage(new Image(new FileInputStream("./src/main/resources/slot_icons/spin2.gif")));
-		gif9.setImage(new Image(new FileInputStream("./src/main/resources/slot_icons/spin3.gif")));
+		gif1.setImage(spin1);
+		gif4.setImage(spin2);
+		gif7.setImage(spin3);
+		gif2.setImage(spin1);
+		gif5.setImage(spin2);
+		gif8.setImage(spin3);
+		gif3.setImage(spin1);
+		gif6.setImage(spin2);
+		gif9.setImage(spin3);
 	}
 	
 	private void showIcons(int[] outcome1, int[] outcome2 ,int[] outcome3) throws FileNotFoundException {
@@ -147,7 +153,11 @@ public class LuckySpinsViewController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		init();
+		try {
+			init();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
