@@ -126,7 +126,7 @@ public class HomepageViewController implements Initializable {
 		try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("LuckySpinsView.fxml"));
-            GridPane luckySpinsView = (GridPane) loader.load();
+            BorderPane luckySpinsView = (BorderPane) loader.load();
             Scene luckySpinsScene = new Scene(luckySpinsView);
 			Stage window = (Stage) nameLabel.getScene().getWindow();
 			window.setScene(luckySpinsScene);
