@@ -1,5 +1,4 @@
 import model.Session;
-import model.SlotMachine;
 
 public class Main {
 	public static void main(String args[]) {
