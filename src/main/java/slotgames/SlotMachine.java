@@ -3,8 +3,8 @@ package slotgames;
 import java.util.*;
 
 public class SlotMachine {
-	private int[] reel = new int[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4 ,4, 5, 5, 5};
-	private int[] winnings = new int[] {0, 10, 20, 30, 60, 120};
+	private int[] reel = new int[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4 ,4, 5, 5, 5, 6, 6, 6};
+	private int[] winnings = new int[] {0, 10, 20, 30, 60, 120, 200};
 	private int[] outcome = new int[3];
 	
 	public SlotMachine(){}
@@ -34,7 +34,8 @@ public class SlotMachine {
 	
 	// Tarkistetaan onko voittoja
 	public boolean checkWin() {
-		if (outcome[0] == outcome[1] && outcome[0] == outcome[2]) {
+		if ((outcome[0] == outcome[1] && outcome[0] == outcome[2]) || (outcome[0] == 6 && outcome[1] == outcome[2]) || (outcome[1] == 6 && outcome[0] == outcome[2]) || (outcome[2] == 6 && outcome[0] == outcome[1]) ||
+				(outcome[0] == 6 && outcome[1] == 6) || (outcome[1] == 6 && outcome[2] == 6) || (outcome[0] == 6 && outcome[2] == 6)){ // Erikseen tarkistetaan jos tulee "wild" iconeja
 			return true;
 		}
 		//System.out.println("Ei voittoja");
@@ -43,6 +44,11 @@ public class SlotMachine {
 	
 	// Maksetaan voitot
 	public int payout() {
+		for(int i = 0; i < outcome.length; i++) {
+			if(outcome[i] != 6) {
+				return winnings[outcome[i]]; // Jos kaikki rivit on 6 eli "wild"
+			}	
+		}
 		return winnings[outcome[0]];
 	}
 
