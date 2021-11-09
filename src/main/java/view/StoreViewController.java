@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
@@ -44,11 +45,16 @@ public class StoreViewController {
 	@FXML private Label creditLabel;
 	@FXML private Label coinLabel;
 	
+	@FXML private ChoiceBox<Double> buyWithCoinsChoiceBox;
+	@FXML private Label buyWithCoinsPriceLabel;
+	@FXML private Button buyWithCoinsBtn;
+	@FXML private Label buyWithCoinsSuccessLabel;
+	
 	public void initialize() {
-		
 		setProducts();
-		refreshAccountInfo();
-		
+		setDiscountProducts();
+		setChoiceBoxItems();
+		refreshAccountInfo();	
 	}
 	
 	public void setProducts() {
@@ -65,7 +71,6 @@ public class StoreViewController {
 				} else {
 					products2.add(p);
 				}
-				
 			} 
 		}
 		
@@ -74,7 +79,7 @@ public class StoreViewController {
 		//Tehdään alennustuotteille oma GridPane, jonka sarakkeisiin asetetaan tuotetiedot, sitten GridPane asetetaan HBoxiin
 		GridPane innerPane = new GridPane();
 		innerPane.setVgap(6); //Rivien välille vähän tyhjää tilaa
-		innerPane.setStyle("-fx-border-style: solid inside;");
+		
 		innerPane.setPadding(new Insets(18, 0, 18, 24));
 		
 		for (i = 0 ; i < products1.size() ; i++) {
@@ -132,13 +137,18 @@ public class StoreViewController {
 		
 		hbox.getChildren().add(innerPane);
 		scrollpane.setContent(innerPane); //Ilman tätä ikkunaa ei voi scrollata (jos tuotteita on paljon)
+	}
+	
+	//-------------------------------------
+	
+	public void setDiscountProducts() {
 		
 		GridPane lowerPane = new GridPane();
 		lowerPane.setVgap(6); //Rivien välille vähän tyhjää tilaa
-		lowerPane.setStyle("-fx-border-style: solid inside;");
+	//	lowerPane.setStyle("-fx-border-style: solid inside;");
 		lowerPane.setPadding(new Insets(18, 0, 18, 24));
 		
-		for (i = 0 ; i < products2.size() ; i++) {
+		for (int i = 0 ; i < products2.size() ; i++) {
 			
 			lowerPane.getColumnConstraints().add(new ColumnConstraints(200)); //Sarakkeen leveys
 			
@@ -181,7 +191,35 @@ public class StoreViewController {
 		hbox2.getChildren().add(lowerPane);
 		scrollpane2.setContent(lowerPane);
 		
-
+	}
+	
+	//-------------------------------------
+	
+	public void setChoiceBoxItems() {
+		buyWithCoinsChoiceBox.getItems().add(0.1);
+		buyWithCoinsChoiceBox.getItems().add((double) 1);
+		buyWithCoinsChoiceBox.getItems().add((double) 10);
+		buyWithCoinsChoiceBox.getItems().add((double) 100);
+		
+		buyWithCoinsChoiceBox.setOnAction((e) -> {	
+			double creditAmount = buyWithCoinsChoiceBox.getSelectionModel().getSelectedItem();
+		    int coinAmount = (int) (1000 * creditAmount);
+			
+			buyWithCoinsPriceLabel.setText("Hinta " + String.valueOf(coinAmount));
+			buyWithCoinsPriceLabel.setVisible(true);
+			buyWithCoinsBtn.setVisible(true);
+			
+			//Ostotapahtuma kolikoilla
+			buyWithCoinsBtn.setOnAction((e2) -> {
+			    if (Tietokanta.decreaseCoinBalance(coinAmount) != 0) {
+			    	Tietokanta.increaseCreditBalance(creditAmount);
+			    	buyWithCoinsSuccessLabel.setText("Onnistui!");
+			    	refreshAccountInfo();
+			    } else {
+			    	buyWithCoinsSuccessLabel.setText("Ei tarpeeksi kolikoita tilillä");
+			    }
+			}); 
+		});
 	}
 	
 	//Asetetaan sivun ylälaitaan käyttäjänimi ja saldot
