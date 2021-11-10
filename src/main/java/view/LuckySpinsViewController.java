@@ -19,6 +19,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Tietokanta;
@@ -44,8 +45,17 @@ public class LuckySpinsViewController implements Initializable{
 	@FXML ToggleButton payline2;
 	@FXML ToggleButton payline3;
 	@FXML Label balanceLabel;
+	@FXML Rectangle rectangle;
+	@FXML Label setSpinsLabel;
+	@FXML Button setSpinsButton;
+	@FXML Button setSpins1;
+	@FXML Button setSpins2;
+	@FXML Button setSpins3;
+	@FXML Button setSpins4;
+	@FXML Button setSpins5;
 	private Image spin1, spin2, spin3;
 	private Image[] gifs = new Image[6];
+	private boolean isSetSpin = false;
 	int winning = 0;
 	
 	private void init() throws FileNotFoundException {
@@ -72,6 +82,29 @@ public class LuckySpinsViewController implements Initializable{
         }
 	}
 	
+	public void setSpins(ActionEvent e) {
+		if(!isSetSpin) {
+			rectangle.setTranslateY(-50);
+			setSpinsElements(true);
+			isSetSpin = true;
+		}
+		else {
+			setSpinsElements(false);
+			rectangle.setTranslateY(0);
+			isSetSpin = false;
+		}
+	}
+	
+	private void setSpinsElements(Boolean bool) {
+		setSpins1.setVisible(bool);
+		setSpins2.setVisible(bool);
+		setSpins3.setVisible(bool);
+		setSpins4.setVisible(bool);
+		setSpins5.setVisible(bool);
+		setSpinsLabel.setVisible(bool);
+		winLabel.setVisible(!bool);
+	}
+	
 	public void spin(ActionEvent e) throws FileNotFoundException{
 		SlotMachine game1 = new SlotMachine();
 		SlotMachine game2 = new SlotMachine();
@@ -93,6 +126,7 @@ public class LuckySpinsViewController implements Initializable{
 		Timeline tl = new Timeline(new KeyFrame(Duration.millis(1000), ea -> {
 				try {showIcons(game1.getOutcome(),game2.getOutcome(),game3.getOutcome()); System.out.println("nyt");} catch (FileNotFoundException e1) {}
 				spinButton.setDisable(false);
+				setSpinsButton.setDisable(false);
 				if(isWin(game1,game2,game3)) {
 					winLabel.setText("Voitit " + winning + " krediittiä");
 					balanceLabel.setText("Saldo: " + User.getCredits());
@@ -105,6 +139,7 @@ public class LuckySpinsViewController implements Initializable{
 		tl.play();
 		spinAnimation();
 		spinButton.setDisable(true);
+		setSpinsButton.setDisable(true);
 		winLabel.setText("Onnea peliin!");
 	}
 	
