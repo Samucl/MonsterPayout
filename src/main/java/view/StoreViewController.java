@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -49,6 +50,8 @@ public class StoreViewController {
 	@FXML private Label buyWithCoinsPriceLabel;
 	@FXML private Button buyWithCoinsBtn;
 	@FXML private Label buyWithCoinsSuccessLabel;
+	@FXML private ImageView coinImage;
+	
 	
 	public void initialize() {
 		setProducts();
@@ -208,6 +211,7 @@ public class StoreViewController {
 			buyWithCoinsPriceLabel.setText("Hinta " + String.valueOf(coinAmount));
 			buyWithCoinsPriceLabel.setVisible(true);
 			buyWithCoinsBtn.setVisible(true);
+			coinImage.setVisible(true);
 			
 			//Ostotapahtuma kolikoilla
 			buyWithCoinsBtn.setOnAction((e2) -> {
@@ -225,8 +229,8 @@ public class StoreViewController {
 	//Asetetaan sivun ylälaitaan käyttäjänimi ja saldot
 	public void refreshAccountInfo() {
 		nameLabel.setText(User.getUsername());
-		creditLabel.setText("Krediitit: " + User.getCredits());
-		coinLabel.setText("Kolikot: " + User.getCoins());
+		creditLabel.setText(String.valueOf(User.getCredits()));
+		coinLabel.setText(String.valueOf(User.getCoins()));
 	}
 	
 	public void buyProduct(Product p) {

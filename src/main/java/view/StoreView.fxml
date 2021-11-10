@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -18,9 +20,9 @@
    <top>
       <GridPane prefHeight="40.0" prefWidth="856.0" BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="262.40000305175784" minWidth="10.0" prefWidth="154.39999694824218" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="491.9999633789062" minWidth="10.0" prefWidth="220.40002441406247" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="864.1999877929687" minWidth="10.0" prefWidth="752.3999755859373" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="262.40000305175784" minWidth="10.0" prefWidth="178.1333221435547" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="491.9999633789062" minWidth="10.0" prefWidth="196.33334350585935" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="864.1999877929687" minWidth="10.0" prefWidth="774.4666564941405" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
@@ -29,24 +31,49 @@
          <children>
             <Label fx:id="coinLabel" text="Label" GridPane.columnIndex="2">
                <GridPane.margin>
-                  <Insets left="16.0" />
+                  <Insets left="44.0" />
                </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
             </Label>
             <Label fx:id="creditLabel" text="Label" GridPane.columnIndex="1">
                <GridPane.margin>
-                  <Insets left="16.0" />
+                  <Insets left="44.0" />
                </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
             </Label>
             <Label fx:id="nameLabel" text="Label">
                <GridPane.margin>
                   <Insets left="16.0" />
                </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
             </Label>
             <Button fx:id="toMainBtn" mnemonicParsing="false" onAction="#toMainView" text="Pelivalikkoon" GridPane.columnIndex="3" GridPane.halignment="RIGHT">
                <GridPane.margin>
                   <Insets right="16.0" />
                </GridPane.margin>
             </Button>
+            <ImageView fitHeight="80.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <image>
+                  <Image url="@/credit_1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+               <image>
+                  <Image url="@/coin_1.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
          </children>
          <opaqueInsets>
             <Insets />
@@ -103,7 +130,7 @@
                <children>
                   <Button fx:id="buyWithCoinsBtn" mnemonicParsing="false" text="OSTA!" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP">
                      <font>
-                        <Font size="17.0" />
+                        <Font name="System Bold" size="17.0" />
                      </font>
                      <GridPane.margin>
                         <Insets />
@@ -119,22 +146,33 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="buyWithCoinsChoiceBox" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <ChoiceBox fx:id="buyWithCoinsChoiceBox" prefWidth="88.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Label GridPane.halignment="CENTER" GridPane.rowIndex="3">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                  <ImageView fx:id="coinImage" fitHeight="80.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                      <GridPane.margin>
-                        <Insets right="70.0" />
+                        <Insets right="104.0" />
                      </GridPane.margin>
+                     <image>
+                        <Image url="@/coin_1.png" />
+                     </image>
                   </ImageView>
                   <Label fx:id="buyWithCoinsSuccessLabel" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets top="44.0" />
                      </GridPane.margin>
                   </Label>
+                  <ImageView fitHeight="92.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@/credit_1.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets right="104.0" />
+                     </GridPane.margin>
+                  </ImageView>
                </children>
             </GridPane>
          </children>
