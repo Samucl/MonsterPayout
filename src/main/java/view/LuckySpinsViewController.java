@@ -53,10 +53,13 @@ public class LuckySpinsViewController implements Initializable{
 	@FXML Button setSpins3;
 	@FXML Button setSpins4;
 	@FXML Button setSpins5;
+	@FXML Label spinsLeftLabel;
 	private Image spin1, spin2, spin3;
 	private Image[] gifs = new Image[6];
 	private boolean isSetSpin = false;
-	int winning = 0;
+	private int autoSpins = 0;;
+	private int winning = 0;
+	private int testi = 400;
 	
 	private void init() throws FileNotFoundException {
 		payline1.setSelected(false);
@@ -82,30 +85,20 @@ public class LuckySpinsViewController implements Initializable{
         }
 	}
 	
-	public void setSpins(ActionEvent e) {
-		if(!isSetSpin) {
-			rectangle.setTranslateY(-50);
-			setSpinsElements(true);
-			isSetSpin = true;
-		}
-		else {
-			setSpinsElements(false);
-			rectangle.setTranslateY(0);
-			isSetSpin = false;
-		}
-	}
-	
-	private void setSpinsElements(Boolean bool) {
-		setSpins1.setVisible(bool);
-		setSpins2.setVisible(bool);
-		setSpins3.setVisible(bool);
-		setSpins4.setVisible(bool);
-		setSpins5.setVisible(bool);
-		setSpinsLabel.setVisible(bool);
-		winLabel.setVisible(!bool);
-	}
 	
 	public void spin(ActionEvent e) throws FileNotFoundException{
+		if(autoSpins != 0) { //Sama painike voi myös lopettaa auto spin toiminnon
+			autoSpins = 0;
+			spinsLeftLabel.setVisible(false);
+			spinButton.setText("Pyöräytä");
+			setSpinsButton.setDisable(false);
+		}
+		else {
+			manualSpin(1000);
+		}
+	}
+	
+	private void manualSpin(int timeInMillis) throws FileNotFoundException{
 		SlotMachine game1 = new SlotMachine();
 		SlotMachine game2 = new SlotMachine();
 		SlotMachine game3 = new SlotMachine();
@@ -123,7 +116,7 @@ public class LuckySpinsViewController implements Initializable{
 		if(isWin(game1,game2,game3))
 			Tietokanta.increaseCreditBalance(winning);
 		
-		Timeline tl = new Timeline(new KeyFrame(Duration.millis(1000), ea -> {
+		Timeline tl = new Timeline(new KeyFrame(Duration.millis(timeInMillis), ea -> {
 				try {showIcons(game1.getOutcome(),game2.getOutcome(),game3.getOutcome()); System.out.println("nyt");} catch (FileNotFoundException e1) {}
 				spinButton.setDisable(false);
 				setSpinsButton.setDisable(false);
@@ -134,7 +127,6 @@ public class LuckySpinsViewController implements Initializable{
 				else
 					winLabel.setText("Ei voittoa");
 		}));
-
 		tl.setCycleCount(1);
 		tl.play();
 		spinAnimation();
@@ -142,6 +134,7 @@ public class LuckySpinsViewController implements Initializable{
 		setSpinsButton.setDisable(true);
 		winLabel.setText("Onnea peliin!");
 	}
+	
 	
 	private boolean isWin(SlotMachine game1, SlotMachine game2, SlotMachine game3) {
 			return (game1.checkWin() && payline1.isSelected())  || (game2.checkWin() && payline2.isSelected())  || (game3.checkWin() && payline3.isSelected());
@@ -193,6 +186,67 @@ public class LuckySpinsViewController implements Initializable{
 		gif3.setImage(gifs[outcome1[2]-1]);
 		gif6.setImage(gifs[outcome2[2]-1]);
 		gif9.setImage(gifs[outcome3[2]-1]);
+	}
+	
+	public void setSpins(ActionEvent e) {
+		if(!isSetSpin) {
+			rectangle.setTranslateY(-50);
+			setSpinsElements(true);
+			isSetSpin = true;
+		}
+		else {
+			setSpinsElements(false);
+			rectangle.setTranslateY(0);
+			isSetSpin = false;
+		}
+	}
+	
+	private void setSpinsElements(Boolean bool) {
+		setSpins1.setVisible(bool);
+		setSpins2.setVisible(bool);
+		setSpins3.setVisible(bool);
+		setSpins4.setVisible(bool);
+		setSpins5.setVisible(bool);
+		setSpinsLabel.setVisible(bool);
+		winLabel.setVisible(!bool);
+	}
+	
+	public void setSpinsButton1(ActionEvent e) {
+		autoSpins += 10;
+		setAutoSpins();
+	}
+	public void setSpinsButton2(ActionEvent e) {
+		autoSpins += 20;
+		setAutoSpins();
+	}
+	public void setSpinsButton3(ActionEvent e) {
+		autoSpins += 40;
+		setAutoSpins();
+	}
+	public void setSpinsButton4(ActionEvent e) {
+		autoSpins += 70;
+		setAutoSpins();
+	}
+	public void setSpinsButton5(ActionEvent e) {
+		autoSpins += 100;
+		setAutoSpins();
+	}
+	
+	private void setAutoSpins() {
+		spinsLeftLabel.setVisible(true);
+		rectangle.setTranslateY(0);
+		spinButton.setText("Lopeta");
+		setSpinsElements(false);
+		isSetSpin = false;
+		setSpinsButton.setDisable(true);
+		try {
+			for(int i = 200; autoSpins != 0; i+=1000) {
+				manualSpin(i);
+				autoSpins--;
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
