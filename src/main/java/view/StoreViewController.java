@@ -1,5 +1,7 @@
 package view;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
@@ -99,9 +102,24 @@ public class StoreViewController {
 			nameLabel.setFont(Font.font(16));
 			innerPane.add(nameLabel, i, 1);
 			
-			Label creditLabel = new Label(Double.toString(products1.get(i).getCreditAmount()) + " krediittiä");
+			Label creditLabel = new Label(Double.toString(products1.get(i).getCreditAmount()));
 			creditLabel.setFont(Font.font(18));
 			innerPane.add(creditLabel, i, 2);
+			
+			FileInputStream input;
+			try {
+				input = new FileInputStream("./src/main/resources/credit_1.png");
+				Image image = new Image(input);
+		        ImageView imageView = new ImageView(image);
+		        imageView.setFitWidth(35);
+		        imageView.setTranslateX(Double.toString(products1.get(i).getCreditAmount()).length() * 9); //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
+		        imageView.setPreserveRatio(true);
+		        innerPane.add(imageView, i, 2);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        
 			
 			if (products1.get(i).getSaleMultiplier() < 0.99) { //Jos tuote on alennuksessa niin ilmoitetaan tässä vanha hinta
 				String oldPriceStr = String.valueOf(products1.get(i).getPrice()) + " €";
@@ -121,11 +139,23 @@ public class StoreViewController {
 			buyBtn.setFont(Font.font("system", FontWeight.BOLD, 18));
 			innerPane.add(buyBtn, i, 5);
 			
-			if (products1.get(i).getCoinAmount() != 0) { //Jos tuotteesta saa kolikkobonuksen niin laitetaan se ylimääräiseksi sarakkeeksi tähän väliin
+			if (products1.get(i).getCoinAmount() != 0) { //Jos tuotteesta saa kolikkobonuksen niin laitetaan se ylimääräiseksi sarakkeeksi
 				
-				Label coinLabel = new Label("+" + Integer.toString(products1.get(i).getCoinAmount()) + " kolikkoa bonusta!");
-				coinLabel.setFont(Font.font("system", FontPosture.ITALIC, 14));
-				innerPane.add(coinLabel, i, 6);
+				FileInputStream input2;
+				try {
+					Label coinLabel = new Label("Bonuksena " + Integer.toString(products1.get(i).getCoinAmount()));
+					coinLabel.setFont(Font.font("system", FontPosture.ITALIC, 14));
+					innerPane.add(coinLabel, i, 6);
+					input2 = new FileInputStream("./src/main/resources/coin_1.png");
+					Image image = new Image(input2);
+			        ImageView imageView = new ImageView(image);
+			        imageView.setFitWidth(26);
+			        imageView.setTranslateX(coinLabel.getText().length() * 7.2); //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
+			        imageView.setPreserveRatio(true);
+			        innerPane.add(imageView, i, 6);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}		
 			}
 			
 			Product p = products1.get(i);		
@@ -149,7 +179,7 @@ public class StoreViewController {
 		GridPane lowerPane = new GridPane();
 		lowerPane.setVgap(6); //Rivien välille vähän tyhjää tilaa
 	//	lowerPane.setStyle("-fx-border-style: solid inside;");
-		lowerPane.setPadding(new Insets(18, 0, 18, 24));
+		lowerPane.setPadding(new Insets(0, 0, 18, 24));
 		
 		for (int i = 0 ; i < products2.size() ; i++) {
 			
@@ -159,9 +189,22 @@ public class StoreViewController {
 			nameLabel.setFont(Font.font(16));
 			lowerPane.add(nameLabel, i, 0);
 			
-			Label creditLabel = new Label(Double.toString(products2.get(i).getCreditAmount()) + " krediittiä");
+			Label creditLabel = new Label(Double.toString(products2.get(i).getCreditAmount()));
 			creditLabel.setFont(Font.font(18));
 			lowerPane.add(creditLabel, i, 1);
+			
+			FileInputStream input;
+			try {
+				input = new FileInputStream("./src/main/resources/credit_1.png");
+				Image image = new Image(input);
+		        ImageView imageView = new ImageView(image);
+		        imageView.setFitWidth(35);
+		        imageView.setTranslateX(Double.toString(products2.get(i).getCreditAmount()).length() * 9); //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
+		        imageView.setPreserveRatio(true);
+		        lowerPane.add(imageView, i, 1);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 			
 			double price = products2.get(i).getPrice();
 			
@@ -174,11 +217,23 @@ public class StoreViewController {
 			buyBtn.setFont(Font.font("system", FontWeight.BOLD, 18));
 			lowerPane.add(buyBtn, i, 3);
 			
-			if (products2.get(i).getCoinAmount() != 0) { //Jos tuotteesta saa kolikkobonuksen niin laitetaan se ylimääräiseksi sarakkeeksi tähän väliin
+			if (products2.get(i).getCoinAmount() != 0) { //Jos tuotteesta saa kolikkobonuksen niin laitetaan se ylimääräiseksi sarakkeeksi tähän
 				
-				Label coinLabel = new Label("+" + Integer.toString(products2.get(i).getCoinAmount()) + " kolikkoa bonusta!");
-				coinLabel.setFont(Font.font("system", FontPosture.ITALIC, 14));
-				lowerPane.add(coinLabel, i, 4);
+				FileInputStream input2;
+				try {
+					Label coinLabel = new Label("Bonuksena " + Integer.toString(products2.get(i).getCoinAmount()));
+					coinLabel.setFont(Font.font("system", FontPosture.ITALIC, 14));
+					lowerPane.add(coinLabel, i, 4);
+					input2 = new FileInputStream("./src/main/resources/coin_1.png");
+					Image image = new Image(input2);
+			        ImageView imageView = new ImageView(image);
+			        imageView.setFitWidth(26);
+			        imageView.setTranslateX(coinLabel.getText().length() * 7.2); //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
+			        imageView.setPreserveRatio(true);
+			        lowerPane.add(imageView, i, 4);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
 			}
 			
 			Product p = products2.get(i);		

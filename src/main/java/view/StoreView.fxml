@@ -66,7 +66,7 @@
                   <Image url="@/credit_1.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+            <ImageView fitHeight="80.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                <image>
                   <Image url="@/coin_1.png" />
                </image>
