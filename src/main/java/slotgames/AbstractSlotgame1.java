@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javafx.scene.image.Image;
+
 public abstract class AbstractSlotgame1 {
 	
 	private final int bonus_symbols = 3;
@@ -112,7 +114,9 @@ public abstract class AbstractSlotgame1 {
 		}
 	}
 	
-	public void spin() {
+	public Image[] spin() {
+		int imageCount = rows.length * rows[0].length;
+		Image[] symbolImages = new Image[imageCount];
 		Random rand = new Random();
 		/*
 		 * Syötetään kaksiuloitteeseen rows tauluun
@@ -121,19 +125,31 @@ public abstract class AbstractSlotgame1 {
 		for(SlotSymbol[] row : rows) {
 			for(int i = 0; i < row.length; i++) {
 				row[i] = reel_of_symbols.get(rand.nextInt(reel_of_symbols.size()));
+				
 			}
 		}
 		
 		/*
+		 * Haetaan kuvat tauluun joka palautetaan
 		 * Kirjoitetaan näytölle testin vuoksi
 		 */
 		for(int i = 0; i < rows.length; i++) {
 			String s = "";
 			for(int y = 0; y < rows[i].length; y++) {
+				/*
+				 * ÄLÄ POISTA TÄTÄ
+				 */
+				symbolImages[i]=rows[i][y].getImage();
+				
+				/*
+				 * DEBUGGAUSTA VARTEN
+				 * SAA POISTAA
+				 */
 				s+=rows[i][y].getName()+"-";
 			}
 			System.out.println(s);
 		}
+		return symbolImages;
 	}
 	
 	public void checkLines() {

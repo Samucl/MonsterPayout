@@ -65,7 +65,7 @@ public class SlotSymbol {
 				break;
 			case 1:
 				multipliers = new Double[]{0.0, 0.0, 3.0, 10.0, 60.0};
-				probability = 3;
+				probability = 5;
 				break;
 			case 2:
 				multipliers = new Double[]{0.0, 0.0, 2.0, 6.0, 20.0};
@@ -77,15 +77,15 @@ public class SlotSymbol {
 				break;
 			case 4:
 				multipliers = new Double[]{0.0, 0.0, 1.0, 3.0, 8.0};
-				probability = 15;
+				probability = 20;
 				break;
 			case 5:
 				multipliers = new Double[]{0.0, 0.0, 0.5, 2.0, 4.0};
-				probability = 20;
+				probability = 50;
 				break;
 			default:
 				multipliers = new Double[]{0.0, 0.0, 0.5, 2.0, 4.0};
-				probability = 20;
+				probability = 50;
 				break;
 		}
 	}
