@@ -13,6 +13,27 @@ public class Tietokanta {
 	final static String URL = "jdbc:mariadb://10.114.32.22:3306/kasino";
 	final static String USERNAME = "remote";
 	final static String PASSWORD = "remote";
+	private static Connection connection;
+	private static Tietokanta instance = null;
+	
+	private Tietokanta() {
+		try {
+			connection = DriverManager.getConnection(
+					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+		} catch (SQLException e) {
+			do {
+				System.err.println("Viesti: "+e.getMessage());
+				System.err.println("Virhekoodi: "+e.getErrorCode());
+				System.err.println("SQL-tilakoodi: "+e.getSQLState());
+			} while (e.getNextException() != null);
+		}
+	}
+	
+	public static Tietokanta getInstance() {
+		if(instance==null)
+			instance = new Tietokanta();
+		return instance;
+	}
 	
 	private static boolean loggedIn = false;
 	
@@ -23,9 +44,7 @@ public class Tietokanta {
 	
 	public static boolean testConnection() {
 		try {
-			Connection con;
-			con = DriverManager.getConnection(
-					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+			Connection con = connection;
 			
 			Statement stmt = con.createStatement();
 			
@@ -46,11 +65,9 @@ public class Tietokanta {
 		/*
 		 * Luodaan käyttäjän istunto. Samalla haetaan alustavasti kaikki käyttäjän tilaukset yms.
 		 */
-		
 		try {
-			Connection con;
-			con = DriverManager.getConnection(
-					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+			
+			Connection con = connection;
 			
 			Statement stmt = con.createStatement();
 			
@@ -96,6 +113,7 @@ public class Tietokanta {
 					}
 					
 				}
+		
 			
 		} catch (SQLException e) {
 			do {
@@ -111,9 +129,7 @@ public class Tietokanta {
 	private static void lastLogin(ResultSet rs) {
 		
 		try {
-			Connection con;
-			con = DriverManager.getConnection(
-					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+			Connection con = connection;
 			Statement stmt = con.createStatement();
 			Date last_login = rs.getDate("Last_login");
 			
@@ -169,9 +185,7 @@ public class Tietokanta {
 	
 	public static Product[] getProducts() {
 		try {
-			Connection con;
-			con = DriverManager.getConnection(
-					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+			Connection con = connection;
 			
 			Statement stmt = con.createStatement();
 			
@@ -223,9 +237,7 @@ public class Tietokanta {
 	public static Order[] getOrders() {
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
-				Connection con;
-				con = DriverManager.getConnection(
-						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				Connection con = connection;
 				
 				Statement stmt = con.createStatement();
 				
@@ -280,9 +292,7 @@ public class Tietokanta {
 		 */
 		
 		try {
-			Connection con;
-			con = DriverManager.getConnection(
-					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+			Connection con = connection;
 			
 			Statement stmt = con.createStatement();
 			
@@ -337,9 +347,7 @@ public class Tietokanta {
 		 * True tarkoittaa ettei käyttäjänimellä ole vielä tehty käyttäjää.
 		 */
 		try {
-			Connection con;
-			con = DriverManager.getConnection(
-					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+			Connection con = connection;
 			
 			Statement stmt = con.createStatement();
 			
@@ -385,9 +393,7 @@ public class Tietokanta {
 		
 		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
-				Connection con;
-				con = DriverManager.getConnection(
-						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				Connection con = connection;
 				
 				Statement stmt = con.createStatement();
 				
@@ -453,9 +459,7 @@ public class Tietokanta {
 		
 		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
-				Connection con;
-				con = DriverManager.getConnection(
-						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				Connection con = connection;
 				
 				Statement stmt = con.createStatement();
 				
@@ -520,8 +524,7 @@ public class Tietokanta {
 			if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 				
 				try {
-					Connection con = DriverManager.getConnection(
-							URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+					Connection con = connection;
 					
 					Statement stmt = con.createStatement();
 					
@@ -569,8 +572,7 @@ public class Tietokanta {
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			
 			try {
-				Connection con = DriverManager.getConnection(
-						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				Connection con = connection;
 				
 				Statement stmt = con.createStatement();
 				
@@ -627,8 +629,7 @@ public class Tietokanta {
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			
 			try {
-				Connection con = DriverManager.getConnection(
-						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				Connection con = connection;
 				
 				Statement stmt = con.createStatement();
 				
@@ -672,8 +673,7 @@ public class Tietokanta {
 	public static boolean createProduct(Product product) {
 		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
-				Connection con = DriverManager.getConnection(
-						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				Connection con = connection;
 				
 				Statement stmt = con.createStatement();
 				
@@ -715,8 +715,7 @@ public class Tietokanta {
 	public static boolean editProduct(Product product) {
 		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
-				Connection con = DriverManager.getConnection(
-						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				Connection con = connection;
 				
 				Statement stmt = con.createStatement();
 				
@@ -767,8 +766,7 @@ public class Tietokanta {
 	public static boolean deleteProduct(int productNumber) {
 		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
-				Connection con = DriverManager.getConnection(
-						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				Connection con = connection;
 				
 				Statement stmt = con.createStatement();
 				
@@ -810,8 +808,7 @@ public class Tietokanta {
 	public static boolean saveProfileChanges() {
 		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
-				Connection con = DriverManager.getConnection(
-						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				Connection con = connection;
 				
 				Statement stmt = con.createStatement();
 				
@@ -856,8 +853,7 @@ public class Tietokanta {
 	public static int getHighScore(String peli) {
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
-				Connection con = DriverManager.getConnection(
-						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				Connection con = connection;
 				
 				Statement stmt = con.createStatement();
 				
@@ -885,8 +881,7 @@ public class Tietokanta {
 	public static boolean setHighScore(int highScore, String peli) {
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
-				Connection con = DriverManager.getConnection(
-						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				Connection con = connection;
 				
 				Statement stmt = con.createStatement();
 				if(getHighScore(peli) < highScore) {
@@ -921,8 +916,7 @@ public class Tietokanta {
 		
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
-				Connection con = DriverManager.getConnection(
-						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				Connection con = connection;
 				
 				Statement stmt = con.createStatement();
 				String query;
@@ -976,8 +970,7 @@ public class Tietokanta {
 		
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
-				Connection con = DriverManager.getConnection(
-						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				Connection con = connection;
 				
 				Statement stmt = con.createStatement();
 				
@@ -1005,8 +998,7 @@ public class Tietokanta {
 	public static boolean setHighScoreTime(double time, String game) {
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
-				Connection con = DriverManager.getConnection(
-						URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+				Connection con = connection;
 				
 				Statement stmt = con.createStatement();
 				if(getHighScoreTime(game) > time && getHighScoreTime(game) != 0) {
@@ -1045,9 +1037,7 @@ public class Tietokanta {
 	
 	public static boolean deleteTestUser() {
 		try {
-			Connection con;
-			con = DriverManager.getConnection(
-					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+			Connection con = connection;
 			
 			Statement stmt = con.createStatement();
 			

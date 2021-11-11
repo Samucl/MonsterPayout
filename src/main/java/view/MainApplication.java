@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import model.Tietokanta;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -19,6 +20,11 @@ public class MainApplication extends Application {
 	*/
 	@Override
 	public void start(Stage primaryStage) {
+		/*
+		 * Tehdään ilmentymä tietokanta luokasta
+		 */
+		Tietokanta.getInstance();
+		
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("MonsterPayout");
         showKirjautumisView();
