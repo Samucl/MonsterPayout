@@ -13,6 +13,7 @@ public abstract class AbstractSlotgame1 {
 	private final int bonus_symbols = 3;
 	private final int scatter_symbols = 3;
 	private final int[] scatter_freespins = {5,10,15};
+	protected final String resourcePath = "./src/main/resources/slot_icons/";
 	/*
 	 * Symboolien määrä. Tässä otetaan sama määrä kuin Veikkauksen 
 	 * Kulta-Jaska 2 pelissä ja matkitaan symboolejen arvoa
@@ -29,6 +30,15 @@ public abstract class AbstractSlotgame1 {
 	 * 9 = 
 	 */
 	protected SlotSymbol[] symbols;
+	
+	/*
+	 * Metodilla ladataan symboolien kuvakkeet
+	 */
+	abstract void loadSymbols();
+	
+	/*
+	 * Metodilla luodaan symboolit (asetetaan arvot ja kuvat kohdilleen)
+	 */
 	abstract void createSymbols();
 	
 	/*
@@ -69,7 +79,16 @@ public abstract class AbstractSlotgame1 {
 	private List<SlotSymbol> reel_of_symbols = new ArrayList<SlotSymbol>();
 	
 	public AbstractSlotgame1() {
-		try{createSymbols();}catch(Exception e) {
+		try{
+			/*
+			 * Ladataan symboolit tiedostoista
+			 */
+			loadSymbols();
+			/*
+			 * Tehdään symboolit pelille
+			 */
+			createSymbols();
+			}catch(Exception e) {
 			fatalError();
 		}
 		/*
