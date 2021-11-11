@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class SlotsMadness {
+public abstract class AbstractSlotgame1 {
 	
 	private final int bonus_symbols = 3;
 	private final int scatter_symbols = 3;
@@ -28,27 +28,8 @@ public class SlotsMadness {
 	 * 8 = 
 	 * 9 = 
 	 */
-	private SlotSymbol[] symbols = {
-			new SlotSymbol(null, 2, "bonus",false,true,false),
-			
-			new SlotSymbol(null, 0, "scatter",false,false,true),
-			
-			new SlotSymbol(null, 2, "wild",true,false,false),
-			
-			new SlotSymbol(null, 0, "kulta"),
-			
-			new SlotSymbol(null, 1, "hopea"),
-			
-			new SlotSymbol(null, 2, "pronssi"),
-			
-			new SlotSymbol(null, 3, "hakku"),
-			
-			new SlotSymbol(null, 4, "lintu"),
-			
-			new SlotSymbol(null, 5, "marjat"),
-			
-			new SlotSymbol(null, 5, "muki")
-	};
+	protected SlotSymbol[] symbols;
+	abstract void createSymbols();
 	
 	/*
 	 * Pelin constructori hakee tähän muuttujaan parhaimman symboolin
@@ -87,7 +68,10 @@ public class SlotsMadness {
 	
 	private List<SlotSymbol> reel_of_symbols = new ArrayList<SlotSymbol>();
 	
-	public SlotsMadness() {
+	public AbstractSlotgame1() {
+		try{createSymbols();}catch(Exception e) {
+			fatalError();
+		}
 		/*
 		 * Jokaista määritettyä symboolia asetetaan 
 		 * reel_of_symbols listaan niin monta kertaa, kuin 
@@ -283,6 +267,14 @@ public class SlotsMadness {
 			System.out.println("LAUNCH BONUS");
 		if(freespins>0)
 			System.out.println(freespins+" FREESPINS");
+	}
+	
+	public void fatalError() throws NullPointerException {
+		/*
+		 * Tämä metodi heittäisi käyttäjälle ilmoituksen virheestä
+		 * ja ohjelma palaa pois pelistä
+		 */
+		throw new NullPointerException("Virhe avatessa peliä.");
 	}
 	
 	public void launchBonus() {

@@ -1,5 +1,7 @@
 package slotgames;
 
+import javafx.scene.image.Image;
+
 public class SlotSymbol {
 	/*
 	 * Kaikki pelit, jotka käyttävät näitä symbooleja 
@@ -12,6 +14,8 @@ public class SlotSymbol {
 	private boolean isWild = false;
 	private boolean isBonus = false;
 	private boolean isScatter = false;
+	
+	private Image image = null;
 	
 	/*
 	 * Mitä isompi luku on probabilityssä, sitä suuremmalla todennäköisyydellä 
@@ -26,22 +30,26 @@ public class SlotSymbol {
 	 * merkkijono joka antaa nimen,
 	 * booleanit jotka määrittävät onki symbooli villi tai bonus
 	 */
-	public SlotSymbol(int type, String name, boolean wild, boolean bonus, boolean scatter) {
+	public SlotSymbol(Image symbol, int type, String name, boolean wild, boolean bonus, boolean scatter) {
 		isWild = wild;
 		isBonus = bonus;
 		isScatter = scatter;
 		this.name = name;
+		if(symbol!=null)
+			image = symbol;
 		setMultipliers(type);
 	}
 	
 	/*
 	 * Perus symboolin constructor
 	 */
-	public SlotSymbol(int type, String name) {
+	public SlotSymbol(Image symbol, int type, String name) {
 		isWild = false;
 		isBonus = false;
 		isScatter = false;
 		this.name = name;
+		if(symbol!=null)
+			image = symbol;
 		setMultipliers(type);
 	}
 	
@@ -108,6 +116,10 @@ public class SlotSymbol {
 	
 	public double getMaxMultiplier() {
 		return multipliers[multipliers.length-1];
+	}
+	
+	public Image getImage() {
+		return image;
 	}
 
 }
