@@ -53,19 +53,24 @@ public class LuckySpinsViewController implements Initializable{
 	@FXML Button setSpins3;
 	@FXML Button setSpins4;
 	@FXML Button setSpins5;
+	@FXML Button betButton;
+	@FXML Button turboButton;
 	@FXML Label spinsLeftLabel;
 	private Image spin1, spin2, spin3;
 	private Image[] gifs = new Image[6];
 	private boolean isSetSpin = false;
-	private int autoSpins = 0;;
+	private boolean isTurbo = false;
+	private int autoSpins = 0;
+	private int spinsLeft = 0;
 	private int winning = 0;
-	private int testi = 400;
+	private double bet = 1;
 	
 	private void init() throws FileNotFoundException {
 		payline1.setSelected(false);
 		payline2.setSelected(true);
 		payline3.setSelected(false);
 		balanceLabel.setText("Saldo: " + User.getCredits());
+		betButton.setText("Panos: " + (int)bet);
 		spin1 = new Image(new FileInputStream("./src/main/resources/slot_icons/spin1.gif"));
 		spin2 = new Image(new FileInputStream("./src/main/resources/slot_icons/spin2.gif"));
 		spin3 = new Image(new FileInputStream("./src/main/resources/slot_icons/spin3.gif"));
@@ -87,15 +92,11 @@ public class LuckySpinsViewController implements Initializable{
 	
 	
 	public void spin(ActionEvent e) throws FileNotFoundException{
-		if(autoSpins != 0) { //Sama painike voi myös lopettaa auto spin toiminnon
-			autoSpins = 0;
-			spinsLeftLabel.setVisible(false);
-			spinButton.setText("Pyöräytä");
-			setSpinsButton.setDisable(false);
-		}
-		else {
-			manualSpin(1000);
-		}
+		setButtonsDisable(true);
+			if(isTurbo)
+				manualSpin(100);
+			else
+				manualSpin(1000);
 	}
 	
 	private void manualSpin(int timeInMillis) throws FileNotFoundException{
@@ -106,6 +107,8 @@ public class LuckySpinsViewController implements Initializable{
 		game2.play();
 		game3.play();
 		
+		Tietokanta.decreaseCreditBalance((int)bet);
+		balanceLabel.setText("Saldo: " + User.getCredits());
 		winning = 0;
 		if(game1.checkWin() && payline1.isSelected())
 			winning += game1.payout();
@@ -114,14 +117,22 @@ public class LuckySpinsViewController implements Initializable{
 		if(game3.checkWin() && payline3.isSelected())
 			winning += game3.payout();
 		if(isWin(game1,game2,game3))
-			Tietokanta.increaseCreditBalance(winning);
+			Tietokanta.increaseCreditBalance(winning * bet);
 		
 		Timeline tl = new Timeline(new KeyFrame(Duration.millis(timeInMillis), ea -> {
-				try {showIcons(game1.getOutcome(),game2.getOutcome(),game3.getOutcome()); System.out.println("nyt");} catch (FileNotFoundException e1) {}
-				spinButton.setDisable(false);
-				setSpinsButton.setDisable(false);
+				try {
+					showIcons(game1.getOutcome(),game2.getOutcome(),game3.getOutcome());
+					System.out.println(spinsLeft);
+					if(spinsLeft>1) {
+						spinsLeftLabel.setText("Pyöräytykset: " + (--spinsLeft));
+					}
+					else {
+						setButtonsDisable(false);
+						spinsLeftLabel.setVisible(false);
+					}
+				} catch (FileNotFoundException e1) {}
 				if(isWin(game1,game2,game3)) {
-					winLabel.setText("Voitit " + winning + " krediittiä");
+					winLabel.setText("Voitit " + (winning*(int)bet) + " krediittiä");
 					balanceLabel.setText("Saldo: " + User.getCredits());
 				}
 				else
@@ -130,11 +141,15 @@ public class LuckySpinsViewController implements Initializable{
 		tl.setCycleCount(1);
 		tl.play();
 		spinAnimation();
-		spinButton.setDisable(true);
-		setSpinsButton.setDisable(true);
 		winLabel.setText("Onnea peliin!");
 	}
 	
+	private void setButtonsDisable(Boolean bool) {
+		spinButton.setDisable(bool);
+		setSpinsButton.setDisable(bool);
+		betButton.setDisable(bool);
+		turboButton.setDisable(bool);
+	}
 	
 	private boolean isWin(SlotMachine game1, SlotMachine game2, SlotMachine game3) {
 			return (game1.checkWin() && payline1.isSelected())  || (game2.checkWin() && payline2.isSelected())  || (game3.checkWin() && payline3.isSelected());
@@ -235,10 +250,10 @@ public class LuckySpinsViewController implements Initializable{
 	private void setAutoSpins() {
 		spinsLeftLabel.setVisible(true);
 		rectangle.setTranslateY(0);
-		spinButton.setText("Lopeta");
 		setSpinsElements(false);
 		isSetSpin = false;
-		setSpinsButton.setDisable(true);
+		setButtonsDisable(true);
+		spinsLeft = autoSpins;
 		try {
 			for(int i = 200; autoSpins != 0; i+=1000) {
 				manualSpin(i);
@@ -247,6 +262,22 @@ public class LuckySpinsViewController implements Initializable{
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setBet(ActionEvent e) {
+		bet = bet + bet/2;
+		bet = Math.round(bet);
+		if(bet > 140)
+			bet = 1;
+		betButton.setText("Panos: " + (int)bet);
+	}
+	
+	public void setTurbo(ActionEvent e) {
+		isTurbo = !isTurbo;
+		if(isTurbo)
+			turboButton.setStyle("-fx-background-color:  #b363db");
+		else
+			turboButton.setStyle("-fx-background-color:  #693b80");
 	}
 
 	@Override

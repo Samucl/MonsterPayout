@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LuckySpinsViewController">
+<BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(to bottom,#c77df0, #7db0f0);" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LuckySpinsViewController">
    <center>
       <GridPane BorderPane.alignment="CENTER">
          <columnConstraints>
@@ -28,7 +28,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <GridPane style="-fx-background-color: white;" GridPane.columnIndex="1">
+            <GridPane maxHeight="500.0" maxWidth="700.0" minHeight="500.0" minWidth="700.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <columnConstraints>
                   <ColumnConstraints />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -41,40 +41,41 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
+                  <Rectangle arcHeight="80.0" arcWidth="80.0" fill="WHITE" height="513.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" width="718.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <ImageView fx:id="gif4" fitHeight="184.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <ImageView fx:id="gif4" fitHeight="167.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@/slot_icons/diamond.gif" />
                      </image></ImageView>
-                  <ImageView fx:id="gif1" fitHeight="184.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <ImageView fx:id="gif1" fitHeight="167.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@/slot_icons/seven.gif" />
                      </image></ImageView>
-                  <ImageView fx:id="gif7" fitHeight="184.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <ImageView fx:id="gif7" fitHeight="167.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@/slot_icons/clover.gif" />
                      </image></ImageView>
-                  <ImageView fx:id="gif2" fitHeight="184.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <ImageView fx:id="gif2" fitHeight="167.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@/slot_icons/seven.gif" />
                      </image></ImageView>
-                  <ImageView fx:id="gif5" fitHeight="184.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <ImageView fx:id="gif5" fitHeight="167.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@/slot_icons/diamond.gif" />
                      </image></ImageView>
-                  <ImageView fx:id="gif8" fitHeight="184.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <ImageView fx:id="gif8" fitHeight="167.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@/slot_icons/clover.gif" />
                      </image></ImageView>
-                  <ImageView fx:id="gif3" fitHeight="184.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <ImageView fx:id="gif3" fitHeight="167.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@/slot_icons/seven.gif" />
                      </image></ImageView>
-                  <ImageView fx:id="gif6" fitHeight="184.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <ImageView fx:id="gif6" fitHeight="167.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@/slot_icons/diamond.gif" />
                      </image></ImageView>
-                  <ImageView fx:id="gif9" fitHeight="184.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <ImageView fx:id="gif9" fitHeight="167.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@/slot_icons/clover.gif" />
                      </image></ImageView>
@@ -107,7 +108,7 @@
                         <Insets right="20.0" />
                      </GridPane.margin>
                   </ToggleButton>
-                  <Label alignment="CENTER" text="Valitse voittolinjat" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                  <Label alignment="CENTER" text="Valitse voittolinjat" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="24.0" />
                      </font>
@@ -117,6 +118,9 @@
                      <padding>
                         <Insets right="20.0" top="20.0" />
                      </padding>
+                     <effect>
+                        <DropShadow height="8.9" radius="3.95" spread="1.0" width="8.9" />
+                     </effect>
                   </Label>
                </children>
             </GridPane>
@@ -130,6 +134,16 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="200.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" translateX="-20.0" translateY="-20.0" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@/slot_icons/LuckySlotsLogo.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </ImageView>
+               </children>
             </GridPane>
          </children>
       </GridPane>
@@ -158,12 +172,12 @@
                   <Insets top="10.0" />
                </GridPane.margin>
             </Rectangle>
-            <Label fx:id="winLabel" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+            <Label fx:id="winLabel" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets bottom="70.0" />
                </GridPane.margin>
                <font>
-                  <Font name="Arial Rounded MT Bold" size="26.0" />
+                  <Font name="Arial Rounded MT Bold" size="20.0" />
                </font>
             </Label>
             <Button fx:id="spinButton" mnemonicParsing="false" onAction="#spin" style="-fx-background-color: #52a400;" text="Pyöräytä" textFill="WHITE" translateY="-15.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
@@ -231,16 +245,40 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label fx:id="spinsLeftLabel" text="Pyöräytykset: " textFill="WHITE" translateX="-10.0" translateY="-10.0" GridPane.columnIndex="1">
+                  <Button fx:id="turboButton" mnemonicParsing="false" onAction="#setTurbo" prefHeight="42.0" prefWidth="157.0" style="-fx-background-color: #693b80;" text="Turbo spins" textFill="WHITE" translateY="-2.0" GridPane.columnSpan="2">
                      <font>
-                        <Font name="Arial Rounded MT Bold" size="12.0" />
+                        <Font name="Arial Rounded MT Bold" size="21.0" />
                      </font>
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </Label>
+                     <effect>
+                        <DropShadow height="53.62" radius="24.8275" width="47.69">
+                           <color>
+                              <Color red="0.5126096606254578" green="0.19572368264198303" blue="0.6710526347160339" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
                </children>
             </GridPane>
+            <Button fx:id="betButton" mnemonicParsing="false" onAction="#setBet" prefHeight="42.0" prefWidth="167.0" style="-fx-background-color: #475ede;" text="Panos" textFill="WHITE" textOverrun="CLIP" translateX="100.0" translateY="-15.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.rowSpan="2">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="21.0" />
+               </font>
+               <effect>
+                  <DropShadow height="47.69" radius="21.862499999999997" width="41.76">
+                     <color>
+                        <Color red="0.04605263099074364" green="0.17653508484363556" blue="0.8289473652839661" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Button>
+            <Label fx:id="spinsLeftLabel" text="Pyöräytykset:" textFill="WHITE" translateY="-7.0" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
    </bottom>
