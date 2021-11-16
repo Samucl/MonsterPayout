@@ -17,9 +17,6 @@ public class SlotMachine {
 	// Pelataan kierros slotteja
 	public void play() {
 		spin();
-		if (checkWin()) {
-			System.out.println("Voitit " + payout() + " krediittiä!");
-		}
 	}
 	
 	// Pyöräytetään yksi kierros numeroita koneesta
@@ -28,8 +25,6 @@ public class SlotMachine {
 		for (int i=0;i<3; i++) {
 			outcome[i] = reel[rand.nextInt(reel.length)];
 		}
-		System.out.println(Arrays.toString(outcome));
-
 	}
 	
 	// Tarkistetaan onko voittoja
@@ -38,7 +33,6 @@ public class SlotMachine {
 				(outcome[0] == 6 && outcome[1] == 6) || (outcome[1] == 6 && outcome[2] == 6) || (outcome[0] == 6 && outcome[2] == 6)){ // Erikseen tarkistetaan jos tulee "wild" iconeja
 			return true;
 		}
-		//System.out.println("Ei voittoja");
 		return false;
 	}
 	

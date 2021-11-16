@@ -3,10 +3,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Bloom?>
-<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MoneyRainDeadViewController">
@@ -16,7 +17,7 @@
             <Image url="@/moneyrain/deadbg.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="toMenu" layoutX="224.0" layoutY="371.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="39.0" prefWidth="273.0" style="-fx-background-color: black;" text="Palaa takaisin valikkoon" textFill="#006fff">
+      <Button fx:id="toMenu" layoutX="224.0" layoutY="332.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="39.0" prefWidth="273.0" style="-fx-background-color: black;" text="Palaa takaisin valikkoon" textFill="#006fff">
          <font>
             <Font name="Calibri Light" size="17.0" />
          </font>
@@ -24,12 +25,40 @@
             <Bloom threshold="0.0" />
          </effect>
       </Button>
-      <Label fx:id="pointsLabel" layoutX="353.0" layoutY="309.0" prefHeight="37.0" prefWidth="176.0" text="0" textFill="WHITE">
+      <Label fx:id="pointsLabel" alignment="CENTER" layoutY="272.0" prefHeight="43.0" prefWidth="720.0" text="Pisteet: 100" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="Arial Black" size="29.0" />
+            <Font name="Arial Black" size="35.0" />
          </font>
          <effect>
-            <Glow level="0.91" />
+            <DropShadow height="62.51" radius="20.377499999999998">
+               <color>
+                  <Color green="0.7333333492279053" blue="1.0" opacity="0.647826075553894" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Label>
+      <Label fx:id="coinsWonLabel" alignment="CENTER" layoutX="234.0" layoutY="393.0" prefHeight="17.0" prefWidth="253.0" textAlignment="CENTER" textFill="#eaff00">
+         <font>
+            <Font name="Calibri Light" size="27.0" />
+         </font>
+         <effect>
+            <DropShadow height="41.51" radius="10.68" spread="0.44" width="3.21">
+               <color>
+                  <Color red="1.0" green="0.4833333194255829" opacity="0.43043479323387146" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="181.0" prefHeight="90.0" prefWidth="720.0" text="KUOLIT" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="74.0" />
+         </font>
+         <effect>
+            <DropShadow height="62.51" radius="20.377499999999998">
+               <color>
+                  <Color red="0.05000000074505806" green="0.6041666865348816" blue="1.0" opacity="0.5869565010070801" />
+               </color>
+            </DropShadow>
          </effect>
       </Label>
    </children>

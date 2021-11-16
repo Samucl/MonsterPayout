@@ -64,6 +64,10 @@ public class LuckySpinsViewController implements Initializable{
 	private int spinsLeft = 0;
 	private int winning = 0;
 	private double bet = 1;
+	private SlotMachine game1 = new SlotMachine();
+	private SlotMachine game2 = new SlotMachine();
+	private SlotMachine game3 = new SlotMachine();
+	private int paylinesSelected = 1;
 	
 	private void init() throws FileNotFoundException {
 		payline1.setSelected(false);
@@ -100,14 +104,11 @@ public class LuckySpinsViewController implements Initializable{
 	}
 	
 	private void manualSpin(int timeInMillis) throws FileNotFoundException{
-		SlotMachine game1 = new SlotMachine();
-		SlotMachine game2 = new SlotMachine();
-		SlotMachine game3 = new SlotMachine();
 		game1.play();
 		game2.play();
 		game3.play();
 		
-		Tietokanta.decreaseCreditBalance((int)bet);
+		Tietokanta.decreaseCreditBalance((int)bet * paylinesSelected);
 		balanceLabel.setText("Saldo: " + User.getCredits());
 		winning = 0;
 		if(game1.checkWin() && payline1.isSelected())
@@ -122,7 +123,6 @@ public class LuckySpinsViewController implements Initializable{
 		Timeline tl = new Timeline(new KeyFrame(Duration.millis(timeInMillis), ea -> {
 				try {
 					showIcons(game1.getOutcome(),game2.getOutcome(),game3.getOutcome());
-					System.out.println(spinsLeft);
 					if(spinsLeft>1) {
 						spinsLeftLabel.setText("Pyöräytykset: " + (--spinsLeft));
 					}
@@ -168,9 +168,20 @@ public class LuckySpinsViewController implements Initializable{
 	private void paylineColor(ToggleButton payline) {
 		if(payline.isSelected()) {
 			payline.setStyle("-fx-background-color:  #6bd600");
+			paylinesSelected++;
 		}
 		else {
 			payline.setStyle("-fx-background-color:  #132402");
+			paylinesSelected--;
+		}
+		betButton.setText("Panos: " + ((int)bet*paylinesSelected));
+		if(paylinesSelected == 0) {
+			setButtonsDisable(true);
+			winLabel.setText("Valitse voittolinjat!");
+		}
+		else {
+			setButtonsDisable(false);
+			winLabel.setText("");
 		}
 	}
 	private void spinAnimation() throws FileNotFoundException {
@@ -269,7 +280,7 @@ public class LuckySpinsViewController implements Initializable{
 		bet = Math.round(bet);
 		if(bet > 140)
 			bet = 1;
-		betButton.setText("Panos: " + (int)bet);
+		betButton.setText("Panos: " + ((int)bet)*paylinesSelected);
 	}
 	
 	public void setTurbo(ActionEvent e) {

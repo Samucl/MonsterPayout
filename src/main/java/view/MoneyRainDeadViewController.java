@@ -15,6 +15,7 @@ public class MoneyRainDeadViewController{
 	
 	@FXML private Button toMenu;
 	@FXML private Label pointsLabel;
+	@FXML private Label coinsWonLabel;
 	private int points;
 	
 	
@@ -36,7 +37,12 @@ public class MoneyRainDeadViewController{
 	public void setPoints(int pointsFromGame) {
 		points = pointsFromGame;
 		Tietokanta.setHighScore(points, "MoneyRain");
-		pointsLabel.setText("" + points);
+		pointsLabel.setText("Pisteet: " + points);
+		int coinsToGive = points/20; //Pelaajan kolikot on pelin pisteet/20, eli esim 200 pistettä pelistä on 10 kolikkoa
+		if(points > 100) { //Pelaajalla on oltava ainakin 100 pistettä jotta ansaitsee kolikoita
+			coinsWonLabel.setText("Voitit " + coinsToGive + " kolikkoa!");
+			Tietokanta.increaseCoinBalance(coinsToGive);
+		}
 	}
 	
 	public int getPoints() {

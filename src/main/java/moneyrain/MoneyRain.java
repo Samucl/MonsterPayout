@@ -176,10 +176,10 @@ public class MoneyRain extends Canvas {
 	}
 	
 	private void run(GraphicsContext gc) throws FileNotFoundException {
-		if(collectedCash == 5) 
-			gc.drawImage(bgfullcar, 0, 0);
-		else
-			gc.drawImage(bg, 0, 0);
+		gc.drawImage(bg, 0, 0);
+		if(collectedCash == 5) {
+			gc.fillText("Tyhjennä kädet!", 25, height-110);
+		}
 		gc.setFont(Font.font(25));
 		gc.setTextAlign(TextAlignment.LEFT);
 		
@@ -272,6 +272,11 @@ public class MoneyRain extends Canvas {
 		else {
 			click = new Image(new FileInputStream("./src/main/resources/moneyrain/click.png"));
 			gc.drawImage(click, 0, 0);
+			gc.setTextAlign(TextAlignment.CENTER);
+			gc.setFill(Color.WHITE);
+			gc.setFont(Font.font("Courier", 50));
+			gc.fillText("Klikkaa pelataksesi", width/2, height/2);
+			gc.setTextAlign(TextAlignment.LEFT);
 		}
 	}
 	
