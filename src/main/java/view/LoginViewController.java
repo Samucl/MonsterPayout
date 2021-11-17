@@ -10,9 +10,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -39,6 +41,7 @@ public class LoginViewController implements Initializable {
 	public void kirjaudu(ActionEvent e) {
 		if(kayttajatunnusInput.getText().isEmpty() || salasanaInput.getText().isEmpty()) {
 			System.out.println("Kirjoita käyttäjätunnus ja salasana");
+			insufficientInformation("Tyhjiä kenttiä","Syötä käyttäjänimi ja salasana.");
 		}
 		else {
 			System.out.println("Käyttäjätunnus: " + kayttajatunnusInput.getText() + " Salasana: " + salasanaInput.getText());
@@ -61,8 +64,19 @@ public class LoginViewController implements Initializable {
 			
 			else if (Tietokanta.isLogged() && User.isAdmin() == 1) {
 				toSetProductsView();
+			} else {
+				insufficientInformation("Virheelliset tunnukset","Käyttäjää ei löydy tai salasana on väärä.");
 			}
 		}
+	}
+	
+	private void insufficientInformation(String error, String message) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Register error");
+		alert.setHeaderText(error);
+		alert.setContentText(message);
+
+		alert.showAndWait();
 	}
 	
 	/**

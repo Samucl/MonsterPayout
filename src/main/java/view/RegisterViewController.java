@@ -78,7 +78,7 @@ public class RegisterViewController {
 	
 	private void insufficientInformation(String error, String message) {
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Register eroor");
+		alert.setTitle("Register error");
 		alert.setHeaderText(error);
 		alert.setContentText(message);
 
