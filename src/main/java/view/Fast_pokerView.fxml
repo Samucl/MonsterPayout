@@ -18,7 +18,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="420.0" minWidth="980.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(to bottom,#94001b, #4a000e);" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Fast_pokerViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="420.0" minWidth="980.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(to bottom,#94001b, #4a000e);" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Fast_pokerViewController">
    <bottom>
       <GridPane prefHeight="124.0" prefWidth="1280.0" style="-fx-background-color: #0d0606;" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -98,6 +98,18 @@
                      </color>
                   </DropShadow>
                </effect></Button>
+            <Label fx:id="errorLabel" textFill="WHITE" translateX="200.0" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="16.0" />
+               </font>
+               <effect>
+                  <DropShadow height="19.03" radius="12.4725" spread="0.43" width="32.86">
+                     <color>
+                        <Color red="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Label>
          </children>
       </GridPane>
    </bottom>

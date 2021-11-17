@@ -48,6 +48,7 @@ public class Fast_pokerViewController implements Initializable{
 	@FXML private Label winLabel7;
 	@FXML private Label winLabel8;
 	@FXML private Label winLabel9;
+	@FXML private Label errorLabel;
 	private double win;
 	private double bet = 1.00;
 	private final String[] winningTable = {"Pari", "Kaksi paria", "Kolmoset", "Suora", "Väri","Täyskäsi", "Neljä samaa", "Värisuora", "Kuningasvärisuora"};
@@ -57,6 +58,7 @@ public class Fast_pokerViewController implements Initializable{
 	Card[] winningCards = new Card[5];
 	
 	public void init() throws FileNotFoundException {
+		errorLabel.setText("Ei tarpeeksi krediitejä!");
 		hideCards();
 		recoverButton.setDisable(true);
 		doubleButton.setDisable(true);
@@ -158,6 +160,8 @@ public class Fast_pokerViewController implements Initializable{
 			card4.setImage(cards[3].getImage());
 			card5.setImage(new Image(new FileInputStream("./src/main/resources/card_deck_1/taka.png")));
 		}
+		else
+			errorLabel.setVisible(true);
 	}
 	
 	public void recover(ActionEvent e) throws FileNotFoundException {
@@ -173,6 +177,9 @@ public class Fast_pokerViewController implements Initializable{
 	}
 	
 	public void bet(ActionEvent e) {
+		if(bet < User.getCredits()) {
+			errorLabel.setVisible(false);
+		}
 		bet = bet + bet/2;
 		bet = Math.round(bet);
 		if(bet > 140)
