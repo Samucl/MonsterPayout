@@ -110,7 +110,7 @@ public class User {
 	
 	public static String getAccountNumber() {
 		if(User.account_number==null)
-			return "empty";
+			return "";
 		return User.account_number;
 	}
 	
