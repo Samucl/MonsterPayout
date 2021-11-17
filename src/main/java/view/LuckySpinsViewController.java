@@ -96,6 +96,10 @@ public class LuckySpinsViewController implements Initializable{
 	
 	
 	public void spin(ActionEvent e) throws FileNotFoundException{
+		if(User.getCredits() < bet) {
+			winLabel.setText("Ei tarpeeksi krediittejä");
+			return;
+		}
 		setButtonsDisable(true);
 			if(isTurbo)
 				manualSpin(100);
@@ -104,6 +108,10 @@ public class LuckySpinsViewController implements Initializable{
 	}
 	
 	private void manualSpin(int timeInMillis) throws FileNotFoundException{
+		if(User.getCredits() < bet) {
+			winLabel.setText("Ei tarpeeksi krediittejä");
+			return;
+		}
 		game1.play();
 		game2.play();
 		game3.play();
