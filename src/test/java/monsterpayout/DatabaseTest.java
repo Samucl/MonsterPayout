@@ -15,6 +15,7 @@ public class DatabaseTest {
 	@BeforeEach 
     void init() {
 		//Rekisteröidään uusi testikäyttäjä
+		Tietokanta.getInstance();
 		if(Tietokanta.checkUsername("testikäyttäjä123"))
 			Tietokanta.deleteTestUser();
 		Tietokanta.register("testikäyttäjä123", "testi", "testi123@gmail.com", "Testaaja", "Testaa");
