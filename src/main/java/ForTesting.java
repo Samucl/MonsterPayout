@@ -1,6 +1,8 @@
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import model.Session;
+
 public class ForTesting {
 
 	public static void main(String[] args) {
@@ -39,7 +41,7 @@ public class ForTesting {
 		texts = ResourceBundle.getBundle("lang.language",locale);
 		System.out.println(texts.getString("login"));
 		
-		
+		Session.initialization();
 
 	}
 

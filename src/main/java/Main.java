@@ -14,7 +14,7 @@ public class Main {
 		/*
 		 * Haetaan resursseista kaikki profiilikuvat sessioon
 		 */
-		Session.loadAvatarImages();
+		Session.initialization();
 		
 		/*
 		 * Käynnistetään ohjelma
