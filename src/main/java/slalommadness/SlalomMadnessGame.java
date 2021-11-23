@@ -36,7 +36,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.Tietokanta;
+import model.Database;
 
 public class SlalomMadnessGame extends Application {
 	
@@ -341,13 +341,13 @@ public class SlalomMadnessGame extends Application {
 				gc.fillText("Aika: " + score + " s", 350, 220);
 			}
 			
-			if (Tietokanta.getHighScoreTime("Slalom Madness") == 0 || Tietokanta.getHighScoreTime("Slalom Madness") > score) {
+			if (Database.getHighScoreTime("Slalom Madness") == 0 || Database.getHighScoreTime("Slalom Madness") > score) {
 				gc.setFill(Color.GOLD);
 				gc.setFont(Font.font ("Arial Black", 24));
 				gc.fillText("UUSI ENNÄTYS!", 350, 390);
 			}
 
-			Tietokanta.setHighScoreTime(score, "Slalom Madness");
+			Database.setHighScoreTime(score, "Slalom Madness");
 			
 			gc.setFill(Color.BLACK);
 			gc.setFont(Font.font ("Arial Black", 24));

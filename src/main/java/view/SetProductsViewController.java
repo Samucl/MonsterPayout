@@ -20,7 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Product;
-import model.Tietokanta;
+import model.Database;
 
 public class SetProductsViewController {
 	
@@ -64,7 +64,7 @@ public class SetProductsViewController {
 	//Käydään tietokannasta tuotteet, lisätään ne ObservableListiin, joka liitetään TableViewiin
 	public void refreshTableView() {
 		
-		products = Tietokanta.getProducts();
+		products = Database.getProducts();
 		if (products != null) {
 			ObservableList<Product> productOL = FXCollections.observableArrayList();
 			for (Product p : products) {
@@ -87,7 +87,7 @@ public class SetProductsViewController {
 			double price = Double.parseDouble(priceTF.getText());
 			Product p = new Product(name, credits, coins, 1, price, false);
 			
-			Tietokanta.createProduct(p);
+			Database.createProduct(p);
 			
 			nameTF.setText("");
 			creditTF.setText("");
@@ -104,7 +104,7 @@ public class SetProductsViewController {
 		Product p = productsTable.getSelectionModel().getSelectedItem();
 		if(p != null) {
 			p.setForSaleStatus(true);
-			Tietokanta.editProduct(p);
+			Database.editProduct(p);
 			
 			refreshTableView();
          }
@@ -115,7 +115,7 @@ public class SetProductsViewController {
 		Product p = productsTable.getSelectionModel().getSelectedItem();
 		if (p != null) {
 			p.setForSaleStatus(false);
-			Tietokanta.editProduct(p);
+			Database.editProduct(p);
 			
 			refreshTableView();
          }
@@ -167,7 +167,7 @@ public class SetProductsViewController {
 	                		double saleMultiplier = newPrice / product.getPrice(); //Huom. tuotteen varsinainen hinta (getPrice) ei koskaan muutu alkuperäisestä, vaan alennuskertoimella lasketaan sen kauppahinta
 	                		product.setSaleMultiplier(saleMultiplier);
 	                		
-	                		if (Tietokanta.editProduct(product)) {
+	                		if (Database.editProduct(product)) {
 	                			Label successLabel = new Label();
 	                			successLabel.setText("Tiedot tallennettu");
 	                			dialogVbox.getChildren().add(successLabel);
@@ -198,7 +198,7 @@ public class SetProductsViewController {
             BorderPane loginView = (BorderPane) loader.load();
             Scene loginScene = new Scene(loginView);
 			Stage window = (Stage) logOutBtn.getScene().getWindow();
-			Tietokanta.logout();
+			Database.logout();
 			window.setScene(loginScene);
         } catch (IOException iOE) {
             iOE.printStackTrace();

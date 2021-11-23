@@ -29,7 +29,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import model.Product;
-import model.Tietokanta;
+import model.Database;
 import model.User;
  
 public class StoreViewController {
@@ -65,7 +65,7 @@ public class StoreViewController {
 	
 	public void setProducts() {
 		
-		Product[] allProducts = Tietokanta.getProducts(); //Kaikki tietokannan tuotteet
+		Product[] allProducts = Database.getProducts(); //Kaikki tietokannan tuotteet
 		products1 = new ArrayList<Product>(); //Laitetaan tähän listaan ne, jotka tällä hetkellä myynnissä ja alennuksessa
 		products2 = new ArrayList<Product>(); //Ja tähän ne, jotka myynnissä ja joissa ei alennusta
 		
@@ -270,8 +270,8 @@ public class StoreViewController {
 			
 			//Ostotapahtuma kolikoilla
 			buyWithCoinsBtn.setOnAction((e2) -> {
-			    if (Tietokanta.decreaseCoinBalance(coinAmount) != 0) {
-			    	Tietokanta.increaseCreditBalance(creditAmount);
+			    if (Database.decreaseCoinBalance(coinAmount) != 0) {
+			    	Database.increaseCreditBalance(creditAmount);
 			    	buyWithCoinsSuccessLabel.setText("Onnistui!");
 			    	refreshAccountInfo();
 			    } else {
@@ -289,7 +289,7 @@ public class StoreViewController {
 	}
 	
 	public void buyProduct(Product p) {
-		Tietokanta.buyProduct(p);
+		Database.buyProduct(p);
 		refreshAccountInfo();
 	}
 	

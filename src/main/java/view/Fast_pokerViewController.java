@@ -21,7 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import model.Tietokanta;
+import model.Database;
 import model.User;
 
 public class Fast_pokerViewController implements Initializable{
@@ -145,7 +145,7 @@ public class Fast_pokerViewController implements Initializable{
 	public void play(ActionEvent e) throws FileNotFoundException {
 		if(User.getCredits() >= bet) {
 			hideButtons();
-			Tietokanta.decreaseCreditBalance((int)bet);
+			Database.decreaseCreditBalance((int)bet);
 			winLabel.setText("Voitto");
 			handLabel.setText("Käsi");
 			game.setPlay(true);
@@ -168,7 +168,7 @@ public class Fast_pokerViewController implements Initializable{
 		winLabel.setText("Voitto");
 		handLabel.setText("Käsi");
 		hideCards();
-		Tietokanta.increaseCreditBalance((int)win * (int)bet);
+		Database.increaseCreditBalance((int)win * (int)bet);
 		balanceLabel.setText("Krediitit: " + User.getCredits());
 		recoverButton.setDisable(true);
 		doubleButton.setDisable(true);

@@ -8,15 +8,15 @@ import java.time.temporal.ChronoUnit;
 
 import com.google.common.hash.Hashing;
 
-public class Tietokanta {
+public class Database {
 	
 	final static String URL = "jdbc:mariadb://10.114.32.22:3306/kasino";
 	final static String USERNAME = "remote";
 	final static String PASSWORD = "remote";
 	private static Connection connection;
-	private static Tietokanta instance = null;
+	private static Database instance = null;
 	
-	private Tietokanta() {
+	private Database() {
 		try {
 			connection = DriverManager.getConnection(
 					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
@@ -29,9 +29,9 @@ public class Tietokanta {
 		}
 	}
 	
-	public static Tietokanta getInstance() {
+	public static Database getInstance() {
 		if(instance==null)
-			instance = new Tietokanta();
+			instance = new Database();
 		return instance;
 	}
 	
@@ -120,7 +120,7 @@ public class Tietokanta {
 						 * Lisätään Session-luokkaan käyttäjän tekemät tilaukset
 						 */
 						loggedIn = true;
-						Session.setOrders(Tietokanta.getOrders());
+						Session.setOrders(Database.getOrders());
 						return loggedIn;
 					}
 					
@@ -265,7 +265,7 @@ public class Tietokanta {
 		 */
 		getInstance();
 		
-		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
 				
@@ -439,7 +439,7 @@ public class Tietokanta {
 		if(amount <= 0)
 			return 0;
 		
-		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		if(Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
 				
@@ -511,7 +511,7 @@ public class Tietokanta {
 		if(amount <= 0)
 			return 0;
 		
-		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		if(Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
 				
@@ -581,7 +581,7 @@ public class Tietokanta {
 		getInstance();
 		
 			
-			if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+			if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 				
 				try {
 					Connection con = connection;
@@ -635,7 +635,7 @@ public class Tietokanta {
 		/*
 		 * Toteutetaan käyttäjän tekemä tilaus ja samalla päivitetään Session-luokkaan tilaukset
 		 */
-		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			
 			try {
 				Connection con = connection;
@@ -674,7 +674,7 @@ public class Tietokanta {
 					if(rs.next())
 						User.setCredits(rs.getDouble("KrediittiSaldo"));
 					
-					Session.setOrders(Tietokanta.getOrders());
+					Session.setOrders(Database.getOrders());
 					
 					return true;
 				}
@@ -698,7 +698,7 @@ public class Tietokanta {
 		getInstance();
 		
 		
-		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			
 			try {
 				Connection con = connection;
@@ -749,7 +749,7 @@ public class Tietokanta {
 		 */
 		getInstance();
 		
-		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		if(Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
 				
@@ -797,7 +797,7 @@ public class Tietokanta {
 		 */
 		getInstance();
 		
-		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		if(Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
 				
@@ -854,7 +854,7 @@ public class Tietokanta {
 		 */
 		getInstance();
 		
-		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		if(Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
 				
@@ -902,7 +902,7 @@ public class Tietokanta {
 		 */
 		getInstance();
 		
-		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		if(Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
 				
@@ -953,7 +953,7 @@ public class Tietokanta {
 		 */
 		getInstance();
 		
-		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
 				
@@ -987,7 +987,7 @@ public class Tietokanta {
 		 */
 		getInstance();
 		
-		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
 				
@@ -1027,7 +1027,7 @@ public class Tietokanta {
 			isSpeedGame = true;
 		}
 		
-		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
 				
@@ -1086,7 +1086,7 @@ public class Tietokanta {
 		 */
 		getInstance();
 		
-		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
 				
@@ -1120,7 +1120,7 @@ public class Tietokanta {
 		 */
 		getInstance();
 		
-		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
+		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
 				

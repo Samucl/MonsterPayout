@@ -19,7 +19,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Order;
 import model.Session;
-import model.Tietokanta;
+import model.Database;
 import model.User;
 
 public class UserInfoViewController implements Initializable {
@@ -95,7 +95,7 @@ public class UserInfoViewController implements Initializable {
 		User.setEmail(newEmail);
 		User.setAccountNumber(newAccountNumber);
 		System.out.println("Tallennetaan");
-		if(Tietokanta.saveProfileChanges())
+		if(Database.saveProfileChanges())
 			System.out.println("Päivitys onnistui");
 		else
 			System.out.println("Päivitys ei tainnut onnistua");

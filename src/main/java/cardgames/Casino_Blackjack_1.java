@@ -7,7 +7,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import model.ICoinGame;
 import model.ICreditGame;
-import model.Tietokanta;
+import model.Database;
 
 public class Casino_Blackjack_1 implements ICreditGame {
 	/*
@@ -216,7 +216,7 @@ public class Casino_Blackjack_1 implements ICreditGame {
 	
 	@Override
 	public double useCredits(double bet) {
-		return Tietokanta.decreaseCreditBalance(bet);
+		return Database.decreaseCreditBalance(bet);
 	}
 
 	@Override
@@ -225,7 +225,7 @@ public class Casino_Blackjack_1 implements ICreditGame {
 		 * Peli päättyy
 		 */
 		gameOver = true;
-		if(Tietokanta.increaseCreditBalance(amount)>0)
+		if(Database.increaseCreditBalance(amount)>0)
 			return true;
 		return false;
 	}

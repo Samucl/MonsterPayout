@@ -11,7 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.Tietokanta;
+import model.Database;
 
 /**
 * Kontrolleri jolla ohjataan RekisterointiViewin toimintoja.
@@ -49,7 +49,7 @@ public class RegisterViewController {
 			System.out.println("Sukunimi: " + sukunimiInput.getText());
 			System.out.println("Sähköposti: " + sahkopostiInput.getText());
 			
-			Boolean onnistuiko = Tietokanta.register(kayttajatunnusInput2.getText(), salasanaInput2.getText(), sahkopostiInput.getText(), etunimiInput.getText(), sukunimiInput.getText());
+			Boolean onnistuiko = Database.register(kayttajatunnusInput2.getText(), salasanaInput2.getText(), sahkopostiInput.getText(), etunimiInput.getText(), sukunimiInput.getText());
 			
 			if(onnistuiko)
 				successfullRegisteration();
@@ -86,7 +86,7 @@ public class RegisterViewController {
 	}
 	
 	private void successfullRegisteration() {
-		Tietokanta.login(kayttajatunnusInput2.getText(), salasanaInput2.getText());
+		Database.login(kayttajatunnusInput2.getText(), salasanaInput2.getText());
 		tokirjautumisButton.fire();
 	}
 }

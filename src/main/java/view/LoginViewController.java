@@ -1,5 +1,5 @@
 package view;
-import model.Tietokanta;
+import model.Database;
 import model.User;
 import java.io.IOException;
 import java.net.URL;
@@ -45,8 +45,8 @@ public class LoginViewController implements Initializable {
 		}
 		else {
 			System.out.println("Käyttäjätunnus: " + kayttajatunnusInput.getText() + " Salasana: " + salasanaInput.getText());
-			Tietokanta.login(kayttajatunnusInput.getText(), salasanaInput.getText());
-			if(Tietokanta.isLogged() && User.isAdmin() == 0) {
+			Database.login(kayttajatunnusInput.getText(), salasanaInput.getText());
+			if(Database.isLogged() && User.isAdmin() == 0) {
 				
 				try {
 		            FXMLLoader loader = new FXMLLoader();
@@ -62,7 +62,7 @@ public class LoginViewController implements Initializable {
 				System.out.println("Tervetuloa: " + User.getFirstname());
 			}
 			
-			else if (Tietokanta.isLogged() && User.isAdmin() == 1) {
+			else if (Database.isLogged() && User.isAdmin() == 1) {
 				toSetProductsView();
 			} else {
 				insufficientInformation("Virheelliset tunnukset","Käyttäjää ei löydy tai salasana on väärä.");

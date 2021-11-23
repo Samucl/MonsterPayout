@@ -14,7 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import model.Tietokanta;
+import model.Database;
 import model.User;
 
 public class SlalomMadnessMenuViewController implements Initializable {
@@ -31,8 +31,8 @@ public class SlalomMadnessMenuViewController implements Initializable {
 	private void init() {
 		nameLabel.setText(User.getUsername());
 		coinsLabel.setText("Kolikot: " + User.getCoins());
-		highScoreLabel.setText(String.valueOf(Tietokanta.getHighScoreTime("Slalom Madness") + " s"));
-		String[] top10List = Tietokanta.getTop10("Slalom Madness");
+		highScoreLabel.setText(String.valueOf(Database.getHighScoreTime("Slalom Madness") + " s"));
+		String[] top10List = Database.getTop10("Slalom Madness");
 		
 		if (top10List == null) {
 			top10List = new String[10];

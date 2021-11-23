@@ -20,7 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.Tietokanta;
+import model.Database;
 import model.User;
 
 
@@ -168,7 +168,7 @@ public class HomepageViewController implements Initializable {
             BorderPane loginView = (BorderPane) loader.load();
             Scene loginScene = new Scene(loginView);
 			Stage window = (Stage) toStoreButton.getScene().getWindow();
-			Tietokanta.logout();
+			Database.logout();
 			window.setScene(loginScene);
         } catch (IOException iOE) {
             iOE.printStackTrace();

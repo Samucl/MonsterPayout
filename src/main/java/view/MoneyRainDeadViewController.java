@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.Tietokanta;
+import model.Database;
 
 public class MoneyRainDeadViewController{
 	
@@ -36,12 +36,12 @@ public class MoneyRainDeadViewController{
 	
 	public void setPoints(int pointsFromGame) {
 		points = pointsFromGame;
-		Tietokanta.setHighScore(points, "MoneyRain");
+		Database.setHighScore(points, "MoneyRain");
 		pointsLabel.setText("Pisteet: " + points);
 		int coinsToGive = points/20; //Pelaajan kolikot on pelin pisteet/20, eli esim 200 pistettä pelistä on 10 kolikkoa
 		if(points > 100) { //Pelaajalla on oltava ainakin 100 pistettä jotta ansaitsee kolikoita
 			coinsWonLabel.setText("Voitit " + coinsToGive + " kolikkoa!");
-			Tietokanta.increaseCoinBalance(coinsToGive);
+			Database.increaseCoinBalance(coinsToGive);
 		}
 	}
 	

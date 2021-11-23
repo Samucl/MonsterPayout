@@ -22,7 +22,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.Tietokanta;
+import model.Database;
 import model.User;
 import slotgames.SlotMachine;
 
@@ -116,7 +116,7 @@ public class LuckySpinsViewController implements Initializable{
 		game2.play();
 		game3.play();
 		
-		Tietokanta.decreaseCreditBalance((int)bet * paylinesSelected);
+		Database.decreaseCreditBalance((int)bet * paylinesSelected);
 		balanceLabel.setText("Saldo: " + User.getCredits());
 		winning = 0;
 		if(game1.checkWin() && payline1.isSelected())
@@ -126,7 +126,7 @@ public class LuckySpinsViewController implements Initializable{
 		if(game3.checkWin() && payline3.isSelected())
 			winning += game3.payout();
 		if(isWin(game1,game2,game3))
-			Tietokanta.increaseCreditBalance(winning * bet);
+			Database.increaseCreditBalance(winning * bet);
 		
 		Timeline tl = new Timeline(new KeyFrame(Duration.millis(timeInMillis), ea -> {
 				try {

@@ -6,7 +6,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import model.ICoinGame;
-import model.Tietokanta;
+import model.Database;
 
 public class Arcade_Blackjack_1 implements ICoinGame {
 	/*
@@ -215,7 +215,7 @@ public class Arcade_Blackjack_1 implements ICoinGame {
 	
 	@Override
 	public int useCoins(int bet) {
-		return Tietokanta.decreaseCoinBalance(bet);
+		return Database.decreaseCoinBalance(bet);
 	}
 
 	@Override
@@ -224,7 +224,7 @@ public class Arcade_Blackjack_1 implements ICoinGame {
 		 * Peli päättyy
 		 */
 		gameOver = true;
-		if(Tietokanta.increaseCoinBalance(amount)>0)
+		if(Database.increaseCoinBalance(amount)>0)
 			return true;
 		return false;
 	}
