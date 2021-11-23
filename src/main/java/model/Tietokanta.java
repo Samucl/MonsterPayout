@@ -43,6 +43,12 @@ public class Tietokanta {
 	}
 	
 	public static boolean testConnection() {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		try {
 			Connection con = connection;
 			
@@ -62,6 +68,12 @@ public class Tietokanta {
 	}
 	
 	public static boolean login(String username, String password) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		/*
 		 * Luodaan käyttäjän istunto. Samalla haetaan alustavasti kaikki käyttäjän tilaukset yms.
 		 */
@@ -127,6 +139,12 @@ public class Tietokanta {
 	}
 	
 	private static void lastLogin(ResultSet rs) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		
 		try {
 			Connection con = connection;
@@ -184,6 +202,12 @@ public class Tietokanta {
 	}
 	
 	public static Product[] getProducts() {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		try {
 			Connection con = connection;
 			
@@ -235,6 +259,12 @@ public class Tietokanta {
 	
 	
 	public static Order[] getOrders() {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
@@ -287,6 +317,12 @@ public class Tietokanta {
 	}
 	
 	public static boolean register(String username, String password, String email, String firstname, String lastname) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		/*
 		 * Jos rekisteröinti onnistuu palauttaa metodi boolean arvon true, muuten false
 		 */
@@ -343,6 +379,12 @@ public class Tietokanta {
 	
 	public static boolean checkUsername(String username) {
 		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
+		/*
 		 * Metodi palauttaa boolean arvon false jos käyttäjänimi on jo käytössä.
 		 * True tarkoittaa ettei käyttäjänimellä ole vielä tehty käyttäjää.
 		 */
@@ -373,6 +415,12 @@ public class Tietokanta {
 	}
 	
 	public static int decreaseCoinBalance(int amount) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		
 		/*
 		 * Metodi ottaa parametreina Kayttaja-luokan joka sisältää 
@@ -454,6 +502,12 @@ public class Tietokanta {
 	}
 	
 	public static double decreaseCreditBalance(double amount) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		if(amount <= 0)
 			return 0;
 		
@@ -520,6 +574,12 @@ public class Tietokanta {
 	}
 	
 	public static int increaseCoinBalance(int amount) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 			
 			if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 				
@@ -566,6 +626,12 @@ public class Tietokanta {
 		}
 	
 	public static boolean buyProduct(Product product) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		/*
 		 * Toteutetaan käyttäjän tekemä tilaus ja samalla päivitetään Session-luokkaan tilaukset
 		 */
@@ -625,6 +691,12 @@ public class Tietokanta {
 	}
 	
 	public static int increaseCreditBalance(double amount) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			
@@ -671,6 +743,12 @@ public class Tietokanta {
 	}
 	
 	public static boolean createProduct(Product product) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
@@ -713,6 +791,12 @@ public class Tietokanta {
 	}
 	
 	public static boolean editProduct(Product product) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
@@ -764,6 +848,12 @@ public class Tietokanta {
 	}
 	
 	public static boolean deleteProduct(int productNumber) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
@@ -806,6 +896,12 @@ public class Tietokanta {
 	}
 	
 	public static boolean saveProfileChanges() {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		if(Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
@@ -851,6 +947,12 @@ public class Tietokanta {
 	}
 	
 	public static int getHighScore(String peli) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
@@ -879,6 +981,12 @@ public class Tietokanta {
 	}
 	
 	public static boolean setHighScore(int highScore, String peli) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
@@ -908,6 +1016,11 @@ public class Tietokanta {
 	}
 	
 	public static String[] getTop10(String peli) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
 		
 		boolean isSpeedGame = false;
 		if (peli.equals("Slalom Madness")) {
@@ -967,6 +1080,11 @@ public class Tietokanta {
 	
 	//Palauttaa nopeimman ajan jossakin pelissä
 	public static double getHighScoreTime(String game) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
 		
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
@@ -996,6 +1114,12 @@ public class Tietokanta {
 	}
 	
 	public static boolean setHighScoreTime(double time, String game) {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		if (Tietokanta.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
@@ -1030,12 +1154,24 @@ public class Tietokanta {
 	
 	public static boolean isLogged() {
 		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
+		/*
 		 * Tarkistetaan onko käyttäjä kirjautunut sisään
 		 */
 		return loggedIn;
 	}
 	
 	public static boolean deleteTestUser() {
+		/*
+		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
+		 * on luotu ilmentymä
+		 */
+		getInstance();
+		
 		try {
 			Connection con = connection;
 			

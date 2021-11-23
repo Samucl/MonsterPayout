@@ -20,10 +20,6 @@ public class MainApplication extends Application {
 	*/
 	@Override
 	public void start(Stage primaryStage) {
-		/*
-		 * Tehdään ilmentymä tietokanta luokasta
-		 */
-		Tietokanta.getInstance();
 		
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("MonsterPayout");
