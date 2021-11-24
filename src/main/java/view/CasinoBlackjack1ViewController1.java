@@ -84,7 +84,7 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 	}
 	
 	private void updateBalance() {
-		balance.setText(Double.toString(User.getCredits()));
+		balance.setText("Krediitit: " + Double.toString(User.getCredits()));
 	}
 	
 	public void insertBet() {
@@ -113,7 +113,7 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 	public void gameStarted() {
 		updateBalance();
 		clearCard();
-		win_field.setText("0");
+		win_field.setText("");
 		player_hand_total.setText(Integer.toString(game.playerHandTotal()));
 		dealer_hand_total.setText(Integer.toString(game.dealersHandFirstCard()));
 		updatePlayersCards();
@@ -192,7 +192,7 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 	}
 	
 	private void showOutcome() {
-		win_field.setText(Double.toString(game.getWinnings()));
+		win_field.setText("Voitto: " + Double.toString(game.getWinnings()));
 		updateBalance();
 	}
 	
