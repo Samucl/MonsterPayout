@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CasinoBlackjack1ViewController1">
+<BorderPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CasinoBlackjack1ViewController1">
    <center>
       <GridPane style="-fx-background-color: linear-gradient(to bottom,#380600, #2f000c);" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -293,8 +294,35 @@
                </GridPane.margin>
             </Button>
             <Rectangle arcHeight="40.0" arcWidth="40.0" fill="#0d060691" height="132.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="20.0" translateY="-125.0" width="167.0" GridPane.rowIndex="1" />
-            <TextField fx:id="bet_field" maxWidth="136.0" minWidth="136.0" prefHeight="38.0" prefWidth="136.0" promptText="Panos" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: white;" translateX="35.0" translateY="-100.0" GridPane.rowIndex="1" />
-            <TextField fx:id="win_field" editable="false" focusTraversable="false" maxWidth="136.0" minWidth="136.0" prefHeight="38.0" prefWidth="116.0" promptText="Voitto" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: white;" text="Voitto" translateX="35.0" translateY="-150.0" GridPane.rowIndex="1" />
+            <TextField fx:id="bet_field" maxWidth="136.0" minWidth="136.0" prefHeight="38.0" prefWidth="136.0" promptText="Aseta panos" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: #ffb56b;" translateX="35.0" translateY="-100.0" GridPane.rowIndex="1">
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <effect>
+                  <DropShadow height="62.51" radius="24.33" spread="0.02" width="36.81">
+                     <color>
+                        <Color red="1.0" green="0.10999999940395355" blue="0.49566665291786194" opacity="0.3285302519798279" />
+                     </color>
+                  </DropShadow>
+               </effect></TextField>
+            <Label fx:id="win_label" textFill="#ffdf86" translateX="40.0" translateY="-115.0">
+               <font>
+                  <Font name="Calibri" size="21.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow height="50.65" radius="20.377499999999998" width="32.86">
+                     <color>
+                        <Color red="1.0" green="0.646402895450592" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Label>
          </children>
       </GridPane>
    </bottom>

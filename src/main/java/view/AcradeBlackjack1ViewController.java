@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -33,7 +34,7 @@ public class AcradeBlackjack1ViewController implements Initializable {
 	@FXML
 	public TextField bet_field;
 	@FXML
-	public TextField win_field;
+	public Label win_label;
 	@FXML
 	public Text player_hand_total;
 	@FXML
@@ -95,7 +96,7 @@ public class AcradeBlackjack1ViewController implements Initializable {
 	}
 	
 	private void updateBalance() {
-		balance.setText(Integer.toString(User.getCoins()));
+		balance.setText("Kolikot: " + Integer.toString(User.getCoins()));
 	}
 	
 	private void disableButtons() {
@@ -113,7 +114,7 @@ public class AcradeBlackjack1ViewController implements Initializable {
 	public void gameStarted() {
 		updateBalance();
 		clearCard();
-		win_field.setText("0");
+		win_label.setText("");
 		player_hand_total.setText(Integer.toString(game.playerHandTotal()));
 		dealer_hand_total.setText(Integer.toString(game.dealersHandFirstCard()));
 		updatePlayersCards();
@@ -192,7 +193,7 @@ public class AcradeBlackjack1ViewController implements Initializable {
 	}
 	
 	private void showOutcome() {
-		win_field.setText(Integer.toString(game.getWinnings()));
+		win_label.setText("Voitto: " + Integer.toString(game.getWinnings()));
 		updateBalance();
 	}
 	

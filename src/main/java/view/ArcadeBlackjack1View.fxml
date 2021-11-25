@@ -1,89 +1,381 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AcradeBlackjack1ViewController">
-   <children>
-      <AnchorPane minHeight="720.0" minWidth="1200.0" prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color: #30b33b;">
+<BorderPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AcradeBlackjack1ViewController">
+   <center>
+      <GridPane style="-fx-background-color: linear-gradient(to bottom,#532157, #330e52);" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="400.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <Button fx:id="exit_button" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toMainView" prefHeight="72.0" prefWidth="150.0" text="Poistu" />
-            <Button fx:id="play_button" layoutX="272.0" layoutY="638.0" mnemonicParsing="false" onAction="#insertBet" prefHeight="60.0" prefWidth="125.0" text="Pelaa" />
-            <TextField fx:id="bet_field" layoutX="25.0" layoutY="660.0" prefHeight="38.0" prefWidth="226.0" promptText="Panos" />
-            <TextField fx:id="win_field" editable="false" focusTraversable="false" layoutX="25.0" layoutY="611.0" prefHeight="38.0" prefWidth="226.0" promptText="Voitto" />
-            <Button fx:id="hit_button" layoutX="467.0" layoutY="551.0" mnemonicParsing="false" onAction="#playerHit" prefHeight="60.0" prefWidth="125.0" text="Iske" />
-            <GridPane layoutX="206.0" layoutY="412.0" prefHeight="116.0" prefWidth="873.0">
+            <GridPane GridPane.rowIndex="1">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="          " />
-                  <Text layoutX="10.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="1" />
-                  <Text layoutX="110.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="2" />
-                  <Text layoutX="10.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="3" />
-                  <Text layoutX="10.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="4" />
-                  <Text layoutX="410.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="5" />
-                  <Text layoutX="510.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="6" />
-                  <ImageView fx:id="pcard6" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="pcard3" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-                  <ImageView fx:id="pcard0" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
-                  <ImageView fx:id="pcard1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
-                  <ImageView fx:id="pcard2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
-                  <ImageView fx:id="pcard4" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" />
-                  <ImageView fx:id="pcard5" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
+                  <GridPane maxWidth="1000.0" minWidth="1000.0" prefHeight="116.0" prefWidth="873.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="          " />
+                        <Text layoutX="10.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="1" />
+                        <Text layoutX="110.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="2" />
+                        <Text layoutX="10.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="3" />
+                        <Text layoutX="10.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="4" />
+                        <Text layoutX="410.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="5" />
+                        <Text layoutX="510.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="6" />
+                        <ImageView fx:id="pcard6" fitHeight="190.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
+                           <effect>
+                              <DropShadow height="40.0" radius="19.5" width="40.0">
+                                 <color>
+                                    <Color opacity="0.5869565010070801" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="pcard3" fitHeight="190.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                           <effect>
+                              <DropShadow height="40.0" radius="19.5" width="40.0">
+                                 <color>
+                                    <Color opacity="0.582608699798584" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="pcard0" fitHeight="190.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                           <effect>
+                              <DropShadow height="40.0" radius="19.5" width="40.0">
+                                 <color>
+                                    <Color opacity="0.5652173757553101" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="pcard1" fitHeight="190.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+                           <effect>
+                              <DropShadow height="40.0" radius="19.5" width="40.0">
+                                 <color>
+                                    <Color opacity="0.582608699798584" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="pcard2" fitHeight="190.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER">
+                           <effect>
+                              <DropShadow height="40.0" radius="19.5" width="40.0">
+                                 <color>
+                                    <Color opacity="0.5565217137336731" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="pcard4" fitHeight="190.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.halignment="CENTER">
+                           <effect>
+                              <DropShadow height="40.0" radius="19.5" width="40.0">
+                                 <color>
+                                    <Color opacity="0.573913037776947" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="pcard5" fitHeight="190.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.halignment="CENTER">
+                           <effect>
+                              <DropShadow height="40.0" radius="19.5" width="40.0">
+                                 <color>
+                                    <Color opacity="0.595652163028717" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </ImageView>
+                     </children>
+                  </GridPane>
+                  <GridPane maxWidth="1000.0" minWidth="1000.0" prefHeight="116.0" prefWidth="1000.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="          " />
+                        <Text layoutX="10.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="1" />
+                        <Text layoutX="110.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="2" />
+                        <Text layoutX="10.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="3" />
+                        <Text layoutX="10.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="4" />
+                        <Text layoutX="410.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="5" />
+                        <Text layoutX="510.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="6" />
+                        <ImageView fx:id="dcard6" fitHeight="190.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
+                           <effect>
+                              <DropShadow height="40.0" radius="19.5" width="40.0">
+                                 <color>
+                                    <Color opacity="0.5869565010070801" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="dcard3" fitHeight="190.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                           <effect>
+                              <DropShadow height="40.0" radius="19.5" width="40.0">
+                                 <color>
+                                    <Color opacity="0.573913037776947" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="dcard0" fitHeight="190.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                           <effect>
+                              <DropShadow height="40.0" radius="19.5" width="40.0">
+                                 <color>
+                                    <Color opacity="0.5478261113166809" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="dcard1" fitHeight="190.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+                           <effect>
+                              <DropShadow height="40.0" radius="19.5" width="40.0">
+                                 <color>
+                                    <Color opacity="0.5652173757553101" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="dcard2" fitHeight="190.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER">
+                           <effect>
+                              <DropShadow height="40.0" radius="19.5" width="40.0">
+                                 <color>
+                                    <Color opacity="0.5869565010070801" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="dcard4" fitHeight="190.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.halignment="CENTER">
+                           <effect>
+                              <DropShadow height="40.0" radius="19.5" width="40.0">
+                                 <color>
+                                    <Color opacity="0.5478261113166809" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="dcard5" fitHeight="190.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.halignment="CENTER">
+                           <effect>
+                              <DropShadow height="40.0" radius="19.5" width="40.0">
+                                 <color>
+                                    <Color opacity="0.5565217137336731" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </ImageView>
+                     </children>
+                  </GridPane>
                </children>
             </GridPane>
-            <GridPane layoutX="192.0" layoutY="150.0" prefHeight="116.0" prefWidth="855.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="          " />
-                  <Text layoutX="10.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="1" />
-                  <Text layoutX="110.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="2" />
-                  <Text layoutX="10.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="3" />
-                  <Text layoutX="10.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="4" />
-                  <Text layoutX="410.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="5" />
-                  <Text layoutX="510.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " GridPane.columnIndex="6" />
-                  <ImageView fx:id="dcard6" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="dcard3" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-                  <ImageView fx:id="dcard0" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
-                  <ImageView fx:id="dcard1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
-                  <ImageView fx:id="dcard2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" />
-                  <ImageView fx:id="dcard4" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" />
-                  <ImageView fx:id="dcard5" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" />
-               </children>
-            </GridPane>
-            <Text fx:id="player_hand_total" layoutX="558.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Koritten summa" />
-            <Text fx:id="dealer_hand_total" layoutX="558.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Koritten summa" />
-            <Button fx:id="stay_button" layoutX="609.0" layoutY="551.0" mnemonicParsing="false" onAction="#playerStay" prefHeight="60.0" prefWidth="125.0" text="Pysy" />
-            <Text layoutX="25.0" layoutY="586.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kolikko saldo: " />
-            <Text fx:id="balance" layoutX="108.0" layoutY="586.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1000" />
+            <Text fx:id="player_hand_total" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Koritten summa" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <font>
+                  <Font name="Calibri" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" opacity="0.9599999785423279" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
+            <Text fx:id="dealer_hand_total" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Koritten summa" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="Calibri" size="25.0" />
+               </font>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
          </children>
-      </AnchorPane>
-   </children>
-</AnchorPane>
+      </GridPane>
+   </center>
+   <bottom>
+      <GridPane prefHeight="83.0" prefWidth="1280.0" style="-fx-background-color: #0d0606;" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="1.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="play_button" mnemonicParsing="false" onAction="#insertBet" prefHeight="38.0" prefWidth="147.0" style="-fx-background-color: #52a400;" text="Pelaa" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="22.0" />
+               </font>
+               <effect>
+                  <DropShadow height="46.21" radius="21.4925" width="41.76">
+                     <color>
+                        <Color red="0.0833333358168602" green="1.0" opacity="0.6304348111152649" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Button>
+            <Button fx:id="hit_button" mnemonicParsing="false" onAction="#playerHit" prefHeight="60.0" prefWidth="125.0" style="-fx-border-color: white; -fx-border-radius: 10; -fx-background-color: transparent;" text="Iske" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Calibri" size="26.0" />
+               </font>
+               <effect>
+                  <DropShadow height="47.69" radius="24.085" width="50.65">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="stay_button" mnemonicParsing="false" onAction="#playerStay" prefHeight="60.0" prefWidth="125.0" style="-fx-border-color: white; -fx-border-radius: 10; -fx-background-color: transparent;" text="Pysy" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Calibri" size="26.0" />
+               </font>
+               <effect>
+                  <DropShadow radius="12.965" spread="0.22" width="32.86">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Rectangle arcHeight="40.0" arcWidth="40.0" fill="#0d060691" height="132.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="20.0" translateY="-125.0" width="167.0" GridPane.rowIndex="1" />
+            <TextField fx:id="bet_field" maxWidth="136.0" minWidth="136.0" prefHeight="38.0" prefWidth="136.0" promptText="Aseta panos" style="-fx-background-color: rgba(0, 0, 0, 0.5); -fx-text-fill: #ffb56b;" translateX="35.0" translateY="-100.0" GridPane.rowIndex="1">
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <effect>
+                  <DropShadow height="62.51" radius="24.33" spread="0.02" width="36.81">
+                     <color>
+                        <Color red="1.0" green="0.10999999940395355" blue="0.49566665291786194" opacity="0.3285302519798279" />
+                     </color>
+                  </DropShadow>
+               </effect></TextField>
+            <Label fx:id="win_label" textFill="#ffdf86" translateX="40.0" translateY="-115.0">
+               <font>
+                  <Font name="Calibri" size="21.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow height="50.65" radius="20.377499999999998" width="32.86">
+                     <color>
+                        <Color red="1.0" green="0.646402895450592" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Label>
+         </children>
+      </GridPane>
+   </bottom>
+   <top>
+      <GridPane prefHeight="49.0" prefWidth="1280.0" style="-fx-background-color: #0d0606;" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="exit_button" mnemonicParsing="false" onAction="#toMainView" opacity="0.85" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: #e32209;" text="Takaisin" textFill="WHITE" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Calibri Bold" size="15.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="15.0" />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" green="0.10185185074806213" blue="0.10185185074806213" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Button>
+            <Text fx:id="balance" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Krediitit 100.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets right="20.0" />
+               </GridPane.margin>
+            </Text>
+            <ImageView fitHeight="45.0" fitWidth="147.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@/smallLogo.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="114.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@/blackjack/arcadeblackjacklogo.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets left="30.0" top="190.0" />
+               </GridPane.margin>
+            </ImageView>
+         </children>
+      </GridPane>
+   </top>
+</BorderPane>

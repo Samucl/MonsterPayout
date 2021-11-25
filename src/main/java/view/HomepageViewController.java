@@ -47,7 +47,7 @@ public class HomepageViewController implements Initializable {
 		try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("ArcadeBlackjack1View.fxml"));
-            AnchorPane blackjackView = (AnchorPane) loader.load();
+            BorderPane blackjackView = (BorderPane) loader.load();
             Scene blackjackScene = new Scene(blackjackView);
 			Stage window = (Stage) nameLabel.getScene().getWindow();
 			window.setScene(blackjackScene);
