@@ -626,6 +626,7 @@ public class Database {
 		}
 	
 	public static boolean buyProduct(Product product) {
+		
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
 		 * on luotu ilmentymä
@@ -656,7 +657,7 @@ public class Database {
 					// Lisätään saldoa
 					query = "UPDATE Tili "
 							+ "SET KrediittiSaldo = KrediittiSaldo + " + product.getCreditAmount()
-									+ " WHERE TiliID = " + tiliID;
+									+ ", KolikkoSaldo = KolikkoSaldo + " + product.getCoinAmount() + " WHERE TiliID = " + tiliID;
 					int updatedRows = stmt.executeUpdate(query); // Tallennetaan palautusta varten päivitettyjen alkioiden lkm (1 jos onnistui, 0 jos ei)
 					
 					query = "INSERT INTO Tilaus (Summa, Paivamaara, KayttajaID, Tuotekuvaus, KrediittienMaara) VALUES "
@@ -668,11 +669,13 @@ public class Database {
 					
 					stmt.executeQuery(query);
 					
-					query = "SELECT KrediittiSaldo FROM Tili "
+					query = "SELECT KrediittiSaldo, KolikkoSaldo FROM Tili "
 							+ "WHERE TiliID = "+tiliID;
 					rs = stmt.executeQuery(query);
-					if(rs.next())
+					if(rs.next()) {
 						User.setCredits(rs.getDouble("KrediittiSaldo"));
+						User.setCoins(rs.getInt("KolikkoSaldo"));
+					}	
 					
 					Session.setOrders(Database.getOrders());
 					
