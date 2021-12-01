@@ -51,7 +51,7 @@ public class HomepageViewController implements Initializable {
 	public void toArcadeBlackjack1() {
 		try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("ArcadeBlackjack1View.fxml"));
+            loader.setLocation(MainApplication.class.getResource("ArcadeBlackjack1View2.fxml"));
             BorderPane blackjackView = (BorderPane) loader.load();
             Scene blackjackScene = new Scene(blackjackView);
 			Stage window = (Stage) nameLabel.getScene().getWindow();

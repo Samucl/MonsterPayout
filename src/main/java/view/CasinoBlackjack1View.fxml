@@ -211,7 +211,7 @@
                   </GridPane>
                </children>
             </GridPane>
-            <Text fx:id="player_hand_total" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Koritten summa" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <Text fx:id="player_hand_total" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Korttien summa" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <font>
                   <Font name="Calibri" size="25.0" />
                </font>
@@ -223,7 +223,7 @@
                   </DropShadow>
                </effect>
             </Text>
-            <Text fx:id="dealer_hand_total" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Koritten summa" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+            <Text fx:id="dealer_hand_total" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Korttien summa" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                <font>
                   <Font name="Calibri" size="25.0" />
                </font>
@@ -307,7 +307,7 @@
                </effect></TextField>
             <Label fx:id="win_label" textFill="#ffdf86" translateX="40.0" translateY="-115.0">
                <font>
-                  <Font name="Calibri" size="21.0" />
+                  <Font name="Calibri" size="15.0" />
                </font>
                <opaqueInsets>
                   <Insets />
@@ -319,6 +319,21 @@
                   <DropShadow height="50.65" radius="20.377499999999998" width="32.86">
                      <color>
                         <Color red="1.0" green="0.646402895450592" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Label>
+            <Label fx:id="errorLabel" text="Panos suurempi kuin krediittien saldo!" textFill="#ff3939" visible="false" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="19.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="1.0" green="0.25462964177131653" blue="0.006172839552164078" opacity="0.6299999952316284" />
                      </color>
                   </DropShadow>
                </effect>

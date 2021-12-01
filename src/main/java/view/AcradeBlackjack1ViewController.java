@@ -69,6 +69,8 @@ public class AcradeBlackjack1ViewController implements Initializable {
 	public ImageView dcard6;
 	@FXML
 	public Text balance;
+	@FXML
+	public Label errorLabel;
 	
 	private Arcade_Blackjack_1 game = new Arcade_Blackjack_1();
 	
@@ -88,9 +90,18 @@ public class AcradeBlackjack1ViewController implements Initializable {
 		int bet = 0;
 		try {
 			bet = Integer.parseInt(bet_field.getText());
+			if(User.getCoins() < bet) {
+				errorLabel.setText("Panos suurempi kuin kolikoiden saldo!");
+				errorLabel.setVisible(true);
+				return;
+			}
+			else
+				errorLabel.setVisible(false);
 			if(game.startGame(bet))
 				gameStarted();
 		} catch (NumberFormatException e) {
+			errorLabel.setText("Syötä panos!");
+			errorLabel.setVisible(true);
 			System.err.println("Panos ei ole annettu numeroina");
 		}
 	}
@@ -115,8 +126,8 @@ public class AcradeBlackjack1ViewController implements Initializable {
 		updateBalance();
 		clearCard();
 		win_label.setText("");
-		player_hand_total.setText(Integer.toString(game.playerHandTotal()));
-		dealer_hand_total.setText(Integer.toString(game.dealersHandFirstCard()));
+		player_hand_total.setText("Pelaajan kortit: " + Integer.toString(game.playerHandTotal()));
+		dealer_hand_total.setText("Vastustajan kortit: " + Integer.toString(game.dealersHandFirstCard()));
 		updatePlayersCards();
 		showDealersBeginningHand();
 		if(game.isGameOver()) {
@@ -193,7 +204,7 @@ public class AcradeBlackjack1ViewController implements Initializable {
 	}
 	
 	private void showOutcome() {
-		win_label.setText("Voitto: " + Integer.toString(game.getWinnings()));
+		win_label.setText("Voitto: " + Integer.toString(game.getWinnings()) + " kolikkoa");
 		updateBalance();
 	}
 	

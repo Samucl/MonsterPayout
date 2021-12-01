@@ -69,6 +69,8 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 	public ImageView dcard6;
 	@FXML
 	public Text balance;
+	@FXML 
+	public Label errorLabel;
 	
 	private Casino_Blackjack_1 game = new Casino_Blackjack_1();
 	
@@ -92,9 +94,18 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 		double bet = 0;
 		try {
 			bet = Double.parseDouble(bet_field.getText());
+			if(User.getCredits() < bet) {
+				errorLabel.setText("Panos suurempi kuin krediittien saldo!");
+				errorLabel.setVisible(true);
+				return;
+			}
+			else
+				errorLabel.setVisible(false);
 			if(game.startGame(bet))
 				gameStarted();
 		} catch (NumberFormatException e) {
+			errorLabel.setText("Syötä panos!");
+			errorLabel.setVisible(true);
 			System.err.println("Panos ei ole annettu liukunumerona");
 		}
 	}
@@ -115,8 +126,8 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 		updateBalance();
 		clearCard();
 		win_label.setText("");
-		player_hand_total.setText(Integer.toString(game.playerHandTotal()));
-		dealer_hand_total.setText(Integer.toString(game.dealersHandFirstCard()));
+		player_hand_total.setText("Pelaajan kortit: " + Integer.toString(game.playerHandTotal()));
+		dealer_hand_total.setText("Vastustajan kortit: " + Integer.toString(game.dealersHandFirstCard()));
 		updatePlayersCards();
 		showDealersBeginningHand();
 		if(game.isGameOver()) {
@@ -193,7 +204,7 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 	}
 	
 	private void showOutcome() {
-		win_label.setText("Voitto: " + Double.toString(game.getWinnings()));
+		win_label.setText("Voitto: " + Double.toString(game.getWinnings()) + " krediittiä");
 		updateBalance();
 	}
 	
