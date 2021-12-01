@@ -1,8 +1,10 @@
 package view;
 import model.Database;
+import model.Session;
 import model.User;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -12,10 +14,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -28,13 +31,41 @@ public class LoginViewController implements Initializable {
 	@FXML private PasswordField salasanaInput;
 	@FXML private Button kirjauduButton;
 	@FXML private Button torekisteroitymisButton;
+	@FXML private Label loginLabel;
+	@FXML private MenuButton languageButton;
+	private ResourceBundle texts;
 	
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
     	kirjauduButton.setDefaultButton(true);
+    	texts = Session.getLanguageBundle();
+    	updateLanguage();
     }
-	
+    
+    public void toEnglish(ActionEvent e) {
+    	texts = ResourceBundle.getBundle("lang.language",new Locale("en", "US"));
+    	updateLanguage();
+    }
+    
+    public void toFinnish(ActionEvent e) {
+    	texts = ResourceBundle.getBundle("lang.language",new Locale("fi", "FI"));
+    	updateLanguage();
+    }
+    
+    private void updateLanguage() {
+    	loginLabel.setText(uppercase(texts, "welcomeback"));
+    	kirjauduButton.setText(uppercase(texts, "login"));
+    	kayttajatunnusInput.setPromptText(uppercase(texts, "username"));
+    	salasanaInput.setPromptText(uppercase(texts, "password"));
+    	torekisteroitymisButton.setText(uppercase(texts, "join.button"));
+    	languageButton.setText(uppercase(texts, "language"));
+    }
+    
+    private String uppercase(ResourceBundle rb, String string) {
+    	return rb.getString(string).substring(0, 1).toUpperCase() + rb.getString(string).substring(1).toLowerCase();
+    }
+    
 	/**
 	* Metodi käyttäjän kirjautumista varten. Lähetetään DAO:lle kirjautumiseen tarvittavat tiedot.
 	*/

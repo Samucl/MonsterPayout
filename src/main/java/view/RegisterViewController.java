@@ -1,23 +1,31 @@
 package view;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.Database;
+import model.Session;
 
 /**
 * Kontrolleri jolla ohjataan RekisterointiViewin toimintoja.
 */
 
-public class RegisterViewController {
+public class RegisterViewController implements Initializable{
 	@FXML private TextField sahkopostiInput;
 	@FXML private TextField etunimiInput;
 	@FXML private TextField sukunimiInput;
@@ -26,6 +34,43 @@ public class RegisterViewController {
 	@FXML private PasswordField salasanauudelleenInput;
 	@FXML private Button rekisteroidyButton;
 	@FXML private Button tokirjautumisButton;
+	@FXML private Label registerLabel;
+	@FXML private MenuButton languageButton;
+	private ResourceBundle texts;
+	
+    @Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+    	texts = Session.getLanguageBundle();
+    	updateLanguage();
+    }
+    
+    public void toEnglish(ActionEvent e) {
+    	texts = ResourceBundle.getBundle("lang.language",new Locale("en", "US"));
+    	updateLanguage();
+    }
+    
+    public void toFinnish(ActionEvent e) {
+    	texts = ResourceBundle.getBundle("lang.language",new Locale("fi", "FI"));
+    	updateLanguage();
+    }
+    
+    private void updateLanguage() {
+    	registerLabel.setText(uppercase(texts, "register.button"));
+    	sahkopostiInput.setPromptText(uppercase(texts, "email"));
+    	etunimiInput.setPromptText(uppercase(texts, "firstname"));
+    	sukunimiInput.setPromptText(uppercase(texts, "lastname"));
+    	kayttajatunnusInput2.setPromptText(uppercase(texts, "username"));
+    	salasanaInput2.setPromptText(uppercase(texts, "password"));
+    	salasanauudelleenInput.setPromptText(uppercase(texts, "password.again"));
+    	rekisteroidyButton.setText(uppercase(texts, "join.button"));
+    	tokirjautumisButton.setText(uppercase(texts, "account.already"));
+    	languageButton.setText(uppercase(texts, "language"));
+    }
+    
+    private String uppercase(ResourceBundle rb, String string) {
+    	return rb.getString(string).substring(0, 1).toUpperCase() + rb.getString(string).substring(1).toLowerCase();
+    }
 	
 	/**
 	* Metodi käyttäjän rekisteröintiä varten. Lähetetään DAO:lle rekisteröintiin tarvittavat tiedot.

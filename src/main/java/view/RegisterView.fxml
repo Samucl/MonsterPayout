@@ -3,14 +3,18 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="117.0" minWidth="208.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.RegisterViewController">
@@ -33,6 +37,18 @@
                <GridPane.margin>
                   <Insets bottom="5.0" left="10.0" />
                </GridPane.margin></ImageView>
+            <MenuButton fx:id="languageButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: #31485f;" text="Kieli" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+              <items>
+                <MenuItem fx:id="toEnglish" mnemonicParsing="false" onAction="#toEnglish" text="In English" />
+                <MenuItem fx:id="toFinnish" mnemonicParsing="false" onAction="#toFinnish" text="Suomeksi" />
+              </items>
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets right="30.0" />
+               </GridPane.margin>
+            </MenuButton>
          </children>
       </GridPane>
    </top>
@@ -76,13 +92,20 @@
                 <RowConstraints minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label contentDisplay="CENTER" text="Rekisteröidy" textFill="#ffe400" textOverrun="CLIP" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Label fx:id="registerLabel" contentDisplay="CENTER" text="Rekisteröidy" textFill="#ffe400" textOverrun="CLIP" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font size="54.0" />
                      </font>
                      <GridPane.margin>
                         <Insets bottom="30.0" />
                      </GridPane.margin>
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.7490196228027344" green="0.5411764979362488" blue="0.22745098173618317" />
+                           </color>
+                        </DropShadow>
+                     </effect>
                   </Label>
                   <TextField fx:id="sahkopostiInput" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Sähköposti" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
@@ -117,10 +140,17 @@
                         <Font name="Calibri" size="18.0" />
                      </font>
                   </PasswordField>
-                  <Button fx:id="rekisteroidyButton" defaultButton="true" mnemonicParsing="false" onAction="#rekisteroidy" prefHeight="40.0" prefWidth="358.0" style="-fx-background-color: #31485f;" text="Liity mukaan" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
+                  <Button fx:id="rekisteroidyButton" defaultButton="true" mnemonicParsing="false" onAction="#rekisteroidy" prefHeight="40.0" prefWidth="358.0" style="-fx-background-color: #ebd871;" text="Liity mukaan" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Calibri" size="18.0" />
                      </font>
+                     <effect>
+                        <DropShadow height="44.72" radius="21.86" width="44.72">
+                           <color>
+                              <Color red="1.0" green="0.6666666865348816" opacity="0.6091304421424866" />
+                           </color>
+                        </DropShadow>
+                     </effect>
                   </Button>
                </children>
             </GridPane>
@@ -140,8 +170,15 @@
                      </image></ImageView>
                   <Button fx:id="tokirjautumisButton" mnemonicParsing="false" onAction="#toKirjautuminen" prefHeight="70.0" prefWidth="240.0" style="-fx-background-color: #31485f;" text="Onko sinulla jo tili?" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Calibri" size="26.0" />
+                        <Font name="Calibri" size="20.0" />
                      </font>
+                     <effect>
+                        <DropShadow height="65.48" radius="29.275" width="53.62">
+                           <color>
+                              <Color red="0.12999999523162842" green="0.796999990940094" blue="1.0" opacity="0.7260869145393372" />
+                           </color>
+                        </DropShadow>
+                     </effect>
                   </Button>
                </children>
             </GridPane>
