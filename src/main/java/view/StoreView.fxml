@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.StoreViewController">
+<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(to bottom,#000c2e, #ACB6E5);;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.StoreViewController">
    <top>
       <GridPane prefHeight="40.0" prefWidth="856.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -84,15 +84,16 @@
       </GridPane>
    </top>
    <center>
-      <HBox fx:id="hbox" maxHeight="310.0" maxWidth="820.0" prefHeight="310.0" prefWidth="830.0" BorderPane.alignment="CENTER_LEFT">
+      <HBox fx:id="hbox" maxHeight="310.0" maxWidth="820.0" prefHeight="310.0" prefWidth="830.0" style="-fx-background-color: linear-gradient(to bottom,#000c2e, #ACB6E5);" BorderPane.alignment="CENTER_LEFT">
          <BorderPane.margin>
             <Insets bottom="16.0" left="32.0" right="32.0" top="74.0" />
          </BorderPane.margin>
          <children>
-            <ScrollPane fx:id="scrollpane" maxHeight="310.0" maxWidth="830.0" minHeight="310.0" minWidth="830.0" prefHeight="336.0" prefWidth="830.0" style="-fx-background-color: transparent;">
+            <ScrollPane fx:id="scrollpane" maxHeight="310.0" maxWidth="830.0" minHeight="310.0" minWidth="830.0" prefHeight="336.0" prefWidth="830.0">
                <HBox.margin>
                   <Insets />
-               </HBox.margin></ScrollPane>
+               </HBox.margin>
+            </ScrollPane>
          </children>
       </HBox>
    </center>

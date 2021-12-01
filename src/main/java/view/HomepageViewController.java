@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.sun.prism.paint.Stop;
+
 import moneyrain.MoneyRain;
 import slalommadness.SlalomMadnessGame;
 import javafx.event.ActionEvent;
@@ -18,6 +20,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Database;
@@ -154,6 +159,8 @@ public class HomepageViewController implements Initializable {
             loader.setLocation(MainApplication.class.getResource("StoreView.fxml"));
             BorderPane storeView = (BorderPane) loader.load();
             Scene storeScene = new Scene(storeView);
+            
+  
 			Stage window = (Stage) toStoreButton.getScene().getWindow();
 			window.setScene(storeScene);
         } catch (IOException iOE) {

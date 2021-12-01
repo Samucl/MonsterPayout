@@ -61,14 +61,16 @@ public class SlalomMadnessGame extends Application {
 	private Image stone1;
 	private Image stone2;
 	private Image finish;
+	private Image coin;
 	
 	private int points = 0;
+	private int coinReward = 0;
 	private int speed = 1;
 	private boolean dead = false;
 	private boolean finished = false;
 	private boolean sprucesOnStartCreated = false;
 	
-	private double playerXPos = (width/2-PLAYER_WIDTH/2); //Keskelle ruutua
+	private double playerXPos = (width/2-PLAYER_WIDTH/2); //Keskelle ruutua pelin alussa
 	private double playerYPos = (height/4 - PLAYER_HEIGHT);
 	
 	private List<Item> items = new ArrayList<>();
@@ -98,6 +100,7 @@ public class SlalomMadnessGame extends Application {
 		stone1 = new Image(new FileInputStream("./src/main/resources/slalommadness/stone1.png"));
 		stone2 = new Image(new FileInputStream("./src/main/resources/slalommadness/stone2.png"));
 		finish = new Image(new FileInputStream("./src/main/resources/slalommadness/finish.png"));
+		coin = new Image(new FileInputStream("./src/main/resources/coin_1.png"));
 		
 		Canvas canvas = new Canvas(width, height);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -321,7 +324,7 @@ public class SlalomMadnessGame extends Application {
 			}
 
 		} else if (!running && finished) { //Jos maaliin on tultu
-			tl.stop();
+			
 			
 			gc.setFont(Font.font ("Arial Black", 30));
 			
@@ -346,12 +349,48 @@ public class SlalomMadnessGame extends Application {
 				gc.setFont(Font.font ("Arial Black", 24));
 				gc.fillText("UUSI ENNÄTYS!", 350, 390);
 			}
+			
+			if (score > 60) {
+				coinReward = 1;
+			} else if (score > 55) {
+				coinReward = 2;
+			} else if (score > 50) {
+				coinReward = 3;
+			} else if (score > 45) {
+				coinReward = 4;
+			} else if (score > 44) {
+				coinReward = 5;
+			} else if (score > 43) {
+				coinReward = 6;
+			} else if (score > 42) {
+				coinReward = 7;
+			} else if (score > 41) {
+				coinReward = 7;
+			} else if (score > 40) {
+				coinReward = 8;
+			} else {
+				coinReward = 10;
+			}
+
+			gc.setFill(Color.BLACK);
+			gc.fillText("Kolikkopalkinto: ", 320, 730);
+			
+			try {TimeUnit.SECONDS.sleep(1);} catch (InterruptedException e) {e.printStackTrace();}
+
+			gc.fillText(String.valueOf(coinReward), 580, 730);
+			gc.drawImage(coin, 590, 730);
 
 			Database.setHighScoreTime(score, "Slalom Madness");
+			Database.increaseCoinBalance(coinReward);
+			
+
+			try {TimeUnit.SECONDS.sleep(1);} catch (InterruptedException e) {e.printStackTrace();}
 			
 			gc.setFill(Color.BLACK);
 			gc.setFont(Font.font ("Arial Black", 24));
-			gc.fillText("Palaa menuun painamalla  ↵", 294, 730);
+			gc.fillText("Palaa menuun painamalla  ↵", 294, 8000);
+			
+			tl.stop();
 			
 		} else if (dead) { //Jos pelaaja törmännyt esteeseen
 			tl.stop();

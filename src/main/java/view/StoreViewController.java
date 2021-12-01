@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -17,11 +18,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -56,11 +63,24 @@ public class StoreViewController {
 	@FXML private ImageView coinImage;
 	
 	
+	private final Background unfocusBackground = new Background( new BackgroundFill( Color.web( "#F4F4F4" ), CornerRadii.EMPTY, Insets.EMPTY ) );
+	
 	public void initialize() {
 		setProducts();
 		setDiscountProducts();
 		setChoiceBoxItems();
 		refreshAccountInfo();	
+		
+		/*
+		Stop[] stops = new Stop[] {new Stop(0, Color.BLUE), new Stop(1, Color.RED)};
+		LinearGradient lgcolor = new LinearGradient(0,0,1,0,true,CycleMethod.NO_CYCLE, stops);
+		BackgroundFill bgfill = new BackgroundFill(lgcolor, CornerRadii.EMPTY, Insets.EMPTY);
+		borderpane.setBackground(new Background(bgfill));
+		*/
+		
+		hbox.setBackground(unfocusBackground);
+		scrollpane.setBackground(unfocusBackground);
+		
 	}
 	
 	public void setProducts() {
@@ -85,7 +105,6 @@ public class StoreViewController {
 		//Tehdään alennustuotteille oma GridPane, jonka sarakkeisiin asetetaan tuotetiedot, sitten GridPane asetetaan HBoxiin
 		GridPane innerPane = new GridPane();
 		innerPane.setVgap(6); //Rivien välille vähän tyhjää tilaa
-		
 		innerPane.setPadding(new Insets(18, 0, 18, 24));
 		
 		for (i = 0 ; i < products1.size() ; i++) {
@@ -252,7 +271,7 @@ public class StoreViewController {
 	}
 	
 	//-------------------------------------
-	
+
 	public void setChoiceBoxItems() {
 		buyWithCoinsChoiceBox.getItems().add(0.1);
 		buyWithCoinsChoiceBox.getItems().add((double) 1);
