@@ -377,8 +377,8 @@ public class SlalomMadnessGame extends Application {
 			
 			try {TimeUnit.SECONDS.sleep(1);} catch (InterruptedException e) {e.printStackTrace();}
 
-			gc.fillText(String.valueOf(coinReward), 580, 730);
-			gc.drawImage(coin, 590, 730);
+			gc.fillText(String.valueOf(coinReward), 557, 730);
+			gc.drawImage(coin, 590, 703, 35, 35);
 
 			Database.setHighScoreTime(score, "Slalom Madness");
 			Database.increaseCoinBalance(coinReward);
