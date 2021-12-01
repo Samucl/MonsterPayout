@@ -11,6 +11,7 @@ import slalommadness.SlalomMadnessGame;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -46,6 +47,8 @@ public class SlalomMadnessMenuViewController implements Initializable {
 			Label scoreLabel = new Label(part2);
 			userLabel.setFont(Font.font("Ariel Black", FontWeight.BOLD, 12));
 			scoreLabel.setFont(Font.font("Ariel Black", FontWeight.BOLD, 12));
+			userLabel.setTextFill(Color.WHITE);
+			scoreLabel.setTextFill(Color.WHITE);
 			top10GridPane.add(userLabel, 0, i);
 			top10GridPane.add(scoreLabel, 1, i);
 		}	
