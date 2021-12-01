@@ -164,9 +164,9 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fitHeight="536.0" fitWidth="761.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <ImageView fx:id="logoImageView" fitHeight="536.0" fitWidth="761.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@/bigLogo2.png" />
+                        <Image url="@/bigLogo2en.png" />
                      </image></ImageView>
                   <Button fx:id="tokirjautumisButton" mnemonicParsing="false" onAction="#toKirjautuminen" prefHeight="70.0" prefWidth="240.0" style="-fx-background-color: #31485f;" text="Onko sinulla jo tili?" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>

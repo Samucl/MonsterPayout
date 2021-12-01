@@ -1,4 +1,6 @@
 package view;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
@@ -16,6 +18,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.Database;
@@ -36,6 +40,7 @@ public class RegisterViewController implements Initializable{
 	@FXML private Button tokirjautumisButton;
 	@FXML private Label registerLabel;
 	@FXML private MenuButton languageButton;
+	@FXML private ImageView logoImageView;
 	private ResourceBundle texts;
 	
     @Override
@@ -43,16 +48,32 @@ public class RegisterViewController implements Initializable{
     {
     	texts = Session.getLanguageBundle();
     	updateLanguage();
+    	
+    	try {
+			setBackgroundLogo();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+    	
     }
     
-    public void toEnglish(ActionEvent e) {
+    public void toEnglish(ActionEvent e) throws FileNotFoundException {
     	texts = ResourceBundle.getBundle("lang.language",new Locale("en", "US"));
     	updateLanguage();
+    	setBackgroundLogo();
     }
     
-    public void toFinnish(ActionEvent e) {
+    public void toFinnish(ActionEvent e) throws FileNotFoundException {
     	texts = ResourceBundle.getBundle("lang.language",new Locale("fi", "FI"));
     	updateLanguage();
+    	setBackgroundLogo();
+    }
+    
+    private void setBackgroundLogo() throws FileNotFoundException {
+    	if(texts.getLocale().equals(new Locale("fi", "FI")))
+        	logoImageView.setImage(new Image(new FileInputStream("./src/main/resources/bigLogo2fi.png")));
+    	else
+    		logoImageView.setImage(new Image(new FileInputStream("./src/main/resources/bigLogo2en.png")));
     }
     
     private void updateLanguage() {
