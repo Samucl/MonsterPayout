@@ -52,6 +52,35 @@ public class Session {
 	
 	public static void setLanguageBundle(ResourceBundle lB) {
 		languageBundle = lB;
+		saveLanguage();
+	}
+	
+	private static void saveLanguage() {
+		try {
+			userProperties.load(new FileInputStream(userPropertiesPath));
+			/*
+			 * Jos tähän tarvittavat avaimet puuttuvat tiedostosta, luodaan ne
+			 */
+			if(userProperties.getProperty("language")==null||userProperties.getProperty("country")==null) {
+				Locale locale = new Locale("en","US");
+				if(userProperties.getProperty("language")==null)
+					userProperties.setProperty("language", languageBundle.getString("info.language"));
+				if(userProperties.getProperty("country")==null)
+					userProperties.setProperty("country", languageBundle.getString("info.country"));
+				
+				userProperties.store(new FileOutputStream(userPropertiesPath), "missing keys added");
+			} else {
+				userProperties.setProperty("language", languageBundle.getString("info.language"));
+				userProperties.setProperty("country", languageBundle.getString("info.country"));
+			}
+			userProperties.store(new FileOutputStream(userPropertiesPath), "language changed");
+			System.out.println(userProperties.getProperty("language")+userProperties.getProperty("country"));
+		} catch (FileNotFoundException e) {
+			createUserProperties();
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void loadLanguageBundle() {
