@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Session;
 import view.MainApplication;
 import view.MoneyRainDeadViewController;
 import javafx.scene.Scene;
@@ -55,9 +57,11 @@ public class MoneyRain extends Canvas {
 	private int health = 3;
 	private boolean dead = false;
 	private List<Item> items = new ArrayList<>();
+	private ResourceBundle texts;
 	
 	public MoneyRain(Stage stage) {
 		try {
+			texts = Session.getLanguageBundle();
 			start(stage);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -178,7 +182,7 @@ public class MoneyRain extends Canvas {
 	private void run(GraphicsContext gc) throws FileNotFoundException {
 		gc.drawImage(bg, 0, 0);
 		if(collectedCash == 5) {
-			gc.fillText("Tyhjennä kädet!", 25, height-110);
+			gc.fillText(texts.getString("empty.hands") + "!", 25, height-110);
 		}
 		gc.setFont(Font.font(25));
 		gc.setTextAlign(TextAlignment.LEFT);
@@ -190,7 +194,7 @@ public class MoneyRain extends Canvas {
 			gc.setFill(Color.WHITE);
 			gc.drawImage(player, playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 			gc.setFont(Font.font ("Arial Black", 20));
-			gc.fillText("Pisteet: " +  points + "    Rahat kädessä: " + collectedCash + "/5      Aikaa jäljellä: " + gameTime/1000 + "s", 10, 30);
+			gc.fillText(texts.getString("points") + ": " +  points + "    " + texts.getString("cash.in.hand") + ": " + collectedCash + "/5      " + texts.getString("time.left") + ": " + gameTime/1000 + "s", 10, 30);
 			
 			if(health == 3)
 				gc.drawImage(heart3, 630, 10);
@@ -275,7 +279,7 @@ public class MoneyRain extends Canvas {
 			gc.setTextAlign(TextAlignment.CENTER);
 			gc.setFill(Color.WHITE);
 			gc.setFont(Font.font("Courier", 50));
-			gc.fillText("Klikkaa pelataksesi", width/2, height/2);
+			gc.fillText(texts.getString("click.to.play"), width/2, height/2);
 			gc.setTextAlign(TextAlignment.LEFT);
 		}
 	}
