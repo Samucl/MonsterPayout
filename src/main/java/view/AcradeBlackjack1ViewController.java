@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.Session;
 import model.User;
 
 public class AcradeBlackjack1ViewController implements Initializable {
@@ -72,6 +73,8 @@ public class AcradeBlackjack1ViewController implements Initializable {
 	@FXML
 	public Label errorLabel;
 	
+	private ResourceBundle texts;
+	
 	private Arcade_Blackjack_1 game = new Arcade_Blackjack_1();
 	
 	
@@ -82,8 +85,22 @@ public class AcradeBlackjack1ViewController implements Initializable {
     }
 	
 	private void init() {
+		texts = Session.getLanguageBundle();
+		setText();
 		disableButtons();
 		updateBalance();
+	}
+	
+	private void setText() {
+		exit_button.setText(texts.getString("exit.button"));
+		play_button.setText(texts.getString("play.button"));
+		hit_button.setText(texts.getString("hit.button"));
+		stay_button.setText(texts.getString("stay.button"));
+		
+		bet_field.setPromptText(texts.getString("bet.insert"));
+		win_label.setText(texts.getString("win"));
+		player_hand_total.setText(texts.getString("cards.player"));
+		dealer_hand_total.setText(texts.getString("cards.opponent"));
 	}
 	
 	public void insertBet() {
@@ -91,7 +108,7 @@ public class AcradeBlackjack1ViewController implements Initializable {
 		try {
 			bet = Integer.parseInt(bet_field.getText());
 			if(User.getCoins() < bet) {
-				errorLabel.setText("Panos suurempi kuin kolikoiden saldo!");
+				errorLabel.setText(texts.getString("bet.morethancoin")+"!");
 				errorLabel.setVisible(true);
 				return;
 			}
@@ -100,14 +117,14 @@ public class AcradeBlackjack1ViewController implements Initializable {
 			if(game.startGame(bet))
 				gameStarted();
 		} catch (NumberFormatException e) {
-			errorLabel.setText("Syötä panos!");
+			errorLabel.setText(texts.getString("bet.insert"));
 			errorLabel.setVisible(true);
-			System.err.println("Panos ei ole annettu numeroina");
+			System.err.println(texts.getString("bet.notnumber"));
 		}
 	}
 	
 	private void updateBalance() {
-		balance.setText("Kolikot: " + Integer.toString(User.getCoins()));
+		balance.setText(texts.getString("coins")+": " + Integer.toString(User.getCoins()));
 	}
 	
 	private void disableButtons() {
@@ -126,8 +143,8 @@ public class AcradeBlackjack1ViewController implements Initializable {
 		updateBalance();
 		clearCard();
 		win_label.setText("");
-		player_hand_total.setText("Pelaajan kortit: " + Integer.toString(game.playerHandTotal()));
-		dealer_hand_total.setText("Vastustajan kortit: " + Integer.toString(game.dealersHandFirstCard()));
+		player_hand_total.setText(texts.getString("cards.player")+": " + Integer.toString(game.playerHandTotal()));
+		dealer_hand_total.setText(texts.getString("cards.opponent")+": " + Integer.toString(game.dealersHandFirstCard()));
 		updatePlayersCards();
 		showDealersBeginningHand();
 		if(game.isGameOver()) {
@@ -204,7 +221,7 @@ public class AcradeBlackjack1ViewController implements Initializable {
 	}
 	
 	private void showOutcome() {
-		win_label.setText("Voitto: " + Integer.toString(game.getWinnings()) + " kolikkoa");
+		win_label.setText(texts.getString("win")+": " + Integer.toString(game.getWinnings()) +" "+ texts.getString("coins"));
 		updateBalance();
 	}
 	

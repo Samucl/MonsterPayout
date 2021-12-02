@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Toolkit;
 import java.io.IOException;
 
 import javafx.application.Application;

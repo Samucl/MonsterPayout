@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.Session;
 import model.User;
 
 public class CasinoBlackjack1ViewController1 implements Initializable {
@@ -72,6 +73,8 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 	@FXML 
 	public Label errorLabel;
 	
+	private ResourceBundle texts;
+	
 	private Casino_Blackjack_1 game = new Casino_Blackjack_1();
 	
 	
@@ -82,12 +85,26 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
     }
 	
 	private void init() {
+		texts = Session.getLanguageBundle();
+		setText();
 		disableButtons();
 		updateBalance();
 	}
 	
+	private void setText() {
+		exit_button.setText(texts.getString("exit.button"));
+		play_button.setText(texts.getString("play.button"));
+		hit_button.setText(texts.getString("hit.button"));
+		stay_button.setText(texts.getString("stay.button"));
+		
+		bet_field.setPromptText(texts.getString("bet.insert"));
+		win_label.setText(texts.getString("win"));
+		player_hand_total.setText(texts.getString("cards.player"));
+		dealer_hand_total.setText(texts.getString("cards.opponent"));
+	}
+	
 	private void updateBalance() {
-		balance.setText("Krediitit: " + Double.toString(User.getCredits()));
+		balance.setText(texts.getString("credits")+": " + Double.toString(User.getCredits()));
 	}
 	
 	public void insertBet() {
@@ -95,7 +112,7 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 		try {
 			bet = Double.parseDouble(bet_field.getText());
 			if(User.getCredits() < bet) {
-				errorLabel.setText("Panos suurempi kuin krediittien saldo!");
+				errorLabel.setText(texts.getString("bet.morethancredit")+"!");
 				errorLabel.setVisible(true);
 				return;
 			}
@@ -104,9 +121,9 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 			if(game.startGame(bet))
 				gameStarted();
 		} catch (NumberFormatException e) {
-			errorLabel.setText("Syötä panos!");
+			errorLabel.setText(texts.getString("bet.insert"));
 			errorLabel.setVisible(true);
-			System.err.println("Panos ei ole annettu liukunumerona");
+			System.err.println(texts.getString("bet.notnumber"));
 		}
 	}
 	
@@ -126,8 +143,8 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 		updateBalance();
 		clearCard();
 		win_label.setText("");
-		player_hand_total.setText("Pelaajan kortit: " + Integer.toString(game.playerHandTotal()));
-		dealer_hand_total.setText("Vastustajan kortit: " + Integer.toString(game.dealersHandFirstCard()));
+		player_hand_total.setText(texts.getString("cards.player")+": " + Integer.toString(game.playerHandTotal()));
+		dealer_hand_total.setText(texts.getString("cards.opponent")+": " + Integer.toString(game.dealersHandFirstCard()));
 		updatePlayersCards();
 		showDealersBeginningHand();
 		if(game.isGameOver()) {
@@ -204,7 +221,7 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 	}
 	
 	private void showOutcome() {
-		win_label.setText("Voitto: " + Double.toString(game.getWinnings()) + " krediittiä");
+		win_label.setText(texts.getString("win")+": " + Double.toString(game.getWinnings()) +" "+ texts.getString("credits"));
 		updateBalance();
 	}
 	
