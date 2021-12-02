@@ -26,6 +26,7 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Database;
+import model.Session;
 import model.User;
 
 
@@ -41,12 +42,24 @@ public class HomepageViewController implements Initializable {
 	@FXML Button toMoneyRain;
 	@FXML Button toSlalomMadness;
 	@FXML Button toFastPoker;
+	@FXML Label casinoLabel;
+	@FXML Label arcadeLabel;
 	
 	private void init() {
-		nameLabel.setText("Tervetuloa " + User.getUsername() + "!");
-		kolikotLabel.setText("Kolikot: " + User.getCoins());
-		krediititLabel.setText("Krediitit: " + User.getCredits());
+		useLanguageBundle();
+
 	}
+	
+	private void useLanguageBundle() {
+		ResourceBundle texts = Session.getLanguageBundle();
+		nameLabel.setText(uppercase(texts,"welcome") + " " + User.getUsername() + "!");
+		kolikotLabel.setText(uppercase(texts,"coins") + ": " + User.getCoins());
+		//krediititLabel.setText("Krediitit: " + User.getCredits());
+	}
+	
+    private String uppercase(ResourceBundle rb, String string) {
+    	return rb.getString(string).substring(0, 1).toUpperCase() + rb.getString(string).substring(1).toLowerCase();
+    }
 	
 	public void toArcadeBlackjack1() {
 		try {

@@ -45,25 +45,23 @@ public class LoginViewController implements Initializable {
     
     public void toEnglish(ActionEvent e) {
     	texts = ResourceBundle.getBundle("lang.language",new Locale("en", "US"));
+    	Session.setLanguageBundle(texts);
     	updateLanguage();
     }
     
     public void toFinnish(ActionEvent e) {
     	texts = ResourceBundle.getBundle("lang.language",new Locale("fi", "FI"));
+    	Session.setLanguageBundle(texts);
     	updateLanguage();
     }
     
     private void updateLanguage() {
-    	loginLabel.setText(uppercase(texts, "welcomeback"));
-    	kirjauduButton.setText(uppercase(texts, "login"));
-    	kayttajatunnusInput.setPromptText(uppercase(texts, "username"));
-    	salasanaInput.setPromptText(uppercase(texts, "password"));
-    	torekisteroitymisButton.setText(uppercase(texts, "join.button"));
-    	languageButton.setText(uppercase(texts, "language"));
-    }
-    
-    private String uppercase(ResourceBundle rb, String string) {
-    	return rb.getString(string).substring(0, 1).toUpperCase() + rb.getString(string).substring(1).toLowerCase();
+    	loginLabel.setText(texts.getString("welcomeback"));
+    	kirjauduButton.setText(texts.getString("login"));
+    	kayttajatunnusInput.setPromptText(texts.getString("username"));
+    	salasanaInput.setPromptText(texts.getString("password"));
+    	torekisteroitymisButton.setText(texts.getString("join.button"));
+    	languageButton.setText(texts.getString("language"));
     }
     
 	/**

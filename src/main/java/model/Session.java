@@ -50,6 +50,10 @@ public class Session {
 		return instance;
 	}
 	
+	public static void setLanguageBundle(ResourceBundle lB) {
+		languageBundle = lB;
+	}
+	
 	public static void loadLanguageBundle() {
 		/*
 		 * Käytetään user.properties tiedoston language ja country avaimia

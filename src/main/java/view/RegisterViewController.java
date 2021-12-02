@@ -77,20 +77,16 @@ public class RegisterViewController implements Initializable{
     }
     
     private void updateLanguage() {
-    	registerLabel.setText(uppercase(texts, "register.button"));
-    	sahkopostiInput.setPromptText(uppercase(texts, "email"));
-    	etunimiInput.setPromptText(uppercase(texts, "firstname"));
-    	sukunimiInput.setPromptText(uppercase(texts, "lastname"));
-    	kayttajatunnusInput2.setPromptText(uppercase(texts, "username"));
-    	salasanaInput2.setPromptText(uppercase(texts, "password"));
-    	salasanauudelleenInput.setPromptText(uppercase(texts, "password.again"));
-    	rekisteroidyButton.setText(uppercase(texts, "join.button"));
-    	tokirjautumisButton.setText(uppercase(texts, "account.already"));
-    	languageButton.setText(uppercase(texts, "language"));
-    }
-    
-    private String uppercase(ResourceBundle rb, String string) {
-    	return rb.getString(string).substring(0, 1).toUpperCase() + rb.getString(string).substring(1).toLowerCase();
+    	registerLabel.setText(texts.getString("register.button"));
+    	sahkopostiInput.setPromptText(texts.getString("email"));
+    	etunimiInput.setPromptText(texts.getString("firstname"));
+    	sukunimiInput.setPromptText(texts.getString("lastname"));
+    	kayttajatunnusInput2.setPromptText(texts.getString("username"));
+    	salasanaInput2.setPromptText(texts.getString("password"));
+    	salasanauudelleenInput.setPromptText(texts.getString("password.again"));
+    	rekisteroidyButton.setText(texts.getString("join.button"));
+    	tokirjautumisButton.setText(texts.getString("account.already"));
+    	languageButton.setText(texts.getString("language"));
     }
 	
 	/**
