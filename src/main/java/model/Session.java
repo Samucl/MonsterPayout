@@ -176,7 +176,7 @@ public class Session {
 	public static List<Properties> getLanguages(){
 		return languageProperties;
 	}
-	
+
 	public static void loadAvatarImages() {
 		//File path = new File("./src/main/resources/avatars");
 		File path = new File("./src/main/resources/avatars");

@@ -63,8 +63,6 @@ public class StoreViewController {
 	@FXML private ImageView coinImage;
 	
 	
-	private final Background unfocusBackground = new Background( new BackgroundFill( Color.web( "#F4F4F4" ), CornerRadii.EMPTY, Insets.EMPTY ) );
-	
 	public void initialize() {
 		setProducts();
 		setDiscountProducts();
@@ -78,8 +76,6 @@ public class StoreViewController {
 		borderpane.setBackground(new Background(bgfill));
 		*/
 		
-		hbox.setBackground(unfocusBackground);
-		scrollpane.setBackground(unfocusBackground);
 		
 	}
 	
