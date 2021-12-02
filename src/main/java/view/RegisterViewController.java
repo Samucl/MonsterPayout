@@ -59,12 +59,14 @@ public class RegisterViewController implements Initializable{
     
     public void toEnglish(ActionEvent e) throws FileNotFoundException {
     	texts = ResourceBundle.getBundle("lang.language",new Locale("en", "US"));
+    	Session.setLanguageBundle(texts);
     	updateLanguage();
     	setBackgroundLogo();
     }
     
     public void toFinnish(ActionEvent e) throws FileNotFoundException {
     	texts = ResourceBundle.getBundle("lang.language",new Locale("fi", "FI"));
+    	Session.setLanguageBundle(texts);
     	updateLanguage();
     	setBackgroundLogo();
     }
