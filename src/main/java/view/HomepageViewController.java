@@ -5,11 +5,7 @@ import java.io.IOException;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import com.sun.prism.paint.Stop;
-
 import moneyrain.MoneyRain;
-import slalommadness.SlalomMadnessGame;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,10 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Database;
@@ -37,11 +29,6 @@ public class HomepageViewController implements Initializable {
 	@FXML Button logoutButton;
 	@FXML Button toStoreButton;
 	@FXML Button toUserInfoButton;
-	@FXML Button toArcadeBlackjack1;
-	@FXML Button toCasinoBlackjack1;
-	@FXML Button toMoneyRain;
-	@FXML Button toSlalomMadness;
-	@FXML Button toFastPoker;
 	@FXML Label casinoLabel;
 	@FXML Label arcadeLabel;
 	
@@ -52,14 +39,15 @@ public class HomepageViewController implements Initializable {
 	
 	private void useLanguageBundle() {
 		ResourceBundle texts = Session.getLanguageBundle();
-		nameLabel.setText(uppercase(texts,"welcome") + " " + User.getUsername() + "!");
-		kolikotLabel.setText(uppercase(texts,"coins") + ": " + User.getCoins());
-		//krediititLabel.setText("Krediitit: " + User.getCredits());
+		nameLabel.setText(texts.getString("welcomeback") + " " + User.getUsername() + "!");
+		kolikotLabel.setText(texts.getString("coins") + ": " + User.getCoins());
+		krediititLabel.setText(texts.getString("credits") + ": " + User.getCredits());
+		casinoLabel.setText(texts.getString("casino.games"));
+		arcadeLabel.setText(texts.getString("arcade.games"));
+		logoutButton.setText(texts.getString("logout.button"));
+		toStoreButton.setText(texts.getString("store"));
+		toUserInfoButton.setText(texts.getString("user.details"));
 	}
-	
-    private String uppercase(ResourceBundle rb, String string) {
-    	return rb.getString(string).substring(0, 1).toUpperCase() + rb.getString(string).substring(1).toLowerCase();
-    }
 	
 	public void toArcadeBlackjack1() {
 		try {
