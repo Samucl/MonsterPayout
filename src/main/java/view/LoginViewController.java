@@ -23,7 +23,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-/** * Kontrolleri jolla ohjataan LoginViewin toimintoja.
+/*
+ *	Kontrolleri jolla ohjataan LoginViewin toimintoja.
 */
 
 public class LoginViewController implements Initializable {
@@ -69,11 +70,9 @@ public class LoginViewController implements Initializable {
 	*/
 	public void kirjaudu(ActionEvent e) {
 		if(kayttajatunnusInput.getText().isEmpty() || salasanaInput.getText().isEmpty()) {
-			System.out.println("Kirjoita käyttäjätunnus ja salasana");
-			insufficientInformation("Tyhjiä kenttiä","Syötä käyttäjänimi ja salasana.");
+			insufficientInformation(texts.getString("empty.fields"), texts.getString("enter.username.password"));
 		}
 		else {
-			System.out.println("Käyttäjätunnus: " + kayttajatunnusInput.getText() + " Salasana: " + salasanaInput.getText());
 			Database.login(kayttajatunnusInput.getText(), salasanaInput.getText());
 			if(Database.isLogged() && User.isAdmin() == 0) {
 				
@@ -87,14 +86,12 @@ public class LoginViewController implements Initializable {
 		        } catch (IOException iOE) {
 		            iOE.printStackTrace();
 		        }
-				
-				System.out.println("Tervetuloa: " + User.getFirstname());
 			}
 			
 			else if (Database.isLogged() && User.isAdmin() == 1) {
 				toSetProductsView();
 			} else {
-				insufficientInformation("Virheelliset tunnukset","Käyttäjää ei löydy tai salasana on väärä.");
+				insufficientInformation(texts.getString("incorrect.id"),texts.getString("user.not.found"));
 			}
 		}
 	}
@@ -104,7 +101,6 @@ public class LoginViewController implements Initializable {
 		alert.setTitle("Register error");
 		alert.setHeaderText(error);
 		alert.setContentText(message);
-
 		alert.showAndWait();
 	}
 	

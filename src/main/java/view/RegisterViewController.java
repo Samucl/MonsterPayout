@@ -25,8 +25,8 @@ import javafx.stage.Stage;
 import model.Database;
 import model.Session;
 
-/**
-* Kontrolleri jolla ohjataan RekisterointiViewin toimintoja.
+/*
+ *	Kontrolleri jolla ohjataan RekisterointiViewin toimintoja.
 */
 
 public class RegisterViewController implements Initializable{
@@ -94,30 +94,22 @@ public class RegisterViewController implements Initializable{
 	*/
 	public void rekisteroidy(ActionEvent e) {
 		if(!salasanaInput2.getText().equals(salasanauudelleenInput.getText())) {
-			System.out.println("Salasanat eivät täsmää");
-			insufficientInformation("Salasanat eivät täsmää",
-					"Syötetyt salasanat eivät täsmää");
+			insufficientInformation(texts.getString("passwords.not.match"),
+					texts.getString("entered.passwords.not.match"));
 			
 		} else if(kayttajatunnusInput2.getText().isEmpty() || salasanaInput2.getText().isEmpty() || etunimiInput.getText().isEmpty() || sukunimiInput.getText().isEmpty() 
 				|| sahkopostiInput.getText().isEmpty() || salasanauudelleenInput.getText().isEmpty()) {
-			insufficientInformation("Täytä kaikki tiedot",
-					"Osa tiedoista jäänyt täyttämättä tai syötetty väärin");
+			insufficientInformation(texts.getString("fill.information"),
+					texts.getString("fill.information.incorrect"));
 			
 		} else {
-			System.out.println("Käyttäjätunnus: " + kayttajatunnusInput2.getText());
-			System.out.println("Salasana: " + salasanaInput2.getText());
-			System.out.println("Salasana Uudelleen: " + salasanauudelleenInput.getText());
-			System.out.println("Etunimi: " + etunimiInput.getText());
-			System.out.println("Sukunimi: " + sukunimiInput.getText());
-			System.out.println("Sähköposti: " + sahkopostiInput.getText());
-			
 			Boolean onnistuiko = Database.register(kayttajatunnusInput2.getText(), salasanaInput2.getText(), sahkopostiInput.getText(), etunimiInput.getText(), sukunimiInput.getText());
 			
 			if(onnistuiko)
 				successfullRegisteration();
 			else
-				insufficientInformation("Virhe rekisteröitymisessä",
-						"Joku meni pieleen rekisteröimisessä. Kokeile uudelleen.");
+				insufficientInformation(texts.getString("register.error"),
+						texts.getString("register.error.something"));
 				
 		}
 	}
