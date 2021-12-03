@@ -25,6 +25,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -43,10 +44,16 @@ public class StoreViewController {
 	
 	private ArrayList<Product> products1;
 	private ArrayList<Product> products2;
+	private int bgCardWidth = 140;
+	private Image bgCard;
+	private Image credit;
+	private Image coin;
 	
 	@FXML private BorderPane borderpane;
 	@FXML private GridPane gridpane;
 	@FXML private Button toMainBtn;
+	
+	@FXML private StackPane stackpane;
 	@FXML private HBox hbox;
 	@FXML private HBox hbox2;
 	@FXML private ScrollPane scrollpane;
@@ -64,6 +71,13 @@ public class StoreViewController {
 	
 	
 	public void initialize() {
+		try {
+			bgCard = new Image(new FileInputStream("./src/main/resources/card_deck_1/taka.png"));
+			credit = new Image(new FileInputStream("./src/main/resources/credit_1.png"));
+			coin = new Image(new FileInputStream("./src/main/resources/coin_1.png"));
+			
+		} catch (FileNotFoundException e) {e.printStackTrace();}
+		
 		setProducts();
 		setDiscountProducts();
 		setChoiceBoxItems();
@@ -98,10 +112,18 @@ public class StoreViewController {
 		
 		Collections.sort(products1); //Laitetaan järjestykseen alennuskertoimen perusteella
 		
+		/*
+		for (i = 0 ; i < products1.size() ; i++) {
+			ImageView bgCardIV = new ImageView(bgCard);
+			stackpane.getChildren().add(bgCardIV);
+			bgCardIV.setTranslateX(i * 200);
+		} */
+		
 		//Tehdään alennustuotteille oma GridPane, jonka sarakkeisiin asetetaan tuotetiedot, sitten GridPane asetetaan HBoxiin
 		GridPane innerPane = new GridPane();
 		innerPane.setVgap(6); //Rivien välille vähän tyhjää tilaa
 		innerPane.setPadding(new Insets(18, 0, 18, 24));
+		
 		
 		for (i = 0 ; i < products1.size() ; i++) {
 			
@@ -120,20 +142,12 @@ public class StoreViewController {
 			Label creditLabel = new Label(Double.toString(products1.get(i).getCreditAmount()));
 			creditLabel.setFont(Font.font(18));
 			innerPane.add(creditLabel, i, 2);
-			
-			FileInputStream input;
-			try {
-				input = new FileInputStream("./src/main/resources/credit_1.png");
-				Image image = new Image(input);
-		        ImageView imageView = new ImageView(image);
-		        imageView.setFitWidth(35);
-		        imageView.setTranslateX(Double.toString(products1.get(i).getCreditAmount()).length() * 9); //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
-		        imageView.setPreserveRatio(true);
-		        innerPane.add(imageView, i, 2);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+		    ImageView imageView = new ImageView(credit);
+		    imageView.setFitWidth(35);
+		    imageView.setTranslateX(Double.toString(products1.get(i).getCreditAmount()).length() * 9); //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
+		    imageView.setPreserveRatio(true);
+		    innerPane.add(imageView, i, 2);
 	        
 			
 			if (products1.get(i).getSaleMultiplier() < 0.99) { //Jos tuote on alennuksessa niin ilmoitetaan tässä vanha hinta
@@ -156,21 +170,14 @@ public class StoreViewController {
 			
 			if (products1.get(i).getCoinAmount() != 0) { //Jos tuotteesta saa kolikkobonuksen niin laitetaan se ylimääräiseksi sarakkeeksi
 				
-				FileInputStream input2;
-				try {
 					Label coinLabel = new Label("Bonuksena " + Integer.toString(products1.get(i).getCoinAmount()));
 					coinLabel.setFont(Font.font("system", FontPosture.ITALIC, 14));
 					innerPane.add(coinLabel, i, 6);
-					input2 = new FileInputStream("./src/main/resources/coin_1.png");
-					Image image = new Image(input2);
-			        ImageView imageView = new ImageView(image);
-			        imageView.setFitWidth(26);
-			        imageView.setTranslateX(coinLabel.getText().length() * 7.2); //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
-			        imageView.setPreserveRatio(true);
-			        innerPane.add(imageView, i, 6);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}		
+			        ImageView imageView2 = new ImageView(coin);
+			        imageView2.setFitWidth(26);
+			        imageView2.setTranslateX(coinLabel.getText().length() * 7.2); //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
+			        imageView2.setPreserveRatio(true);
+			        innerPane.add(imageView2, i, 6);
 			}
 			
 			Product p = products1.get(i);		
@@ -180,11 +187,10 @@ public class StoreViewController {
                 	buyProduct(p);
                 }
 			});
-			
 		}
 		
-		hbox.getChildren().add(innerPane);
-		scrollpane.setContent(innerPane); //Ilman tätä ikkunaa ei voi scrollata (jos tuotteita on paljon)
+		
+		scrollpane.setContent(innerPane); //Ilman tätä ei voi scrollata (jos tuotteita on paljon)
 	}
 	
 	//-------------------------------------

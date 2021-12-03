@@ -47,8 +47,9 @@ public class SetProductsViewController {
 	//Alustetaan TableView
 	public void initialize() {
 		
-		//Määritetään mitä instanssimuuttujaa mikäkin kolumni hakee Product-luokasta
-		//Määritys täytyy olla nimetty getterin mukaan: esim. forSale ei palauta mitään arvoa, koska getteri on nimellä getForSaleStatus
+		/**
+		Määritetään mitä instanssimuuttujaa mikäkin sarake hakee Product-luokasta
+		*/
 		idColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("id"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("description"));
 		creditColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("creditAmount"));
@@ -79,7 +80,7 @@ public class SetProductsViewController {
 	//Tallentaa uuden tuotteen tietokantaan ja päivittää sen listaan
 	public void addNewProduct(ActionEvent e) {
 		
-		//Tähän myöhemmin parempia validointeja
+		//TODO Tähän myöhemmin parempia validointeja
 		if (!(nameTF.getText().isEmpty()) && !(creditTF.getText().isEmpty()) && !(coinTF.getText().isEmpty()) && !(priceTF.getText().isEmpty()) ) {
 			String name = nameTF.getText();
 			double credits = Double.parseDouble(creditTF.getText());
