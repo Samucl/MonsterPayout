@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -52,6 +53,8 @@ public class StoreViewController {
 	@FXML private BorderPane borderpane;
 	@FXML private GridPane gridpane;
 	@FXML private Button toMainBtn;
+	@FXML private Button toUserInfoBtn;
+	@FXML private Button logoutBtn;
 	
 	@FXML private StackPane stackpane;
 	@FXML private HBox hbox;
@@ -121,7 +124,7 @@ public class StoreViewController {
 		
 		//Tehdään alennustuotteille oma GridPane, jonka sarakkeisiin asetetaan tuotetiedot, sitten GridPane asetetaan HBoxiin
 		GridPane innerPane = new GridPane();
-		innerPane.setVgap(6); //Rivien välille vähän tyhjää tilaa
+		innerPane.setVgap(5); //Rivien välille vähän tyhjää tilaa
 		innerPane.setPadding(new Insets(18, 0, 18, 24));
 		
 		
@@ -198,7 +201,7 @@ public class StoreViewController {
 	public void setDiscountProducts() {
 		
 		GridPane lowerPane = new GridPane();
-		lowerPane.setVgap(6); //Rivien välille vähän tyhjää tilaa
+		lowerPane.setVgap(5); //Rivien välille vähän tyhjää tilaa
 	//	lowerPane.setStyle("-fx-border-style: solid inside;");
 		lowerPane.setPadding(new Insets(0, 0, 18, 24));
 		
@@ -314,6 +317,19 @@ public class StoreViewController {
 		refreshAccountInfo();
 	}
 	
+	public void toUserInfoView(ActionEvent e) {
+		try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("UserInfoView.fxml"));
+            AnchorPane userInfoView = (AnchorPane) loader.load();
+            Scene userInfoScene = new Scene(userInfoView);
+			Stage window = (Stage) toUserInfoBtn.getScene().getWindow();
+			window.setScene(userInfoScene);
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
+	}
+	
 	public void toMainView(ActionEvent e) {
 		
 		try {
@@ -328,5 +344,21 @@ public class StoreViewController {
             iOE.printStackTrace();
         }
 	}
+	
+	public void logOut(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("LoginView.fxml"));
+            BorderPane loginView = (BorderPane) loader.load();
+            Scene loginScene = new Scene(loginView);
+			Stage window = (Stage) logoutBtn.getScene().getWindow();
+			Database.logout();
+			window.setScene(loginScene);
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
+	}
+	
+	
 	
 }

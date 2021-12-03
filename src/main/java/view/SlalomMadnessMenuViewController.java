@@ -111,7 +111,7 @@ public class SlalomMadnessMenuViewController implements Initializable {
             
             vbox.getChildren().addAll(instLabel, rewardsLabel);
             
-            Scene dialogScene = new Scene(vbox, 400, 315);
+            Scene dialogScene = new Scene(vbox, 400, 312);
             dialog.setScene(dialogScene);
             dialog.showAndWait();
             

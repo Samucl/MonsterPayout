@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -19,106 +18,109 @@
 
 <BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(to bottom,#2e000b, #a87859);" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.StoreViewController">
    <top>
-      <GridPane prefHeight="40.0" prefWidth="856.0" BorderPane.alignment="CENTER">
+      <GridPane prefHeight="58.0" prefWidth="856.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="262.40000305175784" minWidth="10.0" prefWidth="178.1333221435547" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="491.9999633789062" minWidth="10.0" prefWidth="196.33334350585935" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="864.1999877929687" minWidth="10.0" prefWidth="774.4666564941405" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="747.6000305175781" minWidth="10.0" prefWidth="200.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="864.1999877929687" minWidth="10.0" prefWidth="529.6000183105468" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="864.1999877929687" minWidth="10.0" prefWidth="240.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="336.2666015625" minWidth="10.0" prefWidth="240.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="coinLabel" text="Label" GridPane.columnIndex="2">
-               <GridPane.margin>
-                  <Insets left="44.0" />
-               </GridPane.margin>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label fx:id="creditLabel" text="Label" GridPane.columnIndex="1">
-               <GridPane.margin>
-                  <Insets left="44.0" />
-               </GridPane.margin>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label fx:id="nameLabel" text="Label">
-               <GridPane.margin>
-                  <Insets left="16.0" />
-               </GridPane.margin>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Button fx:id="toMainBtn" mnemonicParsing="false" onAction="#toMainView" text="Pelivalikkoon" GridPane.columnIndex="3" GridPane.halignment="RIGHT">
-               <GridPane.margin>
-                  <Insets right="16.0" />
-               </GridPane.margin>
-            </Button>
-            <ImageView fitHeight="80.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+            <Label fx:id="coinLabel" text="Kolikot" textFill="WHITE" GridPane.columnIndex="2">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
-               <image>
-                  <Image url="@/credit_1.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="40.0" />
+               </padding>
+            </Label>
+            <Label fx:id="creditLabel" text="Krediitit" textFill="WHITE" GridPane.columnIndex="3">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="40.0" />
+               </padding>
+            </Label>
+            <Label fx:id="nameLabel" text="Käyttäjänimi" textFill="WHITE" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                <image>
                   <Image url="@/coin_1.png" />
                </image>
-               <viewport>
-                  <Rectangle2D />
-               </viewport>
+            </ImageView>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
+               <image>
+                  <Image url="@/credit_1.png" />
+               </image></ImageView>
+            <ImageView fitHeight="49.0" fitWidth="186.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/smallLogo.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
             </ImageView>
          </children>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <BorderPane.margin>
-            <Insets left="16.0" right="16.0" top="24.0" />
+            <Insets />
          </BorderPane.margin>
       </GridPane>
    </top>
    <center>
-      <StackPane fx:id="stackpane" BorderPane.alignment="CENTER_LEFT">
+      <StackPane fx:id="stackpane" minHeight="530.0" prefHeight="530.0" BorderPane.alignment="CENTER_LEFT">
          <BorderPane.margin>
-            <Insets bottom="16.0" left="32.0" right="32.0" top="74.0" />
+            <Insets bottom="66.0" left="32.0" right="32.0" top="68.0" />
          </BorderPane.margin>
          <children>
-            <HBox fx:id="hbox" maxHeight="310.0" maxWidth="820.0" prefHeight="310.0" prefWidth="830.0">
+            <HBox fx:id="hbox" maxHeight="294.0" maxWidth="824.0" prefHeight="294.0" prefWidth="824.0" StackPane.alignment="TOP_LEFT">
                <children>
-                  <ScrollPane fx:id="scrollpane" maxHeight="310.0" maxWidth="830.0" minHeight="310.0" minWidth="830.0" prefHeight="336.0" prefWidth="830.0" style="-fx-background: transparent; -fx-background-color: transparent;">
+                  <ScrollPane fx:id="scrollpane" maxHeight="300.0" maxWidth="824.0" minHeight="294.0" minWidth="828.0" prefHeight="300.0" prefWidth="824.0" style="-fx-background: transparent; -fx-background-color: transparent;">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </ScrollPane>
                </children>
             </HBox>
+            <HBox fx:id="hbox2" maxHeight="208.0" maxWidth="828.0" prefHeight="212.0" prefWidth="828.0" StackPane.alignment="BOTTOM_LEFT">
+               <children>
+                  <ScrollPane fx:id="scrollpane2" maxHeight="210.0" maxWidth="828.0" prefHeight="212.0" prefWidth="828.0" style="-fx-background: transparent; -fx-background-color: transparent;">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></ScrollPane>
+               </children>
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
+            </HBox>
          </children>
       </StackPane>
    </center>
-   <bottom>
-      <HBox fx:id="hbox2" maxHeight="224.0" maxWidth="830.0" prefHeight="224.0" prefWidth="830.0" BorderPane.alignment="CENTER_LEFT">
-         <BorderPane.margin>
-            <Insets bottom="32.0" left="32.0" right="32.0" />
-         </BorderPane.margin>
-         <children>
-            <ScrollPane fx:id="scrollpane2" maxHeight="224.0" maxWidth="830.0" prefHeight="224.0" prefWidth="830.0" style="-fx-background: transparent; -fx-background-color: transparent;" />
-         </children>
-      </HBox>
-   </bottom>
    <right>
       <AnchorPane minHeight="588.0" prefHeight="588.0" prefWidth="381.0" BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
             <Insets right="20.0" top="20.0" />
          </BorderPane.margin>
          <children>
-            <Label layoutX="120.0" layoutY="116.0" prefHeight="30.0" prefWidth="145.0" text="Maksa kolikoilla:">
+            <Label layoutX="120.0" layoutY="116.0" prefHeight="30.0" prefWidth="145.0" text="Maksa kolikoilla:" textFill="GOLD" underline="true">
                <font>
                   <Font name="System Italic" size="20.0" />
                </font></Label>
@@ -142,9 +144,9 @@
                         <Insets />
                      </GridPane.margin>
                   </Button>
-                  <Label text="Valitse määrä:" GridPane.halignment="CENTER">
+                  <Label text="Valitse määrä:" textFill="WHITE" GridPane.halignment="CENTER">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Arial" size="15.0" />
                      </font>
                   </Label>
                   <Label fx:id="buyWithCoinsPriceLabel" text="Hinta:" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2">
@@ -152,7 +154,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="buyWithCoinsChoiceBox" prefWidth="88.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <ChoiceBox fx:id="buyWithCoinsChoiceBox" prefWidth="88.0" style="-fx-background-color: white;" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Label GridPane.halignment="CENTER" GridPane.rowIndex="3">
                      <font>
                         <Font size="14.0" />
@@ -184,4 +186,42 @@
          </children>
       </AnchorPane>
    </right>
+   <bottom>
+      <GridPane prefHeight="70.4" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="toMainBtn" mnemonicParsing="false" onAction="#toMainView" prefHeight="34.0" prefWidth="142.0" style="-fx-background-color: blue;" text="Pelivalikkoon" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+               <GridPane.margin>
+                  <Insets left="16.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="toUserInfoBtn" mnemonicParsing="false" onAction="#toUserInfoView" prefHeight="34.0" prefWidth="142.0" style="-fx-background-color: darkgreen;" text="Käyttäjätiedot" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#logOut" prefHeight="34.0" prefWidth="142.0" style="-fx-background-color: red;" text="Kirjaudu ulos" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets right="20.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+      </GridPane>
+   </bottom>
 </BorderPane>
