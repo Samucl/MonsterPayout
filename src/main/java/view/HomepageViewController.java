@@ -145,7 +145,7 @@ public class HomepageViewController implements Initializable {
 		try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("UserInfoView.fxml"));
-            AnchorPane userInfoView = (AnchorPane) loader.load();
+            BorderPane userInfoView = (BorderPane) loader.load();
             Scene userInfoScene = new Scene(userInfoView);
 			Stage window = (Stage) toUserInfoButton.getScene().getWindow();
 			window.setScene(userInfoScene);
@@ -160,8 +160,6 @@ public class HomepageViewController implements Initializable {
             loader.setLocation(MainApplication.class.getResource("StoreView.fxml"));
             BorderPane storeView = (BorderPane) loader.load();
             Scene storeScene = new Scene(storeView);
-            
-  
 			Stage window = (Stage) toStoreButton.getScene().getWindow();
 			window.setScene(storeScene);
         } catch (IOException iOE) {
@@ -175,7 +173,7 @@ public class HomepageViewController implements Initializable {
             loader.setLocation(MainApplication.class.getResource("LoginView.fxml"));
             BorderPane loginView = (BorderPane) loader.load();
             Scene loginScene = new Scene(loginView);
-			Stage window = (Stage) toStoreButton.getScene().getWindow();
+			Stage window = (Stage) logoutButton.getScene().getWindow();
 			Database.logout();
 			window.setScene(loginScene);
         } catch (IOException iOE) {

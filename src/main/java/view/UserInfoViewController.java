@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
@@ -33,13 +34,16 @@ public class UserInfoViewController implements Initializable {
 	@FXML TextField lastname;
 	@FXML TextField email;
 	@FXML TextField account_number;
-	@FXML TextField login_streak;
+	@FXML Label login_streak;
 	@FXML ListView purchase_history;
 	@FXML Button save_button;
 	@FXML Button cancel_button;
 	@FXML Button home_button;
 	@FXML Tab to_home_tab;
 	@FXML ImageView profile_picture;
+	@FXML Button logoutButton;
+	@FXML Button toStoreButton;
+	ResourceBundle texts;
 	
 	@Override
     public void initialize(URL location, ResourceBundle resources)
@@ -108,6 +112,7 @@ public class UserInfoViewController implements Initializable {
 	}
 	
 	private void init() {
+		texts = Session.getLanguageBundle();
 		setTexts();
 		setOrders();
 		loadProfilePicture();
@@ -117,8 +122,8 @@ public class UserInfoViewController implements Initializable {
 	private void profileInit() {
 		profile_username.setText(User.getUsername());
 		//profile_image;
-		profile_kredits.setText(String.valueOf(User.getCredits()));;
-		profile_coins.setText(String.valueOf(User.getCoins()));;
+		profile_kredits.setText(texts.getString("credits") + " " + String.valueOf(User.getCredits()));;
+		profile_coins.setText(texts.getString("coins") + " " + String.valueOf(User.getCoins()));;
 		profile_firstname.setText(User.getFirstname());
 	}
 	
@@ -165,6 +170,33 @@ public class UserInfoViewController implements Initializable {
 			Stage window = (Stage) home_button.getScene().getWindow();
 			window.setScene(mainScene);
 			
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
+	}
+	
+	public void logout(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("LoginView.fxml"));
+            BorderPane loginView = (BorderPane) loader.load();
+            Scene loginScene = new Scene(loginView);
+			Stage window = (Stage) logoutButton.getScene().getWindow();
+			Database.logout();
+			window.setScene(loginScene);
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
+	}
+	
+	public void toStore(ActionEvent e) {
+		try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("StoreView.fxml"));
+            BorderPane storeView = (BorderPane) loader.load();
+            Scene storeScene = new Scene(storeView);
+			Stage window = (Stage) toStoreButton.getScene().getWindow();
+			window.setScene(storeScene);
         } catch (IOException iOE) {
             iOE.printStackTrace();
         }

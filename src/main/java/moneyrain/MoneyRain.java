@@ -26,6 +26,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
+/*
+ * Luokka sisältää kaiken logiikan MoneyRain peliin
+ * @author Samuel Laisaar
+ */
+
 public class MoneyRain extends Canvas {
 	
 	private Stage stage;
@@ -42,7 +47,6 @@ public class MoneyRain extends Canvas {
 	private double playerXPos = width / 2;
 	private double playerYPos = height - PLAYER_HEIGHT;
 	private Image bg;
-	private Image bgfullcar;
 	private Image player;
 	private Image bill;
 	private Image click;
@@ -72,7 +76,6 @@ public class MoneyRain extends Canvas {
 		this.stage = stage;
 		this.stage.setTitle("MoneyRain");
 		bg = new Image(new FileInputStream("./src/main/resources/moneyrain/bg.jpg"));
-		bgfullcar = new Image(new FileInputStream("./src/main/resources/moneyrain/bgfullcar.jpg"));
 		heart1 = new Image(new FileInputStream("./src/main/resources/moneyrain/heart1.png"));
 		heart2 = new Image(new FileInputStream("./src/main/resources/moneyrain/heart2.png"));
 		heart3 = new Image(new FileInputStream("./src/main/resources/moneyrain/heart3.png"));
@@ -118,31 +121,7 @@ public class MoneyRain extends Canvas {
 			
 		});
 
-		
-		/* 										PELAAJAN KONTROLLERI NUOLINÄPPÄIMILLÄ (
-		canvas.setOnKeyPressed(event -> {
-			System.out.println("keypressed");
-			switch(event.getCode()) {
-			case LEFT:
-				System.out.println("left");
-				playerXPos = playerXPos - 1;
-				try {
-					player = new Image(new FileInputStream("./src/main/resources/moneyrain/playerLeft.png"));
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
-				break;
-			case RIGHT:
-				playerXPos = playerXPos + 1;
-				try {
-					player = new Image(new FileInputStream("./src/main/resources/moneyrain/playerRight.png"));
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
-				break;
-			}});
-			*/
-		
+
 		/*
 		 * Hiiren klikkauksesta tapahtuvat asiat
 		 */
