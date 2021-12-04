@@ -1,0 +1,69 @@
+/*
+ * Tabpanen tyyli
+ */
+.tab .tab-label {
+    -fx-text-fill: WHITE;
+}
+.tab {
+    -fx-background-insets: 0;
+    -fx-background-radius: 30;
+    -fx-background-color: #17181B;
+    -fx-padding: 0 30 0 30;
+}
+.tab:selected {
+    -fx-background-color: #21477A;
+}
+
+.tab-pane *.tab-header-background {
+    -fx-background-color: #00282e;
+}
+.tab:selected .focus-indicator {
+    -fx-focus-color: transparent;
+    -fx-border-color: transparent;
+}
+/*
+ * Listviewin tyyli
+ */
+.list-view .list-cell:even {
+-fx-background-color: #17181B;
+-fx-text-fill: white; 
+}
+.list-view .list-cell:odd {
+-fx-background-color: #292b30;
+-fx-text-fill: white;
+}
+
+/*
+ * Scrollbarin tyyli
+ */
+.scroll-bar{
+ -fx-background-color: rgb(96,96,96);
+ -fx-background-radius: 2em;
+}
+.scroll-bar .track {
+ -fx-background-color: transparent;
+ -fx-border-color:transparent;
+ -fx-background-radius: 2em;
+}
+.scroll-bar .track-background{
+ -fx-background-color: transparent;
+ -fx-background-insets: 0;
+ -fx-background-radius: 2em;
+}
+.scroll-bar .thumb {
+ -fx-background-color: rgb(211,211,211);
+ -fx-background-insets: 0 4 0 4;
+ -fx-background-radius: 2em;
+}
+
+.scroll-bar .increment-button, .scroll-bar:vertical .decrement-button {
+ -fx-background-color:transparent;
+ -fx-background-radius: 2em;
+ -fx-padding: 5;
+}
+.scroll-bar .increment-arrow {
+ -fx-background-color: rgba(0,0,0,0);
+}
+.scroll-bar .decrement-arrow {
+ -fx-background-color: rgba(0,0,0,0);
+}

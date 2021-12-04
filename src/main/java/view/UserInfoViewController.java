@@ -2,8 +2,8 @@ package view;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,10 +12,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Order;
@@ -35,21 +37,41 @@ public class UserInfoViewController implements Initializable {
 	@FXML TextField email;
 	@FXML TextField account_number;
 	@FXML Label login_streak;
-	@FXML ListView purchase_history;
+	@FXML TabPane editProfileTabPane;
+	@FXML ListView<String> purchase_history;
 	@FXML Button save_button;
 	@FXML Button cancel_button;
 	@FXML Button home_button;
-	@FXML Tab to_home_tab;
 	@FXML ImageView profile_picture;
 	@FXML Button logoutButton;
 	@FXML Button toStoreButton;
-	ResourceBundle texts;
+	@FXML ImageView profile_picture0;
+	@FXML ImageView profile_picture1;
+	@FXML ImageView profile_picture2;
+	@FXML ImageView profile_picture3;
+	@FXML ImageView profile_picture4;
+	@FXML ImageView profile_picture5;
+	private ImageView[] images = new ImageView[6];
+	private int selectedImage;
+	private ResourceBundle texts;
 	
-	@Override
-    public void initialize(URL location, ResourceBundle resources)
-    {
-    	init();
-    }
+	private void init() {
+		texts = Session.getLanguageBundle();
+		setImages();
+		setTexts();
+		setOrders();
+		loadProfilePicture();
+		profileInit();
+	}
+	
+	private void setImages() {
+		images[0] = profile_picture0;
+		images[1] = profile_picture1;
+		images[2] = profile_picture2;
+		images[3] = profile_picture3;
+		images[4] = profile_picture4;
+		images[5] = profile_picture5;
+	}
 	
 	public void saveChanges() {
 		/*
@@ -111,14 +133,6 @@ public class UserInfoViewController implements Initializable {
 		setTexts();
 	}
 	
-	private void init() {
-		texts = Session.getLanguageBundle();
-		setTexts();
-		setOrders();
-		loadProfilePicture();
-		profileInit();
-	}
-	
 	private void profileInit() {
 		profile_username.setText(User.getUsername());
 		//profile_image;
@@ -150,14 +164,54 @@ public class UserInfoViewController implements Initializable {
 	}
 	
 	public void loadProfilePicture() {
-		profile_picture.setImage(Session.getAvatar(0));
+		profile_image.setImage(Session.getAvatar(0));
 	}
 	
-	public void toHomeTabPress() {
-		/*
-		 * Pakotetaan napin painallus
-		 */
-		home_button.fire();
+	public void editProfile(ActionEvent e) {
+		editProfileTabPane.getSelectionModel().select(1);
+	}
+	
+	public void selectImage0() {
+		removeEffects();
+		images[0].setEffect(setDropShadow(50));
+		selectedImage = 0;
+	}
+	public void selectImage1() {
+		removeEffects();
+		images[1].setEffect(setDropShadow(50));
+		selectedImage = 1;
+	}
+	public void selectImage2() {
+		removeEffects();
+		images[2].setEffect(setDropShadow(50));
+		selectedImage = 2;
+	}
+	public void selectImage3() {
+		removeEffects();
+		images[3].setEffect(setDropShadow(50));
+		selectedImage = 3;
+	}
+	public void selectImage4() {
+		removeEffects();
+		images[4].setEffect(setDropShadow(50));
+		selectedImage = 4;
+	}
+	public void selectImage5() {
+		removeEffects();
+		images[5].setEffect(setDropShadow(50));
+		selectedImage = 5;
+	}
+	
+	private void removeEffects() {
+		images[selectedImage].setEffect(null);
+	}
+	
+	private DropShadow setDropShadow(int intensity) {
+		DropShadow ds = new DropShadow();
+		ds.setColor(Color.LIGHTSKYBLUE);
+		ds.setHeight(intensity);
+		ds.setWidth(intensity);
+		return ds;
 	}
 	
 	public void toMainView(ActionEvent e) {
@@ -201,5 +255,11 @@ public class UserInfoViewController implements Initializable {
             iOE.printStackTrace();
         }
 	}
+	
+	@Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+    	init();
+    }
 
 }
