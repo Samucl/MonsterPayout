@@ -86,9 +86,9 @@
       </GridPane>
    </top>
    <center>
-      <StackPane fx:id="stackpane" minHeight="530.0" prefHeight="530.0" BorderPane.alignment="CENTER_LEFT">
+      <StackPane fx:id="stackpane" minHeight="528.0" prefHeight="528.0" BorderPane.alignment="CENTER_LEFT">
          <BorderPane.margin>
-            <Insets bottom="66.0" left="32.0" right="32.0" top="68.0" />
+            <Insets bottom="66.0" left="32.0" right="32.0" top="100.0" />
          </BorderPane.margin>
          <children>
             <HBox fx:id="hbox" maxHeight="294.0" maxWidth="824.0" prefHeight="294.0" prefWidth="824.0" StackPane.alignment="TOP_LEFT">
@@ -100,7 +100,7 @@
                   </ScrollPane>
                </children>
             </HBox>
-            <HBox fx:id="hbox2" maxHeight="208.0" maxWidth="828.0" prefHeight="212.0" prefWidth="828.0" StackPane.alignment="BOTTOM_LEFT">
+            <HBox fx:id="hbox2" maxHeight="220.0" maxWidth="828.0" prefHeight="220.0" prefWidth="828.0" StackPane.alignment="BOTTOM_LEFT">
                <children>
                   <ScrollPane fx:id="scrollpane2" maxHeight="210.0" maxWidth="828.0" prefHeight="212.0" prefWidth="828.0" style="-fx-background: transparent; -fx-background-color: transparent;">
                      <HBox.margin>
@@ -108,16 +108,16 @@
                      </HBox.margin></ScrollPane>
                </children>
                <StackPane.margin>
-                  <Insets />
+                  <Insets bottom="8.0" />
                </StackPane.margin>
             </HBox>
          </children>
       </StackPane>
    </center>
    <right>
-      <AnchorPane minHeight="588.0" prefHeight="588.0" prefWidth="381.0" BorderPane.alignment="TOP_LEFT">
+      <AnchorPane maxWidth="342.0" minHeight="588.0" prefHeight="588.0" prefWidth="342.0" BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
-            <Insets right="20.0" top="20.0" />
+            <Insets right="59.0" top="20.0" />
          </BorderPane.margin>
          <children>
             <Label layoutX="120.0" layoutY="116.0" prefHeight="30.0" prefWidth="145.0" text="Maksa kolikoilla:" textFill="GOLD" underline="true">
