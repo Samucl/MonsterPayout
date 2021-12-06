@@ -22,10 +22,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Database;
+import model.Session;
 import model.User;
 
 public class Fast_pokerViewController implements Initializable{
 	
+	ResourceBundle texts;
 	@FXML private ImageView card1;
 	@FXML private ImageView card2;
 	@FXML private ImageView card3;
@@ -39,33 +41,50 @@ public class Fast_pokerViewController implements Initializable{
 	@FXML private Label winLabel;
 	@FXML private Label balanceLabel;
 	@FXML private Label handLabel;
-	@FXML private Label winLabel1;
-	@FXML private Label winLabel2;
-	@FXML private Label winLabel3;
-	@FXML private Label winLabel4;
-	@FXML private Label winLabel5;
-	@FXML private Label winLabel6;
-	@FXML private Label winLabel7;
-	@FXML private Label winLabel8;
-	@FXML private Label winLabel9;
+	@FXML private Label winLabel1, winLabel2, winLabel3, winLabel4, winLabel5, winLabel6, winLabel7, winLabel8, winLabel9;
+	@FXML private Label pair, twoOfAKind, threeOfAKind, straight, flush, fullhouse, fourOfAKind, straightFlush, royalFlush;
 	@FXML private Label errorLabel;
 	private double win;
 	private double bet = 1.00;
-	private final String[] winningTable = {"Pari", "Kaksi paria", "Kolmoset", "Suora", "Väri","Täyskäsi", "Neljä samaa", "Värisuora", "Kuningasvärisuora"};
+	private String[] winningTable = new String[9];
 	private final double[] coinsTable = {2,6,10,20,30,50,100,200,300};
 	Fast_poker game;
 	Card[] cards = new Card[6];
 	Card[] winningCards = new Card[5];
 	
 	public void init() throws FileNotFoundException {
-		errorLabel.setText("Ei tarpeeksi krediitejä!");
+		setLanguage();
 		hideCards();
 		recoverButton.setDisable(true);
 		doubleButton.setDisable(true);
-		betButton.setText("Panos: " + bet);
 		game = new Fast_poker();
-		balanceLabel.setText("Krediitit: " + User.getCredits());
 		setWinLabel();
+	}
+	
+	private void setLanguage() {
+		texts = Session.getLanguageBundle();
+		setPokerCardNames(pair, 0, texts.getString("pair") + " 10-A");
+		setPokerCardNames(twoOfAKind, 1, texts.getString("two.of.akind"));
+		setPokerCardNames(threeOfAKind, 2, texts.getString("three.of.akind"));
+		setPokerCardNames(straight, 3, texts.getString("straight"));
+		setPokerCardNames(flush, 4, texts.getString("flush"));
+		setPokerCardNames(fullhouse, 5, texts.getString("fullhouse"));
+		setPokerCardNames(fourOfAKind, 6, texts.getString("four.of.akind"));
+		setPokerCardNames(straightFlush, 7, texts.getString("straight.flush"));
+		setPokerCardNames(royalFlush, 8, texts.getString("royal.flush"));
+		balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
+		errorLabel.setText(texts.getString("bet.morethancredit"));
+		betButton.setText(texts.getString("bet.amount") + ": " + bet);
+		winLabel.setText(texts.getString("win"));
+		handLabel.setText(texts.getString("hand"));
+		playButton.setText(texts.getString("play.button"));
+		recoverButton.setText(texts.getString("recover.profits"));
+		doubleButton.setText(texts.getString("double.button"));
+	}
+	
+	private void setPokerCardNames(Label pokerHand, int i, String key) {
+		winningTable[i] = key;
+		pokerHand.setText(key);
 	}
 
 	public void clickCard2() {
@@ -73,7 +92,7 @@ public class Fast_pokerViewController implements Initializable{
 	}
 	
 	public void clickCard3() {
-		if(game.isPlay()) {
+		if(game.isPlay()) {	//Ensin asetetaan loput korteista näkyviin.
 			cards[3] = null;
 			card4.setImage(cards[4].getImage());
 			card5.setImage(cards[5].getImage());
@@ -84,27 +103,14 @@ public class Fast_pokerViewController implements Initializable{
 				winningCards[i] = cards[x];
 				x++;
 			}
-			game.getWinningCards(winningCards);
-			if(game.getWinningHand() == -1) {
-				handLabel.setText("");
-				winLabel.setText("Ei voittoa");
-				playButton.setDisable(false);
-				betButton.setDisable(false);
-			}
-			else {
-				win = coinsTable[game.getWinningHand()];
-				winLabel.setText((int)(win*bet) + " Krediittiä");
-				handLabel.setText(winningTable[game.getWinningHand()]);
-				doubleButton.setDisable(false);
-				recoverButton.setDisable(false);
-			}
+			showWin();
 		}
 		doublesResult(2, card3);
 		game.setPlay(false);
 		highlightCards();
 	}
 	public void clickCard4() {
-		if(game.isPlay()) {
+		if(game.isPlay()) {	//Ensin asetetaan loput korteista näkyviin.
 			cards[2] = null;
 			card3.setImage(cards[4].getImage());
 			card5.setImage(cards[5].getImage());
@@ -118,41 +124,49 @@ public class Fast_pokerViewController implements Initializable{
 			Card temp = winningCards[2];
 			winningCards[2] = winningCards[3];
 			winningCards[3] = temp;
-			game.getWinningCards(winningCards);
-			if(game.getWinningHand() == -1) {
-				handLabel.setText("");
-				winLabel.setText("Ei voittoa");
-				playButton.setDisable(false);
-				betButton.setDisable(false);
-			}
-			else {
-				win = coinsTable[game.getWinningHand()];
-				winLabel.setText((int)(win*bet) + " Krediittiä");
-				handLabel.setText(winningTable[game.getWinningHand()]);
-				doubleButton.setDisable(false);
-				recoverButton.setDisable(false);
-			}
+			showWin();
 		}
 		doublesResult(3, card4);
 		game.setPlay(false);
 		highlightCards();
 	}
 	
+	private void showWin() {
+		game.getWinningCards(winningCards);
+		if(game.getWinningHand() == -1) { //Jos winningHand palauttaa arvon -1 eli häviön.
+			handLabel.setText("");
+			winLabel.setText("");
+			playButton.setDisable(false);
+			betButton.setDisable(false);
+		}
+		else { //Jos tuloksena on voitto.
+			win = coinsTable[game.getWinningHand()];
+			winLabel.setText((int)(win*bet) + " " + texts.getString("credits"));
+			handLabel.setText(winningTable[game.getWinningHand()]);
+			doubleButton.setDisable(false);
+			recoverButton.setDisable(false);
+		}
+	}
+	
 	public void clickCard5() {
 		doublesResult(4, card5);
 	}
 	
+	/*
+	 * Metodi aloittaa pelin. Tarkistetaan pelaajan saldo ja vähennetään siitä panoksen verran.
+	 * Luodaan korttipakka ja asetetaan kortit näkyviin pelipöydälle.
+	 */
 	public void play(ActionEvent e) throws FileNotFoundException {
 		if(User.getCredits() >= bet) {
 			hideButtons();
 			Database.decreaseCreditBalance((int)bet);
-			winLabel.setText("Voitto");
-			handLabel.setText("Käsi");
+			winLabel.setText(texts.getString("win"));
+			handLabel.setText(texts.getString("hand"));
 			game.setPlay(true);
 			highlightCards();
 			game.makeDeck();
 			cards = game.take6();
-			balanceLabel.setText("Krediitit: " + User.getCredits());
+			balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
 			System.out.println(cards[0].getImage());
 			card1.setImage(cards[0].getImage());
 			card2.setImage(cards[1].getImage());
@@ -164,18 +178,25 @@ public class Fast_pokerViewController implements Initializable{
 			errorLabel.setVisible(true);
 	}
 	
+	/*
+	 * Metodi jolla saadaan pelaajan voitot talteen, jos pelaaja ei halua tuplata enempää.
+	 * Toisin sanoen metodin suorittaminen lopettaa pelikerran.
+	 */
 	public void recover(ActionEvent e) throws FileNotFoundException {
-		winLabel.setText("Voitto");
-		handLabel.setText("Käsi");
+		winLabel.setText(texts.getString("win"));
+		handLabel.setText(texts.getString("hand"));
 		hideCards();
 		Database.increaseCreditBalance((int)win * (int)bet);
-		balanceLabel.setText("Krediitit: " + User.getCredits());
+		balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
 		recoverButton.setDisable(true);
 		doubleButton.setDisable(true);
 		playButton.setDisable(false);
 		betButton.setDisable(false);
 	}
 	
+	/*
+	 * Metodi panoksen asettamiselle.
+	 */
 	public void bet(ActionEvent e) {
 		if(bet < User.getCredits()) {
 			errorLabel.setVisible(false);
@@ -185,9 +206,12 @@ public class Fast_pokerViewController implements Initializable{
 		if(bet > 140)
 			bet = 1;
 		setWinLabel();
-		betButton.setText("Panos: " + bet);
+		betButton.setText(texts.getString("bet.button") + ": " + bet);
 	}
 	
+	/*
+	 * Metodi asettaa pelaajalle näkyviin kaikki mahdolliset pokerikäsien voittosummat.
+	 */
 	private void setWinLabel() {
 		winLabel1.setText((int)coinsTable[8] * (int)bet + "");
 		winLabel2.setText((int)coinsTable[7] * (int)bet + "");
@@ -200,6 +224,9 @@ public class Fast_pokerViewController implements Initializable{
 		winLabel9.setText((int)coinsTable[0] * (int)bet + "");
 	}
 	
+	/*
+	 * Metodi tuplauken alottamiselle.
+	 */
 	public void doubles(ActionEvent e) throws FileNotFoundException {
 		game.setDoubles(true);
 		highlightCards();
@@ -208,22 +235,25 @@ public class Fast_pokerViewController implements Initializable{
 		hideCards();
 		card1.setImage(cards[0].getImage());
 		handLabel.setText("");
-		winLabel.setText("Voitto");
+		winLabel.setText(texts.getString("win"));
 		hideButtons();
 	}
 	
+	/*
+	 * Metodilla tarkistetaan tuplauksen tulos.
+	 */
 	private void doublesResult(int i, ImageView card) {
 		if(game.isDoubles()) {
 			card.setImage(cards[i].getImage());
 			if(game.checkDouble(cards, i)) {
 				win = win * 2;
-				handLabel.setText("Tuplaus!");
+				handLabel.setText(texts.getString("double.button") + "!");
 				winLabel.setText("" + (int)win*bet);
 				recoverButton.setDisable(false);
 				doubleButton.setDisable(false);
 			}
 			else {
-				winLabel.setText("Ei voittoa");
+				winLabel.setText("");
 				playButton.setDisable(false);
 				betButton.setDisable(false);
 				win = 0;

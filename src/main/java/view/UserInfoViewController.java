@@ -3,6 +3,7 @@ package view;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -62,7 +63,23 @@ public class UserInfoViewController implements Initializable {
 		setOrders();
 		loadProfilePicture();
 		profileInit();
+		updateLanguage();
 	}
+	
+    public void toEnglish(ActionEvent e) {
+    	texts = ResourceBundle.getBundle("lang.language",new Locale("en", "US"));
+    	Session.setLanguageBundle(texts);
+    	updateLanguage();
+    }
+    
+    public void toFinnish(ActionEvent e) {
+    	texts = ResourceBundle.getBundle("lang.language",new Locale("fi", "FI"));
+    	Session.setLanguageBundle(texts);
+    	updateLanguage();
+    }
+    
+    private void updateLanguage() {
+    }
 	
 	private void setImages() {
 		images[0] = profile_picture0;

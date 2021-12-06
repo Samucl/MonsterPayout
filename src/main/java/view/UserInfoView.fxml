@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -24,7 +26,7 @@
 
 <BorderPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.UserInfoViewController">
    <center>
-      <TabPane fx:id="editProfileTabPane" prefHeight="540.0" prefWidth="960.0" stylesheets="@tabpane.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="80.0" tabMaxWidth="150.0" tabMinHeight="30.0" tabMinWidth="150.0" BorderPane.alignment="CENTER">
+      <TabPane fx:id="editProfileTabPane" prefHeight="540.0" prefWidth="622.0" stylesheets="@tabpane.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="80.0" tabMaxWidth="150.0" tabMinHeight="30.0" tabMinWidth="150.0" BorderPane.alignment="CENTER">
          <tabs>
             <Tab text="Profiili">
                <content>
@@ -579,6 +581,18 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </ImageView>
+            <MenuButton mnemonicParsing="false" style="-fx-background-radius: 30; -fx-background-color: #21477A;" text="Kieli" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+              <items>
+                <MenuItem fx:id="toEnglish" mnemonicParsing="false" onAction="#toEnglish" text="In English" />
+                <MenuItem fx:id="toFinnish" mnemonicParsing="false" onAction="#toFinnish" text="Suomeksi" />
+              </items>
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="16.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets right="30.0" />
+               </GridPane.margin>
+            </MenuButton>
          </children>
       </GridPane>
    </top>
