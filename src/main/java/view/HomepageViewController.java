@@ -152,7 +152,7 @@ public class HomepageViewController implements Initializable {
         } catch (IOException iOE) {
             iOE.printStackTrace();
         }
-	}
+	} 
 	
 	public void toStore(ActionEvent e) {
 		try {

@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -38,6 +40,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import model.Product;
+import model.Session;
 import model.Database;
 import model.User;
  
@@ -67,33 +70,42 @@ public class StoreViewController {
 	@FXML private Label coinLabel;
 	
 	@FXML private ChoiceBox<Double> buyWithCoinsChoiceBox;
+	@FXML private Label buyWithCoinsLabel;
+	@FXML private Label chooseAmountLabel;
 	@FXML private Label buyWithCoinsPriceLabel;
 	@FXML private Button buyWithCoinsBtn;
 	@FXML private Label buyWithCoinsSuccessLabel;
 	@FXML private ImageView coinImage;
+	
+
+	ResourceBundle texts = Session.getLanguageBundle();
 	
 	
 	public void initialize() {
 		try {
 			bgCard = new Image(new FileInputStream("./src/main/resources/card_deck_1/taka.png"));
 			credit = new Image(new FileInputStream("./src/main/resources/credit_1.png"));
-			coin = new Image(new FileInputStream("./src/main/resources/coin_1.png"));
-			
-		} catch (FileNotFoundException e) {e.printStackTrace();}
+			coin = new Image(new FileInputStream("./src/main/resources/coin_1.png"));	
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		
+		useLanguageBundle();
 		setProducts();
 		setDiscountProducts();
 		setChoiceBoxItems();
-		refreshAccountInfo();	
+		refreshAccountInfo();
 		
-		/*
-		Stop[] stops = new Stop[] {new Stop(0, Color.BLUE), new Stop(1, Color.RED)};
-		LinearGradient lgcolor = new LinearGradient(0,0,1,0,true,CycleMethod.NO_CYCLE, stops);
-		BackgroundFill bgfill = new BackgroundFill(lgcolor, CornerRadii.EMPTY, Insets.EMPTY);
-		borderpane.setBackground(new Background(bgfill));
-		*/
+	}
+	
+	private void useLanguageBundle() {
+		logoutBtn.setText(texts.getString("logout.button"));
+		toMainBtn.setText(texts.getString("store"));
+		toUserInfoBtn.setText(texts.getString("user.details"));
 		
-		
+		buyWithCoinsLabel.setText(texts.getString("buy.with.coins"));
+		chooseAmountLabel.setText(texts.getString("choose.credit.amount"));
+		buyWithCoinsBtn.setText(texts.getString("buy.button"));
 	}
 	
 	public void setProducts() {
@@ -124,7 +136,7 @@ public class StoreViewController {
 		
 		//Tehdään alennustuotteille oma GridPane, jonka sarakkeisiin asetetaan tuotetiedot, sitten GridPane asetetaan HBoxiin
 		GridPane innerPane = new GridPane();
-		innerPane.setVgap(5); //Rivien välille vähän tyhjää tilaa
+		innerPane.setVgap(5); //Rivien välille vähän tilaa
 		innerPane.setPadding(new Insets(18, 0, 18, 24));
 		
 		
@@ -133,7 +145,7 @@ public class StoreViewController {
 			innerPane.getColumnConstraints().add(new ColumnConstraints(200)); //Sarakkeen leveys
 			
 			int discount = (int) (100 - (products1.get(i).getSaleMultiplier() * 100)); //Lasketaan alennusprosentti hintakertoimesta
-			Label discountLabel = new Label(discount + " % ALENNUS");
+			Label discountLabel = new Label(texts.getString("discount") + discount + " %");
 			discountLabel.setFont(Font.font("system", FontWeight.BOLD, 14));
 			discountLabel.setTextFill(Color.RED);
 			innerPane.add(discountLabel, i, 0);
@@ -167,13 +179,13 @@ public class StoreViewController {
 			innerPane.add(priceLabel, i, 4);
 			
 			Button buyBtn = new Button();
-			buyBtn.setText("OSTA!");
+			buyBtn.setText(texts.getString("buy.button"));
 			buyBtn.setFont(Font.font("system", FontWeight.BOLD, 18));
 			innerPane.add(buyBtn, i, 5);
 			
 			if (products1.get(i).getCoinAmount() != 0) { //Jos tuotteesta saa kolikkobonuksen niin laitetaan se ylimääräiseksi sarakkeeksi
 				
-					Label coinLabel = new Label("Bonuksena " + Integer.toString(products1.get(i).getCoinAmount()));
+					Label coinLabel = new Label(texts.getString("coin.bonus") + Integer.toString(products1.get(i).getCoinAmount()));
 					coinLabel.setFont(Font.font("system", FontPosture.ITALIC, 14));
 					innerPane.add(coinLabel, i, 6);
 			        ImageView imageView2 = new ImageView(coin);
@@ -192,8 +204,7 @@ public class StoreViewController {
 			});
 		}
 		
-		
-		scrollpane.setContent(innerPane); //Ilman tätä ei voi scrollata (jos tuotteita on paljon)
+		scrollpane.setContent(innerPane);
 	}
 	
 	//-------------------------------------
@@ -201,8 +212,7 @@ public class StoreViewController {
 	public void setDiscountProducts() {
 		
 		GridPane lowerPane = new GridPane();
-		lowerPane.setVgap(5); //Rivien välille vähän tyhjää tilaa
-	//	lowerPane.setStyle("-fx-border-style: solid inside;");
+		lowerPane.setVgap(5); //Rivien välille vähän tilaa
 		lowerPane.setPadding(new Insets(0, 0, 18, 24));
 		
 		for (int i = 0 ; i < products2.size() ; i++) {
@@ -237,7 +247,7 @@ public class StoreViewController {
 			lowerPane.add(priceLabel, i, 2);
 			
 			Button buyBtn = new Button();
-			buyBtn.setText("OSTA!");
+			buyBtn.setText(texts.getString("buy.button"));
 			buyBtn.setFont(Font.font("system", FontWeight.BOLD, 18));
 			lowerPane.add(buyBtn, i, 3);
 			
@@ -245,7 +255,7 @@ public class StoreViewController {
 				
 				FileInputStream input2;
 				try {
-					Label coinLabel = new Label("Bonuksena " + Integer.toString(products2.get(i).getCoinAmount()));
+					Label coinLabel = new Label(texts.getString("coin.bonus") + Integer.toString(products2.get(i).getCoinAmount()));
 					coinLabel.setFont(Font.font("system", FontPosture.ITALIC, 14));
 					lowerPane.add(coinLabel, i, 4);
 					input2 = new FileInputStream("./src/main/resources/coin_1.png");
@@ -287,7 +297,7 @@ public class StoreViewController {
 			double creditAmount = buyWithCoinsChoiceBox.getSelectionModel().getSelectedItem();
 		    int coinAmount = (int) (1000 * creditAmount);
 			
-			buyWithCoinsPriceLabel.setText("Hinta " + String.valueOf(coinAmount));
+			buyWithCoinsPriceLabel.setText(texts.getString("price") + String.valueOf(coinAmount));
 			buyWithCoinsPriceLabel.setVisible(true);
 			buyWithCoinsBtn.setVisible(true);
 			coinImage.setVisible(true);
@@ -296,10 +306,10 @@ public class StoreViewController {
 			buyWithCoinsBtn.setOnAction((e2) -> {
 			    if (Database.decreaseCoinBalance(coinAmount) != 0) {
 			    	Database.increaseCreditBalance(creditAmount);
-			    	buyWithCoinsSuccessLabel.setText("Onnistui!");
+			    	buyWithCoinsSuccessLabel.setText(texts.getString("success"));
 			    	refreshAccountInfo();
 			    } else {
-			    	buyWithCoinsSuccessLabel.setText("Ei tarpeeksi kolikoita tilillä");
+			    	buyWithCoinsSuccessLabel.setText(texts.getString("not.enough.coins"));
 			    }
 			}); 
 		});
@@ -321,17 +331,16 @@ public class StoreViewController {
 		try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("UserInfoView.fxml"));
-            AnchorPane userInfoView = (AnchorPane) loader.load();
+            BorderPane userInfoView = (BorderPane) loader.load();
             Scene userInfoScene = new Scene(userInfoView);
 			Stage window = (Stage) toUserInfoBtn.getScene().getWindow();
 			window.setScene(userInfoScene);
         } catch (IOException iOE) {
             iOE.printStackTrace();
         }
-	}
+	} 
 	
 	public void toMainView(ActionEvent e) {
-		
 		try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));

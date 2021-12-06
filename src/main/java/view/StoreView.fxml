@@ -88,7 +88,7 @@
    <center>
       <StackPane fx:id="stackpane" minHeight="528.0" prefHeight="528.0" BorderPane.alignment="CENTER_LEFT">
          <BorderPane.margin>
-            <Insets bottom="66.0" left="32.0" right="32.0" top="100.0" />
+            <Insets bottom="66.0" left="48.0" right="32.0" top="100.0" />
          </BorderPane.margin>
          <children>
             <HBox fx:id="hbox" maxHeight="294.0" maxWidth="824.0" prefHeight="294.0" prefWidth="824.0" StackPane.alignment="TOP_LEFT">
@@ -99,6 +99,9 @@
                      </HBox.margin>
                   </ScrollPane>
                </children>
+               <StackPane.margin>
+                  <Insets top="10.0" />
+               </StackPane.margin>
             </HBox>
             <HBox fx:id="hbox2" maxHeight="220.0" maxWidth="828.0" prefHeight="220.0" prefWidth="828.0" StackPane.alignment="BOTTOM_LEFT">
                <children>
@@ -120,7 +123,7 @@
             <Insets right="59.0" top="20.0" />
          </BorderPane.margin>
          <children>
-            <Label layoutX="120.0" layoutY="116.0" prefHeight="30.0" prefWidth="145.0" text="Maksa kolikoilla:" textFill="GOLD" underline="true">
+            <Label fx:id="buyWithCoinsLabel" layoutX="120.0" layoutY="116.0" prefHeight="30.0" prefWidth="145.0" text="Maksa kolikoilla:" textFill="GOLD" underline="true">
                <font>
                   <Font name="System Italic" size="20.0" />
                </font></Label>
@@ -144,18 +147,18 @@
                         <Insets />
                      </GridPane.margin>
                   </Button>
-                  <Label text="Valitse määrä:" textFill="WHITE" GridPane.halignment="CENTER">
+                  <Label fx:id="chooseAmountLabel" text="Valitse määrä:" textFill="WHITE" GridPane.halignment="CENTER">
                      <font>
                         <Font name="Arial" size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="buyWithCoinsPriceLabel" text="Hinta:" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <Label fx:id="buyWithCoinsPriceLabel" text="Hinta:" textFill="WHITE" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
                   <ChoiceBox fx:id="buyWithCoinsChoiceBox" prefWidth="88.0" style="-fx-background-color: white;" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                  <Label textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -168,10 +171,13 @@
                         <Image url="@/coin_1.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="buyWithCoinsSuccessLabel" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP">
+                  <Label fx:id="buyWithCoinsSuccessLabel" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets top="44.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                   </Label>
                   <ImageView fitHeight="92.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                      <image>
