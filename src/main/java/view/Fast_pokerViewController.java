@@ -80,6 +80,7 @@ public class Fast_pokerViewController implements Initializable{
 		playButton.setText(texts.getString("play.button"));
 		recoverButton.setText(texts.getString("recover.profits"));
 		doubleButton.setText(texts.getString("double.button"));
+		toMenu.setText(texts.getString("exit.button"));
 	}
 	
 	private void setPokerCardNames(Label pokerHand, int i, String key) {

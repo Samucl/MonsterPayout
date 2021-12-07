@@ -3,6 +3,9 @@
  */
 .tab .tab-label {
     -fx-text-fill: WHITE;
+    -fx-font-family: "Arial Rounded";
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
 }
 .tab {
     -fx-background-insets: 0;

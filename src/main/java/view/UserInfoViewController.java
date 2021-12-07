@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
@@ -27,31 +29,21 @@ import model.Database;
 import model.User;
 
 public class UserInfoViewController implements Initializable {
-	@FXML Text profile_username;
-	@FXML Text profile_firstname;
+	@FXML Text profile_username, profile_firstname, profileText;
 	@FXML ImageView profile_image;
-	@FXML Text profile_kredits;
-	@FXML Text profile_coins;
-	@FXML TextField username;
-	@FXML TextField firstname;
-	@FXML TextField lastname;
-	@FXML TextField email;
-	@FXML TextField account_number;
-	@FXML Label login_streak;
+	@FXML Text profile_kredits, profile_coins;
+	@FXML TextField username, firstname, lastname, email, account_number;
+	@FXML Label login_streak, firstnameLabel, usernameLabel, loginStreakLabel;
+	@FXML Tab profileTab, editProfileTab, purchaseHistoryTab;
 	@FXML TabPane editProfileTabPane;
 	@FXML ListView<String> purchase_history;
-	@FXML Button save_button;
-	@FXML Button cancel_button;
-	@FXML Button home_button;
-	@FXML ImageView profile_picture;
-	@FXML Button logoutButton;
-	@FXML Button toStoreButton;
-	@FXML ImageView profile_picture0;
-	@FXML ImageView profile_picture1;
-	@FXML ImageView profile_picture2;
-	@FXML ImageView profile_picture3;
-	@FXML ImageView profile_picture4;
-	@FXML ImageView profile_picture5;
+	@FXML Button save_button, cancel_button;;
+	@FXML Button home_button, logoutButton, toStoreButton;
+	@FXML Label profilePictureLabel, usernameLabel2, firstnameLabel2, lastnameLabel, emailLabel, accountNumberLabel;
+	@FXML Label errorLabel;
+	@FXML MenuButton languageButton;
+	@FXML Button editPictureButton;
+	@FXML ImageView profile_picture, profile_picture0, profile_picture1, profile_picture2, profile_picture3, profile_picture4, profile_picture5;
 	private ImageView[] images = new ImageView[6];
 	private int selectedImage;
 	private ResourceBundle texts;
@@ -79,8 +71,28 @@ public class UserInfoViewController implements Initializable {
     }
     
     private void updateLanguage() {
+    	profileTab.setText(texts.getString("profile"));
+    	editProfileTab.setText(texts.getString("edit") + " " + texts.getString("profile.partitive").toLowerCase());
+    	purchaseHistoryTab.setText(texts.getString("purchase.history"));
+    	firstnameLabel.setText(texts.getString("firstname"));
+    	usernameLabel.setText(texts.getString("username"));
+    	languageButton.setText(texts.getString("language"));
+    	editPictureButton.setText(texts.getString("change.profile.pic"));
+    	profileText.setText(texts.getString("your.profile"));
+    	loginStreakLabel.setText(texts.getString("login.streak"));
+    	cancel_button.setText(texts.getString("cancel.button"));
+    	save_button.setText(texts.getString("save.button"));
+    	usernameLabel2.setText(texts.getString("username"));
+    	firstnameLabel2.setText(texts.getString("firstname"));
+    	lastnameLabel.setText(texts.getString("lastname"));
+    	emailLabel.setText(texts.getString("email"));
+    	accountNumberLabel.setText(texts.getString("account.number"));
+    	profilePictureLabel.setText(texts.getString("change.profile.pic"));
+    	home_button.setText(texts.getString("user.details"));
+    	logoutButton.setText(texts.getString("logout"));
+    	toStoreButton.setText(texts.getString("store"));
     }
-	
+    
 	private void setImages() {
 		images[0] = profile_picture0;
 		images[1] = profile_picture1;
@@ -91,6 +103,8 @@ public class UserInfoViewController implements Initializable {
 	}
 	
 	public void saveChanges() {
+		errorLabel.setVisible(false);
+		errorLabel.setEffect(setDropShadow(20, Color.RED));
 		/*
 		 * Poistetaan kaikki mahdolliset "tyhjät" välit tekstistä
 		 * "Markus Miettinen" -> "MarkusMiettinen"
@@ -106,6 +120,7 @@ public class UserInfoViewController implements Initializable {
 		if(User.getFirstname().equals(newFirstname) && User.getLastname().equals(newLastname)
 				&& User.getEmail().equals(newEmail) && User.getAccountNumber().equals(newAccountNumber)) {
 			System.out.println("Et ole muokannut mitään tietoja");
+			errorLabel.setText(texts.getString(""));
 			return;
 		}
 		
@@ -117,19 +132,27 @@ public class UserInfoViewController implements Initializable {
 		 * 
 		 */
 		if(newFirstname.length() > 20) {
+			errorLabel.setVisible(true);
 			System.out.println("Etunimi on liian pitkä (max 20-merkkiä)");
+			errorLabel.setText(texts.getString("firstname") + " " + texts.getString("too.long").toLowerCase() + " (max 20-" + texts.getString("characters").toLowerCase() + ")");
 			return;
 		}
 		if(newLastname.length() > 20) {
+			errorLabel.setVisible(true);
 			System.out.println("Sukunimi on liian pitkä (max 20-merkkiä)");
+			errorLabel.setText(texts.getString("lastname") + " " + texts.getString("too.long").toLowerCase() + " (max 20-" + texts.getString("characters").toLowerCase() + ")");
 			return;
 		}
 		if(newEmail.length() > 40) {
+			errorLabel.setVisible(true);
 			System.out.println("Sähköpostiosoite on liian pitkä (max 40-merkkiä)");
+			errorLabel.setText(texts.getString("email") + " " + texts.getString("too.long").toLowerCase() + " (max 40-" + texts.getString("characters").toLowerCase() + ")");
 			return;
 		}
 		if(newAccountNumber.length() > 25) {
+			errorLabel.setVisible(true);
 			System.out.println("Tilinumero on liian pitkä (max 25-merkkiä)");
+			errorLabel.setText(texts.getString("account.number") + " " + texts.getString("too.long").toLowerCase() + " (max 25-" + texts.getString("characters").toLowerCase() + ")");
 			return;
 		}
 		
@@ -138,15 +161,19 @@ public class UserInfoViewController implements Initializable {
 		User.setEmail(newEmail);
 		User.setAccountNumber(newAccountNumber);
 		System.out.println("Tallennetaan");
-		if(Database.saveProfileChanges())
-			System.out.println("Päivitys onnistui");
-		else
-			System.out.println("Päivitys ei tainnut onnistua");
+		if(Database.saveProfileChanges()) {
+			errorLabel.setVisible(true);
+			errorLabel.setEffect(setDropShadow(20, Color.LIGHTSKYBLUE));
+			errorLabel.setText(texts.getString("update.succesful"));
+		}
+		else {
+			errorLabel.setVisible(true);
+			errorLabel.setText(texts.getString("update.failed"));
+		}
 		profileInit();
 	}
 	
 	public void cancelChanges() {
-		System.out.println("Peruutetaan muutokset");
 		setTexts();
 	}
 	
@@ -190,32 +217,32 @@ public class UserInfoViewController implements Initializable {
 	
 	public void selectImage0() {
 		removeEffects();
-		images[0].setEffect(setDropShadow(50));
+		images[0].setEffect(setDropShadow(50, Color.LIGHTSKYBLUE));
 		selectedImage = 0;
 	}
 	public void selectImage1() {
 		removeEffects();
-		images[1].setEffect(setDropShadow(50));
+		images[1].setEffect(setDropShadow(50, Color.LIGHTSKYBLUE));
 		selectedImage = 1;
 	}
 	public void selectImage2() {
 		removeEffects();
-		images[2].setEffect(setDropShadow(50));
+		images[2].setEffect(setDropShadow(50, Color.LIGHTSKYBLUE));
 		selectedImage = 2;
 	}
 	public void selectImage3() {
 		removeEffects();
-		images[3].setEffect(setDropShadow(50));
+		images[3].setEffect(setDropShadow(50, Color.LIGHTSKYBLUE));
 		selectedImage = 3;
 	}
 	public void selectImage4() {
 		removeEffects();
-		images[4].setEffect(setDropShadow(50));
+		images[4].setEffect(setDropShadow(50, Color.LIGHTSKYBLUE));
 		selectedImage = 4;
 	}
 	public void selectImage5() {
 		removeEffects();
-		images[5].setEffect(setDropShadow(50));
+		images[5].setEffect(setDropShadow(50, Color.LIGHTSKYBLUE));
 		selectedImage = 5;
 	}
 	
@@ -223,9 +250,9 @@ public class UserInfoViewController implements Initializable {
 		images[selectedImage].setEffect(null);
 	}
 	
-	private DropShadow setDropShadow(int intensity) {
+	private DropShadow setDropShadow(int intensity, Color color) {
 		DropShadow ds = new DropShadow();
-		ds.setColor(Color.LIGHTSKYBLUE);
+		ds.setColor(color);
 		ds.setHeight(intensity);
 		ds.setWidth(intensity);
 		return ds;

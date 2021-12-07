@@ -28,7 +28,7 @@
    <center>
       <TabPane fx:id="editProfileTabPane" prefHeight="540.0" prefWidth="622.0" stylesheets="@tabpane.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="80.0" tabMaxWidth="150.0" tabMinHeight="30.0" tabMinWidth="150.0" BorderPane.alignment="CENTER">
          <tabs>
-            <Tab text="Profiili">
+            <Tab fx:id="profileTab" text="Profiili">
                <content>
                   <GridPane>
                     <columnConstraints>
@@ -66,7 +66,7 @@
                             <RowConstraints vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Profiilisi" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                              <Text fx:id="profileText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Profiilisi" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <font>
                                     <Font name="Arial Rounded MT Bold" size="38.0" />
                                  </font>
@@ -138,7 +138,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label text="Firstname" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                    <Label fx:id="firstnameLabel" text="Firstname" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                        <font>
                                           <Font name="Arial Rounded MT Bold" size="16.0" />
                                        </font>
@@ -178,7 +178,7 @@
                                           </DropShadow>
                                        </effect>
                                     </Text>
-                                    <Label text="Username" textFill="WHITE" translateY="-4.0" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                    <Label fx:id="usernameLabel" text="Username" textFill="WHITE" translateY="-4.0" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                                        <font>
                                           <Font name="Arial Rounded MT Bold" size="16.0" />
                                        </font>
@@ -247,7 +247,7 @@
                                           <Insets left="30.0" />
                                        </padding>
                                     </Label>
-                                    <Label text="Login streak" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                    <Label fx:id="loginStreakLabel" text="Login streak" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                                        <font>
                                           <Font name="Arial Rounded MT Bold" size="16.0" />
                                        </font>
@@ -296,7 +296,7 @@
                                           <Insets bottom="20.0" />
                                        </GridPane.margin>
                                     </ImageView>
-                                    <Button mnemonicParsing="false" onAction="#editProfile" style="-fx-background-color: black;" text="Change profile picture" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                    <Button fx:id="editPictureButton" mnemonicParsing="false" onAction="#editProfile" style="-fx-background-color: black;" text="Change profile picture" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                        <effect>
                                           <DropShadow height="36.57" radius="18.34" width="38.79">
                                              <color>
@@ -322,7 +322,7 @@
                   </GridPane>
                </content>
             </Tab>
-            <Tab text="Muokkaa profiilia">
+            <Tab fx:id="editProfileTab" text="Muokkaa profiilia">
                <content>
                   <GridPane style="-fx-background-color: linear-gradient(to top,#e5caac, #00282e);">
                     <columnConstraints>
@@ -366,7 +366,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <Label style="-fx-text-fill: #ffffff;" text="Käyttäjänimi" GridPane.halignment="RIGHT">
+                                    <Label fx:id="usernameLabel2" style="-fx-text-fill: #ffffff;" text="Käyttäjänimi" GridPane.halignment="RIGHT">
                                        <font>
                                           <Font name="Arial Rounded MT Bold" size="20.0" />
                                        </font>
@@ -374,7 +374,7 @@
                                           <Insets right="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label style="-fx-text-fill: #ffffff;" text="Etunimi" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                    <Label fx:id="firstnameLabel2" style="-fx-text-fill: #ffffff;" text="Etunimi" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                        <font>
                                           <Font name="Arial Rounded MT Bold" size="20.0" />
                                        </font>
@@ -382,7 +382,7 @@
                                           <Insets right="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label style="-fx-text-fill: #ffffff;" text="Sukunimi" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                                    <Label fx:id="lastnameLabel" style="-fx-text-fill: #ffffff;" text="Sukunimi" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                        <font>
                                           <Font name="Arial Rounded MT Bold" size="20.0" />
                                        </font>
@@ -390,7 +390,7 @@
                                           <Insets right="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label style="-fx-text-fill: #ffffff;" text="Sähköpostiosoite" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                                    <Label fx:id="emailLabel" style="-fx-text-fill: #ffffff;" text="Sähköpostiosoite" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                                        <font>
                                           <Font name="Arial Rounded MT Bold" size="20.0" />
                                        </font>
@@ -398,7 +398,7 @@
                                           <Insets right="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label style="-fx-text-fill: #ffffff;" text="Tilinumero" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                                    <Label fx:id="accountNumberLabel" style="-fx-text-fill: #ffffff;" text="Tilinumero" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
                                        <font>
                                           <Font name="Arial Rounded MT Bold" size="20.0" />
                                        </font>
@@ -445,14 +445,49 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Button fx:id="save_button" mnemonicParsing="false" onAction="#saveChanges" prefHeight="51.0" prefWidth="95.0" style="-fx-background-radius: 30;" text="Tallenna" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                                    <Button fx:id="save_button" mnemonicParsing="false" onAction="#saveChanges" prefHeight="51.0" prefWidth="95.0" style="-fx-background-radius: 30; -fx-background-color: #095c2a;" text="Tallenna" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                       <GridPane.margin>
+                                          <Insets right="30.0" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font name="Arial Rounded MT Bold" size="15.0" />
+                                       </font>
+                                       <effect>
+                                          <DropShadow height="59.55" radius="28.5325" spread="0.56" width="56.58">
+                                             <color>
+                                                <Color red="0.235867440700531" green="0.5789473652839661" blue="0.235867440700531" opacity="0.550000011920929" />
+                                             </color>
+                                          </DropShadow>
+                                       </effect></Button>
+                                    <Button fx:id="cancel_button" mnemonicParsing="false" onAction="#cancelChanges" prefHeight="51.0" prefWidth="95.0" style="-fx-background-radius: 30; -fx-background-color: #521111;" text="Peruuta" textFill="WHITE" GridPane.columnSpan="2147483647" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                       <GridPane.margin>
+                                          <Insets left="30.0" right="150.0" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font name="Arial Rounded MT Bold" size="15.0" />
+                                       </font>
+                                       <effect>
+                                          <DropShadow height="44.72" radius="21.119999999999997" spread="0.22" width="41.76">
+                                             <color>
+                                                <Color red="0.7099999785423279" green="0.26980000734329224" blue="0.26980000734329224" opacity="0.8086956739425659" />
+                                             </color>
+                                          </DropShadow>
+                                       </effect></Button>
+                                    <Label fx:id="errorLabel" textFill="WHITE" textOverrun="CLIP" visible="false" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                                       <font>
+                                          <Font name="Arial Rounded MT Bold" size="13.0" />
+                                       </font>
+                                       <effect>
+                                          <DropShadow height="47.68" radius="20.375" spread="0.54" width="35.82">
+                                             <color>
+                                                <Color red="1.0" />
+                                             </color>
+                                          </DropShadow>
+                                       </effect>
                                        <GridPane.margin>
                                           <Insets left="20.0" />
-                                       </GridPane.margin></Button>
-                                    <Button fx:id="cancel_button" mnemonicParsing="false" onAction="#cancelChanges" prefHeight="51.0" prefWidth="95.0" style="-fx-background-radius: 30;" text="Peruuta" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
-                                       <GridPane.margin>
-                                          <Insets right="20.0" />
-                                       </GridPane.margin></Button>
+                                       </GridPane.margin>
+                                    </Label>
                                  </children>
                               </GridPane>
                            </children>
@@ -510,15 +545,15 @@
                                           <Image url="@/avatars/avatar_7.png" />
                                        </image>
                                     </ImageView>
-                                    <Label prefHeight="51.0" prefWidth="222.0" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 30;" text="Aseta profiilikuva" textFill="WHITE" translateY="-90.0" GridPane.columnSpan="2147483647" GridPane.valignment="TOP">
+                                    <Label fx:id="profilePictureLabel" prefHeight="51.0" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 30;" text="Change profile picture" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" translateY="-90.0" GridPane.columnSpan="2147483647" GridPane.valignment="TOP">
                                        <font>
-                                          <Font name="Arial Rounded MT Bold" size="21.0" />
+                                          <Font name="Arial Rounded MT Bold" size="15.0" />
                                        </font>
                                        <GridPane.margin>
                                           <Insets top="30.0" />
                                        </GridPane.margin>
                                        <padding>
-                                          <Insets left="25.0" />
+                                          <Insets left="25.0" right="25.0" />
                                        </padding>
                                     </Label>
                                  </children>
@@ -532,7 +567,7 @@
                   </GridPane>
                </content>
             </Tab>
-            <Tab text="Osto historia">
+            <Tab fx:id="purchaseHistoryTab" text="Osto historia">
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to top,#e5caac, #00282e);">
                      <center>
@@ -581,7 +616,7 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </ImageView>
-            <MenuButton mnemonicParsing="false" style="-fx-background-radius: 30; -fx-background-color: #21477A;" text="Kieli" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <MenuButton fx:id="languageButton" mnemonicParsing="false" style="-fx-background-radius: 30; -fx-background-color: #21477A;" text="Kieli" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
               <items>
                 <MenuItem fx:id="toEnglish" mnemonicParsing="false" onAction="#toEnglish" text="In English" />
                 <MenuItem fx:id="toFinnish" mnemonicParsing="false" onAction="#toFinnish" text="Suomeksi" />
@@ -609,21 +644,20 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="home_button" mnemonicParsing="false" onAction="#toMainView" style="-fx-background-color: darkgreen;" text="Pelivalikkoon" textFill="WHITE" GridPane.rowIndex="1">
-               <font>
-                  <Font name="Arial" size="20.0" />
-               </font>
-               <effect>
-                  <DropShadow>
-                     <color>
-                        <Color green="1.0" blue="0.05000000074505806" opacity="0.686956524848938" />
-                     </color>
-                  </DropShadow>
-               </effect>
+            <Button fx:id="home_button" mnemonicParsing="false" onAction="#toMainView" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: darkgreen;" text="Käyttäjä tiedot" textFill="WHITE" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin>
-            </Button>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color green="1.0" blue="0.05000000074505806" opacity="0.6860869526863098" />
+                     </color>
+                  </DropShadow>
+               </effect>
+               <font>
+                  <Font name="Arial" size="19.0" />
+               </font></Button>
             <Button fx:id="toStoreButton" mnemonicParsing="false" onAction="#toStore" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: blue;" text="Kauppaan" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <font>
                   <Font name="Arial" size="19.0" />
