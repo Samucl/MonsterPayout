@@ -10,10 +10,13 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 import javafx.animation.KeyFrame;
@@ -34,9 +37,11 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Database;
+import model.Session;
 
 public class SlalomMadnessGame extends Application {
 	
@@ -77,6 +82,10 @@ public class SlalomMadnessGame extends Application {
 	
 	private boolean running = false, goFaster = false, goSlower = false, goLeft = false, goRight = false;
 	
+	private ResourceBundle texts = Session.getLanguageBundle();
+	
+	private Canvas canvas;
+	private GraphicsContext gc;
 	
 	public SlalomMadnessGame(Stage stage) {
 		this.timeInMillis = 0;
@@ -102,8 +111,8 @@ public class SlalomMadnessGame extends Application {
 		finish = new Image(new FileInputStream("./src/main/resources/slalommadness/finish.png"));
 		coin = new Image(new FileInputStream("./src/main/resources/coin_1.png"));
 		
-		Canvas canvas = new Canvas(width, height);
-		GraphicsContext gc = canvas.getGraphicsContext2D();
+		canvas = new Canvas(width, height);
+		gc = canvas.getGraphicsContext2D();
 		tl = new Timeline(new KeyFrame(Duration.millis(10), e -> run(gc)));
 		tl.setCycleCount(Timeline.INDEFINITE);
 		
@@ -286,9 +295,6 @@ public class SlalomMadnessGame extends Application {
 	
 			});
 			
-			
-			//----------------------------------------------------
-			
 			//Kolmiulotteisuuden tuntua lisäävä koodi
 			items.forEach(item -> {
 				gc.drawImage(item.getImg(), item.getXPos(), item.getYPos(), item.getWidth(), item.getHeight()); //Piirretään item päällimmäiseksi, eli pelaaja jää esim. kuusen taakse
@@ -298,21 +304,28 @@ public class SlalomMadnessGame extends Application {
 					gc.drawImage(skier, playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 				}
 			});
-			//-----------------------------------------------------
 			
-			gc.setFont(Font.font ("Arial Black", 20));
-			gc.fillText("Pisteet: " + points, 320, 30);
-			gc.fillText("Aika: " + String.valueOf((System.currentTimeMillis() - startTime) / 1000.0) + " s", 460, 30);
+			updateTimeAndPoints();
 			
-		} else if (!running && !finished && !dead) { //Jos peli ei vielä käynnissä 
+		//Jos peli ei vielä käynnissä:
+		} else if (!running && !finished && !dead) { 
 			
-			gc.setFont(Font.font ("Arial Black", 30));
-			gc.fillText("Paina  ↵  aloittaaksesi!", 285, 352);
+			gc.setTextAlign(TextAlignment.CENTER);
+	        gc.setTextBaseline(VPos.CENTER);
+	        gc.setFont(Font.font ("Arial Black", 30));
+	        gc.fillText(
+	        	texts.getString("press.enter"),
+	            Math.round(canvas.getWidth()  / 2), 
+	            Math.round(canvas.getHeight() / 2)
+	        );
+					
+			/*
 			gc.setFont(Font.font ("Verdana", 16));
 			gc.fillText("Ohje:", 440, 413);
 			gc.fillText("Liiku nuolinäppäimillä. Väistele esteitä ja yritä päästä maaliin.", 220, 450);
 			gc.fillText("Kierrä punaiset kepit vasemmalta ja siniset oikealta.", 220, 482);
 			gc.fillText("Jokaisesta ohilasketusta kepistä saat kaksi sekuntia sanktiota.", 220, 512);
+			*/
 
 			gc.drawImage(skier, playerXPos , playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 			
@@ -322,12 +335,14 @@ public class SlalomMadnessGame extends Application {
 					gc.drawImage(item.getImg(), item.getXPos(), item.getYPos(), item.getWidth(), item.getHeight());
 				});
 			}
-
-		} else if (!running && finished) { //Jos maaliin on tultu
 			
+		//Jos maaliin on tultu:
+		} else if (!running && finished) { 
 			
+			gc.setTextAlign(TextAlignment.CENTER);
+	        gc.setTextBaseline(VPos.CENTER);
 			gc.setFont(Font.font ("Arial Black", 30));
-			
+		
 			double score;
 			
 			if (points < poleCount * 2) { //Jos on tullut ohilaskuja
@@ -335,19 +350,32 @@ public class SlalomMadnessGame extends Application {
 				score = (finishTime / 1000.0 + missedPoles * 2);
 				
 				gc.setFill(Color.RED);
-				gc.fillText("Sanktio: " + missedPoles + " ohilaskua = " + missedPoles * 2 + " s", 250, 280);
+				gc.fillText(
+					texts.getString("sanction") + missedPoles + " " + texts.getString("missed.poles") + missedPoles * 2 + " s",
+			        Math.round(canvas.getWidth()  / 2), 
+			        Math.round(canvas.getHeight() / 4)
+			    );
+				
 				gc.setFill(Color.BLACK);
-				gc.fillText("Aika: " + score + " s", 350, 340);
+				gc.fillText(
+					texts.getString("time") + score + " s",
+				    Math.round(canvas.getWidth()  / 2), 
+				    Math.round(canvas.getHeight() / 3)
+				);
 				
 			} else {
 				score = finishTime / 1000.0;
-				gc.fillText("Aika: " + score + " s", 350, 220);
+				gc.fillText(texts.getString("time") + score + " s", 350, 220);
 			}
 			
 			if (Database.getHighScoreTime("Slalom Madness") == 0 || Database.getHighScoreTime("Slalom Madness") > score) {
-				gc.setFill(Color.GOLD);
+				gc.setFill(Color.DARKGREEN);
 				gc.setFont(Font.font ("Arial Black", 24));
-				gc.fillText("UUSI ENNÄTYS!", 350, 390);
+				gc.fillText(
+					texts.getString("new.personal.best"),
+					Math.round(canvas.getWidth()  / 2), 
+					Math.round(canvas.getHeight() / 2.5)
+				);
 			}
 			
 			if (score > 60) {
@@ -370,15 +398,17 @@ public class SlalomMadnessGame extends Application {
 				coinReward = 8;
 			} else {
 				coinReward = 10;
-			}
-
-			gc.setFill(Color.BLACK);
-			gc.fillText("Kolikkopalkinto: ", 320, 730);
+			}		
 			
 			try {TimeUnit.SECONDS.sleep(1);} catch (InterruptedException e) {e.printStackTrace();}
-
-			gc.fillText(String.valueOf(coinReward), 557, 730);
-			gc.drawImage(coin, 590, 703, 35, 35);
+			
+			gc.setFill(Color.BLACK);
+			gc.fillText(
+					texts.getString("coin.reward") + String.valueOf(coinReward),
+					Math.round(canvas.getWidth()  / 2), 
+					Math.round(canvas.getHeight() / 1.1)
+				);
+			gc.drawImage(coin, 588, Math.round(canvas.getHeight() / 1.1 - 18), 35, 35);
 
 			Database.setHighScoreTime(score, "Slalom Madness");
 			Database.increaseCoinBalance(coinReward);
@@ -388,18 +418,48 @@ public class SlalomMadnessGame extends Application {
 			
 			gc.setFill(Color.BLACK);
 			gc.setFont(Font.font ("Arial Black", 24));
-			gc.fillText("Palaa menuun painamalla  ↵", 294, 8000);
+			gc.fillText(texts.getString("return.to.menu"), 294, 8000);
 			
 			tl.stop();
 			
 		} else if (dead) { //Jos pelaaja törmännyt esteeseen
 			tl.stop();
 			
+			gc.setTextAlign(TextAlignment.CENTER);
+	        gc.setTextBaseline(VPos.CENTER);
 			gc.setFont(Font.font ("Arial Black", 30));
-			gc.fillText("GAME OVER", 356, 240);
+			gc.setFill(Color.RED);
+			gc.fillText(
+				texts.getString("game.over"),
+				Math.round(canvas.getWidth()  / 2), 
+				Math.round(canvas.getHeight() / 3)
+			);
+			gc.setFill(Color.BLACK);
 			gc.setFont(Font.font ("Arial Black", 24));
-			gc.fillText("Palaa menuun painamalla  ↵", 294, 302);
+			gc.fillText(
+				texts.getString("return.to.menu"),
+				Math.round(canvas.getWidth()  / 2), 
+				Math.round(canvas.getHeight() / 2.3)
+			);
 		}
+	}
+	
+	//Päivitetään aika- ja pistelaskurin tulostus ruudulle
+	private void updateTimeAndPoints() {
+		
+		gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font ("Arial Black", 20));
+        gc.fillText(
+        	texts.getString("points") + points,
+            Math.round(canvas.getWidth()  / 2.5), 
+            30
+        );
+        gc.fillText(
+	        	texts.getString("time") + String.valueOf((System.currentTimeMillis() - startTime) / 1000.0),
+	            Math.round(canvas.getWidth()  / 1.75), 
+	            30
+	    );
 	}
 
 	private void createSprucesOnSides(int number) {

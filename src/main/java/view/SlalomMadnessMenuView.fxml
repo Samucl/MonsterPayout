@@ -91,7 +91,7 @@
             </Label>
          </children>
       </GridPane>
-      <Button fx:id="playButton" defaultButton="true" layoutX="162.0" layoutY="253.0" mnemonicParsing="false" onAction="#play" prefHeight="77.0" prefWidth="189.0" style="-fx-background-color: rgba(0, 0, 0, 0.7);" text="PELAA" textFill="GOLD">
+      <Button fx:id="playBtn" defaultButton="true" layoutX="162.0" layoutY="253.0" mnemonicParsing="false" onAction="#play" prefHeight="77.0" prefWidth="189.0" style="-fx-background-color: rgba(0, 0, 0, 0.7);" text="PELAA" textFill="GOLD">
          <font>
             <Font name="Berlin Sans FB" size="42.0" />
          </font>
@@ -129,7 +129,7 @@
             </DropShadow>
          </effect>
       </Label>
-      <Button fx:id="instructionBtn" defaultButton="true" layoutX="205.0" layoutY="341.0" mnemonicParsing="false" onAction="#showInstruction" prefHeight="52.0" prefWidth="103.0" style="-fx-background-color: rgba(0, 0, 0, 0.7);" text="Ohje" textFill="WHITE">
+      <Button fx:id="instructionBtn" defaultButton="true" layoutX="161.0" layoutY="343.0" mnemonicParsing="false" onAction="#showInstructions" prefHeight="52.0" prefWidth="190.0" style="-fx-background-color: rgba(0, 0, 0, 0.7);" text="Ohje" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB" size="29.0" />
          </font>

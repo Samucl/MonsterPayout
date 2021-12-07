@@ -78,7 +78,7 @@ public class StoreViewController {
 	@FXML private ImageView coinImage;
 	
 
-	ResourceBundle texts = Session.getLanguageBundle();
+	private ResourceBundle texts = Session.getLanguageBundle();
 	
 	
 	public void initialize() {

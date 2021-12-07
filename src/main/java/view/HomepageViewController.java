@@ -108,6 +108,7 @@ public class HomepageViewController implements Initializable {
 				}
 			}); */
 			window.setScene(slalomMenuScene);
+			window.setTitle("Slalom Madness - Menu");
 			window.setResizable(false);
 			window.show();
         } catch (IOException iOE) {
