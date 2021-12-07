@@ -174,6 +174,7 @@ public class UserInfoViewController implements Initializable {
 	}
 	
 	public void cancelChanges() {
+		errorLabel.setVisible(false);
 		setTexts();
 	}
 	
