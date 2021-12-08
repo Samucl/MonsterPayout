@@ -82,6 +82,7 @@ public class LuckySpinsViewController implements Initializable{
 	
 	public void toMenu(ActionEvent e) {
 		try {
+			autoSpins = 0;
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));
             BorderPane mainView = (BorderPane) loader.load();
@@ -278,6 +279,9 @@ public class LuckySpinsViewController implements Initializable{
 		isSetSpin = false;
 		setButtonsDisable(true);
 		spinsLeft = autoSpins;
+		
+		//TÄMÄ ON VANHA TAPA, jätetty jos ongelmia tulee
+		/*
 		try {
 			for(int i = 200; autoSpins != 0; i+=1000) {
 				manualSpin(i);
@@ -285,7 +289,73 @@ public class LuckySpinsViewController implements Initializable{
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}
+		}*/
+		
+		//TÄMÄ ON UUTTA, mainSpin metodin sijaan taika tapahtuu täällä
+		try {
+		
+			int timeInMillis = 600;
+			
+			if(User.getCredits() < bet) {
+				winLabel.setText("Ei tarpeeksi krediittejä");
+				autoSpins = 0;
+				setButtonsDisable(false);
+				spinsLeftLabel.setVisible(false);
+				return;
+			}
+			
+			Timeline tl = new Timeline(new KeyFrame(Duration.millis(timeInMillis), ea -> {
+					try {
+	
+						//Tämä pätkä koodia siirrettiin timelinen ulkopuolelta täänne
+						game1.play();
+						game2.play();
+						game3.play();
+						
+						Database.decreaseCreditBalance((int)bet * paylinesSelected);
+						balanceLabel.setText("Saldo: " + User.getCredits());
+						winning = 0;
+						
+						spinAnimation();
+						winLabel.setText("Onnea peliin!");
+						
+						if(game1.checkWin() && payline1.isSelected())
+							winning += game1.payout();
+						if(game2.checkWin() && payline2.isSelected())
+							winning += game2.payout();
+						if(game3.checkWin() && payline3.isSelected())
+							winning += game3.payout();
+						if(isWin(game1,game2,game3))
+							Database.increaseCreditBalance(winning * bet);
+						//Siirretty osuus loppuu tähän
+						
+						
+						showIcons(game1.getOutcome(),game2.getOutcome(),game3.getOutcome());
+						if(spinsLeft>1) {
+							spinsLeftLabel.setText("Pyöräytykset: " + (--spinsLeft));
+						}
+						else {
+							setButtonsDisable(false);
+							spinsLeftLabel.setVisible(false);
+						}
+						
+						autoSpins--;
+						if(autoSpins>0)
+							setAutoSpins();
+						
+					} catch (FileNotFoundException e1) {}
+					if(isWin(game1,game2,game3)) {
+						winLabel.setText("Voitit " + (winning*(int)bet) + " krediittiä");
+						balanceLabel.setText("Saldo: " + User.getCredits());
+					}
+					else
+						winLabel.setText("Ei voittoa");
+					
+			}));
+			tl.setCycleCount(1);
+			tl.play();
+		} catch (Exception e1) {}
+		
 	}
 	
 	public void setBet(ActionEvent e) {
