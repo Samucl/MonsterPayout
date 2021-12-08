@@ -1,7 +1,8 @@
 package view;
 
 import java.io.IOException;
-import javax.swing.JFormattedTextField;
+import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Product;
+import model.Session;
 import model.Database;
 
 public class SetProductsViewController {
@@ -32,8 +34,9 @@ public class SetProductsViewController {
 	@FXML private TextField priceTF;
 	@FXML private Button addNewBtn;
 	@FXML private Button editBtn;
-	
 	@FXML private Button logOutBtn;
+	@FXML private Button removeFromSaleBtn;
+	@FXML private Button putUpForSaleBtn;
 	
 	@FXML private TableView<Product> productsTable;
 	@FXML private TableColumn<Product, Integer> idColumn;
@@ -44,11 +47,15 @@ public class SetProductsViewController {
 	@FXML private TableColumn<Product, Double> priceColumn;
 	@FXML private TableColumn<Product, Boolean> forSaleColumn;
 	
-	//Alustetaan TableView
+	/**
+	* Alustaa TableViewin
+	*/
 	public void initialize() {
 		
+		useLanguageBundle();
+		
 		/**
-		Määritetään mitä instanssimuuttujaa mikäkin sarake hakee Product-luokasta
+		* Määrittää mitä instanssimuuttujaa mikäkin sarake hakee Product-luokasta
 		*/
 		idColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("id"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("description"));
@@ -61,8 +68,9 @@ public class SetProductsViewController {
 		refreshTableView();
 	
 	}
-	
-	//Käydään tietokannasta tuotteet, lisätään ne ObservableListiin, joka liitetään TableViewiin
+	/**
+	* Käy tietokannasta tuotteet, lisää ne ObservableListiin, joka liitetään TableViewiin
+	*/
 	public void refreshTableView() {
 		
 		products = Database.getProducts();
@@ -76,8 +84,9 @@ public class SetProductsViewController {
 		
 	}
 	
-	
-	//Tallentaa uuden tuotteen tietokantaan ja päivittää sen listaan
+	/**
+	* Tallentaa uuden tuotteen tietokantaan ja päivittää sen listaan
+	*/
 	public void addNewProduct(ActionEvent e) {
 		
 		//TODO Tähän myöhemmin parempia validointeja
@@ -99,8 +108,10 @@ public class SetProductsViewController {
 		}
 	}
 		
-	
-	//Laittaa valitun tuotteen kauppasivulle
+	/**
+	 * Laittaa valitun tuotteen kauppasivulle
+	 * @param e
+	 */
 	public void putUpForSale(ActionEvent e) {	
 		Product p = productsTable.getSelectionModel().getSelectedItem();
 		if(p != null) {
@@ -111,7 +122,9 @@ public class SetProductsViewController {
          }
 	}
 	
-	//Poistaa valitun tuotteen kauppasivulta
+	/**
+	* Poistaa valitun tuotteen kauppasivulta
+	*/
 	public void removeFromSale(ActionEvent e) {	
 		Product p = productsTable.getSelectionModel().getSelectedItem();
 		if (p != null) {
@@ -122,7 +135,9 @@ public class SetProductsViewController {
          }
 	}
 	
-	//Avaa popup-dialogin tuotteen tietojen vaihtamista varten
+	/**
+	* Avaa popup-dialogin tuotteen tietojen vaihtamista varten
+	*/
 	public void editProduct(ActionEvent e) {
 		
 		Product product = productsTable.getSelectionModel().getSelectedItem();
@@ -190,6 +205,30 @@ public class SetProductsViewController {
 		
 		refreshTableView();
         
+	}
+	
+	public void useLanguageBundle() {
+		ResourceBundle texts = Session.getLanguageBundle();
+		
+		idColumn.setText(texts.getString("id.column"));
+		nameColumn.setText(texts.getString("name.column"));
+		creditColumn.setText(texts.getString("credit.column"));
+		coinColumn.setText(texts.getString("coin.column"));
+		discountColumn.setText(texts.getString("discount.column"));
+		priceColumn.setText(texts.getString("price.column"));
+		forSaleColumn.setText(texts.getString("forsale.column"));	
+		
+		nameTF.setPromptText(texts.getString("name.ph"));
+		creditTF.setPromptText(texts.getString("credit.ph"));
+		coinTF.setPromptText(texts.getString("coin.ph"));
+		priceTF.setPromptText(texts.getString("price.ph"));
+		
+		addNewBtn.setText(texts.getString("add.button"));
+		editBtn.setText(texts.getString("edit.button"));
+		logOutBtn.setText(texts.getString("logout.button"));
+		removeFromSaleBtn.setText(texts.getString("remove.from.sale.button"));
+		putUpForSaleBtn.setText(texts.getString("put.up.for.sale.button"));
+		
 	}
 	
 	public void logout(ActionEvent e) {

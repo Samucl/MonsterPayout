@@ -127,6 +127,7 @@ public class LoginViewController implements Initializable {
             GridPane spView = (GridPane) loader.load();
             Scene spScene = new Scene(spView);
 			Stage window = (Stage) kirjauduButton.getScene().getWindow();
+			window.setTitle("MPO - Store Management");
 			window.setScene(spScene);
         } catch (IOException iOE) {
             iOE.printStackTrace();
