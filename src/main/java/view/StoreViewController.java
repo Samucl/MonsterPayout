@@ -12,15 +12,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -29,14 +28,13 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import model.Product;
@@ -101,8 +99,7 @@ public class StoreViewController {
 	private void useLanguageBundle() {
 		logoutBtn.setText(texts.getString("logout.button"));
 		toMainBtn.setText(texts.getString("store"));
-		toUserInfoBtn.setText(texts.getString("user.details"));
-		
+		toUserInfoBtn.setText(texts.getString("user.details"));	
 		buyWithCoinsLabel.setText(texts.getString("buy.with.coins"));
 		chooseAmountLabel.setText(texts.getString("choose.credit.amount"));
 		buyWithCoinsBtn.setText(texts.getString("buy.button"));
@@ -285,8 +282,9 @@ public class StoreViewController {
 		
 	}
 	
-	//-------------------------------------
-
+	/**
+	 * Asettaa choice boxiin neljä krediittiarvoa, joita käyttäjä pystyy kolikoilla ostamaan
+	 */	
 	public void setChoiceBoxItems() {
 		buyWithCoinsChoiceBox.getItems().add(0.1);
 		buyWithCoinsChoiceBox.getItems().add((double) 1);
@@ -315,17 +313,71 @@ public class StoreViewController {
 		});
 	}
 	
-	//Asetetaan sivun ylälaitaan käyttäjänimi ja saldot
+	/**
+	 * Asettaa sivun ylälaitaan käyttäjänimen ja saldot
+	 */
 	public void refreshAccountInfo() {
 		nameLabel.setText(User.getUsername());
 		creditLabel.setText(String.valueOf(User.getCredits()));
 		coinLabel.setText(String.valueOf(User.getCoins()));
 	}
 	
+	/**
+	 * Avaa uuden ikkunan, jossa käyttäjä varmistaa, että haluaa ostaa klikatun tuotteen
+	 * 
+	 * @param p
+	 */
 	public void buyProduct(Product p) {
-		Database.buyProduct(p);
-		refreshAccountInfo();
+		
+		Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL); //Taustalla olevaa ikkunaa ei voi klikkailla, ennenkuin tämä suljetaan
+        
+        VBox vbox = new VBox(10);
+        vbox.setPadding(new Insets(16, 16, 16, 24));
+        vbox.setBackground(new Background(new BackgroundFill(Color.rgb(156,114,62), CornerRadii.EMPTY, Insets.EMPTY)));
+        
+        HBox hbox = new HBox(18);
+        
+        Label label = new Label();
+        label.setText(texts.getString("purchase.confirmation") + p.getDescription() + "?\n\n");
+        label.setFont(Font.font("Ariel Black", FontWeight.NORMAL, 16));
+        label.setTextFill(Color.WHITE);
+        
+        Button noBtn = new Button(texts.getString("no"));
+        noBtn.setFont(Font.font("Ariel Black", FontWeight.NORMAL, 18));
+        Button yesBtn = new Button(texts.getString("yes"));
+        yesBtn.setFont(Font.font("Ariel Black", FontWeight.NORMAL, 18));
+        
+        Label successLabel = new Label();
+        successLabel.setFont(Font.font("Ariel Black", FontWeight.NORMAL, 16));
+        successLabel.setTextFill(Color.WHITE);
+        
+        noBtn.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+            	dialog.close();
+            }
+        });
+        
+        yesBtn.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+            	if (Database.buyProduct(p)) {
+            		successLabel.setText(texts.getString("success"));
+            		refreshAccountInfo();
+            	}
+            }
+        });
+        
+        vbox.getChildren().addAll(label, hbox, successLabel);
+        hbox.getChildren().addAll(noBtn, yesBtn);
+        
+        Scene dialogScene = new Scene(vbox, 440, 180);
+        dialog.setScene(dialogScene);
+        dialog.showAndWait();
+        
 	}
+	
 	
 	public void toUserInfoView(ActionEvent e) {
 		try {

@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -210,6 +211,9 @@
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
+               <effect>
+                  <DropShadow />
+               </effect>
             </Button>
             <Button fx:id="toUserInfoBtn" mnemonicParsing="false" onAction="#toUserInfoView" prefHeight="34.0" prefWidth="142.0" style="-fx-background-color: darkgreen;" text="Käyttäjätiedot" textFill="WHITE">
                <font>
@@ -218,6 +222,9 @@
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin>
+               <effect>
+                  <DropShadow />
+               </effect>
             </Button>
             <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#logOut" prefHeight="34.0" prefWidth="142.0" style="-fx-background-color: red;" text="Kirjaudu ulos" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                <font>
@@ -226,6 +233,9 @@
                <GridPane.margin>
                   <Insets right="20.0" />
                </GridPane.margin>
+               <effect>
+                  <DropShadow />
+               </effect>
             </Button>
          </children>
       </GridPane>

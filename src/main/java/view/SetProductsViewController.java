@@ -46,6 +46,8 @@ public class SetProductsViewController {
 	@FXML private TableColumn<Product, Double> discountColumn;
 	@FXML private TableColumn<Product, Double> priceColumn;
 	@FXML private TableColumn<Product, Boolean> forSaleColumn;
+
+	private ResourceBundle texts = Session.getLanguageBundle();
 	
 	/**
 	* Alustaa TableViewin
@@ -158,7 +160,7 @@ public class SetProductsViewController {
 	            newPriceTF.setPromptText(String.valueOf(product.getPrice()));
 	            newPriceTF.setFocusTraversable(false);
 	            
-	            Button editBtn = new Button("Aseta");          
+	            Button editBtn = new Button(texts.getString("set.button"));          
 	            
 	            editBtn.setOnAction(new EventHandler<ActionEvent>(){
 	                @Override
@@ -208,7 +210,6 @@ public class SetProductsViewController {
 	}
 	
 	public void useLanguageBundle() {
-		ResourceBundle texts = Session.getLanguageBundle();
 		
 		idColumn.setText(texts.getString("id.column"));
 		nameColumn.setText(texts.getString("name.column"));
