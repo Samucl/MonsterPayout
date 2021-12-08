@@ -112,24 +112,29 @@ public class LuckySpinsViewController implements Initializable{
 			winLabel.setText("Ei tarpeeksi krediittejä");
 			return;
 		}
-		game1.play();
-		game2.play();
-		game3.play();
-		
-		Database.decreaseCreditBalance((int)bet * paylinesSelected);
-		balanceLabel.setText("Saldo: " + User.getCredits());
-		winning = 0;
-		if(game1.checkWin() && payline1.isSelected())
-			winning += game1.payout();
-		if(game2.checkWin() && payline2.isSelected())
-			winning += game2.payout();
-		if(game3.checkWin() && payline3.isSelected())
-			winning += game3.payout();
-		if(isWin(game1,game2,game3))
-			Database.increaseCreditBalance(winning * bet);
 		
 		Timeline tl = new Timeline(new KeyFrame(Duration.millis(timeInMillis), ea -> {
 				try {
+
+					//Tämä pätkä koodia siirrettiin timelinen ulkopuolelta täänne
+					game1.play();
+					game2.play();
+					game3.play();
+					
+					Database.decreaseCreditBalance((int)bet * paylinesSelected);
+					balanceLabel.setText("Saldo: " + User.getCredits());
+					winning = 0;
+					if(game1.checkWin() && payline1.isSelected())
+						winning += game1.payout();
+					if(game2.checkWin() && payline2.isSelected())
+						winning += game2.payout();
+					if(game3.checkWin() && payline3.isSelected())
+						winning += game3.payout();
+					if(isWin(game1,game2,game3))
+						Database.increaseCreditBalance(winning * bet);
+					//Siirretty osuus loppuu tähän
+					
+					
 					showIcons(game1.getOutcome(),game2.getOutcome(),game3.getOutcome());
 					if(spinsLeft>1) {
 						spinsLeftLabel.setText("Pyöräytykset: " + (--spinsLeft));
