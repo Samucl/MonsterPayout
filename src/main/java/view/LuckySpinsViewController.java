@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -23,6 +22,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Database;
+import model.Session;
 import model.User;
 import slotgames.SlotMachine;
 
@@ -30,32 +30,19 @@ public class LuckySpinsViewController implements Initializable{
 	
 	private static final String[] icons = new String[] {"strawberry", "spade", "clover", "diamond", "seven", "wild"};
 	@FXML Button toMenu;
-	@FXML ImageView gif1;
-	@FXML ImageView gif2;
-	@FXML ImageView gif3;
-	@FXML ImageView gif4;
-	@FXML ImageView gif5;
-	@FXML ImageView gif6;
-	@FXML ImageView gif7;
-	@FXML ImageView gif8;
-	@FXML ImageView gif9;
+	@FXML ImageView gif1, gif2, gif3, gif4, gif5, gif6, gif7, gif8, gif9;
 	@FXML Button spinButton;
 	@FXML Label winLabel;
-	@FXML ToggleButton payline1;
-	@FXML ToggleButton payline2;
-	@FXML ToggleButton payline3;
+	@FXML ToggleButton payline1, payline2, payline3;
+	@FXML Rectangle rectangle1, rectangle2, rectangle3;
 	@FXML Label balanceLabel;
 	@FXML Rectangle rectangle;
 	@FXML Label setSpinsLabel;
 	@FXML Button setSpinsButton;
-	@FXML Button setSpins1;
-	@FXML Button setSpins2;
-	@FXML Button setSpins3;
-	@FXML Button setSpins4;
-	@FXML Button setSpins5;
+	@FXML Button setSpins1, setSpins2, setSpins3, setSpins4, setSpins5;
 	@FXML Button betButton;
 	@FXML Button turboButton;
-	@FXML Label spinsLeftLabel;
+	@FXML Label spinsLeftLabel, paylinesLabel;
 	private Image spin1, spin2, spin3;
 	private Image[] gifs = new Image[6];
 	private boolean isSetSpin = false;
@@ -68,16 +55,31 @@ public class LuckySpinsViewController implements Initializable{
 	private SlotMachine game2 = new SlotMachine();
 	private SlotMachine game3 = new SlotMachine();
 	private int paylinesSelected = 1;
+	private ResourceBundle texts;
 	
 	private void init() throws FileNotFoundException {
+		setLanguage();
 		payline1.setSelected(false);
 		payline2.setSelected(true);
 		payline3.setSelected(false);
-		balanceLabel.setText("Saldo: " + User.getCredits());
-		betButton.setText("Panos: " + (int)bet);
 		spin1 = new Image(new FileInputStream("./src/main/resources/slot_icons/spin1.gif"));
 		spin2 = new Image(new FileInputStream("./src/main/resources/slot_icons/spin2.gif"));
 		spin3 = new Image(new FileInputStream("./src/main/resources/slot_icons/spin3.gif"));
+	}
+	
+	private void setLanguage() {
+		texts = Session.getLanguageBundle();
+		balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
+		betButton.setText(texts.getString("bet.button") + ": " + (int)bet);
+		paylinesLabel.setText(texts.getString("choose.paylines"));
+		toMenu.setText(texts.getString("exit.button"));
+		turboButton.setText("Turbo");
+		setSpinsButton.setText(texts.getString("set.spins.button"));
+		setSpinsLabel.setText(texts.getString("set.spins.button"));
+		spinButton.setText(texts.getString("spin.button"));
+		payline1.setText(texts.getString("payline") + " 1");
+		payline2.setText(texts.getString("payline") + " 2");
+		payline3.setText(texts.getString("payline") + " 3");
 	}
 	
 	public void toMenu(ActionEvent e) {
@@ -98,7 +100,7 @@ public class LuckySpinsViewController implements Initializable{
 	
 	public void spin(ActionEvent e) throws FileNotFoundException{
 		if(User.getCredits() < bet) {
-			winLabel.setText("Ei tarpeeksi krediittejä");
+			winLabel.setText(texts.getString("not.enough.credits"));
 			return;
 		}
 		setButtonsDisable(true);
@@ -110,7 +112,7 @@ public class LuckySpinsViewController implements Initializable{
 	
 	private void manualSpin(int timeInMillis) throws FileNotFoundException{
 		if(User.getCredits() < bet) {
-			winLabel.setText("Ei tarpeeksi krediittejä");
+			winLabel.setText(texts.getString("not.enough.credits"));
 			return;
 		}
 		
@@ -123,7 +125,7 @@ public class LuckySpinsViewController implements Initializable{
 					game3.play();
 					
 					Database.decreaseCreditBalance((int)bet * paylinesSelected);
-					balanceLabel.setText("Saldo: " + User.getCredits());
+					balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
 					winning = 0;
 					if(game1.checkWin() && payline1.isSelected())
 						winning += game1.payout();
@@ -138,7 +140,7 @@ public class LuckySpinsViewController implements Initializable{
 					
 					showIcons(game1.getOutcome(),game2.getOutcome(),game3.getOutcome());
 					if(spinsLeft>1) {
-						spinsLeftLabel.setText("Pyöräytykset: " + (--spinsLeft));
+						spinsLeftLabel.setText(texts.getString("spins") + ": " + (--spinsLeft));
 					}
 					else {
 						setButtonsDisable(false);
@@ -146,16 +148,16 @@ public class LuckySpinsViewController implements Initializable{
 					}
 				} catch (FileNotFoundException e1) {}
 				if(isWin(game1,game2,game3)) {
-					winLabel.setText("Voitit " + (winning*(int)bet) + " krediittiä");
-					balanceLabel.setText("Saldo: " + User.getCredits());
+					winLabel.setText(texts.getString("you.won") + " " + (winning*(int)bet) + " " + texts.getString("credits").toLowerCase());
+					balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
 				}
 				else
-					winLabel.setText("Ei voittoa");
+					winLabel.setText(texts.getString("no.win"));
 		}));
 		tl.setCycleCount(1);
 		tl.play();
 		spinAnimation();
-		winLabel.setText("Onnea peliin!");
+		winLabel.setText(texts.getString("good.luck") + "!");
 	}
 	
 	private void setButtonsDisable(Boolean bool) {
@@ -166,7 +168,7 @@ public class LuckySpinsViewController implements Initializable{
 	}
 	
 	private boolean isWin(SlotMachine game1, SlotMachine game2, SlotMachine game3) {
-			return (game1.checkWin() && payline1.isSelected())  || (game2.checkWin() && payline2.isSelected())  || (game3.checkWin() && payline3.isSelected());
+		return (game1.checkWin() && payline1.isSelected())  || (game2.checkWin() && payline2.isSelected())  || (game3.checkWin() && payline3.isSelected());
 	}
 	
 	public void paylinePress1(ActionEvent e) {
@@ -178,20 +180,34 @@ public class LuckySpinsViewController implements Initializable{
 	public void paylinePress3(ActionEvent e) {
 		paylineColor(payline3);
 	}
+	public void showPaylineRect1() {
+		rectangle1.setVisible(true);
+		payline1.setOnMouseExited(m->{rectangle1.setVisible(false);});
+	}
+	public void showPaylineRect2() {
+		rectangle2.setVisible(true);
+		payline2.setOnMouseExited(m->{rectangle2.setVisible(false);});
+	}
+	public void showPaylineRect3() {
+		rectangle3.setVisible(true);
+		payline3.setOnMouseExited(m->{rectangle3.setVisible(false);});
+	}
 	
 	private void paylineColor(ToggleButton payline) {
 		if(payline.isSelected()) {
-			payline.setStyle("-fx-background-color:  #6bd600");
+			payline.setStyle("-fx-background-color: linear-gradient(to right,#9960ba, #4a8bbf)");
+			payline.setOpacity(1);
 			paylinesSelected++;
 		}
 		else {
-			payline.setStyle("-fx-background-color:  #132402");
+			payline.setStyle("-fx-background-color: linear-gradient(to right,#734090, #2c6491)");
+			payline.setOpacity(0.2);
 			paylinesSelected--;
 		}
-		betButton.setText("Panos: " + ((int)bet*paylinesSelected));
+		betButton.setText(texts.getString("bet.button") + ": " + ((int)bet*paylinesSelected));
 		if(paylinesSelected == 0) {
 			setButtonsDisable(true);
-			winLabel.setText("Valitse voittolinjat!");
+			winLabel.setText(texts.getString("choose.paylines") + "!");
 		}
 		else {
 			setButtonsDisable(false);
@@ -297,7 +313,7 @@ public class LuckySpinsViewController implements Initializable{
 			int timeInMillis = 600;
 			
 			if(User.getCredits() < bet) {
-				winLabel.setText("Ei tarpeeksi krediittejä");
+				winLabel.setText(texts.getString("not.enough.credits"));
 				autoSpins = 0;
 				setButtonsDisable(false);
 				spinsLeftLabel.setVisible(false);
@@ -313,11 +329,11 @@ public class LuckySpinsViewController implements Initializable{
 						game3.play();
 						
 						Database.decreaseCreditBalance((int)bet * paylinesSelected);
-						balanceLabel.setText("Saldo: " + User.getCredits());
+						balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
 						winning = 0;
 						
 						spinAnimation();
-						winLabel.setText("Onnea peliin!");
+						winLabel.setText(texts.getString("good.luck") + "!");
 						
 						if(game1.checkWin() && payline1.isSelected())
 							winning += game1.payout();
@@ -332,7 +348,7 @@ public class LuckySpinsViewController implements Initializable{
 						
 						showIcons(game1.getOutcome(),game2.getOutcome(),game3.getOutcome());
 						if(spinsLeft>1) {
-							spinsLeftLabel.setText("Pyöräytykset: " + (--spinsLeft));
+							spinsLeftLabel.setText(texts.getString("spins") + ": " + (--spinsLeft));
 						}
 						else {
 							setButtonsDisable(false);
@@ -345,11 +361,11 @@ public class LuckySpinsViewController implements Initializable{
 						
 					} catch (FileNotFoundException e1) {}
 					if(isWin(game1,game2,game3)) {
-						winLabel.setText("Voitit " + (winning*(int)bet) + " krediittiä");
-						balanceLabel.setText("Saldo: " + User.getCredits());
+						winLabel.setText(texts.getString("you.won") + " " + (winning*(int)bet) + " " + texts.getString("credits").toLowerCase());
+						balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
 					}
 					else
-						winLabel.setText("Ei voittoa");
+						winLabel.setText(texts.getString("no.win"));
 					
 			}));
 			tl.setCycleCount(1);
@@ -363,7 +379,7 @@ public class LuckySpinsViewController implements Initializable{
 		bet = Math.round(bet);
 		if(bet > 140)
 			bet = 1;
-		betButton.setText("Panos: " + ((int)bet)*paylinesSelected);
+		betButton.setText(texts.getString("bet.button") + ": " + ((int)bet*paylinesSelected));
 	}
 	
 	public void setTurbo(ActionEvent e) {
@@ -373,6 +389,7 @@ public class LuckySpinsViewController implements Initializable{
 		else
 			turboButton.setStyle("-fx-background-color:  #693b80");
 	}
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -382,6 +399,5 @@ public class LuckySpinsViewController implements Initializable{
 			e.printStackTrace();
 		}
 	}
-	
 	
 }
