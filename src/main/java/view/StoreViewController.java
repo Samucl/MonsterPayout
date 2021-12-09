@@ -335,23 +335,29 @@ public class StoreViewController {
         dialog.initModality(Modality.APPLICATION_MODAL); //Taustalla olevaa ikkunaa ei voi klikkailla, ennenkuin tämä suljetaan
         
         VBox vbox = new VBox(10);
-        vbox.setPadding(new Insets(16, 16, 16, 24));
+        vbox.setPadding(new Insets(24, 16, 16, 24));
         vbox.setBackground(new Background(new BackgroundFill(Color.rgb(156,114,62), CornerRadii.EMPTY, Insets.EMPTY)));
         
         HBox hbox = new HBox(18);
+        hbox.setPadding(new Insets(10, 0, 0, 0));
         
         Label label = new Label();
-        label.setText(texts.getString("purchase.confirmation") + p.getDescription() + "?\n\n");
-        label.setFont(Font.font("Arial Black", FontWeight.NORMAL, 16));
+        label.setText(texts.getString("purchase.confirmation"));    
+        label.setFont(Font.font("Arial Black", FontWeight.NORMAL, 15));
         label.setTextFill(Color.WHITE);
         
+        Label label2 = new Label();
+        label2.setText(p.getDescription() + "?\n\n");
+        label2.setFont(Font.font("Arial Black", FontWeight.NORMAL, 15));
+        label2.setTextFill(Color.WHITE);
+        
         Button noBtn = new Button(texts.getString("no"));
-        noBtn.setFont(Font.font("Arial Black", FontWeight.NORMAL, 18));
+        noBtn.setFont(Font.font("Arial Black", FontWeight.NORMAL, 17));
         Button yesBtn = new Button(texts.getString("yes"));
-        yesBtn.setFont(Font.font("Arial Black", FontWeight.NORMAL, 18));
+        yesBtn.setFont(Font.font("Arial Black", FontWeight.NORMAL, 17));
         
         Label successLabel = new Label();
-        successLabel.setFont(Font.font("Arial Black", FontWeight.NORMAL, 16));
+        successLabel.setFont(Font.font("Arial Black", FontWeight.NORMAL, 15));
         successLabel.setTextFill(Color.WHITE);
         
         noBtn.setOnAction(new EventHandler<ActionEvent>(){
@@ -371,10 +377,10 @@ public class StoreViewController {
             }
         });
         
-        vbox.getChildren().addAll(label, hbox, successLabel);
+        vbox.getChildren().addAll(label, label2, hbox, successLabel);
         hbox.getChildren().addAll(noBtn, yesBtn);
         
-        Scene dialogScene = new Scene(vbox, 440, 180);
+        Scene dialogScene = new Scene(vbox, 358, 180);
         dialog.setScene(dialogScene);
         dialog.showAndWait();
         
