@@ -121,26 +121,26 @@
    <right>
       <AnchorPane maxWidth="342.0" minHeight="588.0" prefHeight="588.0" prefWidth="342.0" BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
-            <Insets right="59.0" top="20.0" />
+            <Insets right="16.0" top="20.0" />
          </BorderPane.margin>
          <children>
-            <Label fx:id="buyWithCoinsLabel" layoutX="120.0" layoutY="116.0" prefHeight="30.0" prefWidth="145.0" text="Maksa kolikoilla:" textFill="GOLD" underline="true">
+            <Label fx:id="buyWithCoinsLabel" layoutX="93.0" layoutY="122.0" prefHeight="30.0" prefWidth="212.0" text="Maksa kolikoilla:" textFill="GOLD" underline="true">
                <font>
-                  <Font name="System Italic" size="20.0" />
+                  <Font name="Arial Black" size="20.0" />
                </font></Label>
             <GridPane layoutX="-3.0" layoutY="175.0" prefHeight="414.0" prefWidth="384.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="77.00000610351563" minHeight="10.0" prefHeight="39.20000610351562" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="107.53333740234373" minHeight="10.0" prefHeight="31.200042724609375" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="228.53328857421877" minHeight="10.0" prefHeight="44.266644287109386" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="229.0000061035156" minHeight="10.0" prefHeight="18.400048828124966" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="253.7332824707031" minHeight="10.0" prefHeight="251.59995117187498" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="77.00000610351563" minHeight="10.0" prefHeight="49.59999389648438" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="107.53333740234373" minHeight="10.0" prefHeight="35.800006103515635" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="228.53328857421877" minHeight="10.0" prefHeight="50.199993896484386" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="229.0000061035156" minHeight="10.0" prefHeight="45.600012207031256" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="253.7332824707031" minHeight="10.0" prefHeight="234.39998779296874" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="buyWithCoinsBtn" mnemonicParsing="false" text="OSTA!" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP">
+                  <Button fx:id="buyWithCoinsBtn" mnemonicParsing="false" text="OSTA!" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
@@ -150,20 +150,15 @@
                   </Button>
                   <Label fx:id="chooseAmountLabel" text="Valitse määrä:" textFill="WHITE" GridPane.halignment="CENTER">
                      <font>
-                        <Font name="Arial" size="15.0" />
+                        <Font name="Arial Black" size="16.0" />
                      </font>
                   </Label>
                   <Label fx:id="buyWithCoinsPriceLabel" text="Hinta:" textFill="WHITE" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Arial Black" size="15.0" />
                      </font>
                   </Label>
                   <ChoiceBox fx:id="buyWithCoinsChoiceBox" prefWidth="88.0" style="-fx-background-color: white;" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
                   <ImageView fx:id="coinImage" fitHeight="80.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets right="104.0" />
@@ -174,7 +169,7 @@
                   </ImageView>
                   <Label fx:id="buyWithCoinsSuccessLabel" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP">
                      <GridPane.margin>
-                        <Insets top="44.0" />
+                        <Insets top="8.0" />
                      </GridPane.margin>
                      <font>
                         <Font size="14.0" />

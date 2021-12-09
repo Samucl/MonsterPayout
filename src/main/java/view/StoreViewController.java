@@ -98,7 +98,7 @@ public class StoreViewController {
 	
 	private void useLanguageBundle() {
 		logoutBtn.setText(texts.getString("logout.button"));
-		toMainBtn.setText(texts.getString("store"));
+		toMainBtn.setText(texts.getString("back.to.menu"));
 		toUserInfoBtn.setText(texts.getString("user.details"));	
 		buyWithCoinsLabel.setText(texts.getString("buy.with.coins"));
 		chooseAmountLabel.setText(texts.getString("choose.credit.amount"));
@@ -143,16 +143,16 @@ public class StoreViewController {
 			
 			int discount = (int) (100 - (products1.get(i).getSaleMultiplier() * 100)); //Lasketaan alennusprosentti hintakertoimesta
 			Label discountLabel = new Label(texts.getString("discount") + discount + " %");
-			discountLabel.setFont(Font.font("system", FontWeight.BOLD, 14));
+			discountLabel.setFont(Font.font("Arial Black", FontWeight.BOLD, 14));
 			discountLabel.setTextFill(Color.RED);
 			innerPane.add(discountLabel, i, 0);
 			
 			Label nameLabel = new Label(products1.get(i).getDescription());
-			nameLabel.setFont(Font.font(16));
+			nameLabel.setFont(Font.font("Arial Black", 16));
 			innerPane.add(nameLabel, i, 1);
 			
 			Label creditLabel = new Label(Double.toString(products1.get(i).getCreditAmount()));
-			creditLabel.setFont(Font.font(18));
+			creditLabel.setFont(Font.font("Arial Black", 15));
 			innerPane.add(creditLabel, i, 2);
 
 		    ImageView imageView = new ImageView(credit);
@@ -166,24 +166,26 @@ public class StoreViewController {
 				String oldPriceStr = String.valueOf(products1.get(i).getPrice()) + " €";
 				Text oldPriceTxt = new Text(oldPriceStr);
 				oldPriceTxt.setStrikethrough(true);
+				oldPriceTxt.setFill(Color.WHITE);
+				oldPriceTxt.setFont(Font.font(16));
 				innerPane.add(oldPriceTxt, i, 3);
 			}
 			
 			double price = products1.get(i).getPrice() * products1.get(i).getSaleMultiplier();
 			
 			Label priceLabel = new Label(Double.toString(price) + " €");
-			priceLabel.setFont(Font.font(18));
+			priceLabel.setFont(Font.font("Arial Black", 16));
 			innerPane.add(priceLabel, i, 4);
 			
 			Button buyBtn = new Button();
 			buyBtn.setText(texts.getString("buy.button"));
-			buyBtn.setFont(Font.font("system", FontWeight.BOLD, 18));
+			buyBtn.setFont(Font.font("Arial Black", FontWeight.BOLD, 18));
 			innerPane.add(buyBtn, i, 5);
 			
 			if (products1.get(i).getCoinAmount() != 0) { //Jos tuotteesta saa kolikkobonuksen niin laitetaan se ylimääräiseksi sarakkeeksi
 				
 					Label coinLabel = new Label(texts.getString("coin.bonus") + Integer.toString(products1.get(i).getCoinAmount()));
-					coinLabel.setFont(Font.font("system", FontPosture.ITALIC, 14));
+					coinLabel.setFont(Font.font("System", FontPosture.ITALIC, 15));
 					innerPane.add(coinLabel, i, 6);
 			        ImageView imageView2 = new ImageView(coin);
 			        imageView2.setFitWidth(26);
@@ -217,11 +219,11 @@ public class StoreViewController {
 			lowerPane.getColumnConstraints().add(new ColumnConstraints(200)); //Sarakkeen leveys
 			
 			Label nameLabel = new Label(products2.get(i).getDescription());
-			nameLabel.setFont(Font.font(16));
+			nameLabel.setFont(Font.font("Arial Black", 16));
 			lowerPane.add(nameLabel, i, 0);
 			
 			Label creditLabel = new Label(Double.toString(products2.get(i).getCreditAmount()));
-			creditLabel.setFont(Font.font(18));
+			creditLabel.setFont(Font.font("Arial Black", 15));
 			lowerPane.add(creditLabel, i, 1);
 			
 			FileInputStream input;
@@ -240,12 +242,12 @@ public class StoreViewController {
 			double price = products2.get(i).getPrice();
 			
 			Label priceLabel = new Label(Double.toString(price) + " €");
-			priceLabel.setFont(Font.font(18));
+			priceLabel.setFont(Font.font("Arial Black", 16));
 			lowerPane.add(priceLabel, i, 2);
 			
 			Button buyBtn = new Button();
 			buyBtn.setText(texts.getString("buy.button"));
-			buyBtn.setFont(Font.font("system", FontWeight.BOLD, 18));
+			buyBtn.setFont(Font.font("Arial Black", FontWeight.BOLD, 18));
 			lowerPane.add(buyBtn, i, 3);
 			
 			if (products2.get(i).getCoinAmount() != 0) { //Jos tuotteesta saa kolikkobonuksen niin laitetaan se ylimääräiseksi sarakkeeksi tähän
@@ -253,7 +255,7 @@ public class StoreViewController {
 				FileInputStream input2;
 				try {
 					Label coinLabel = new Label(texts.getString("coin.bonus") + Integer.toString(products2.get(i).getCoinAmount()));
-					coinLabel.setFont(Font.font("system", FontPosture.ITALIC, 14));
+					coinLabel.setFont(Font.font("System", FontPosture.ITALIC, 15));
 					lowerPane.add(coinLabel, i, 4);
 					input2 = new FileInputStream("./src/main/resources/coin_1.png");
 					Image image = new Image(input2);
@@ -340,16 +342,16 @@ public class StoreViewController {
         
         Label label = new Label();
         label.setText(texts.getString("purchase.confirmation") + p.getDescription() + "?\n\n");
-        label.setFont(Font.font("Ariel Black", FontWeight.NORMAL, 16));
+        label.setFont(Font.font("Arial Black", FontWeight.NORMAL, 16));
         label.setTextFill(Color.WHITE);
         
         Button noBtn = new Button(texts.getString("no"));
-        noBtn.setFont(Font.font("Ariel Black", FontWeight.NORMAL, 18));
+        noBtn.setFont(Font.font("Arial Black", FontWeight.NORMAL, 18));
         Button yesBtn = new Button(texts.getString("yes"));
-        yesBtn.setFont(Font.font("Ariel Black", FontWeight.NORMAL, 18));
+        yesBtn.setFont(Font.font("Arial Black", FontWeight.NORMAL, 18));
         
         Label successLabel = new Label();
-        successLabel.setFont(Font.font("Ariel Black", FontWeight.NORMAL, 16));
+        successLabel.setFont(Font.font("Arial Black", FontWeight.NORMAL, 16));
         successLabel.setTextFill(Color.WHITE);
         
         noBtn.setOnAction(new EventHandler<ActionEvent>(){
