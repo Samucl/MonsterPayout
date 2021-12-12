@@ -8,6 +8,9 @@ import java.time.temporal.ChronoUnit;
 
 import com.google.common.hash.Hashing;
 
+/*
+ * Tämä luokka hoitaa kaiken kommunikaation tietokannan kanssa.
+ */
 public class Database {
 	
 	final static String URL = "jdbc:mariadb://10.114.32.22:3306/kasino";
@@ -67,6 +70,13 @@ public class Database {
 		return false;
 	}
 	
+	/**
+	 * Tarkistaa löytyykö tietokannasta parametrinä annettu tunnus-/salasanapari.
+	 * Jos löytyy, asettaa tämän tiedot User-luokkaan ja asettaa loggedIn-arvoksi "true".
+	 * @param username
+	 * @param password
+	 * @return loggedIn, eli onnistuiko kirjautuminen
+	 */
 	public static boolean login(String username, String password) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -138,6 +148,11 @@ public class Database {
 		return loggedIn = false;
 	}
 	
+	/**
+	 * Tarkistaa onko käyttäjä kirjautunut viimeksi edellisenä päivänä.
+	 * Jos on, kasvattaa "Login_streak"-rivin arvoa yhdellä.
+	 * @param rs
+	 */
 	private static void lastLogin(ResultSet rs) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -201,6 +216,10 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * Palauttaa kaikki tietokannasta löytyvät tuotteet.
+	 * @return
+	 */
 	public static Product[] getProducts() {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -257,7 +276,10 @@ public class Database {
 	}
 			
 	
-	
+	/**
+	 * Palauttaa kirjautuneen käyttäjän ostohistorian.
+	 * @return
+	 */
 	public static Order[] getOrders() {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -316,6 +338,15 @@ public class Database {
 		return null;
 	}
 	
+	/**
+	 * Lisää uuden käyttäjän tiedot tietokantaan.
+	 * @param username
+	 * @param password
+	 * @param email
+	 * @param firstname
+	 * @param lastname
+	 * @return Kertoo onko tietokantaa päivitetty.
+	 */
 	public static boolean register(String username, String password, String email, String firstname, String lastname) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -377,6 +408,11 @@ public class Database {
 		return false;
 	}
 	
+	/**
+	 * Tarkistaa onko parametrinä annetulla käyttäjänimellä olemassa käyttäjää.
+	 * @param username
+	 * @return Kertoo löytyikö käyttäjää
+	 */
 	public static boolean checkUsername(String username) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -384,15 +420,10 @@ public class Database {
 		 */
 		getInstance();
 		
-		/*
-		 * Metodi palauttaa boolean arvon false jos käyttäjänimi on jo käytössä.
-		 * True tarkoittaa ettei käyttäjänimellä ole vielä tehty käyttäjää.
-		 */
 		try {
 			Connection con = connection;
 			
 			Statement stmt = con.createStatement();
-			
 			
 			//SQL syöttökutsu, tehdään Kayttaja tauluun uusi rivi
 			String query = "SELECT * FROM Kayttaja WHERE Kayttajanimi LIKE '"+username+"' LIMIT 1";
@@ -414,6 +445,12 @@ public class Database {
 		return true;
 	}
 	
+	
+	/**
+	 * Vähentää kirjautuneen käyttäjän kolikkosaldoa.
+	 * @param amount
+	 * @return
+	 */
 	public static int decreaseCoinBalance(int amount) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -501,6 +538,11 @@ public class Database {
 		return 0;
 	}
 	
+	/**
+	 * Vähentää kirjautuneen käyttäjän krediittisaldoa.
+	 * @param amount
+	 * @return
+	 */
 	public static double decreaseCreditBalance(double amount) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -573,6 +615,11 @@ public class Database {
 		return 0;
 	}
 	
+	/**
+	 * Lisää kirjautuneen käyttäjän kolikkosaldoa.
+	 * @param amount
+	 * @return
+	 */
 	public static int increaseCoinBalance(int amount) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -625,6 +672,13 @@ public class Database {
 			
 		}
 	
+	/**
+	 * Siirtää tuotteen sisältämät pelivaluutat käyttäjän tilille tietokantaan.
+	 * Tallentaa tilauksen tiedot tietokantaan.
+	 * Tallentaa kirjautuneen käyttäjän tilaukset Session-luokan "orders"-tauluun.
+	 * @param product
+	 * @return Kertoo onko tietokantaa päivitetty.
+	 */
 	public static boolean buyProduct(Product product) {
 		
 		/*
@@ -693,6 +747,11 @@ public class Database {
 		return false;
 	}
 	
+	/**
+	 * Lisää krediittisaldoa kirjautuneen käyttäjän tilille.
+	 * @param amount
+	 * @return
+	 */
 	public static int increaseCreditBalance(double amount) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -745,6 +804,12 @@ public class Database {
 		
 	}
 	
+	/**
+	 * Tarkistaa onko käyttäjällä oikeutta muokata tietokantaa.
+	 * Jos on, luo tietokantaan uuden tuotteen.
+	 * @param product Tuote, joka luodaan
+	 * @return Kertoo päivitettiinkö tietokantaa
+	 */
 	public static boolean createProduct(Product product) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -793,6 +858,11 @@ public class Database {
 		return false;
 	}
 	
+	/**
+	 * Päivittää tuotteen tiedot tietokantaan.
+	 * @param product
+	 * @return Kertoo onko tietokantaa päivitetty
+	 */
 	public static boolean editProduct(Product product) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -850,6 +920,11 @@ public class Database {
 		return false;
 	}
 	
+	/**
+	 * Poistaa tuotteen tietokannasta.
+	 * @param productNumber
+	 * @return Kertoo onko tietokantaa päivitetty
+	 */
 	public static boolean deleteProduct(int productNumber) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -898,6 +973,11 @@ public class Database {
 		return false;
 	}
 	
+	/**
+	 * Päivittää kirjautuneen käyttäjän profiilitiedot tietokantaan.
+	 * 
+	 * @return Kertoo onko tietokantaa päivitetty
+	 */
 	public static boolean saveProfileChanges() {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -949,7 +1029,12 @@ public class Database {
 		return false;
 	}
 	
-	public static int getHighScore(String peli) {
+	/**
+	 * Palauttaa kirjautuneen käyttäjän ennätyspisteet jossakin pelissä.
+	 * @param game Peli, jonka ennätyspisteitä haetaan
+	 * @return Ennätyspisteet, tai 0 jos ennätystä ei ole
+	 */
+	public static int getHighScore(String game) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
 		 * on luotu ilmentymä
@@ -963,7 +1048,7 @@ public class Database {
 				Statement stmt = con.createStatement();
 				
 				String query = "SELECT HighScore "
-						+ "FROM Saavuttaa WHERE KayttajaID = '"+ User.getId() +"' AND PelinNimi = '"+ peli +"'";
+						+ "FROM Saavuttaa WHERE KayttajaID = '"+ User.getId() +"' AND PelinNimi = '"+ game +"'";
 				
 				ResultSet rs = stmt.executeQuery(query);
 				
@@ -983,6 +1068,13 @@ public class Database {
 		return 0;
 	}
 	
+	/**
+	 * Tarkistaa, onko kirjautuneen käyttäjän saavuttama pistetulos parempi kuin hänen henkilökohtainen ennätyksensä.
+	 * Jos on, päivittää tietokannan siltä osin.
+	 * @param highScore Pelaajan saavuttama pistetulos
+	 * @param peli Peli, jossa pistetulos on saavutettu
+	 * @return Kertoo onko tietokantaa päivitetty
+	 */	
 	public static boolean setHighScore(int highScore, String peli) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -1005,6 +1097,7 @@ public class Database {
 					}
 					String query = "INSERT INTO Saavuttaa (HighScore, KayttajaID, PelinNimi) VALUES ('"+ highScore +"', '"+ User.getId() +"', '" + peli + "')";
 					stmt.executeQuery(query);	
+					return true;
 				}
 				
 			} catch (SQLException e) {
@@ -1018,7 +1111,12 @@ public class Database {
 		return false;
 	}
 	
-	public static String[] getTop10(String peli) {
+	/**
+	 * Palauttaa globaalin top10-listan String-taulukkona.
+	 * @param game Peli, jonka top-listaa haetaan.
+	 * @return
+	 */
+	public static String[] getTop10(String game) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
 		 * on luotu ilmentymä
@@ -1026,7 +1124,7 @@ public class Database {
 		getInstance();
 		
 		boolean isSpeedGame = false;
-		if (peli.equals("Slalom Madness")) {
+		if (game.equals("Slalom Madness")) {
 			isSpeedGame = true;
 		}
 		
@@ -1043,11 +1141,11 @@ public class Database {
 					 */
 					query = "SELECT Saavuttaa.HighScore, Kayttaja.Kayttajanimi"
 							+ " FROM Saavuttaa INNER JOIN Kayttaja ON Saavuttaa.KayttajaID = Kayttaja.KayttajaID"
-							+ " WHERE PelinNimi = '" + peli + "' ORDER BY highScore DESC LIMIT 10;";
+							+ " WHERE PelinNimi = '" + game + "' ORDER BY highScore DESC LIMIT 10;";
 				} else {
 					query = "SELECT Saavuttaa.AikaScore, Kayttaja.Kayttajanimi"
 							+ " FROM Saavuttaa INNER JOIN Kayttaja ON Saavuttaa.KayttajaID = Kayttaja.KayttajaID"
-							+ " WHERE PelinNimi = '" + peli + "' ORDER BY AikaScore ASC LIMIT 10;";
+							+ " WHERE PelinNimi = '" + game + "' ORDER BY AikaScore ASC LIMIT 10;";
 				} 
 				
 				ResultSet rs = stmt.executeQuery(query);
@@ -1081,7 +1179,11 @@ public class Database {
 		return null;
 	}
 	
-	//Palauttaa nopeimman ajan jossakin pelissä
+	/**
+	 * Palauttaa kirjautuneen käyttäjän ennätysajan jossakin pelissä.
+	 * @param game Peli, jonka ennätysaikaa haetaan
+	 * @return Ennätysaika, tai 0 jos ennätystä ei ole
+	 */
 	public static double getHighScoreTime(String game) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -1116,6 +1218,14 @@ public class Database {
 		return 0;
 	}
 	
+	/**
+	 * Tarkistaa onko kirjautuneen käyttäjän saavuttama aika jossakin pelissä parempi kuin hänen ennätyksensä.
+	 * Jos on, päivittää tietokannan siltä osalta.
+	 * 
+	 * @param time Aika, jonka pelaaja on saavuttanut pelissä
+	 * @param game Peli, jossa pelaaja on saavuttanut ajan
+	 * @return Kertoo onko tietokantaa päivitetty
+	 */
 	public static boolean setHighScoreTime(double time, String game) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
@@ -1135,12 +1245,14 @@ public class Database {
 					query = "INSERT INTO Saavuttaa (AikaScore, KayttajaID, PelinNimi) "
 							+ "VALUES ('"+ time +"', '"+ User.getId() +"', '" + game + "')";
 					stmt.executeQuery(query);	
+					return true;
 					
 				} else if (getHighScoreTime(game) == 0) {
 
 					String query = "INSERT INTO Saavuttaa (AikaScore, KayttajaID, PelinNimi) "
 							+ "VALUES ('"+ time +"', '"+ User.getId() +"', '" + game + "')";
 					stmt.executeQuery(query);	
+					return true;
 				}
 				
 			} catch (SQLException e) {

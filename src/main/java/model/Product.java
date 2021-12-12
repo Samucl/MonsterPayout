@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * Tämä luokka edustaa virtuaalikaupan ja tietokannan tuotepaketteja.
+ * Luokka implementoi Comparable-rajapintaa, jotta tuotteet saadaan kauppasivulle järjestyksessä alennuksen mukaan.
+ */
 public class Product implements Comparable<Product> { 
 	private int id;
 	private String description;
@@ -86,7 +90,5 @@ public class Product implements Comparable<Product> {
 	public int getCoinAmount() {
 		return coinAmount;
 	}
-
-	
 	
 }

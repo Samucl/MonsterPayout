@@ -14,12 +14,12 @@ import java.util.ResourceBundle;
 
 import javafx.scene.image.Image;
 
+/**
+ * Tähän luokkaan tallennetaan "istunnon" tiedot, kuten tilaushistoria
+ */
 public class Session {
 	private Session instance = null;
-	
-	/*
-	 * Tänne luokkaan tallennetaan "istunnon" tiedot, kuten tilaushistoria
-	 */
+
 	private static Order[] orders;
 	
 	private static Image[] avatarImages;
