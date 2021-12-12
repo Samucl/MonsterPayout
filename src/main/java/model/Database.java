@@ -8,7 +8,7 @@ import java.time.temporal.ChronoUnit;
 
 import com.google.common.hash.Hashing;
 
-/**
+/*
  * Tämä luokka hoitaa kaiken kommunikaation tietokannan kanssa.
  */
 public class Database {
@@ -345,7 +345,7 @@ public class Database {
 	 * @param email
 	 * @param firstname
 	 * @param lastname
-	 * @return Kertoo onko tietokantaa päivitetty.
+	 * @return Kertoo onko tietokantaa päivitetty
 	 */
 	public static boolean register(String username, String password, String email, String firstname, String lastname) {
 		/*
@@ -677,7 +677,7 @@ public class Database {
 	 * Tallentaa tilauksen tiedot tietokantaan.
 	 * Tallentaa kirjautuneen käyttäjän tilaukset Session-luokan "orders"-tauluun.
 	 * @param product
-	 * @return Kertoo onko tietokantaa päivitetty.
+	 * @return Kertoo onko tietokantaa päivitetty
 	 */
 	public static boolean buyProduct(Product product) {
 		

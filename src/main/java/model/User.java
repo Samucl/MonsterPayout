@@ -1,5 +1,11 @@
 package model;
 
+/**
+ * Tämä luokka edustaa kirjautunutta käyttäjää, joita voi olla vain yksi kerrallaan.
+ * Metodit ja attribuutit ovat staattisia, koska ei ole tarvetta luoda ilmentymiä.
+ * Näin myös metodikutsut yms. muista luokista onnistuu helpommin.
+ */
+
 public class User {
 	private static int id;
 	private static String username;
@@ -9,12 +15,12 @@ public class User {
 	private static String email;
 	private static int coins;
 	private static double credits;
-	private static int tiliId;
+	private static int accountId;
 	private static String account_number; //Tilinumero
 	private static int login_streak;
 	private static int status; // 1 = admin, 0 = normaali käyttäjä
 	
-	public static void setUserData(int id, String username, String password,String firstname, String lastname, String email, String account_number, int tiliId, int coins, double credits, int login_streak, int status) {
+	public static void setUserData(int id, String username, String password,String firstname, String lastname, String email, String account_number, int accountId, int coins, double credits, int login_streak, int status) {
 		User.id = id;
 		User.username = username;
 		User.password = password;
@@ -22,7 +28,7 @@ public class User {
 		User.lastname = lastname;
 		User.email = email;
 		User.account_number = account_number;
-		User.tiliId = tiliId;
+		User.accountId = accountId;
 		User.coins = coins;
 		User.credits = credits;
 		User.login_streak = login_streak;
@@ -88,12 +94,12 @@ public class User {
 		User.email = email;
 	}
 	
-	public static int getTiliId() {
-		return tiliId;
+	public static int getAccountId() {
+		return accountId;
 	}
 	
-	public static void setTiliId(int tiliId) {
-		User.tiliId = tiliId;
+	public static void setAccountId(int id) {
+		User.accountId = id;
 	}
 	
 	public static void setUsername(String username) {
@@ -133,7 +139,7 @@ public class User {
 		lastname = null;
 		password = null;
 		email = null;
-		tiliId = 0;
+		accountId = 0;
 		account_number = null;
 	}
 	

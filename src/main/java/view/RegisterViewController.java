@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 import model.Database;
 import model.Session;
 
-/*
+/**
  *	Kontrolleri jolla ohjataan RekisterointiViewin toimintoja.
 */
 

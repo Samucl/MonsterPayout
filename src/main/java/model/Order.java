@@ -3,6 +3,11 @@ package model;
 import java.time.LocalDate;
 import java.sql.Date;
 
+/**
+ * Tämä luokka edustaa virtuaalikaupassa tehtyjä tilauksia eli ostettuja tuotteita.
+ *
+ */
+
 public class Order {
 	private int orderId;
 	private String date;

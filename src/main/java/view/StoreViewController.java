@@ -110,7 +110,7 @@ public class StoreViewController {
 		buyWithCoinsBtn.setText(texts.getString("buy.button"));
 	}
 	
-	/*
+	/**
 	 * Luo grid panen, jonka sarakkeisiin asetetaan alennustuotteiden tiedot.
 	 * Horisontaalisia sarakkeita luodaan niin monta kuin myynnissä olevia alennustuotteita löytyy tietokannasta.
 	 */
@@ -196,7 +196,7 @@ public class StoreViewController {
 		scrollpane.setContent(productPane1);
 	}
 	
-	/*
+	/**
 	 * Luo grid panen, jonka sarakkeisiin asetetaan normaalihintaisten tuotteiden tiedot.
 	 * Horisontaalisia sarakkeita luodaan niin monta kuin myynnissä olevia normaalihintaisia tuotteita löytyy tietokannasta.
 	 */
@@ -296,7 +296,7 @@ public class StoreViewController {
 		});
 	}
 	
-	/*
+	/**
 	 * Luo kaksi listaa, joista ensimmäiseen asettaa alennustuotteet ja toiseen normaalihintaiset tuotteet.
 	 */
 	public void createProductArrays() {
@@ -330,8 +330,7 @@ public class StoreViewController {
 	
 	/**
 	 * Avaa uuden ikkunan, jossa käyttäjä varmistaa klikatun tuotteen ostamisen.
-	 * 
-	 * @param p : Tuote, jota käyttäjä on ostamassa.
+	 * @param p tuote, jota käyttäjä on ostamassa
 	 */
 	public void buyProduct(Product p) {
 		

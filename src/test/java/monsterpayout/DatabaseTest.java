@@ -65,8 +65,6 @@ public class DatabaseTest {
 		Database.decreaseCreditBalance(50);
 		assertTrue(User.getCredits() == 150 + credits);
 	}
-	
-	
 
 	
 }
