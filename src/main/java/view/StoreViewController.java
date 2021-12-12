@@ -44,8 +44,8 @@ import model.User;
  
 public class StoreViewController {
 	
-	private ArrayList<Product> products1;
-	private ArrayList<Product> products2;
+	private ArrayList<Product> discountProducts;
+	private ArrayList<Product> noDiscountProducts;
 	private int bgCardWidth = 140;
 	private Image bgCard;
 	private Image credit;
@@ -89,13 +89,13 @@ public class StoreViewController {
 		}
 		
 		useLanguageBundle();
-		setProducts();
+		createProductArrays();
 		setDiscountProducts();
+		setNoDiscountProducts();
 		setChoiceBoxItems();
-		refreshAccountInfo();
-		
+		refreshAccountInfo();	
 	}
-	
+
 	private void useLanguageBundle() {
 		logoutBtn.setText(texts.getString("logout.button"));
 		toMainBtn.setText(texts.getString("back.to.menu"));
@@ -105,96 +105,80 @@ public class StoreViewController {
 		buyWithCoinsBtn.setText(texts.getString("buy.button"));
 	}
 	
-	public void setProducts() {
+	/*
+	 * Luo grid panen, jonka sarakkeisiin asetetaan alennustuotteiden tiedot.
+	 * Horisontaalisia sarakkeita luodaan niin monta kuin myynnissä olevia alennustuotteita löytyy tietokannasta.
+	 */
+	public void setDiscountProducts() {
 		
-		Product[] allProducts = Database.getProducts(); //Kaikki tietokannan tuotteet
-		products1 = new ArrayList<Product>(); //Laitetaan tähän listaan ne, jotka tällä hetkellä myynnissä ja alennuksessa
-		products2 = new ArrayList<Product>(); //Ja tähän ne, jotka myynnissä ja joissa ei alennusta
+		GridPane productPane1 = new GridPane();
+		productPane1.setVgap(5);
+		productPane1.setPadding(new Insets(18, 0, 18, 24));	
 		
-		int i = 0;
-		for (Product p : allProducts) {
-			if (p.getForSaleStatus()) { //Jos tuote on myynnissä
-				if (p.getSaleMultiplier() < 0.99) {
-					products1.add(p);
-				} else {
-					products2.add(p);
-				}
-			} 
-		}
-		
-		Collections.sort(products1); //Laitetaan järjestykseen alennuskertoimen perusteella
-		
-		/*
-		for (i = 0 ; i < products1.size() ; i++) {
-			ImageView bgCardIV = new ImageView(bgCard);
-			stackpane.getChildren().add(bgCardIV);
-			bgCardIV.setTranslateX(i * 200);
-		} */
-		
-		//Tehdään alennustuotteille oma GridPane, jonka sarakkeisiin asetetaan tuotetiedot, sitten GridPane asetetaan HBoxiin
-		GridPane innerPane = new GridPane();
-		innerPane.setVgap(5); //Rivien välille vähän tilaa
-		innerPane.setPadding(new Insets(18, 0, 18, 24));
-		
-		
-		for (i = 0 ; i < products1.size() ; i++) {
+		for (int i = 0 ; i < discountProducts.size() ; i++) {
 			
-			innerPane.getColumnConstraints().add(new ColumnConstraints(200)); //Sarakkeen leveys
+			//Sarakkeen leveys
+			productPane1.getColumnConstraints().add(new ColumnConstraints(200)); 
 			
-			int discount = (int) (100 - (products1.get(i).getSaleMultiplier() * 100)); //Lasketaan alennusprosentti hintakertoimesta
+			 //Lasketaan alennusprosentti hintakertoimesta
+			int discount = (int) (100 - (discountProducts.get(i).getSaleMultiplier() * 100));
+			
 			Label discountLabel = new Label(texts.getString("discount") + discount + " %");
 			discountLabel.setFont(Font.font("Arial Black", FontWeight.BOLD, 14));
 			discountLabel.setTextFill(Color.RED);
-			innerPane.add(discountLabel, i, 0);
+			productPane1.add(discountLabel, i, 0);
 			
-			Label nameLabel = new Label(products1.get(i).getDescription());
+			Label nameLabel = new Label(discountProducts.get(i).getDescription());
 			nameLabel.setFont(Font.font("Arial Black", 16));
-			innerPane.add(nameLabel, i, 1);
+			productPane1.add(nameLabel, i, 1);
 			
-			Label creditLabel = new Label(Double.toString(products1.get(i).getCreditAmount()));
+			Label creditLabel = new Label(Double.toString(discountProducts.get(i).getCreditAmount()));
 			creditLabel.setFont(Font.font("Arial Black", 15));
-			innerPane.add(creditLabel, i, 2);
+			productPane1.add(creditLabel, i, 2);
 
 		    ImageView imageView = new ImageView(credit);
 		    imageView.setFitWidth(35);
-		    imageView.setTranslateX(Double.toString(products1.get(i).getCreditAmount()).length() * 9); //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
+		    //Asetetaan krediitti-kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
+		    imageView.setTranslateX(Double.toString(discountProducts.get(i).getCreditAmount()).length() * 9); 
 		    imageView.setPreserveRatio(true);
-		    innerPane.add(imageView, i, 2);
+		    productPane1.add(imageView, i, 2);
 	        
 			
-			if (products1.get(i).getSaleMultiplier() < 0.99) { //Jos tuote on alennuksessa niin ilmoitetaan tässä vanha hinta
-				String oldPriceStr = String.valueOf(products1.get(i).getPrice()) + " €";
+			if (discountProducts.get(i).getSaleMultiplier() < 0.99) {
+				String oldPriceStr = String.valueOf(discountProducts.get(i).getPrice()) + " €";
 				Text oldPriceTxt = new Text(oldPriceStr);
 				oldPriceTxt.setStrikethrough(true);
 				oldPriceTxt.setFill(Color.WHITE);
 				oldPriceTxt.setFont(Font.font(16));
-				innerPane.add(oldPriceTxt, i, 3);
+				productPane1.add(oldPriceTxt, i, 3);
 			}
 			
-			double price = products1.get(i).getPrice() * products1.get(i).getSaleMultiplier();
+			double price = discountProducts.get(i).getPrice() * discountProducts.get(i).getSaleMultiplier();
 			
 			Label priceLabel = new Label(Double.toString(price) + " €");
 			priceLabel.setFont(Font.font("Arial Black", 16));
-			innerPane.add(priceLabel, i, 4);
+			productPane1.add(priceLabel, i, 4);
 			
 			Button buyBtn = new Button();
 			buyBtn.setText(texts.getString("buy.button"));
 			buyBtn.setFont(Font.font("Arial Black", FontWeight.BOLD, 18));
-			innerPane.add(buyBtn, i, 5);
+			productPane1.add(buyBtn, i, 5);
 			
-			if (products1.get(i).getCoinAmount() != 0) { //Jos tuotteesta saa kolikkobonuksen niin laitetaan se ylimääräiseksi sarakkeeksi
+			if (discountProducts.get(i).getCoinAmount() != 0) {
 				
-					Label coinLabel = new Label(texts.getString("coin.bonus") + Integer.toString(products1.get(i).getCoinAmount()));
-					coinLabel.setFont(Font.font("System", FontPosture.ITALIC, 15));
-					innerPane.add(coinLabel, i, 6);
-			        ImageView imageView2 = new ImageView(coin);
-			        imageView2.setFitWidth(26);
-			        imageView2.setTranslateX(coinLabel.getText().length() * 7.2); //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
-			        imageView2.setPreserveRatio(true);
-			        innerPane.add(imageView2, i, 6);
+				Label coinLabel = new Label(texts.getString("coin.bonus") + Integer.toString(discountProducts.get(i).getCoinAmount()));
+				coinLabel.setFont(Font.font("System", FontPosture.ITALIC, 15));
+				productPane1.add(coinLabel, i, 6);
+			    ImageView imageView2 = new ImageView(coin);
+			    imageView2.setFitWidth(26);
+			        
+			    //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
+			    imageView2.setTranslateX(coinLabel.getText().length() * 7.2); 
+			    imageView2.setPreserveRatio(true);
+			    productPane1.add(imageView2, i, 6);
 			}
 			
-			Product p = products1.get(i);		
+			Product p = discountProducts.get(i);		
 			buyBtn.setOnAction(new EventHandler<ActionEvent>(){
                 @Override
                 public void handle(ActionEvent event) {
@@ -203,73 +187,65 @@ public class StoreViewController {
 			});
 		}
 		
-		scrollpane.setContent(innerPane);
+		hbox.getChildren().add(productPane1);
+		scrollpane.setContent(productPane1);
 	}
 	
-	//-------------------------------------
-	
-	public void setDiscountProducts() {
+	/*
+	 * Luo grid panen, jonka sarakkeisiin asetetaan normaalihintaisten tuotteiden tiedot.
+	 * Horisontaalisia sarakkeita luodaan niin monta kuin myynnissä olevia normaalihintaisia tuotteita löytyy tietokannasta.
+	 */
+	public void setNoDiscountProducts() {
 		
-		GridPane lowerPane = new GridPane();
-		lowerPane.setVgap(5); //Rivien välille vähän tilaa
-		lowerPane.setPadding(new Insets(0, 0, 18, 24));
+		GridPane productPane2 = new GridPane();
+		productPane2.setVgap(5);
+		productPane2.setPadding(new Insets(0, 0, 18, 24));
 		
-		for (int i = 0 ; i < products2.size() ; i++) {
+		for (int i = 0 ; i < noDiscountProducts.size() ; i++) {
 			
-			lowerPane.getColumnConstraints().add(new ColumnConstraints(200)); //Sarakkeen leveys
+			productPane2.getColumnConstraints().add(new ColumnConstraints(200));
 			
-			Label nameLabel = new Label(products2.get(i).getDescription());
+			Label nameLabel = new Label(noDiscountProducts.get(i).getDescription());
 			nameLabel.setFont(Font.font("Arial Black", 16));
-			lowerPane.add(nameLabel, i, 0);
+			productPane2.add(nameLabel, i, 0);
 			
-			Label creditLabel = new Label(Double.toString(products2.get(i).getCreditAmount()));
+			Label creditLabel = new Label(Double.toString(noDiscountProducts.get(i).getCreditAmount()));
 			creditLabel.setFont(Font.font("Arial Black", 15));
-			lowerPane.add(creditLabel, i, 1);
+			productPane2.add(creditLabel, i, 1);
 			
-			FileInputStream input;
-			try {
-				input = new FileInputStream("./src/main/resources/credit_1.png");
-				Image image = new Image(input);
-		        ImageView imageView = new ImageView(image);
-		        imageView.setFitWidth(35);
-		        imageView.setTranslateX(Double.toString(products2.get(i).getCreditAmount()).length() * 9); //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
-		        imageView.setPreserveRatio(true);
-		        lowerPane.add(imageView, i, 1);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
+		    ImageView imageView = new ImageView(credit);
+		    imageView.setFitWidth(35);
+		    //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
+		    imageView.setTranslateX(Double.toString(noDiscountProducts.get(i).getCreditAmount()).length() * 9); 
+		    imageView.setPreserveRatio(true);
+		    productPane2.add(imageView, i, 1);
 			
-			double price = products2.get(i).getPrice();
+			double price = noDiscountProducts.get(i).getPrice();
 			
 			Label priceLabel = new Label(Double.toString(price) + " €");
 			priceLabel.setFont(Font.font("Arial Black", 16));
-			lowerPane.add(priceLabel, i, 2);
+			productPane2.add(priceLabel, i, 2);
 			
 			Button buyBtn = new Button();
 			buyBtn.setText(texts.getString("buy.button"));
 			buyBtn.setFont(Font.font("Arial Black", FontWeight.BOLD, 18));
-			lowerPane.add(buyBtn, i, 3);
+			productPane2.add(buyBtn, i, 3);
 			
-			if (products2.get(i).getCoinAmount() != 0) { //Jos tuotteesta saa kolikkobonuksen niin laitetaan se ylimääräiseksi sarakkeeksi tähän
+			if (noDiscountProducts.get(i).getCoinAmount() != 0) { 
 				
-				FileInputStream input2;
-				try {
-					Label coinLabel = new Label(texts.getString("coin.bonus") + Integer.toString(products2.get(i).getCoinAmount()));
-					coinLabel.setFont(Font.font("System", FontPosture.ITALIC, 15));
-					lowerPane.add(coinLabel, i, 4);
-					input2 = new FileInputStream("./src/main/resources/coin_1.png");
-					Image image = new Image(input2);
-			        ImageView imageView = new ImageView(image);
-			        imageView.setFitWidth(26);
-			        imageView.setTranslateX(coinLabel.getText().length() * 7.2); //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
-			        imageView.setPreserveRatio(true);
-			        lowerPane.add(imageView, i, 4);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
+				Label coinLabel = new Label(texts.getString("coin.bonus") + Integer.toString(noDiscountProducts.get(i).getCoinAmount()));
+				coinLabel.setFont(Font.font("System", FontPosture.ITALIC, 15));
+				productPane2.add(coinLabel, i, 4);
+			    ImageView coinIV = new ImageView(coin);
+			    coinIV.setFitWidth(26);
+			    //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
+			    coinIV.setTranslateX(coinLabel.getText().length() * 7.2); 
+			    coinIV.setPreserveRatio(true);
+			    productPane2.add(coinIV, i, 4);
+				
 			}
 			
-			Product p = products2.get(i);		
+			Product p = noDiscountProducts.get(i);		
 			buyBtn.setOnAction(new EventHandler<ActionEvent>(){
                 @Override
                 public void handle(ActionEvent event) {
@@ -279,13 +255,13 @@ public class StoreViewController {
 			
 		}
 		
-		hbox2.getChildren().add(lowerPane);
-		scrollpane2.setContent(lowerPane);
+		hbox2.getChildren().add(productPane2);
+		scrollpane2.setContent(productPane2);
 		
 	}
 	
 	/**
-	 * Asettaa choice boxiin neljä krediittiarvoa, joita käyttäjä pystyy kolikoilla ostamaan
+	 * Asettaa choice boxiin neljä krediittiarvoa, joita käyttäjä pystyy kolikoilla ostamaan.
 	 */	
 	public void setChoiceBoxItems() {
 		buyWithCoinsChoiceBox.getItems().add(0.1);
@@ -315,6 +291,29 @@ public class StoreViewController {
 		});
 	}
 	
+	/*
+	 * Luo kaksi listaa, joista ensimmäiseen asettaa alennustuotteet ja toiseen normaalihintaiset tuotteet.
+	 */
+	public void createProductArrays() {
+		Product[] allProducts = Database.getProducts();
+		discountProducts = new ArrayList<Product>();
+		noDiscountProducts = new ArrayList<Product>();
+		
+		int i = 0;
+		for (Product p : allProducts) {
+			if (p.getForSaleStatus()) { //Jos tuote on myynnissä
+				if (p.getSaleMultiplier() < 0.99) {
+					discountProducts.add(p);
+				} else {
+					noDiscountProducts.add(p);
+				}
+			} 
+		}
+		
+		Collections.sort(discountProducts); 
+	}
+	
+	
 	/**
 	 * Asettaa sivun ylälaitaan käyttäjänimen ja saldot
 	 */
@@ -325,9 +324,9 @@ public class StoreViewController {
 	}
 	
 	/**
-	 * Avaa uuden ikkunan, jossa käyttäjä varmistaa, että haluaa ostaa klikatun tuotteen
+	 * Avaa uuden ikkunan, jossa käyttäjä varmistaa klikatun tuotteen ostamisen.
 	 * 
-	 * @param p
+	 * @param p : Tuote, jota käyttäjä on ostamassa.
 	 */
 	public void buyProduct(Product p) {
 		
@@ -380,7 +379,7 @@ public class StoreViewController {
         vbox.getChildren().addAll(label, label2, hbox, successLabel);
         hbox.getChildren().addAll(noBtn, yesBtn);
         
-        Scene dialogScene = new Scene(vbox, 358, 180);
+        Scene dialogScene = new Scene(vbox, 358, 208);
         dialog.setScene(dialogScene);
         dialog.showAndWait();
         
