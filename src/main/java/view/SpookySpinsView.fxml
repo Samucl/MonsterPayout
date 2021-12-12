@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SpinsOfMadnessController">
+   <center>
+      <GridPane style="-fx-background-color: gray;" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="700.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <GridPane maxHeight="300.0" maxWidth="725.0" minHeight="521.0" minWidth="800.0" prefHeight="300.0" prefWidth="725.0" style="-fx-background-color: gray;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fx:id="sym00" fitHeight="175.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <effect>
+                        <DropShadow height="40.0" radius="19.5" width="40.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                     <image>
+                        <Image url="@../../resources/slot_icons/SpookySpins/scatter.gif" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="sym20" fitHeight="175.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <effect>
+                        <DropShadow height="40.0" radius="19.5" width="40.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                     <image>
+                        <Image url="@../../resources/slot_icons/SpookySpins/bonus.gif" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="sym10" fitHeight="175.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <effect>
+                        <DropShadow height="40.0" radius="19.5" width="40.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                     <image>
+                        <Image url="@../../resources/slot_icons/SpookySpins/wild.gif" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="sym01" fitHeight="175.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../../resources/slot_icons/SpookySpins/candies.gif" />
+                     </image>
+                     <effect>
+                        <DropShadow height="40.0" radius="19.5" width="40.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <ImageView fx:id="sym02" fitHeight="175.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../../resources/slot_icons/SpookySpins/pumpkin2.gif" />
+                     </image>
+                     <effect>
+                        <DropShadow height="40.0" radius="19.5" width="40.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <ImageView fx:id="sym03" fitHeight="175.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../../resources/slot_icons/SpookySpins/candies.gif" />
+                     </image>
+                     <effect>
+                        <DropShadow height="40.0" radius="19.5" width="40.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <ImageView fx:id="sym04" fitHeight="175.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../../resources/slot_icons/SpookySpins/apple.gif" />
+                     </image>
+                     <effect>
+                        <DropShadow height="40.0" radius="19.5" width="40.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <ImageView fx:id="sym11" fitHeight="175.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../../resources/slot_icons/SpookySpins/donut.gif" />
+                     </image>
+                     <effect>
+                        <DropShadow height="40.0" radius="19.5" width="40.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <ImageView fx:id="sym12" fitHeight="175.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../../resources/slot_icons/SpookySpins/owl.gif" />
+                     </image>
+                     <effect>
+                        <DropShadow height="40.0" radius="19.5" width="40.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <ImageView fx:id="sym13" fitHeight="175.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../../resources/slot_icons/SpookySpins/pumpkin1.gif" />
+                     </image>
+                     <effect>
+                        <DropShadow height="40.0" radius="19.5" width="40.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <ImageView fx:id="sym14" fitHeight="175.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../../resources/slot_icons/SpookySpins/pumpkin3.gif" />
+                     </image>
+                     <effect>
+                        <DropShadow height="40.0" radius="19.5" width="40.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <ImageView fx:id="sym21" fitHeight="175.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../../resources/slot_icons/SpookySpins/apple.gif" />
+                     </image>
+                     <effect>
+                        <DropShadow height="40.0" radius="19.5" width="40.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <ImageView fx:id="sym22" fitHeight="175.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../../resources/slot_icons/SpookySpins/coin.gif" />
+                     </image>
+                     <effect>
+                        <DropShadow height="40.0" radius="19.5" width="40.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <ImageView fx:id="sym23" fitHeight="175.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                     <image>
+                        <Image url="@../../resources/slot_icons/SpookySpins/spider.gif" />
+                     </image>
+                     <effect>
+                        <DropShadow height="40.0" radius="19.5" width="40.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+                  <ImageView fx:id="sym24" fitHeight="175.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../../resources/slot_icons/SpookySpins/candy.gif" />
+                     </image>
+                     <effect>
+                        <DropShadow height="40.0" radius="19.5" width="40.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ImageView>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </GridPane>
+         </children>
+      </GridPane>
+   </center>
+   <top>
+      <GridPane style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+   </top>
+   <bottom>
+      <GridPane style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="spinButton" mnemonicParsing="false" onAction="#fireSpin" style="-fx-background-color: #4f874d;" text="Spin" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="26.0" />
+               </font>
+               <effect>
+                  <DropShadow radius="7.7775" spread="0.41" width="12.11">
+                     <color>
+                        <Color red="0.5614922046661377" green="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Button>
+         </children>
+      </GridPane>
+   </bottom>
+</BorderPane>

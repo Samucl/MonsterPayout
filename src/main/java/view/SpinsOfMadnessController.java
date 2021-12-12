@@ -1,9 +1,7 @@
 package view;
 
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,7 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import slotgames.AbstractSlotgame1;
-import slotgames.Slotgame1_Spins_of_Madness;
+import slotgames.Slotgame1_Spooky_Spins;
 
 public class SpinsOfMadnessController implements Initializable {
 	@FXML ImageView sym00;
@@ -38,7 +36,7 @@ public class SpinsOfMadnessController implements Initializable {
 	@FXML Button spinButton;
 	@FXML Text multiplier;
 	
-	private AbstractSlotgame1 game = new Slotgame1_Spins_of_Madness();
+	private AbstractSlotgame1 game = new Slotgame1_Spooky_Spins();
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

@@ -142,6 +142,19 @@ public class HomepageViewController implements Initializable {
         }
 	}
 	
+	public void toSpookySpins() {
+		try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("SpookySpinsView.fxml"));
+            BorderPane spookySpinsView = (BorderPane) loader.load();
+            Scene spookySpinsScene = new Scene(spookySpinsView);
+			Stage window = (Stage) nameLabel.getScene().getWindow();
+			window.setScene(spookySpinsScene);
+        } catch (IOException iOE) {
+            iOE.printStackTrace();
+        }
+	}
+	
 	public void toUserInfo(ActionEvent e) {
 		try {
             FXMLLoader loader = new FXMLLoader();
