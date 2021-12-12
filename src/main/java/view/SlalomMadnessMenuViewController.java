@@ -24,6 +24,11 @@ import model.Database;
 import model.Session;
 import model.User;
 
+/* 
+ * Slalom Madness -pelin menu-näkymän kontrolleri.
+ * 
+ * @author Jukka Hallikainen
+ */
 public class SlalomMadnessMenuViewController implements Initializable {
 	@FXML private Label highScoreLabel;
 	@FXML private Label nameLabel;
@@ -68,6 +73,9 @@ public class SlalomMadnessMenuViewController implements Initializable {
 		}	
 	}
 	
+	/*
+	 * Avaa pelinäkymän.
+	 */
 	public void play(ActionEvent e) {
 		window = (Stage) playBtn.getScene().getWindow();
 		window.setX(300); //Koordinaatit näytöllä, mihin ikkuna aukeaa (vasemmasta yläkulmasta)
@@ -76,12 +84,13 @@ public class SlalomMadnessMenuViewController implements Initializable {
 		game = new SlalomMadnessGame(window);
 	}
 	
-	//Peliohje-ikkunan luonti
+	/*
+	 * Luo peliohje-ikkunan.
+	 */
 	public void showInstructions() {
 		try {
         	Stage dialog = new Stage();
         	dialog.setTitle(texts.getString("slalom.instructions.header"));
-        //    dialog.initModality(Modality.APPLICATION_MODAL); //Taustalla olevaa ikkunaa ei voi klikkailla, ennenkuin tämä suljetaan
             
             VBox vbox = new VBox(4);
             vbox.setPadding(new Insets(16, 16, 16, 16));
