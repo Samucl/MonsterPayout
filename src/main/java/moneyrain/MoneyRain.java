@@ -26,15 +26,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
-/*
+/**
  * Luokka sisältää kaiken logiikan MoneyRain peliin
  * @author Samuel Laisaar
+ * @version 16.11.2021
  */
-
 public class MoneyRain extends Canvas {
 	
 	private Stage stage;
-	
 	private static Timeline tl;
 	private int timeInMillis;
 	private int gameTime = 60000;
@@ -94,9 +93,9 @@ public class MoneyRain extends Canvas {
 		}));
 		tl.setCycleCount(Timeline.INDEFINITE);
 		
-		/**
+		/*
 		 * Pelaajan controlleri
-		*/
+		 */
 		canvas.setOnMouseMoved(e -> {
 			
 			//Pelaajan kuvaa vaihdetaan riippuen siitä liiktaanko vasemmalle tai oikealle
@@ -184,15 +183,15 @@ public class MoneyRain extends Canvas {
 
 			//Tehdään asioita kerran per 1s
 			if(timeInMillis % 1000 == 0)
-				createBill(); //Luodaan seteli
+				createBill();
 			
 			//Tehdään asioita kerran per 2s
 			if(timeInMillis % 2000 == 0)
-				createPoison(); //Luodaan myrkkypullo
+				createPoison();
 			
 			//Tehdään asioita kerran per 20s
 			if(timeInMillis % 20000 == 0)
-				createMegis(); //Luodaan megis
+				createMegis();
 			
 			if(gameTime <= 0)
 				dead = true;
@@ -263,7 +262,7 @@ public class MoneyRain extends Canvas {
 		}
 	}
 	
-	/*
+	/**
 	 * Luodaan Bill olioita
 	 */
 	private void createBill() {
@@ -271,7 +270,8 @@ public class MoneyRain extends Canvas {
 		Item item = new Item(bill, 69, 33, xPos, 0, false, false);
 		items.add(item);
 	}
-	/*
+	
+	/**
 	 * Luodaan Poison olioita
 	 */
 	private void createPoison() {
@@ -280,7 +280,7 @@ public class MoneyRain extends Canvas {
 		items.add(item);
 	}
 	
-	/*
+	/**
 	 * Luodaan Megis olioita
 	 */
 	private void createMegis() {
@@ -292,7 +292,4 @@ public class MoneyRain extends Canvas {
 	public static Timeline getTl() {
 		return tl;
 	}
-	
-	
 }
-

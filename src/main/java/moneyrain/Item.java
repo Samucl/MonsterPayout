@@ -2,6 +2,11 @@ package moneyrain;
 
 import javafx.scene.image.Image;
 
+/**
+ * Luokkaa hyödynnetään MoneyRain ja SlalomMadness arcadepeleissä itemien luomiseen.
+ * @author Samuel Laisaar
+ * @version 12.12.21
+ */
 public class Item {
 	private Image img;
 	private String name;

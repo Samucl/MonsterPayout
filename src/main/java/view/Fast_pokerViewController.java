@@ -25,6 +25,11 @@ import model.Database;
 import model.Session;
 import model.User;
 
+/**
+ * Luokka toimii Fastpoker kasinopelin kontrollerina
+ * @author Samuel
+ * @version 12.12.2021
+ */
 public class Fast_pokerViewController implements Initializable{
 	
 	ResourceBundle texts;
@@ -132,6 +137,9 @@ public class Fast_pokerViewController implements Initializable{
 		highlightCards();
 	}
 	
+	/**
+	 * Metodi tuo ruudulle tiedon mahdollisesta voitosta
+	 */
 	private void showWin() {
 		game.getWinningCards(winningCards);
 		if(game.getWinningHand() == -1) { //Jos winningHand palauttaa arvon -1 eli häviön.
@@ -153,9 +161,10 @@ public class Fast_pokerViewController implements Initializable{
 		doublesResult(4, card5);
 	}
 	
-	/*
+	/**
 	 * Metodi aloittaa pelin. Tarkistetaan pelaajan saldo ja vähennetään siitä panoksen verran.
 	 * Luodaan korttipakka ja asetetaan kortit näkyviin pelipöydälle.
+	 * @throws FileNotFoundException
 	 */
 	public void play(ActionEvent e) throws FileNotFoundException {
 		if(User.getCredits() >= bet) {
@@ -179,9 +188,10 @@ public class Fast_pokerViewController implements Initializable{
 			errorLabel.setVisible(true);
 	}
 	
-	/*
+	/**
 	 * Metodi jolla saadaan pelaajan voitot talteen, jos pelaaja ei halua tuplata enempää.
 	 * Toisin sanoen metodin suorittaminen lopettaa pelikerran.
+	 * @throws FileNotFoundException
 	 */
 	public void recover(ActionEvent e) throws FileNotFoundException {
 		winLabel.setText(texts.getString("win"));
@@ -195,7 +205,7 @@ public class Fast_pokerViewController implements Initializable{
 		betButton.setDisable(false);
 	}
 	
-	/*
+	/**
 	 * Metodi panoksen asettamiselle.
 	 */
 	public void bet(ActionEvent e) {
@@ -210,7 +220,7 @@ public class Fast_pokerViewController implements Initializable{
 		betButton.setText(texts.getString("bet.button") + ": " + bet);
 	}
 	
-	/*
+	/**
 	 * Metodi asettaa pelaajalle näkyviin kaikki mahdolliset pokerikäsien voittosummat.
 	 */
 	private void setWinLabel() {
@@ -225,8 +235,9 @@ public class Fast_pokerViewController implements Initializable{
 		winLabel9.setText((int)coinsTable[0] * (int)bet + "");
 	}
 	
-	/*
+	/**
 	 * Metodi tuplauken alottamiselle.
+	 * @throws FileNotFoundException
 	 */
 	public void doubles(ActionEvent e) throws FileNotFoundException {
 		game.setDoubles(true);
@@ -240,7 +251,7 @@ public class Fast_pokerViewController implements Initializable{
 		hideButtons();
 	}
 	
-	/*
+	/**
 	 * Metodilla tarkistetaan tuplauksen tulos.
 	 */
 	private void doublesResult(int i, ImageView card) {
@@ -279,6 +290,9 @@ public class Fast_pokerViewController implements Initializable{
 		betButton.setDisable(true);
 	}
 	
+	/**
+	 * Asetetaan halutuille korteille tyylejä
+	 */
 	private void highlightCards() {
 		DropShadow ds = new DropShadow();
 		ds.setColor(Color.RED);

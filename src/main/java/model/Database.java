@@ -8,7 +8,7 @@ import java.time.temporal.ChronoUnit;
 
 import com.google.common.hash.Hashing;
 
-/*
+/**
  * Tämä luokka hoitaa kaiken kommunikaation tietokannan kanssa.
  */
 public class Database {

@@ -23,11 +23,11 @@ import model.Database;
 import model.Session;
 import model.User;
 
-/*
- * Luokka on toimii kontrollerina MoneyRain arcadepelin valikkonäkymälle
+/**
+ * Luokka toimii kontrollerina MoneyRain arcadepelin valikkonäkymälle
  * @author Samuel Laisaar
+ * @version 12.12.2021
  */
-
 public class MoneyRainMenuViewController implements Initializable {
 	@FXML private Label highscoreLabel;
 	@FXML private Label nameLabel;
@@ -60,7 +60,9 @@ public class MoneyRainMenuViewController implements Initializable {
 		setTop10(top10, 9);
 	}
 	
-	//Peliohje-ikkunan luonti
+	/**
+	 * Peliohje-ikkunan luonti
+	 */
 	public void showInstruction() {
 		try {
         	Stage dialog = new Stage();
@@ -93,7 +95,7 @@ public class MoneyRainMenuViewController implements Initializable {
         }
 	}
 	
-	/*
+	/**
 	 * Haetaan top10 lista tietokannasta asetetaan Labeliin näkyviin
 	 */
 	private void setTop10(Label top, int i) {

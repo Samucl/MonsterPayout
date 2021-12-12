@@ -1,13 +1,10 @@
 package view;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,6 +13,11 @@ import javafx.stage.Stage;
 import model.Database;
 import model.Session;
 
+/**
+ * Luokka toimii kontrollerina MoneyRain arcadepelin kuolema näkymälle
+ * @author Samuel Laisaar
+ * @version 12.12.2021
+ */
 public class MoneyRainDeadViewController{
 	
 	@FXML private Button toMenu;
@@ -39,11 +41,13 @@ public class MoneyRainDeadViewController{
 		}
 	}
 
-	
+	/**
+	 * Lasketaan paljon pelaaja saa kolikoita pelin pisteistä perustuen
+	 * @param pointsFromGame
+	 */
 	public void setPoints(int pointsFromGame) {
 		points = pointsFromGame;
 		Database.setHighScore(points, "MoneyRain");
-		
 		ResourceBundle texts = Session.getLanguageBundle();
 		toMenu.setText(texts.getString("return.to.menu"));
 		deadLabel.setText(texts.getString("you.died"));

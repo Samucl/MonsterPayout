@@ -2,6 +2,11 @@ package cardgames;
 
 import java.util.Arrays;
 
+/**
+ * Tämä luokka sisältää FastPoker pelin sisäisen (model) logiikan
+ * @author Samuel Laisaar
+ * @version 12.12.2021
+ */
 public class Fast_poker {
 	
 	private boolean play = false;
@@ -9,14 +14,16 @@ public class Fast_poker {
 	private int winningHand;
 	private DeckOfCards deck;
 	
-	public Fast_poker() {
-		
-	}
+	public Fast_poker() {}
 	
 	public void makeDeck() {
 		deck = new DeckOfCards();
 	}
 	
+	/**
+	 * Luodaan Cards luokasta 6 kortin pakka
+	 * @return 6 Kortin array
+	 */
 	public Card[] take6() {
 		Card[] cards  = new Card[6];
 		for(int i = 0; i < cards.length; i++) {
@@ -49,6 +56,12 @@ public class Fast_poker {
 		return winningHand;
 	}
 	
+	/**
+	 * Tarkistetaan voittiko pelaaja tuplauksen
+	 * @param wCards
+	 * @param i
+	 * @return boolean arvo, joka kertoo tuplauksen tuloksen
+	 */
 	public boolean checkDouble(Card[] wCards, int i) {
 		if(wCards[i].getRank() == 1) { //Jos klikattu kortti on ässä, tuplauksen voittaa aina.
 			return true;
@@ -60,6 +73,11 @@ public class Fast_poker {
 			return i != 0 && wCards[i].getRank() >= wCards[0].getRank(); // muu kortti kuin ässä
 	}
 	
+	/**
+	 * Tarkistetaan kaikki mahdolliset pokerikädet.
+	 * @param wCards
+	 * @return kokonaisluku, joka kertoo voitetun pokerikäden
+	 */
 	public int checkWinnings(Card[] wCards) {
 		Arrays.sort(wCards);
 		for(int i = 0; i < wCards.length; i++) {
