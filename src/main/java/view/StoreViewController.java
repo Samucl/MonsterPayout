@@ -42,6 +42,11 @@ import model.Session;
 import model.Database;
 import model.User;
  
+/*
+ * Kauppanäkymän kontrolleri.
+ * 
+ * @author Jukka Hallikainen
+ */
 public class StoreViewController {
 	
 	private ArrayList<Product> discountProducts;

@@ -24,6 +24,11 @@ import model.Product;
 import model.Session;
 import model.Database;
 
+/*
+ * Kaupan hallinta -näkymän kontrolleri.
+ * 
+ * @author Jukka Hallikainen
+ */
 public class SetProductsViewController {
 	
 	private Product[] products;
@@ -50,15 +55,13 @@ public class SetProductsViewController {
 	private ResourceBundle texts = Session.getLanguageBundle();
 	
 	/**
-	* Alustaa TableViewin
+	* Alustaa TableViewin.
 	*/
 	public void initialize() {
 		
 		useLanguageBundle();
 		
-		/**
-		* Määrittää mitä instanssimuuttujaa mikäkin sarake hakee Product-luokasta
-		*/
+		//Määrittää mitä instanssimuuttujaa mikäkin sarake hakee Product-luokasta.
 		idColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("id"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("description"));
 		creditColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("creditAmount"));
@@ -70,8 +73,9 @@ public class SetProductsViewController {
 		refreshTableView();
 	
 	}
+	
 	/**
-	* Käy tietokannasta tuotteet, lisää ne ObservableListiin, joka liitetään TableViewiin
+	* Käy tietokannasta tuotteet, lisää ne ObservableListiin, joka liitetään TableViewiin.
 	*/
 	public void refreshTableView() {
 		
@@ -87,7 +91,7 @@ public class SetProductsViewController {
 	}
 	
 	/**
-	* Tallentaa uuden tuotteen tietokantaan ja päivittää sen listaan
+	* Tallentaa uuden tuotteen tietokantaan ja päivittää sen listaan.
 	*/
 	public void addNewProduct(ActionEvent e) {
 		
@@ -111,8 +115,8 @@ public class SetProductsViewController {
 	}
 		
 	/**
-	 * Laittaa valitun tuotteen kauppasivulle
-	 * @param e
+	 * Laittaa valitun tuotteen kauppasivulle.
+	 * @param e : Click-event.
 	 */
 	public void putUpForSale(ActionEvent e) {	
 		Product p = productsTable.getSelectionModel().getSelectedItem();
@@ -125,7 +129,8 @@ public class SetProductsViewController {
 	}
 	
 	/**
-	* Poistaa valitun tuotteen kauppasivulta
+	* Poistaa valitun tuotteen kauppasivulta.
+	* @param e : Click-event.
 	*/
 	public void removeFromSale(ActionEvent e) {	
 		Product p = productsTable.getSelectionModel().getSelectedItem();
@@ -138,7 +143,8 @@ public class SetProductsViewController {
 	}
 	
 	/**
-	* Avaa popup-dialogin tuotteen tietojen vaihtamista varten
+	* Avaa popup-dialogin tuotteen tietojen vaihtamista varten.
+	* @param e : Click-event.
 	*/
 	public void editProduct(ActionEvent e) {
 		
