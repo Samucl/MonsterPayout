@@ -43,6 +43,12 @@ import javafx.util.Duration;
 import model.Database;
 import model.Session;
 
+/*
+ * Slalom Madness-peliä pyörittävä luokka.
+ * 
+ * @author Jukka Hallikainen
+ */
+
 public class SlalomMadnessGame extends Application {
 	
 	private int timeInMillis;
@@ -98,7 +104,9 @@ public class SlalomMadnessGame extends Application {
 		}
 	}   
 	
-	
+	/*
+	 * Tekee alustukset pelin käynnistämiselle.
+	 */
 	public void start(Stage stage) throws Exception {
 		stage.setTitle("Slalom Madness");
 		
@@ -179,14 +187,19 @@ public class SlalomMadnessGame extends Application {
 		canvas.requestFocus(); //Tarvitaan, jotta ohjelma reagoisi keyEventeihin
 		tl.play(); //run()
 	}
-
+	
+	/*
+	 * Käynnistää pelin.
+	 */
 	private void run(GraphicsContext gc) {
 		
 		if (running) {
 			
-			timeInMillis += speed * 10; //Laskuri jolla seurataan pelissä käytettyä aikaa
-
-			gc.clearRect(0, 0, width, height); //Tyhjennetään näyttö
+			//Laskuri jolla seurataan pelissä käytettyä aikaa
+			timeInMillis += speed * 10; 
+			
+			 //Tyhjennetään näyttö
+			gc.clearRect(0, 0, width, height);
 			gc.drawImage(skier, playerXPos , playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 			
 			//Pelaajan liikuttaminen ruudulla
@@ -201,11 +214,11 @@ public class SlalomMadnessGame extends Application {
 				gc.drawImage(skier, playerXPos , playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 			}  
 			if (goFaster && !(playerYPos-1 > height)) { //Liikkumisrajoitus alhaalla
-				if (timeInMillis % 20 == 10) {//Nopeutta ei voida tuplata sillä hetkellä kun aikaa kulunut esim. 10 ms, koska silloin laskuri menisi -> 10-30-50-70-90 jne. eikä saavuttaisi koskaan tasalukua, jonka välein itemit spawnaavat
+				if (timeInMillis % 20 == 10) {//Nopeutta ei voida tuplata sillä hetkellä kun aikaa kulunut esim. 10 ms, koska silloin laskuri menisi -> 10-30-50-70-90 jne. eikä saavuttaisi koskaan tasalukua, jonka välein itemit spawnaavat.
 					timeInMillis+= 10;
 				}
 				speed = 2;
-				if (timeInMillis % 100 == 0) { //Siirretään hahmoa pikselin verran ruudulla vain joka kuudennella kierroksella, jotta hahmo ei liikkuisi liian nopeasti
+				if (timeInMillis % 100 == 0) { //Siirretään hahmoa pikselin verran ruudulla vain joka kuudennella kierroksella, jotta hahmo ei liikkuisi liian nopeasti.
 					playerYPos++;
 					gc.clearRect(playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 					gc.drawImage(skier, playerXPos , playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
@@ -213,15 +226,15 @@ public class SlalomMadnessGame extends Application {
 			}  
 			if (goSlower && !(playerYPos-1 < PLAYER_HEIGHT)) { //Liikkumisrajoitus ylhäällä
 				speed = 1;
-				if (timeInMillis % 20 == 0) //Siirretään hahmoa ruudulla ylös hitaammin kuin objektit liikkuvat (objektit liikkuvat 10 ms välein), jotta ei näytä siltä, että hahmo pysähtyisi kokonaan
+				if (timeInMillis % 20 == 0) //Siirretään hahmoa ruudulla ylös hitaammin kuin objektit liikkuvat (objektit liikkuvat 10 ms välein), jotta ei näytä siltä, että hahmo pysähtyisi kokonaan.
 					playerYPos--;
 				gc.clearRect(playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 				gc.drawImage(skier, playerXPos , playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 			}
-			
-			//--------------------------------------------------
-			//Objektien luonti tietyin aikavälein
-			
+						
+			/*
+			Objektien luonti tietyin aikavälein.
+			*/	
 			if (timeInMillis % 3000 == 0 && !(timeInMillis % 6000 == 0) && poleCount < polesBeforeFinishLine) {
 				createPoleLeft();
 			}
@@ -242,7 +255,7 @@ public class SlalomMadnessGame extends Application {
 				createFinishLine();
 			}
 			
-			//---------------------------------------------------
+			//-----------------------------------
 			
 			items.forEach(item -> {
 				
@@ -297,9 +310,9 @@ public class SlalomMadnessGame extends Application {
 			
 			//Kolmiulotteisuuden tuntua lisäävä koodi
 			items.forEach(item -> {
-				gc.drawImage(item.getImg(), item.getXPos(), item.getYPos(), item.getWidth(), item.getHeight()); //Piirretään item päällimmäiseksi, eli pelaaja jää esim. kuusen taakse
+				gc.drawImage(item.getImg(), item.getXPos(), item.getYPos(), item.getWidth(), item.getHeight()); //Piirretään item päällimmäiseksi, eli pelaaja jää esim. kuusen taakse...
 				
-				if (item.getYPos() + item.getHeight() > playerYPos - PLAYER_HEIGHT / 2        //Mutta jos pelaajan koordinaatit ovat tarpeeksi alhaalla itemiin nähden, niin pelaaja piirtyy sen päälle
+				if (item.getYPos() + item.getHeight() > playerYPos - PLAYER_HEIGHT / 2        //...Mutta jos pelaajan koordinaatit ovat tarpeeksi alhaalla itemiin nähden, niin pelaaja piirtyy sen päälle
 						&& item.getYPos() + item.getHeight() / 2.7 < playerYPos) {
 					gc.drawImage(skier, playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 				}
@@ -307,7 +320,7 @@ public class SlalomMadnessGame extends Application {
 			
 			updateTimeAndPoints();
 			
-		//Jos peli ei vielä käynnissä:
+		//Jos peli ei vielä käynnissä
 		} else if (!running && !finished && !dead) { 
 			
 			gc.setTextAlign(TextAlignment.CENTER);
@@ -318,14 +331,6 @@ public class SlalomMadnessGame extends Application {
 	            Math.round(canvas.getWidth()  / 2), 
 	            Math.round(canvas.getHeight() / 2)
 	        );
-					
-			/*
-			gc.setFont(Font.font ("Verdana", 16));
-			gc.fillText("Ohje:", 440, 413);
-			gc.fillText("Liiku nuolinäppäimillä. Väistele esteitä ja yritä päästä maaliin.", 220, 450);
-			gc.fillText("Kierrä punaiset kepit vasemmalta ja siniset oikealta.", 220, 482);
-			gc.fillText("Jokaisesta ohilasketusta kepistä saat kaksi sekuntia sanktiota.", 220, 512);
-			*/
 
 			gc.drawImage(skier, playerXPos , playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 			
@@ -336,7 +341,7 @@ public class SlalomMadnessGame extends Application {
 				});
 			}
 			
-		//Jos maaliin on tultu:
+		//Jos maaliin on tultu
 		} else if (!running && finished) { 
 			
 			gc.setTextAlign(TextAlignment.CENTER);
@@ -404,10 +409,10 @@ public class SlalomMadnessGame extends Application {
 			
 			gc.setFill(Color.BLACK);
 			gc.fillText(
-					texts.getString("coin.reward") + String.valueOf(coinReward),
-					Math.round(canvas.getWidth()  / 2), 
-					Math.round(canvas.getHeight() / 1.1)
-				);
+				texts.getString("coin.reward") + String.valueOf(coinReward),
+				Math.round(canvas.getWidth()  / 2), 
+				Math.round(canvas.getHeight() / 1.1)
+			);
 			gc.drawImage(coin, 588, Math.round(canvas.getHeight() / 1.1 - 18), 35, 35);
 
 			Database.setHighScoreTime(score, "Slalom Madness");
@@ -422,7 +427,8 @@ public class SlalomMadnessGame extends Application {
 			
 			tl.stop();
 			
-		} else if (dead) { //Jos pelaaja törmännyt esteeseen
+		//Jos pelaaja törmännyt esteeseen	
+		} else if (dead) {
 			tl.stop();
 			
 			gc.setTextAlign(TextAlignment.CENTER);
@@ -444,7 +450,9 @@ public class SlalomMadnessGame extends Application {
 		}
 	}
 	
-	//Päivitetään aika- ja pistelaskurin tulostus ruudulle
+	/*
+	 * Päivittää aika- ja pistelaskurin tulostuksen ruudun yläosaan.
+	 */
 	private void updateTimeAndPoints() {
 		
 		gc.setTextAlign(TextAlignment.CENTER);
@@ -461,7 +469,10 @@ public class SlalomMadnessGame extends Application {
 	            30
 	    );
 	}
-
+	
+	/*
+	 * Luo kuusia oikeaan ja vasempaan laitaan (enimmäkseen pelialueen ulkopuolella) pelin ollessa käynnissä.
+	 */
 	private void createSprucesOnSides(int number) {
 		int xPos = new Random().nextInt(boundLeft - boundLeft/3) - 16; //Randomoitu sijainti x-akselilla
 		double sizeMultiplier = new Random().nextDouble() + 1; //Arvotaan objektin "kokokerroin"
@@ -478,7 +489,10 @@ public class SlalomMadnessGame extends Application {
 		items.add(spruceItem2);
 		
 	}
-
+	
+	/*
+	 * Luo kuusia aloitusnäytön oikeaan ja vasempaan laitaan.
+	 */
 	private void createSprucesOnSidesOnStart(int number) {
 		for (int i = 0 ; i < number/2 ; i++) {
 			int xPos = new Random().nextInt(boundLeft - boundLeft/3) - 16; //Randomoitu sijainti x-akselilla
@@ -503,7 +517,9 @@ public class SlalomMadnessGame extends Application {
 		sprucesOnStartCreated = true;
 	}
 
-	//Vasemman kepin luonti
+	/*
+	 * Luo vasemmalta kierrettävän kepin.
+	 */
 	public void createPoleLeft() {
 		int xPos = new Random().nextInt((width / 3)) + (boundLeft + PLAYER_WIDTH); //Randomoitu sijainti x-akselilla
 		int poleWidth = (int) PLAYER_WIDTH / 2;
@@ -512,7 +528,9 @@ public class SlalomMadnessGame extends Application {
 		items.add(item);
 	}
 	
-	//Oikean kepin luonti
+	/*
+	 * Luo oikealta kierrettävän kepin.
+	 */
 	public void createPoleRight() {
 		int xPos = new Random().nextInt((width / 3)) + (width - (width/3 + boundLeft + PLAYER_WIDTH)); //Randomoitu sijainti x-akselilla
 		int poleWidth = (int) PLAYER_WIDTH / 2;
@@ -522,7 +540,9 @@ public class SlalomMadnessGame extends Application {
 		poleCount++;
 	}
 	
-	//Maalin luonti
+	/*
+	 * Luo maalin.
+	 */
 	private void createFinishLine() {
 		int lineWidth = (int) width/2;
 		int lineHeight = (int) PLAYER_HEIGHT * 3;
@@ -531,7 +551,9 @@ public class SlalomMadnessGame extends Application {
 		items.add(item);
 	}
 	
-	//Objektin arvonta ja luonti
+	/*
+	 * Arpoo luotavan objektin, sekä sen sijainnin ja koon. Luo arvotun objektin.
+	 */
 	public void createObject() {
 		
 		if (new Random().nextInt(3) == 1) {
