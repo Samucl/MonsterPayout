@@ -8,8 +8,10 @@ import java.time.temporal.ChronoUnit;
 
 import com.google.common.hash.Hashing;
 
-/*
+/**
  * Tämä luokka hoitaa kaiken kommunikaation tietokannan kanssa.
+ * Metodit ja attribuutit ovat staattisia, koska ei ole tarvetta luoda ilmentymiä.
+ * Näin myös metodikutsut yms. muista luokista onnistuu helpommin.
  */
 public class Database {
 	
