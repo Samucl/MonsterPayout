@@ -9,9 +9,21 @@ import java.util.List;
 import java.util.Random;
 
 import javafx.scene.image.Image;
+import model.Database;
+import model.User;
 
+/**
+ * Abstrakti luokka slotti peleille.
+ * Käynnistäessä uutta pyöräytystä kutsutaan ensiki
+ * insertBet metodia ja jos se palauttaa arvon 'true'
+ * kutsutaan spin metodia, joka palauttaa symboolien kuvat.
+ * Tämän jälkeen haetaan voiton suuruus metodilla 'checkLines'
+ * @author eljashirvela
+ *
+ */
 public abstract class AbstractSlotgame1 {
 	
+	private double bet = 0;
 	private final int bonus_symbols = 3;
 	private final int scatter_symbols = 3;
 	private final int[] scatter_freespins = {5,10,15};
@@ -114,7 +126,21 @@ public abstract class AbstractSlotgame1 {
 		}
 	}
 	
+	/*
+	 * Ennen spin metodin kutsua, pitäisi katsoa riittääkö
+	 * pelaajalla krediitit pelaamiseen
+	 */
+	public boolean insertBet(double bet) {
+		if(User.getCredits() < bet) {
+			bet = 0;
+			return false;
+		}
+		this.bet = bet;
+		return true;
+	}
+	
 	public Image[] spin() {
+		Database.decreaseCreditBalance(bet);
 		int imageCount = rows.length * rows[0].length;
 		Image[] symbolImages = new Image[imageCount];
 		Random rand = new Random();
@@ -153,7 +179,7 @@ public abstract class AbstractSlotgame1 {
 		return symbolImages;
 	}
 	
-	public void checkLines() {
+	public double checkLines() {
 		double multiply_bet = 0.0;
 		int freespins = 0;
 		boolean launch_bonus = false;
@@ -303,6 +329,11 @@ public abstract class AbstractSlotgame1 {
 			System.out.println("LAUNCH BONUS");
 		if(freespins>0)
 			System.out.println(freespins+" FREESPINS");
+		
+		double win = bet * multiply_bet;
+		if(win>0f)
+			Database.increaseCreditBalance(win);
+		return win;
 	}
 	
 	public void fatalError() throws NullPointerException {
