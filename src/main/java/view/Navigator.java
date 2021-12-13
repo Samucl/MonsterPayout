@@ -189,7 +189,7 @@ public class Navigator {
             BorderPane registerView = (BorderPane) loader.load();
             Scene registerScene = new Scene(registerView);
 			Stage window = stage;
-			window.setTitle("MPO - Register");
+			window.setTitle("MPO - Sign Up");
 			window.setScene(registerScene);
         } catch (IOException iOE) {
             iOE.printStackTrace();

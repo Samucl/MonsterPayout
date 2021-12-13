@@ -239,17 +239,8 @@ public class StoreManagementViewController {
 	}
 	
 	public void logout(ActionEvent e) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("LoginView.fxml"));
-            BorderPane loginView = (BorderPane) loader.load();
-            Scene loginScene = new Scene(loginView);
-			Stage window = (Stage) logOutBtn.getScene().getWindow();
-			Database.logout();
-			window.setScene(loginScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+        Stage window = (Stage) logOutBtn.getScene().getWindow();
+		Navigator.logout(window);
 	}
 	
 }

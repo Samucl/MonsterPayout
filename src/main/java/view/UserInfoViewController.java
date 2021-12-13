@@ -88,7 +88,7 @@ public class UserInfoViewController implements Initializable {
     	emailLabel.setText(texts.getString("email"));
     	accountNumberLabel.setText(texts.getString("account.number"));
     	profilePictureLabel.setText(texts.getString("change.profile.pic"));
-    	home_button.setText(texts.getString("user.details"));
+    	home_button.setText(texts.getString("homepage"));
     	logoutButton.setText(texts.getString("logout"));
     	toStoreButton.setText(texts.getString("store"));
     }

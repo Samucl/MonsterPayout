@@ -100,7 +100,7 @@ public class StoreViewController {
 
 	private void useLanguageBundle() {
 		logoutBtn.setText(texts.getString("logout.button"));
-		toHomeBtn.setText(texts.getString("back.to.menu"));
+		toHomeBtn.setText(texts.getString("homepage"));
 		toUserInfoBtn.setText(texts.getString("user.details"));	
 		buyWithCoinsLabel.setText(texts.getString("buy.with.coins"));
 		chooseAmountLabel.setText(texts.getString("choose.credit.amount"));
