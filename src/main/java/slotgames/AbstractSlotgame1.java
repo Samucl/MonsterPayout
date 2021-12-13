@@ -133,13 +133,14 @@ public abstract class AbstractSlotgame1 {
 		 * Haetaan kuvat tauluun joka palautetaan
 		 * Kirjoitetaan näytölle testin vuoksi
 		 */
-		for(int i = 0; i < rows.length; i++) {
+		for(int i = 0, x = 0; i < rows.length; i++) {
 			String s = "";
 			for(int y = 0; y < rows[i].length; y++) {
 				/*
 				 * ÄLÄ POISTA TÄTÄ
 				 */
-				symbolImages[i]=rows[i][y].getImage();
+				symbolImages[x]=rows[i][y].getImage();
+				x++;
 				
 				/*
 				 * DEBUGGAUSTA VARTEN
