@@ -50,149 +50,51 @@ public class HomepageViewController implements Initializable {
 	}
 	
 	public void toArcadeBlackjack1() {
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("ArcadeBlackjack1View2.fxml"));
-            BorderPane blackjackView = (BorderPane) loader.load();
-            Scene blackjackScene = new Scene(blackjackView);
-			Stage window = (Stage) nameLabel.getScene().getWindow();
-			window.setScene(blackjackScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+		Stage window = (Stage) nameLabel.getScene().getWindow();
+		Navigator.toArcadeBlackjack1(window);
 	}
 	
 	public void toCasinoBlackjack1() {
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("CasinoBlackjack1View.fxml"));
-            BorderPane blackjackView = (BorderPane) loader.load();
-            Scene blackjackScene = new Scene(blackjackView);
-			Stage window = (Stage) nameLabel.getScene().getWindow();
-			window.setScene(blackjackScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+		Stage window = (Stage) nameLabel.getScene().getWindow();
+		Navigator.toCasinoBlackjack1(window);
 	}
 	
 	public void toMoneyRain() {
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("MoneyRainMenuView.fxml"));
-            AnchorPane moneyrainmenuView = (AnchorPane) loader.load();
-            Scene moneyrainmenuScene = new Scene(moneyrainmenuView);
-			Stage window = new Stage();
-			window.setOnCloseRequest(evt -> {
-				if(MoneyRain.getTl() != null) {
-					MoneyRain.getTl().stop();//Pysäyttää pelin timelinen jos suljetaan ikkuna kesken pelin.
-				}
-			});
-			window.setScene(moneyrainmenuScene);
-			window.setResizable(false);
-			window.show();
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+		Navigator.toMoneyRain();
 	}
 	
 	public void toSlalomMadness() {
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("SlalomMadnessMenuView.fxml"));
-            AnchorPane slalomMenuView = (AnchorPane) loader.load();
-            Scene slalomMenuScene = new Scene(slalomMenuView);
-			Stage window = new Stage();
-		/*	window.setOnCloseRequest(evt -> {
-				if(SlalomMadnessGame.getTl() != null) {
-					SlalomMadnessGame.getTl().stop();//Pysäyttää pelin timelinen jos suljetaan ikkuna kesken pelin.
-				}
-			}); */
-			window.setScene(slalomMenuScene);
-			window.setTitle("Slalom Madness - Menu");
-			window.setResizable(false);
-			window.show();
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+		Navigator.toSlalomMadness();
 	}
 	
 	public void toFastPoker() {
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("Fast_pokerView.fxml"));
-            BorderPane fastPokerView = (BorderPane) loader.load();
-            Scene fastPokerScene = new Scene(fastPokerView);
-			Stage window = (Stage) nameLabel.getScene().getWindow();
-			window.setScene(fastPokerScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+		Stage window = (Stage) nameLabel.getScene().getWindow();
+		Navigator.toFastPoker(window);
 	}
 	
 	public void toLuckySpins() {
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("LuckySpinsView.fxml"));
-            BorderPane luckySpinsView = (BorderPane) loader.load();
-            Scene luckySpinsScene = new Scene(luckySpinsView);
-			Stage window = (Stage) nameLabel.getScene().getWindow();
-			window.setScene(luckySpinsScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+		Stage window = (Stage) nameLabel.getScene().getWindow();
+		Navigator.toLuckySpins(window);
 	}
 	
 	public void toSpookySpins() {
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("SpookySpinsView.fxml"));
-            BorderPane spookySpinsView = (BorderPane) loader.load();
-            Scene spookySpinsScene = new Scene(spookySpinsView);
-			Stage window = (Stage) nameLabel.getScene().getWindow();
-			window.setScene(spookySpinsScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+		Stage window = (Stage) nameLabel.getScene().getWindow();
+		Navigator.toSpookySpins(window);
 	}
 	
 	public void toUserInfo(ActionEvent e) {
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("UserInfoView.fxml"));
-            BorderPane userInfoView = (BorderPane) loader.load();
-            Scene userInfoScene = new Scene(userInfoView);
-			Stage window = (Stage) toUserInfoButton.getScene().getWindow();
-			window.setScene(userInfoScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+		Stage window = (Stage) nameLabel.getScene().getWindow();
+		Navigator.toUserInfo(window);
 	} 
 	
 	public void toStore(ActionEvent e) {
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("StoreView.fxml"));
-            BorderPane storeView = (BorderPane) loader.load();
-            Scene storeScene = new Scene(storeView);
-			Stage window = (Stage) toStoreButton.getScene().getWindow();
-			window.setScene(storeScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+		Stage window = (Stage) nameLabel.getScene().getWindow();
+		Navigator.toStore(window);
 	}
 	
 	public void logout(ActionEvent e) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("LoginView.fxml"));
-            BorderPane loginView = (BorderPane) loader.load();
-            Scene loginScene = new Scene(loginView);
-			Stage window = (Stage) logoutButton.getScene().getWindow();
-			Database.logout();
-			window.setScene(loginScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+		Stage window = (Stage) nameLabel.getScene().getWindow();
+		Navigator.logout(window);
 	}
 
 	@Override

@@ -168,7 +168,7 @@
                      <image>
                         <Image url="@/bigLogo2en.png" />
                      </image></ImageView>
-                  <Button fx:id="tokirjautumisButton" mnemonicParsing="false" onAction="#toKirjautuminen" prefHeight="70.0" prefWidth="240.0" style="-fx-background-color: #31485f;" text="Onko sinulla jo tili?" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <Button fx:id="tokirjautumisButton" mnemonicParsing="false" onAction="#toLoginView" prefHeight="70.0" prefWidth="240.0" style="-fx-background-color: #31485f;" text="Onko sinulla jo tili?" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Calibri" size="20.0" />
                      </font>

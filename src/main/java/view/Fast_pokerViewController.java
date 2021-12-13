@@ -330,18 +330,9 @@ public class Fast_pokerViewController implements Initializable{
 			
 	}
 	
-	public void toMenu(ActionEvent e) {
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));
-            BorderPane mainView = (BorderPane) loader.load();
-            Scene mainScene = new Scene(mainView);
-			Stage window = (Stage) toMenu.getScene().getWindow();
-			window.setScene(mainScene);
-			
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+	public void toMainView(ActionEvent e) {
+		Stage window = (Stage) toMenu.getScene().getWindow();
+		Navigator.toMainView(window);
 	}
 	
 	@Override

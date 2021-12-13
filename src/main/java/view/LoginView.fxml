@@ -100,17 +100,17 @@
                         </DropShadow>
                      </effect>
                   </Label>
-                  <TextField fx:id="kayttajatunnusInput" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Käyttäjänimi" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <TextField fx:id="usernameInput" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Käyttäjänimi" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Calibri" size="18.0" />
                      </font>
                   </TextField>
-                  <PasswordField fx:id="salasanaInput" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Salasana" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                  <PasswordField fx:id="passwordInput" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Salasana" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Calibri" size="18.0" />
                      </font>
                   </PasswordField>
-                  <Button fx:id="kirjauduButton" defaultButton="true" mnemonicParsing="false" onAction="#kirjaudu" prefHeight="40.0" prefWidth="358.0" style="-fx-background-color: #ebd871;" text="Kirjaudu sisään" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                  <Button fx:id="loginButton" defaultButton="true" mnemonicParsing="false" onAction="#login" prefHeight="40.0" prefWidth="358.0" style="-fx-background-color: #ebd871;" text="Kirjaudu sisään" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Calibri" size="22.0" />
                      </font>
@@ -138,7 +138,7 @@
                      <image>
                         <Image url="@/bigLogo.png" />
                      </image></ImageView>
-                  <Button fx:id="torekisteroitymisButton" mnemonicParsing="false" onAction="#toRekisteroityminen" prefHeight="70.0" prefWidth="240.0" style="-fx-background-color: #31485f;" text="Liity" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <Button fx:id="signUpButton" mnemonicParsing="false" onAction="#toSignUp" prefHeight="70.0" prefWidth="240.0" style="-fx-background-color: #31485f;" text="Liity" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Calibri" size="27.0" />
                      </font>

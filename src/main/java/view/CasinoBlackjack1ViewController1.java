@@ -226,18 +226,8 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 	}
 	
 	public void toMainView(ActionEvent e) {
-			
-			try {
-	            FXMLLoader loader = new FXMLLoader();
-	            loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));
-	            BorderPane mainView = (BorderPane) loader.load();
-	            Scene mainScene = new Scene(mainView);
-				Stage window = (Stage) exit_button.getScene().getWindow();
-				window.setScene(mainScene);
-				
-	        } catch (IOException iOE) {
-	            iOE.printStackTrace();
-	        }
-		}
-
+		Stage window = (Stage) exit_button.getScene().getWindow();
+		Navigator.toMainView(window);
+	}
+	
 }

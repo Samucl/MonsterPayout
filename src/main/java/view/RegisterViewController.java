@@ -26,7 +26,7 @@ import model.Database;
 import model.Session;
 
 /**
- *	Kontrolleri jolla ohjataan RekisterointiViewin toimintoja.
+ *	Kontrolleri jolla ohjataan RegisterViewin toimintoja.
 */
 
 public class RegisterViewController implements Initializable{
@@ -108,7 +108,7 @@ public class RegisterViewController implements Initializable{
 			Boolean onnistuiko = Database.register(kayttajatunnusInput2.getText(), salasanaInput2.getText(), sahkopostiInput.getText(), etunimiInput.getText(), sukunimiInput.getText());
 			
 			if(onnistuiko)
-				successfullRegisteration();
+				successfulRegistration();
 			else
 				insufficientInformation(texts.getString("register.error"),
 						texts.getString("register.error.something"));
@@ -116,22 +116,7 @@ public class RegisterViewController implements Initializable{
 		}
 	}
 	
-	/**
-	* Metodi jolla asetetaan loginScene nykyiseen Stageen
-	*/
-	public void toKirjautuminen(ActionEvent e) {	
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("LoginView.fxml"));
-            BorderPane loginView = (BorderPane) loader.load();
-            Scene loginScene = new Scene(loginView);
-			Stage window = (Stage) tokirjautumisButton.getScene().getWindow();
-			window.setScene(loginScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
-	}
-	
+
 	private void insufficientInformation(String error, String message) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Register error");
@@ -141,8 +126,15 @@ public class RegisterViewController implements Initializable{
 		alert.showAndWait();
 	}
 	
-	private void successfullRegisteration() {
+	private void successfulRegistration() {
 		Database.login(kayttajatunnusInput2.getText(), salasanaInput2.getText());
 		tokirjautumisButton.fire();
 	}
+	
+	
+	public void toLoginView(ActionEvent e) {	
+		Stage window = (Stage) tokirjautumisButton.getScene().getWindow();
+		Navigator.toLogin(window);
+	}
+	
 }

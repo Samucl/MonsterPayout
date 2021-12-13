@@ -29,7 +29,7 @@ import model.Database;
  * 
  * @author Jukka Hallikainen
  */
-public class SetProductsViewController {
+public class StoreManagementViewController {
 	
 	private Product[] products;
 	
