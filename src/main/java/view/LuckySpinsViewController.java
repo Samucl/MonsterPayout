@@ -28,7 +28,7 @@ import slotgames.SlotMachine;
 
 /**
  * Luokka toimii LuckySpins slottipelin kontrollerina
- * @author Samuel
+ * @author Samuel Laisaar
  * @version 12.12.2021
  */
 public class LuckySpinsViewController implements Initializable{
@@ -155,7 +155,7 @@ public class LuckySpinsViewController implements Initializable{
 					}
 				} catch (FileNotFoundException e1) {}
 				if(isWin(game1,game2,game3)) {
-					winLabel.setText(texts.getString("you.won") + " " + (winning*(int)bet) + " " + texts.getString("credits").toLowerCase());
+					winLabel.setText(texts.getString("you.won") + " " + (winning*(int)bet) + " " + texts.getString("coins.partitive").toLowerCase());
 					balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
 				}
 				else
@@ -369,7 +369,7 @@ public class LuckySpinsViewController implements Initializable{
 							setAutoSpins();
 					} catch (FileNotFoundException e1) {}
 					if(isWin(game1,game2,game3)) {
-						winLabel.setText(texts.getString("you.won") + " " + (winning*(int)bet) + " " + texts.getString("credits").toLowerCase());
+						winLabel.setText(texts.getString("you.won") + " " + (winning*(int)bet) + " " + texts.getString("coins.partitive").toLowerCase());
 						balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
 					}
 					else

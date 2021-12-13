@@ -161,9 +161,9 @@
                         <Image url="@/homeicons/spookyspinslogo.png" />
                      </image>
                      <effect>
-                        <DropShadow height="104.03" radius="53.7375" width="112.92">
+                        <DropShadow height="108.48" radius="54.85" width="112.92">
                            <color>
-                              <Color red="0.8184434175491333" green="0.6184819936752319" blue="0.9342105388641357" />
+                              <Color red="0.6075000166893005" green="0.8100000023841858" blue="0.7725460529327393" />
                            </color>
                         </DropShadow>
                      </effect>
