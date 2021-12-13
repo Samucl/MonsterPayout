@@ -12,6 +12,14 @@ public class Slotgame1_Spins_of_Madness extends AbstractSlotgame1 {
 
 	@Override
 	void createSymbols() {
+		
+		/*
+		 * TÄNNE MUUTOS ETTÄ SYMBOOLILLE ANNETAAN KUVAN URL, EI ITE JAVAFX IMAGEA
+		 * 
+		 */
+		
+		
+		/*
 		if(symbolSet==null)
 			throw new NullPointerException("Virhe: symbooli settiä ei ole määritetty");
 			symbols = new SlotSymbol[]{
@@ -35,6 +43,7 @@ public class Slotgame1_Spins_of_Madness extends AbstractSlotgame1 {
 					
 					new SlotSymbol(symbolSet[9], 5, "muki")
 			};
+			*/
 		
 	}
 

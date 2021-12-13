@@ -139,7 +139,7 @@ public abstract class AbstractSlotgame1 {
 				/*
 				 * ÄLÄ POISTA TÄTÄ
 				 */
-				symbolImages[x]=rows[i][y].getImage();
+				symbolImages[x]=rows[i][y].getNewImage();
 				x++;
 				
 				/*

@@ -1,5 +1,8 @@
 package slotgames;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import javafx.scene.image.Image;
 
 public class SlotSymbol {
@@ -16,6 +19,7 @@ public class SlotSymbol {
 	private boolean isScatter = false;
 	
 	private Image image = null;
+	private String imageURL = null;
 	
 	/*
 	 * Mitä isompi luku on probabilityssä, sitä suuremmalla todennäköisyydellä 
@@ -30,6 +34,7 @@ public class SlotSymbol {
 	 * merkkijono joka antaa nimen,
 	 * booleanit jotka määrittävät onki symbooli villi tai bonus
 	 */
+	/*
 	public SlotSymbol(Image symbol, int type, String name, boolean wild, boolean bonus, boolean scatter) {
 		isWild = wild;
 		isBonus = bonus;
@@ -39,10 +44,12 @@ public class SlotSymbol {
 			image = symbol;
 		setMultipliers(type);
 	}
+	*/
 	
 	/*
 	 * Perus symboolin constructor
 	 */
+	/*
 	public SlotSymbol(Image symbol, int type, String name) {
 		isWild = false;
 		isBonus = false;
@@ -52,6 +59,47 @@ public class SlotSymbol {
 			image = symbol;
 		setMultipliers(type);
 	}
+	*/
+	
+	
+	/*
+	 * 
+	 * -----------------Käytetään kuviin urllää, eikä suoraan javafx Imagea
+	 * 
+	 */
+	
+	/*
+	 * Luotaessa symboolia, annetaan numero
+	 * joka kertoo luokalle millaiset kertoimet
+	 * asetetaan,
+	 * merkkijono joka antaa nimen,
+	 * booleanit jotka määrittävät onki symbooli villi tai bonus
+	 */
+	public SlotSymbol(String symbolURL, int type, String name, boolean wild, boolean bonus, boolean scatter) {
+		isWild = wild;
+		isBonus = bonus;
+		isScatter = scatter;
+		this.name = name;
+		if(symbolURL.length()>0)
+			imageURL = symbolURL;
+		setMultipliers(type);
+	}
+	
+	/*
+	 * Perus symboolin constructor
+	 */
+	public SlotSymbol(String symbolURL, int type, String name) {
+		isWild = false;
+		isBonus = false;
+		isScatter = false;
+		this.name = name;
+		if(symbolURL.length()>0)
+			imageURL = symbolURL;
+		setMultipliers(type);
+	}
+	
+	
+	
 	
 	private void setMultipliers(int type) {
 		/*
@@ -120,6 +168,15 @@ public class SlotSymbol {
 	
 	public Image getImage() {
 		return image;
+	}
+	
+	public Image getNewImage() {
+		try {
+			return new Image(new FileInputStream(imageURL));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
