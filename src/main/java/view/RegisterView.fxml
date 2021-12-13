@@ -107,17 +107,17 @@
                         </DropShadow>
                      </effect>
                   </Label>
-                  <TextField fx:id="sahkopostiInput" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Sähköposti" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <TextField fx:id="email" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Sähköposti" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Calibri" size="18.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="etunimiInput" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Etunimi" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                  <TextField fx:id="firstname" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Etunimi" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Calibri" size="18.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="sukunimiInput" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Sukunimi" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                  <TextField fx:id="lastname" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Sukunimi" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Calibri" size="18.0" />
                      </font>
@@ -125,22 +125,22 @@
                         <Insets />
                      </GridPane.margin>
                   </TextField>
-                  <TextField fx:id="kayttajatunnusInput2" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Käyttäjänimi" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+                  <TextField fx:id="username" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Käyttäjänimi" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Calibri" size="18.0" />
                      </font>
                   </TextField>
-                  <PasswordField fx:id="salasanaInput2" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Salasana" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+                  <PasswordField fx:id="password" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Salasana" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Calibri" size="18.0" />
                      </font>
                   </PasswordField>
-                  <PasswordField fx:id="salasanauudelleenInput" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Salasana uudelleen" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
+                  <PasswordField fx:id="passwordAgain" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="358.0" promptText="Salasana uudelleen" style="-fx-background-color: #31485f; -fx-text-fill: #ffffff;" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Calibri" size="18.0" />
                      </font>
                   </PasswordField>
-                  <Button fx:id="rekisteroidyButton" defaultButton="true" mnemonicParsing="false" onAction="#rekisteroidy" prefHeight="40.0" prefWidth="358.0" style="-fx-background-color: #ebd871;" text="Liity mukaan" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
+                  <Button fx:id="signUpButton" defaultButton="true" mnemonicParsing="false" onAction="#signUp" prefHeight="40.0" prefWidth="358.0" style="-fx-background-color: #ebd871;" text="Liity mukaan" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Calibri" size="18.0" />
                      </font>
@@ -168,7 +168,7 @@
                      <image>
                         <Image url="@/bigLogo2en.png" />
                      </image></ImageView>
-                  <Button fx:id="tokirjautumisButton" mnemonicParsing="false" onAction="#toKirjautuminen" prefHeight="70.0" prefWidth="240.0" style="-fx-background-color: #31485f;" text="Onko sinulla jo tili?" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <Button fx:id="toLoginButton" mnemonicParsing="false" onAction="#toLoginView" prefHeight="70.0" prefWidth="240.0" style="-fx-background-color: #31485f;" text="Onko sinulla jo tili?" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Calibri" size="20.0" />
                      </font>

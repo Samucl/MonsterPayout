@@ -18,7 +18,7 @@ public class MainApplication extends Application {
     private Stage primaryStage;
 	
     /**
-	* start metodissa kaikki ohjelman avautuessa suoritettavat toiminnot
+	* start-metodissa kaikki ohjelman avautuessa suoritettavat toiminnot
 	*/
 	@Override
 	public void start(Stage primaryStage) {
@@ -29,18 +29,14 @@ public class MainApplication extends Application {
         //Ohjelman iconin asettaminen
         this.primaryStage.getIcons().add(new Image("file:./src/main/resources/smallLogo.png"));
         
-        showKirjautumisView();
-        
-        //showStoreView();
-        //showUserInfo();
-
+        showLoginView();
 
 	}
     
 	/**
-	* Metodi jolla asetetaan kirjautumisView primaryStageen heti ohjelman avaessa.
+	* Metodi jolla asetetaan loginView primaryStageen heti ohjelman avautuessa
 	*/
-    public void showKirjautumisView() {
+    public void showLoginView() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("LoginView.fxml"));
@@ -51,36 +47,6 @@ public class MainApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    
-    public void showUserInfo() {
-    	try {
-    		FXMLLoader loader = new FXMLLoader();
-    		loader.setLocation(MainApplication.class.getResource("UserInfoView.fxml"));
-    		AnchorPane userInfoView = (AnchorPane) loader.load();
-    		Scene scene = new Scene(userInfoView);
-    		primaryStage.setScene(scene);
-    		
-    		primaryStage.show();
-    		
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
-    }
-    
-    public void showStoreView() {
-    	try {
-    		FXMLLoader loader = new FXMLLoader();
-    		loader.setLocation(MainApplication.class.getResource("StoreView.fxml"));
-    		BorderPane storeView = (BorderPane) loader.load();
-    		Scene scene = new Scene(storeView);
-    		primaryStage.setScene(scene);
-    		
-    		primaryStage.show();
-    		
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
     }
     
 	public static void main(String[] args) {

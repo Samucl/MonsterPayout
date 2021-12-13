@@ -88,7 +88,7 @@ public class UserInfoViewController implements Initializable {
     	emailLabel.setText(texts.getString("email"));
     	accountNumberLabel.setText(texts.getString("account.number"));
     	profilePictureLabel.setText(texts.getString("change.profile.pic"));
-    	home_button.setText(texts.getString("user.details"));
+    	home_button.setText(texts.getString("homepage"));
     	logoutButton.setText(texts.getString("logout"));
     	toStoreButton.setText(texts.getString("store"));
     }
@@ -260,45 +260,18 @@ public class UserInfoViewController implements Initializable {
 	}
 	
 	public void toMainView(ActionEvent e) {
-		
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));
-            BorderPane mainView = (BorderPane) loader.load();
-            Scene mainScene = new Scene(mainView);
-			Stage window = (Stage) home_button.getScene().getWindow();
-			window.setScene(mainScene);
-			
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+		Stage window = (Stage) home_button.getScene().getWindow();
+		Navigator.toMainView(window);	
 	}
 	
 	public void logout(ActionEvent e) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("LoginView.fxml"));
-            BorderPane loginView = (BorderPane) loader.load();
-            Scene loginScene = new Scene(loginView);
-			Stage window = (Stage) logoutButton.getScene().getWindow();
-			Database.logout();
-			window.setScene(loginScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+        Stage window = (Stage) logoutButton.getScene().getWindow();
+		Navigator.logout(window);
 	}
 	
 	public void toStore(ActionEvent e) {
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("StoreView.fxml"));
-            BorderPane storeView = (BorderPane) loader.load();
-            Scene storeScene = new Scene(storeView);
-			Stage window = (Stage) toStoreButton.getScene().getWindow();
-			window.setScene(storeScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+		Stage window = (Stage) toStoreButton.getScene().getWindow();
+		Navigator.toStore(window);
 	}
 	
 	@Override

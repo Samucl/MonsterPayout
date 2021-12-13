@@ -28,10 +28,10 @@ import javafx.stage.Stage;
 */
 
 public class LoginViewController implements Initializable {
-	@FXML private TextField kayttajatunnusInput;
-	@FXML private PasswordField salasanaInput;
-	@FXML private Button kirjauduButton;
-	@FXML private Button torekisteroitymisButton;
+	@FXML private TextField usernameInput;
+	@FXML private PasswordField passwordInput;
+	@FXML private Button loginButton;
+	@FXML private Button signUpButton;
 	@FXML private Label loginLabel;
 	@FXML private MenuButton languageButton;
 	private ResourceBundle texts;
@@ -39,7 +39,7 @@ public class LoginViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-    	kirjauduButton.setDefaultButton(true);
+    	loginButton.setDefaultButton(true);
     	texts = Session.getLanguageBundle();
     	updateLanguage();
     }
@@ -58,38 +58,26 @@ public class LoginViewController implements Initializable {
     
     private void updateLanguage() {
     	loginLabel.setText(texts.getString("welcomeback"));
-    	kirjauduButton.setText(texts.getString("login"));
-    	kayttajatunnusInput.setPromptText(texts.getString("username"));
-    	salasanaInput.setPromptText(texts.getString("password"));
-    	torekisteroitymisButton.setText(texts.getString("join.button"));
+    	loginButton.setText(texts.getString("login"));
+    	usernameInput.setPromptText(texts.getString("username"));
+    	passwordInput.setPromptText(texts.getString("password"));
+    	signUpButton.setText(texts.getString("join.button"));
     	languageButton.setText(texts.getString("language"));
     }
     
 	/**
 	* Metodi käyttäjän kirjautumista varten. Lähetetään DAO:lle kirjautumiseen tarvittavat tiedot.
 	*/
-	public void kirjaudu(ActionEvent e) {
-		if(kayttajatunnusInput.getText().isEmpty() || salasanaInput.getText().isEmpty()) {
+	public void login(ActionEvent e) {
+		if(usernameInput.getText().isEmpty() || passwordInput.getText().isEmpty()) {
 			insufficientInformation(texts.getString("empty.fields"), texts.getString("enter.username.password"));
 		}
 		else {
-			Database.login(kayttajatunnusInput.getText(), salasanaInput.getText());
+			Database.login(usernameInput.getText(), passwordInput.getText());
 			if(Database.isLogged() && User.isAdmin() == 0) {
-				
-				try {
-		            FXMLLoader loader = new FXMLLoader();
-		            loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));
-		            BorderPane homepageView = (BorderPane) loader.load();
-		            Scene homepageScene = new Scene(homepageView);
-					Stage window = (Stage) kirjauduButton.getScene().getWindow();
-					window.setScene(homepageScene);
-		        } catch (IOException iOE) {
-		            iOE.printStackTrace();
-		        }
-			}
-			
-			else if (Database.isLogged() && User.isAdmin() == 1) {
-				toSetProductsView();
+				toMainView();
+			} else if (Database.isLogged() && User.isAdmin() == 1) {
+				toStoreManagement();
 			} else {
 				insufficientInformation(texts.getString("incorrect.id"),texts.getString("user.not.found"));
 			}
@@ -98,40 +86,25 @@ public class LoginViewController implements Initializable {
 	
 	private void insufficientInformation(String error, String message) {
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Register error");
+		alert.setTitle("Error in registering");
 		alert.setHeaderText(error);
 		alert.setContentText(message);
 		alert.showAndWait();
 	}
 	
-	/**
-	* Metodi jolla asetetaan rekisteroitniScene nykyiseen Stageen
-	*/
-	public void toRekisteroityminen(ActionEvent e) {	
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("RegisterView.fxml"));
-            BorderPane registerView = (BorderPane) loader.load();
-            Scene registerScene = new Scene(registerView);
-			Stage window = (Stage) torekisteroitymisButton.getScene().getWindow();
-			window.setScene(registerScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+	public void toMainView() {
+		Stage window = (Stage) loginButton.getScene().getWindow();
+		Navigator.toMainView(window);
 	}
 	
-	public void toSetProductsView() {
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("SetProductsView.fxml"));
-            GridPane spView = (GridPane) loader.load();
-            Scene spScene = new Scene(spView);
-			Stage window = (Stage) kirjauduButton.getScene().getWindow();
-			window.setTitle("MPO - Store Management");
-			window.setScene(spScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+	public void toSignUp(ActionEvent e) {	
+		Stage window = (Stage) signUpButton.getScene().getWindow();
+		Navigator.toSignUp(window);
+	}
+	
+	public void toStoreManagement() {
+		Stage window = (Stage) loginButton.getScene().getWindow();
+		Navigator.toStoreManagement(window);
 	}
 	
 }

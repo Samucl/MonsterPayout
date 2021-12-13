@@ -51,14 +51,12 @@ public class StoreViewController {
 	
 	private ArrayList<Product> discountProducts;
 	private ArrayList<Product> noDiscountProducts;
-	private int bgCardWidth = 140;
-	private Image bgCard;
 	private Image credit;
 	private Image coin;
 	
 	@FXML private BorderPane borderpane;
 	@FXML private GridPane gridpane;
-	@FXML private Button toMainBtn;
+	@FXML private Button toHomeBtn;
 	@FXML private Button toUserInfoBtn;
 	@FXML private Button logoutBtn;
 	
@@ -86,7 +84,6 @@ public class StoreViewController {
 	
 	public void initialize() {
 		try {
-			bgCard = new Image(new FileInputStream("./src/main/resources/card_deck_1/taka.png"));
 			credit = new Image(new FileInputStream("./src/main/resources/credit_1.png"));
 			coin = new Image(new FileInputStream("./src/main/resources/coin_1.png"));	
 		} catch (FileNotFoundException e) {
@@ -103,7 +100,7 @@ public class StoreViewController {
 
 	private void useLanguageBundle() {
 		logoutBtn.setText(texts.getString("logout.button"));
-		toMainBtn.setText(texts.getString("back.to.menu"));
+		toHomeBtn.setText(texts.getString("homepage"));
 		toUserInfoBtn.setText(texts.getString("user.details"));	
 		buyWithCoinsLabel.setText(texts.getString("buy.with.coins"));
 		chooseAmountLabel.setText(texts.getString("choose.credit.amount"));
@@ -390,45 +387,19 @@ public class StoreViewController {
 	}
 	
 	
-	public void toUserInfoView(ActionEvent e) {
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("UserInfoView.fxml"));
-            BorderPane userInfoView = (BorderPane) loader.load();
-            Scene userInfoScene = new Scene(userInfoView);
-			Stage window = (Stage) toUserInfoBtn.getScene().getWindow();
-			window.setScene(userInfoScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+	public void toUserInfo(ActionEvent e) {
+		Stage window = (Stage) nameLabel.getScene().getWindow();
+		Navigator.toUserInfo(window);
 	} 
 	
-	public void toMainView(ActionEvent e) {
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));
-            BorderPane mainView = (BorderPane) loader.load();
-            Scene mainScene = new Scene(mainView);
-			Stage window = (Stage) toMainBtn.getScene().getWindow();
-			window.setScene(mainScene);
-			
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+	public void toMain(ActionEvent e) {
+		Stage window = (Stage) nameLabel.getScene().getWindow();
+		Navigator.toMainView(window);
 	}
 	
 	public void logOut(ActionEvent e) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("LoginView.fxml"));
-            BorderPane loginView = (BorderPane) loader.load();
-            Scene loginScene = new Scene(loginView);
-			Stage window = (Stage) logoutBtn.getScene().getWindow();
-			Database.logout();
-			window.setScene(loginScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+		Stage window = (Stage) nameLabel.getScene().getWindow();
+		Navigator.logout(window);
 	}
 	
 	

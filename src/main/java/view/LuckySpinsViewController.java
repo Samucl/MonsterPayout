@@ -87,19 +87,10 @@ public class LuckySpinsViewController implements Initializable{
 		payline3.setText(texts.getString("payline") + " 3");
 	}
 	
-	public void toMenu(ActionEvent e) {
-		try {
-			autoSpins = 0;
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("HomepageView.fxml"));
-            BorderPane mainView = (BorderPane) loader.load();
-            Scene mainScene = new Scene(mainView);
-			Stage window = (Stage) toMenu.getScene().getWindow();
-			window.setScene(mainScene);
-			
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
+	public void toMainView(ActionEvent e) {
+		autoSpins = 0;
+        Stage window = (Stage) toMenu.getScene().getWindow();
+		Navigator.toMainView(window);
 	}
 	
 	/**

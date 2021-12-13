@@ -426,7 +426,7 @@
                   <Insets bottom="4.0" />
                </GridPane.margin>
             </ImageView>
-            <Button fx:id="toMenu" mnemonicParsing="false" onAction="#toMenu" style="-fx-background-color: #8f0000;" text="Takaisin" textFill="WHITE">
+            <Button fx:id="toMenu" mnemonicParsing="false" onAction="#toMainView" style="-fx-background-color: #8f0000;" text="Takaisin" textFill="WHITE">
                <GridPane.margin>
                   <Insets bottom="2.0" left="15.0" />
                </GridPane.margin>

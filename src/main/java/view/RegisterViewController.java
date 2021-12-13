@@ -26,21 +26,22 @@ import model.Database;
 import model.Session;
 
 /**
- *	Kontrolleri jolla ohjataan RekisterointiViewin toimintoja.
+ *	Kontrolleri jolla ohjataan RegisterViewin toimintoja.
 */
 
 public class RegisterViewController implements Initializable{
-	@FXML private TextField sahkopostiInput;
-	@FXML private TextField etunimiInput;
-	@FXML private TextField sukunimiInput;
-	@FXML private TextField kayttajatunnusInput2;
-	@FXML private PasswordField salasanaInput2;
-	@FXML private PasswordField salasanauudelleenInput;
-	@FXML private Button rekisteroidyButton;
-	@FXML private Button tokirjautumisButton;
+	@FXML private TextField email;
+	@FXML private TextField firstname;
+	@FXML private TextField lastname;
+	@FXML private TextField username;
+	@FXML private PasswordField password;
+	@FXML private PasswordField passwordAgain;
+	@FXML private Button signUpButton;
+	@FXML private Button toLoginButton;
 	@FXML private Label registerLabel;
 	@FXML private MenuButton languageButton;
 	@FXML private ImageView logoImageView;
+	
 	private ResourceBundle texts;
 	
     @Override
@@ -80,35 +81,35 @@ public class RegisterViewController implements Initializable{
     
     private void updateLanguage() {
     	registerLabel.setText(texts.getString("register.button"));
-    	sahkopostiInput.setPromptText(texts.getString("email"));
-    	etunimiInput.setPromptText(texts.getString("firstname"));
-    	sukunimiInput.setPromptText(texts.getString("lastname"));
-    	kayttajatunnusInput2.setPromptText(texts.getString("username"));
-    	salasanaInput2.setPromptText(texts.getString("password"));
-    	salasanauudelleenInput.setPromptText(texts.getString("password.again"));
-    	rekisteroidyButton.setText(texts.getString("join.button"));
-    	tokirjautumisButton.setText(texts.getString("account.already"));
+    	email.setPromptText(texts.getString("email"));
+    	firstname.setPromptText(texts.getString("firstname"));
+    	lastname.setPromptText(texts.getString("lastname"));
+    	username.setPromptText(texts.getString("username"));
+    	password.setPromptText(texts.getString("password"));
+    	passwordAgain.setPromptText(texts.getString("password.again"));
+    	signUpButton.setText(texts.getString("join.button"));
+    	toLoginButton.setText(texts.getString("account.already"));
     	languageButton.setText(texts.getString("language"));
     }
 	
 	/**
 	* Metodi käyttäjän rekisteröintiä varten. Lähetetään DAO:lle rekisteröintiin tarvittavat tiedot.
 	*/
-	public void rekisteroidy(ActionEvent e) {
-		if(!salasanaInput2.getText().equals(salasanauudelleenInput.getText())) {
+	public void signUp(ActionEvent e) {
+		if(!password.getText().equals(passwordAgain.getText())) {
 			insufficientInformation(texts.getString("passwords.not.match"),
 					texts.getString("entered.passwords.not.match"));
 			
-		} else if(kayttajatunnusInput2.getText().isEmpty() || salasanaInput2.getText().isEmpty() || etunimiInput.getText().isEmpty() || sukunimiInput.getText().isEmpty() 
-				|| sahkopostiInput.getText().isEmpty() || salasanauudelleenInput.getText().isEmpty()) {
+		} else if(username.getText().isEmpty() || password.getText().isEmpty() || firstname.getText().isEmpty() || lastname.getText().isEmpty() 
+				|| email.getText().isEmpty() || passwordAgain.getText().isEmpty()) {
 			insufficientInformation(texts.getString("fill.information"),
 					texts.getString("fill.information.incorrect"));
 			
 		} else {
-			Boolean onnistuiko = Database.register(kayttajatunnusInput2.getText(), salasanaInput2.getText(), sahkopostiInput.getText(), etunimiInput.getText(), sukunimiInput.getText());
+			Boolean success = Database.register(username.getText(), password.getText(), email.getText(), firstname.getText(), lastname.getText());
 			
-			if(onnistuiko)
-				successfullRegisteration();
+			if(success)
+				successfulRegistration();
 			else
 				insufficientInformation(texts.getString("register.error"),
 						texts.getString("register.error.something"));
@@ -116,33 +117,25 @@ public class RegisterViewController implements Initializable{
 		}
 	}
 	
-	/**
-	* Metodi jolla asetetaan loginScene nykyiseen Stageen
-	*/
-	public void toKirjautuminen(ActionEvent e) {	
-		try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("LoginView.fxml"));
-            BorderPane loginView = (BorderPane) loader.load();
-            Scene loginScene = new Scene(loginView);
-			Stage window = (Stage) tokirjautumisButton.getScene().getWindow();
-			window.setScene(loginScene);
-        } catch (IOException iOE) {
-            iOE.printStackTrace();
-        }
-	}
-	
+
 	private void insufficientInformation(String error, String message) {
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Register error");
+		alert.setTitle("Error in registering");
 		alert.setHeaderText(error);
 		alert.setContentText(message);
 
 		alert.showAndWait();
 	}
 	
-	private void successfullRegisteration() {
-		Database.login(kayttajatunnusInput2.getText(), salasanaInput2.getText());
-		tokirjautumisButton.fire();
+	private void successfulRegistration() {
+		Database.login(username.getText(), password.getText());
+		toLoginButton.fire();
 	}
+	
+	
+	public void toLoginView(ActionEvent e) {	
+		Stage window = (Stage) toLoginButton.getScene().getWindow();
+		Navigator.toLogin(window);
+	}
+	
 }
