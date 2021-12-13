@@ -14,7 +14,6 @@ import moneyrain.MoneyRain;
 
 /**
  * Tähän luokkaan on keskitetty navigointi eri ikkunoihin.
- * @author Jukka Hallikainen
  *
  */
 
