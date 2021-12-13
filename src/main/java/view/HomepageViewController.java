@@ -34,7 +34,6 @@ public class HomepageViewController implements Initializable {
 	
 	private void init() {
 		useLanguageBundle();
-
 	}
 	
 	private void useLanguageBundle() {
