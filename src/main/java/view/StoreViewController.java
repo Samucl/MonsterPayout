@@ -141,9 +141,22 @@ public class StoreViewController {
 		    ImageView imageView = new ImageView(credit);
 		    imageView.setFitWidth(35);
 		    //Asetetaan krediitti-kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
-		    imageView.setTranslateX(Double.toString(discountProducts.get(i).getCreditAmount()).length() * 9); 
+		    imageView.setTranslateX(creditLabel.getText().length() * 9); 
 		    imageView.setPreserveRatio(true);
 		    productPane1.add(imageView, i, 2);
+		    
+			if (discountProducts.get(i).getCoinAmount() != 0) {
+				
+				Label coinLabel = new Label(Integer.toString(noDiscountProducts.get(i).getCoinAmount()));
+				coinLabel.setFont(Font.font(14));
+				productPane1.add(coinLabel, i, 3);
+			    ImageView coinIV = new ImageView(coin);
+			    coinIV.setFitWidth(26);
+			    //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
+			    coinIV.setTranslateX(coinLabel.getText().length() * 9); 
+			    coinIV.setPreserveRatio(true);
+			    productPane1.add(coinIV, i, 3);
+			}
 	        
 			
 			if (discountProducts.get(i).getSaleMultiplier() < 0.99) {
@@ -152,33 +165,20 @@ public class StoreViewController {
 				oldPriceTxt.setStrikethrough(true);
 				oldPriceTxt.setFill(Color.WHITE);
 				oldPriceTxt.setFont(Font.font(16));
-				productPane1.add(oldPriceTxt, i, 3);
+				productPane1.add(oldPriceTxt, i, 4);
 			}
 			
 			double price = discountProducts.get(i).getPrice() * discountProducts.get(i).getSaleMultiplier();
 			
 			Label priceLabel = new Label(Double.toString(price) + " €");
 			priceLabel.setFont(Font.font("Arial Black", 16));
-			productPane1.add(priceLabel, i, 4);
+			productPane1.add(priceLabel, i, 5);
 			
 			Button buyBtn = new Button();
 			buyBtn.setText(texts.getString("buy.button"));
 			buyBtn.setFont(Font.font("Arial Black", FontWeight.BOLD, 18));
-			productPane1.add(buyBtn, i, 5);
-			
-			if (discountProducts.get(i).getCoinAmount() != 0) {
-				
-				Label coinLabel = new Label(texts.getString("coin.bonus") + Integer.toString(discountProducts.get(i).getCoinAmount()));
-				coinLabel.setFont(Font.font("System", FontPosture.ITALIC, 15));
-				productPane1.add(coinLabel, i, 6);
-			    ImageView imageView2 = new ImageView(coin);
-			    imageView2.setFitWidth(26);
-			        
-			    //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
-			    imageView2.setTranslateX(coinLabel.getText().length() * 7.2); 
-			    imageView2.setPreserveRatio(true);
-			    productPane1.add(imageView2, i, 6);
-			}
+			productPane1.add(buyBtn, i, 6);
+		
 			
 			Product p = discountProducts.get(i);		
 			buyBtn.setOnAction(new EventHandler<ActionEvent>(){
@@ -218,34 +218,35 @@ public class StoreViewController {
 		    ImageView imageView = new ImageView(credit);
 		    imageView.setFitWidth(35);
 		    //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
-		    imageView.setTranslateX(Double.toString(noDiscountProducts.get(i).getCreditAmount()).length() * 9); 
+		    imageView.setTranslateX(creditLabel.getText().length() * 9); 
 		    imageView.setPreserveRatio(true);
 		    productPane2.add(imageView, i, 1);
+		    
+		    if (noDiscountProducts.get(i).getCoinAmount() != 0) { 
+				
+				Label coinLabel = new Label(Integer.toString(noDiscountProducts.get(i).getCoinAmount()));
+				coinLabel.setFont(Font.font(14));
+				productPane2.add(coinLabel, i, 2);
+			    ImageView coinIV = new ImageView(coin);
+			    coinIV.setFitWidth(26);
+			    //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
+			    coinIV.setTranslateX(coinLabel.getText().length() * 9); 
+			    coinIV.setPreserveRatio(true);
+			    productPane2.add(coinIV, i, 2);
+				
+			}
 			
 			double price = noDiscountProducts.get(i).getPrice();
 			
 			Label priceLabel = new Label(Double.toString(price) + " €");
 			priceLabel.setFont(Font.font("Arial Black", 16));
-			productPane2.add(priceLabel, i, 2);
+			productPane2.add(priceLabel, i, 3);
+			
 			
 			Button buyBtn = new Button();
 			buyBtn.setText(texts.getString("buy.button"));
 			buyBtn.setFont(Font.font("Arial Black", FontWeight.BOLD, 18));
-			productPane2.add(buyBtn, i, 3);
-			
-			if (noDiscountProducts.get(i).getCoinAmount() != 0) { 
-				
-				Label coinLabel = new Label(texts.getString("coin.bonus") + Integer.toString(noDiscountProducts.get(i).getCoinAmount()));
-				coinLabel.setFont(Font.font("System", FontPosture.ITALIC, 15));
-				productPane2.add(coinLabel, i, 4);
-			    ImageView coinIV = new ImageView(coin);
-			    coinIV.setFitWidth(26);
-			    //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
-			    coinIV.setTranslateX(coinLabel.getText().length() * 7.2); 
-			    coinIV.setPreserveRatio(true);
-			    productPane2.add(coinIV, i, 4);
-				
-			}
+			productPane2.add(buyBtn, i, 4);
 			
 			Product p = noDiscountProducts.get(i);		
 			buyBtn.setOnAction(new EventHandler<ActionEvent>(){
@@ -254,7 +255,7 @@ public class StoreViewController {
                 	buyProduct(p);
                 }
 			});
-			
+
 		}
 		
 		hbox2.getChildren().add(productPane2);
@@ -380,7 +381,7 @@ public class StoreViewController {
         vbox.getChildren().addAll(label, label2, hbox, successLabel);
         hbox.getChildren().addAll(noBtn, yesBtn);
         
-        Scene dialogScene = new Scene(vbox, 358, 208);
+        Scene dialogScene = new Scene(vbox, 358, 218);
         dialog.setScene(dialogScene);
         dialog.showAndWait();
         
@@ -401,7 +402,6 @@ public class StoreViewController {
 		Stage window = (Stage) nameLabel.getScene().getWindow();
 		Navigator.logout(window);
 	}
-	
 	
 	
 }
