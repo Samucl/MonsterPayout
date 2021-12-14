@@ -20,8 +20,10 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -72,6 +74,8 @@ public class StoreViewController {
 	@FXML private Label creditLabel;
 	@FXML private Label coinLabel;
 	
+	@FXML private AnchorPane exchangePane;
+	@FXML private GridPane exchangeGridPane;
 	@FXML private ChoiceBox<String> buyWithCoinsChoiceBox;
 	@FXML private Label buyWithCoinsLabel;
 	@FXML private Label chooseAmountLabel;
@@ -101,6 +105,9 @@ public class StoreViewController {
 		setNoDiscountProducts();
 		setChoiceBoxItems();
 		refreshAccountInfo();	
+
+		exchangePane.setEffect(setDropShadow(50, Color.BLACK));
+		exchangeGridPane.setEffect(setDropShadow(50, Color.BLACK));
 	}
 
 	private void useLanguageBundle() {
@@ -194,9 +201,11 @@ public class StoreViewController {
                 	buyProduct(p);
                 }
 			});
+			
 		}
 		
 		hbox.getChildren().add(productPane1);
+		hbox.setEffect(setDropShadow(50, Color.BLACK));
 		scrollpane.setContent(productPane1);
 	}
 	
@@ -265,9 +274,11 @@ public class StoreViewController {
                 }
 			});
 
+
 		}
 		
 		hbox2.getChildren().add(productPane2);
+		hbox2.setEffect(setDropShadow(50, Color.BLACK));
 		scrollpane2.setContent(productPane2);
 		
 	}
@@ -409,6 +420,13 @@ public class StoreViewController {
         
 	}
 	
+	private DropShadow setDropShadow(int intensity, Color color) {
+		DropShadow ds = new DropShadow();
+		ds.setColor(color);
+		ds.setHeight(intensity);
+		ds.setWidth(intensity);
+		return ds;
+	}
 	
 	public void toUserInfo(ActionEvent e) {
 		Stage window = (Stage) nameLabel.getScene().getWindow();
