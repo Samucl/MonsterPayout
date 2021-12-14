@@ -321,8 +321,8 @@ public class StoreViewController {
 	 */
 	public void refreshAccountInfo() {
 		nameLabel.setText(User.getUsername());
-		creditLabel.setText(String.valueOf(User.getCredits()));
-		coinLabel.setText(String.valueOf(User.getCoins()));
+		creditLabel.setText(texts.getString("credits") + ": " + User.getCredits());
+		coinLabel.setText(texts.getString("coins") + ": " + User.getCoins());
 	}
 	
 	/**
