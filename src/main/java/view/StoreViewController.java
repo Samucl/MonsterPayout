@@ -391,7 +391,7 @@ public class StoreViewController {
         yesBtn.setFont(Font.font("System", FontWeight.BOLD, 18));
         
         Label successLabel = new Label();
-        successLabel.setFont(Font.font("Arial Black", FontWeight.BOLD, 15));
+        successLabel.setFont(Font.font("System", FontWeight.BOLD, 16));
         successLabel.setTextFill(Color.rgb(255, 228, 0));
         
         noBtn.setOnAction(new EventHandler<ActionEvent>(){
@@ -411,10 +411,10 @@ public class StoreViewController {
             }
         });
         
-        vbox.getChildren().addAll(label, label2, hbox, successLabel);
         hbox.getChildren().addAll(noBtn, yesBtn);
+        vbox.getChildren().addAll(label, label2, hbox, successLabel);
         
-        Scene dialogScene = new Scene(vbox, 358, 218);
+        Scene dialogScene = new Scene(vbox, 354, 228);
         dialog.setScene(dialogScene);
         dialog.showAndWait();
         
