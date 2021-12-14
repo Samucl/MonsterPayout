@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,6 +49,14 @@ public class Session {
 		if(instance == null)
 			instance = new Session();
 		return instance;
+	}
+	
+	public static ResourceBundle changeToLanguage(String lang, String country) {
+		languageBundle = ResourceBundle.getBundle("lang.language", new Locale(lang,country));
+		saveLanguage();
+		loadUserProperties();
+		loadLanguageBundle();
+		return languageBundle;
 	}
 	
 	public static void setLanguageBundle(ResourceBundle lB) {
@@ -232,6 +241,10 @@ public class Session {
 			}
 		}
 		
+	}
+	
+	public static NumberFormat getNumberFormatter() {
+		return NumberFormat.getInstance(userLocale);
 	}
 
 }

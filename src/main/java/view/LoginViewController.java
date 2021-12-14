@@ -2,16 +2,13 @@ package view;
 import model.Database;
 import model.Session;
 import model.User;
-import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,14 +16,13 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-/*
- *	Kontrolleri jolla ohjataan LoginViewin toimintoja.
-*/
-
+/**
+ * Kirjautumis näkymän ohjain.
+ * @author R12
+ *
+ */
 public class LoginViewController implements Initializable {
 	@FXML private TextField usernameInput;
 	@FXML private PasswordField passwordInput;
@@ -45,14 +41,12 @@ public class LoginViewController implements Initializable {
     }
     
     public void toEnglish(ActionEvent e) {
-    	texts = ResourceBundle.getBundle("lang.language",new Locale("en", "US"));
-    	Session.setLanguageBundle(texts);
+    	texts = Session.changeToLanguage("en", "US");
     	updateLanguage();
     }
     
     public void toFinnish(ActionEvent e) {
-    	texts = ResourceBundle.getBundle("lang.language",new Locale("fi", "FI"));
-    	Session.setLanguageBundle(texts);
+    	texts = Session.changeToLanguage("fi", "FI");
     	updateLanguage();
     }
     

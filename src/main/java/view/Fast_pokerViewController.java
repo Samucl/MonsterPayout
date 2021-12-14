@@ -2,23 +2,19 @@ package view;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ResourceBundle;
-
 import cardgames.Card;
 import cardgames.Fast_poker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Database;
@@ -32,7 +28,8 @@ import model.User;
  */
 public class Fast_pokerViewController implements Initializable{
 	
-	ResourceBundle texts;
+	private ResourceBundle texts;
+	private NumberFormat numberFormat;
 	@FXML private ImageView card1;
 	@FXML private ImageView card2;
 	@FXML private ImageView card3;
@@ -58,6 +55,7 @@ public class Fast_pokerViewController implements Initializable{
 	Card[] winningCards = new Card[5];
 	
 	public void init() throws FileNotFoundException {
+		numberFormat = Session.getNumberFormatter();
 		setLanguage();
 		hideCards();
 		recoverButton.setDisable(true);
@@ -77,7 +75,7 @@ public class Fast_pokerViewController implements Initializable{
 		setPokerCardNames(fourOfAKind, 6, texts.getString("four.of.akind"));
 		setPokerCardNames(straightFlush, 7, texts.getString("straight.flush"));
 		setPokerCardNames(royalFlush, 8, texts.getString("royal.flush"));
-		balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
+		balanceLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
 		errorLabel.setText(texts.getString("bet.morethancredit"));
 		betButton.setText(texts.getString("bet.amount") + ": " + bet);
 		winLabel.setText(texts.getString("win"));
@@ -176,7 +174,7 @@ public class Fast_pokerViewController implements Initializable{
 			highlightCards();
 			game.makeDeck();
 			cards = game.take6();
-			balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
+			balanceLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
 			System.out.println(cards[0].getImage());
 			card1.setImage(cards[0].getImage());
 			card2.setImage(cards[1].getImage());
@@ -198,7 +196,7 @@ public class Fast_pokerViewController implements Initializable{
 		handLabel.setText(texts.getString("hand"));
 		hideCards();
 		Database.increaseCreditBalance((int)win * (int)bet);
-		balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
+		balanceLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
 		recoverButton.setDisable(true);
 		doubleButton.setDisable(true);
 		playButton.setDisable(false);

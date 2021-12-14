@@ -1,15 +1,11 @@
 package view;
-
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -19,7 +15,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -47,8 +42,10 @@ public class UserInfoViewController implements Initializable {
 	private ImageView[] images = new ImageView[6];
 	private int selectedImage;
 	private ResourceBundle texts;
+	private NumberFormat numberFormat;
 	
 	private void init() {
+		numberFormat = Session.getNumberFormatter();
 		texts = Session.getLanguageBundle();
 		setImages();
 		setTexts();
@@ -181,7 +178,7 @@ public class UserInfoViewController implements Initializable {
 	private void profileInit() {
 		profile_username.setText(User.getUsername());
 		//profile_image;
-		profile_kredits.setText(texts.getString("credits") + " " + String.valueOf(User.getCredits()));;
+		profile_kredits.setText(texts.getString("credits") + " " + numberFormat.format(User.getCredits()));;
 		profile_coins.setText(texts.getString("coins") + " " + String.valueOf(User.getCoins()));;
 		profile_firstname.setText(User.getFirstname());
 	}

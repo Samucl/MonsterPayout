@@ -2,22 +2,19 @@ package view;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -61,8 +58,10 @@ public class LuckySpinsViewController implements Initializable{
 	private SlotMachine game3 = new SlotMachine();
 	private int paylinesSelected = 1;
 	private ResourceBundle texts;
+	private NumberFormat numberFormat;
 	
 	private void init() throws FileNotFoundException {
+		numberFormat = Session.getNumberFormatter();
 		setLanguage();
 		payline1.setSelected(false);
 		payline2.setSelected(true);
@@ -74,7 +73,7 @@ public class LuckySpinsViewController implements Initializable{
 	
 	private void setLanguage() {
 		texts = Session.getLanguageBundle();
-		balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
+		balanceLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
 		betButton.setText(texts.getString("bet.button") + ": " + (int)bet);
 		paylinesLabel.setText(texts.getString("choose.paylines"));
 		toMenu.setText(texts.getString("exit.button"));
@@ -126,7 +125,7 @@ public class LuckySpinsViewController implements Initializable{
 					game2.play();
 					game3.play();
 					Database.decreaseCreditBalance((int)bet * paylinesSelected);
-					balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
+					balanceLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
 					winning = 0;
 					if(game1.checkWin() && payline1.isSelected())
 						winning += game1.payout();
@@ -146,8 +145,8 @@ public class LuckySpinsViewController implements Initializable{
 					}
 				} catch (FileNotFoundException e1) {}
 				if(isWin(game1,game2,game3)) {
-					winLabel.setText(texts.getString("you.won") + " " + (winning*(int)bet) + " " + texts.getString("coins.partitive").toLowerCase());
-					balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
+					winLabel.setText(texts.getString("you.won") + " " + numberFormat.format((winning*(int)bet)) + " " + texts.getString("coins.partitive").toLowerCase());
+					balanceLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
 				}
 				else
 					winLabel.setText(texts.getString("no.win"));
@@ -335,7 +334,7 @@ public class LuckySpinsViewController implements Initializable{
 						game2.play();
 						game3.play();
 						Database.decreaseCreditBalance((int)bet * paylinesSelected);
-						balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
+						balanceLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
 						winning = 0;
 						spinAnimation();
 						winLabel.setText(texts.getString("good.luck") + "!");
@@ -360,8 +359,8 @@ public class LuckySpinsViewController implements Initializable{
 							setAutoSpins();
 					} catch (FileNotFoundException e1) {}
 					if(isWin(game1,game2,game3)) {
-						winLabel.setText(texts.getString("you.won") + " " + (winning*(int)bet) + " " + texts.getString("coins.partitive").toLowerCase());
-						balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
+						winLabel.setText(texts.getString("you.won") + " " + numberFormat.format((winning*(int)bet)) + " " + texts.getString("coins.partitive").toLowerCase());
+						balanceLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
 					}
 					else
 						winLabel.setText(texts.getString("no.win"));

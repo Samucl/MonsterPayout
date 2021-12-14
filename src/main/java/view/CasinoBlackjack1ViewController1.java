@@ -1,28 +1,28 @@
 package view;
 
-import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-
 import cardgames.Card;
 import cardgames.Casino_Blackjack_1;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Session;
 import model.User;
 
+/**
+ * Kasino blackjack. Blackjack-peli, mitä pelataan krediiteillä, eli oikealla rahalla.
+ * @author R12
+ *
+ */
 public class CasinoBlackjack1ViewController1 implements Initializable {
 	@FXML
 	public Button exit_button;
@@ -74,6 +74,7 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 	public Label errorLabel;
 	
 	private ResourceBundle texts;
+	private NumberFormat numberFormat;
 	
 	private Casino_Blackjack_1 game = new Casino_Blackjack_1();
 	
@@ -86,6 +87,7 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 	
 	private void init() {
 		texts = Session.getLanguageBundle();
+		numberFormat = Session.getNumberFormatter();
 		setText();
 		disableButtons();
 		updateBalance();
@@ -104,7 +106,7 @@ public class CasinoBlackjack1ViewController1 implements Initializable {
 	}
 	
 	private void updateBalance() {
-		balance.setText(texts.getString("credits")+": " + Double.toString(User.getCredits()));
+		balance.setText(texts.getString("credits")+": " + numberFormat.format(User.getCredits()));
 	}
 	
 	public void insertBet() {

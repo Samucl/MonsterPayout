@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ResourceBundle;
 
 import javafx.animation.KeyFrame;
@@ -50,6 +51,7 @@ public class SpookySpinsViewController implements Initializable {
 	private boolean isPaylines = false;
 	private Image spin1, spin2, spin3;
 	private ResourceBundle texts;
+	private NumberFormat numberFormat;
 	private double bet = 1;
 	private boolean isTurbo = false;
 	
@@ -65,6 +67,7 @@ public class SpookySpinsViewController implements Initializable {
 	}
 	
 	private void init() throws FileNotFoundException {
+		numberFormat = Session.getNumberFormatter();
 		texts = Session.getLanguageBundle();
 		setLanguage();
 		imageViews = new ImageView[] {
@@ -90,7 +93,7 @@ public class SpookySpinsViewController implements Initializable {
 		toMenu = new Button(texts.getString("exit.button"));
 		turboButton.setText("Turbo");
 		spinButton.setText(texts.getString("spin.button"));
-		balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
+		balanceLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
 		paylinesLabel.setText(texts.getString("paylines"));
 	}
 	
@@ -120,11 +123,11 @@ public class SpookySpinsViewController implements Initializable {
 			Timeline tl = new Timeline(new KeyFrame(Duration.millis(timeInMillis), ea -> {
 				Image[] symbols = game.spin();
 				double win = game.checkLines();
-				balanceLabel.setText(texts.getString("credits") + ": " + User.getCredits());
+				balanceLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
 				showSymbols(symbols);
 				disableButtons(false);
 				if(win != 0)
-					winLabel.setText(texts.getString("you.won") + " " + win + " " + texts.getString("coins.partitive").toLowerCase());
+					winLabel.setText(texts.getString("you.won") + " " + numberFormat.format(win) + " " + texts.getString("coins.partitive").toLowerCase());
 				else
 					winLabel.setText(texts.getString("no.win"));
 			}));
