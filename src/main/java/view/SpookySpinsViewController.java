@@ -105,12 +105,18 @@ public class SpookySpinsViewController implements Initializable {
 	 * Aloittaa slottipelin ja pyörittää rullia
 	 */
 	private void spin(int timeInMillis) {
+		if(!game.insertBet(bet)) {
+			winLabel.setText(texts.getString("not.enough.credits"));
+			return;
+		}
 		spinAnimation();
 		try {
+			/*
 			if(User.getCredits() < bet) {
 				winLabel.setText(texts.getString("not.enough.credits"));
 				return;
 			}
+			*/
 			Timeline tl = new Timeline(new KeyFrame(Duration.millis(timeInMillis), ea -> {
 				Image[] symbols = game.spin();
 				double win = game.checkLines();

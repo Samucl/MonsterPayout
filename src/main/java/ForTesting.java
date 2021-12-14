@@ -6,6 +6,15 @@ import model.Session;
 public class ForTesting {
 
 	public static void main(String[] args) {
+		spinsOfMadnessTest(args);
+
+	}
+	
+	private static void spinsOfMadnessTest(String[] args) {
+		view.ForTestingLaunchView.main(args);
+	}
+	
+	private void localisationTest() {
 		/*
 		 * Lokalisoinnin testausta
 		 */
@@ -42,7 +51,6 @@ public class ForTesting {
 		System.out.println(texts.getString("login"));
 		
 		Session.initialization();
-
 	}
 
 }
