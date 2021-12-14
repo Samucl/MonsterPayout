@@ -3,6 +3,8 @@ package view;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ResourceBundle;
@@ -70,19 +72,22 @@ public class StoreViewController {
 	@FXML private Label creditLabel;
 	@FXML private Label coinLabel;
 	
-	@FXML private ChoiceBox<Integer> buyWithCoinsChoiceBox;
+	@FXML private ChoiceBox<String> buyWithCoinsChoiceBox;
 	@FXML private Label buyWithCoinsLabel;
 	@FXML private Label chooseAmountLabel;
-	@FXML private Label buyWithCoinsPriceLabel;
+	@FXML private Label youGetThisLabel;
+	@FXML private Label creditExchangeLabel;
 	@FXML private Button buyWithCoinsBtn;
 	@FXML private Label buyWithCoinsSuccessLabel;
-	@FXML private ImageView coinImage;
+	@FXML private ImageView creditImage;
 	
-
+	private NumberFormat numberFormat;
 	private ResourceBundle texts = Session.getLanguageBundle();
 	
 	
 	public void initialize() {
+		numberFormat = Session.getNumberFormatter();
+		
 		try {
 			credit = new Image(new FileInputStream("./src/main/resources/credit_1.png"));
 			coin = new Image(new FileInputStream("./src/main/resources/coin_1.png"));	
@@ -135,14 +140,14 @@ public class StoreViewController {
 			nameLabel.setUnderline(true);
 			productPane1.add(nameLabel, i, 1);
 			
-			Label creditLabel = new Label(Double.toString(discountProducts.get(i).getCreditAmount()));
+			Label creditLabel = new Label(numberFormat.format(discountProducts.get(i).getCreditAmount()));
 			creditLabel.setFont(Font.font("Arial Black", 15));
 			productPane1.add(creditLabel, i, 2);
 
 		    ImageView imageView = new ImageView(credit);
 		    imageView.setFitWidth(35);
 		    //Asetetaan krediitti-kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
-		    imageView.setTranslateX(creditLabel.getText().length() * 9); 
+		    imageView.setTranslateX(creditLabel.getText().length() * 9.5); 
 		    imageView.setPreserveRatio(true);
 		    productPane1.add(imageView, i, 2);
 		    
@@ -214,14 +219,14 @@ public class StoreViewController {
 			nameLabel.setUnderline(true);
 			productPane2.add(nameLabel, i, 0);
 			
-			Label creditLabel = new Label(Double.toString(noDiscountProducts.get(i).getCreditAmount()));
+			Label creditLabel = new Label(numberFormat.format(noDiscountProducts.get(i).getCreditAmount()));
 			creditLabel.setFont(Font.font("Arial Black", 15));
 			productPane2.add(creditLabel, i, 1);
 			
 		    ImageView imageView = new ImageView(credit);
 		    imageView.setFitWidth(35);
 		    //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
-		    imageView.setTranslateX(creditLabel.getText().length() * 9); 
+		    imageView.setTranslateX(creditLabel.getText().length() * 9.5); 
 		    imageView.setPreserveRatio(true);
 		    productPane2.add(imageView, i, 1);
 		    
@@ -268,23 +273,35 @@ public class StoreViewController {
 	}
 	
 	/**
-	 * Asettaa choice boxiin neljä kolikkoarvoa, joita käyttäjä pystyy vaihtamaan krediiteiksi
+	 * Asettaa choice boxiin neljä kolikkoarvoa, joita käyttäjä pystyy vaihtamaan krediiteiksi.
 	 */	
 	public void setChoiceBoxItems() {
-		buyWithCoinsChoiceBox.getItems().add(100);
-		buyWithCoinsChoiceBox.getItems().add(1000);
-		buyWithCoinsChoiceBox.getItems().add(10000);
-		buyWithCoinsChoiceBox.getItems().add(100000);
+		buyWithCoinsChoiceBox.getItems().add(numberFormat.format(100));
+		buyWithCoinsChoiceBox.getItems().add(numberFormat.format(1000));
+		buyWithCoinsChoiceBox.getItems().add(numberFormat.format(10000));
+		buyWithCoinsChoiceBox.getItems().add(numberFormat.format(100000));
 		
 		buyWithCoinsChoiceBox.setOnAction((e) -> {	
-			int coinAmount = buyWithCoinsChoiceBox.getSelectionModel().getSelectedItem();
+			
+			//Muunnetaan choiceboxin alkio int-muotoon
+			String coinAmountStr = buyWithCoinsChoiceBox.getSelectionModel().getSelectedItem();
+			Number coinAmountNum = 0;
+			try {
+				coinAmountNum = numberFormat.parse(coinAmountStr);
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+			int coinAmount = coinAmountNum.intValue();
+			
 		    double creditAmount = coinAmount / 1000.0;
 			
-			buyWithCoinsPriceLabel.setText(texts.getString("you.get") + String.valueOf(creditAmount));
+			youGetThisLabel.setText(texts.getString("you.get"));
+			creditExchangeLabel.setText(numberFormat.format(creditAmount));
 			buyWithCoinsBtn.setText(texts.getString("exchange"));	
-			buyWithCoinsPriceLabel.setVisible(true);
+			youGetThisLabel.setVisible(true);
 			buyWithCoinsBtn.setVisible(true);
-			coinImage.setVisible(true);
+			creditExchangeLabel.setVisible(true);
+			creditImage.setVisible(true);
 			
 			//Ostotapahtuma kolikoilla
 			buyWithCoinsBtn.setOnAction((e2) -> {
@@ -323,12 +340,12 @@ public class StoreViewController {
 	
 	
 	/**
-	 * Asettaa sivun ylälaitaan käyttäjänimen ja saldot
+	 * Asettaa sivun ylälaitaan käyttäjänimen ja saldot.
 	 */
 	public void refreshAccountInfo() {
 		nameLabel.setText(User.getUsername());
-		creditLabel.setText(texts.getString("credits") + ": " + User.getCredits());
-		coinLabel.setText(texts.getString("coins") + ": " + User.getCoins());
+		creditLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
+		coinLabel.setText(texts.getString("coins") + ": " +  numberFormat.format(User.getCoins()));
 	}
 	
 	/**

@@ -133,14 +133,15 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="77.00000610351563" minHeight="10.0" prefHeight="49.59999389648438" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="107.53333740234373" minHeight="10.0" prefHeight="35.800006103515635" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="228.53328857421877" minHeight="10.0" prefHeight="50.199993896484386" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="229.0000061035156" minHeight="10.0" prefHeight="45.600012207031256" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="253.7332824707031" minHeight="10.0" prefHeight="234.39998779296874" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="77.00000610351563" minHeight="10.0" prefHeight="49.6" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="107.53333740234373" minHeight="10.0" prefHeight="49.6" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="229.0000061035156" minHeight="10.0" prefHeight="41.13338623046876" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="229.0000061035156" minHeight="10.0" prefHeight="56.066613769531244" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="228.53328857421877" minHeight="10.0" prefHeight="49.6" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="253.7332824707031" minHeight="10.0" prefHeight="173.7999694824219" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="buyWithCoinsBtn" mnemonicParsing="false" style="-fx-background-color: white;" text="Vaihda!" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                  <Button fx:id="buyWithCoinsBtn" mnemonicParsing="false" style="-fx-background-color: white;" text="Vaihda!" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
@@ -153,36 +154,44 @@
                         <Font name="Arial Black" size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="buyWithCoinsPriceLabel" text="Hinta:" textFill="WHITE" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <Label fx:id="youGetThisLabel" text="Saat:" textFill="WHITE" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                      <font>
-                        <Font name="Arial Black" size="15.0" />
+                        <Font name="Arial Black" size="16.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets top="14.0" />
+                     </GridPane.margin>
                   </Label>
                   <ChoiceBox fx:id="buyWithCoinsChoiceBox" prefWidth="88.0" style="-fx-background-color: white;" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <ImageView fx:id="coinImage" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                  <Label fx:id="buyWithCoinsSuccessLabel" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="TOP">
                      <GridPane.margin>
-                        <Insets right="84.0" />
-                     </GridPane.margin>
-                     <image>
-                        <Image url="@/credit_1.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="buyWithCoinsSuccessLabel" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP">
-                     <GridPane.margin>
-                        <Insets top="8.0" />
+                        <Insets top="14.0" />
                      </GridPane.margin>
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                  <ImageView fx:id="coinImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                      <image>
                         <Image url="@/coin_1.png" />
                      </image>
                      <GridPane.margin>
-                        <Insets right="90.0" />
+                        <Insets right="102.0" />
                      </GridPane.margin>
                   </ImageView>
+                  <ImageView fx:id="creditImage" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets right="96.0" />
+                     </GridPane.margin>
+                     <image>
+                        <Image url="@/credit_1.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="creditExchangeLabel" text="1" textFill="WHITE" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
          </children>
