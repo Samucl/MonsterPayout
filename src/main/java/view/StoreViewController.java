@@ -160,7 +160,7 @@ public class StoreViewController {
 		    
 			if (discountProducts.get(i).getCoinAmount() != 0) {
 				
-				Label coinLabel = new Label(Integer.toString(noDiscountProducts.get(i).getCoinAmount()));
+				Label coinLabel = new Label(Integer.toString(discountProducts.get(i).getCoinAmount()));
 				coinLabel.setFont(Font.font("System", FontWeight.BOLD, 15));
 				productPane1.add(coinLabel, i, 3);
 			    ImageView coinIV = new ImageView(coin);
