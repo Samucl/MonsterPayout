@@ -127,7 +127,7 @@ public class SpookySpinsViewController implements Initializable {
 				showSymbols(symbols);
 				disableButtons(false);
 				if(win != 0)
-					winLabel.setText(texts.getString("you.won") + " " + numberFormat.format(win) + " " + texts.getString("coins.partitive").toLowerCase());
+					winLabel.setText(texts.getString("you.won") + " " + numberFormat.format(win) + " " + texts.getString("credits.partitive").toLowerCase());
 				else
 					winLabel.setText(texts.getString("no.win"));
 			}));
