@@ -160,7 +160,7 @@ public class StoreViewController {
 		    
 			if (discountProducts.get(i).getCoinAmount() != 0) {
 				
-				Label coinLabel = new Label(Integer.toString(discountProducts.get(i).getCoinAmount()));
+				Label coinLabel = new Label(numberFormat.format(discountProducts.get(i).getCoinAmount()));
 				coinLabel.setFont(Font.font("System", FontWeight.BOLD, 15));
 				productPane1.add(coinLabel, i, 3);
 			    ImageView coinIV = new ImageView(coin);
@@ -241,7 +241,7 @@ public class StoreViewController {
 		    
 		    if (noDiscountProducts.get(i).getCoinAmount() != 0) { 
 				
-				Label coinLabel = new Label(Integer.toString(noDiscountProducts.get(i).getCoinAmount()));
+		    	Label coinLabel = new Label(numberFormat.format(noDiscountProducts.get(i).getCoinAmount()));
 				coinLabel.setFont(Font.font("System", FontWeight.BOLD, 15));
 				productPane2.add(coinLabel, i, 2);
 			    ImageView coinIV = new ImageView(coin);
@@ -370,29 +370,29 @@ public class StoreViewController {
         
         VBox vbox = new VBox(10);
         vbox.setPadding(new Insets(24, 16, 16, 24));
-        vbox.setBackground(new Background(new BackgroundFill(Color.rgb(156,114,62), CornerRadii.EMPTY, Insets.EMPTY)));
+        vbox.setStyle("-fx-background-color: #232932");
         
         HBox hbox = new HBox(18);
         hbox.setPadding(new Insets(10, 0, 0, 0));
         
         Label label = new Label();
         label.setText(texts.getString("purchase.confirmation"));    
-        label.setFont(Font.font("Arial Black", FontWeight.NORMAL, 15));
-        label.setTextFill(Color.WHITE);
+        label.setFont(Font.font("System", FontWeight.BOLD, 16));
+        label.setTextFill(Color.rgb(255, 228, 0));
         
         Label label2 = new Label();
         label2.setText(p.getDescription() + "?\n\n");
-        label2.setFont(Font.font("Arial Black", FontWeight.NORMAL, 15));
-        label2.setTextFill(Color.WHITE);
+        label2.setFont(Font.font("System", FontWeight.BOLD, 16));
+        label2.setTextFill(Color.rgb(255, 228, 0));
         
         Button noBtn = new Button(texts.getString("no"));
-        noBtn.setFont(Font.font("Arial Black", FontWeight.NORMAL, 17));
+        noBtn.setFont(Font.font("System", FontWeight.BOLD, 18));
         Button yesBtn = new Button(texts.getString("yes"));
-        yesBtn.setFont(Font.font("Arial Black", FontWeight.NORMAL, 17));
+        yesBtn.setFont(Font.font("System", FontWeight.BOLD, 18));
         
         Label successLabel = new Label();
-        successLabel.setFont(Font.font("Arial Black", FontWeight.NORMAL, 15));
-        successLabel.setTextFill(Color.WHITE);
+        successLabel.setFont(Font.font("Arial Black", FontWeight.BOLD, 15));
+        successLabel.setTextFill(Color.rgb(255, 228, 0));
         
         noBtn.setOnAction(new EventHandler<ActionEvent>(){
             @Override
