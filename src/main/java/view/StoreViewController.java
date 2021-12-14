@@ -70,7 +70,7 @@ public class StoreViewController {
 	@FXML private Label creditLabel;
 	@FXML private Label coinLabel;
 	
-	@FXML private ChoiceBox<Double> buyWithCoinsChoiceBox;
+	@FXML private ChoiceBox<Integer> buyWithCoinsChoiceBox;
 	@FXML private Label buyWithCoinsLabel;
 	@FXML private Label chooseAmountLabel;
 	@FXML private Label buyWithCoinsPriceLabel;
@@ -103,7 +103,7 @@ public class StoreViewController {
 		toHomeBtn.setText(texts.getString("homepage"));
 		toUserInfoBtn.setText(texts.getString("user.details"));	
 		buyWithCoinsLabel.setText(texts.getString("buy.with.coins"));
-		chooseAmountLabel.setText(texts.getString("choose.credit.amount"));
+		chooseAmountLabel.setText(texts.getString("choose.coin.amount"));
 		buyWithCoinsBtn.setText(texts.getString("buy.button"));
 	}
 	
@@ -114,7 +114,7 @@ public class StoreViewController {
 	public void setDiscountProducts() {
 		
 		GridPane productPane1 = new GridPane();
-		productPane1.setVgap(5);
+		productPane1.setVgap(6);
 		productPane1.setPadding(new Insets(18, 0, 18, 24));	
 		
 		for (int i = 0 ; i < discountProducts.size() ; i++) {
@@ -131,7 +131,8 @@ public class StoreViewController {
 			productPane1.add(discountLabel, i, 0);
 			
 			Label nameLabel = new Label(discountProducts.get(i).getDescription());
-			nameLabel.setFont(Font.font("Arial Black", 16));
+			nameLabel.setFont(Font.font("Arial Black", 17));
+			nameLabel.setUnderline(true);
 			productPane1.add(nameLabel, i, 1);
 			
 			Label creditLabel = new Label(Double.toString(discountProducts.get(i).getCreditAmount()));
@@ -148,12 +149,12 @@ public class StoreViewController {
 			if (discountProducts.get(i).getCoinAmount() != 0) {
 				
 				Label coinLabel = new Label(Integer.toString(noDiscountProducts.get(i).getCoinAmount()));
-				coinLabel.setFont(Font.font(14));
+				coinLabel.setFont(Font.font("System", FontWeight.BOLD, 15));
 				productPane1.add(coinLabel, i, 3);
 			    ImageView coinIV = new ImageView(coin);
 			    coinIV.setFitWidth(26);
 			    //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
-			    coinIV.setTranslateX(coinLabel.getText().length() * 9); 
+			    coinIV.setTranslateX(coinLabel.getText().length() * 10); 
 			    coinIV.setPreserveRatio(true);
 			    productPane1.add(coinIV, i, 3);
 			}
@@ -176,7 +177,8 @@ public class StoreViewController {
 			
 			Button buyBtn = new Button();
 			buyBtn.setText(texts.getString("buy.button"));
-			buyBtn.setFont(Font.font("Arial Black", FontWeight.BOLD, 18));
+			buyBtn.setFont(Font.font("System", FontWeight.BOLD, 17));
+			buyBtn.setStyle("-fx-background-color: white");
 			productPane1.add(buyBtn, i, 6);
 		
 			
@@ -200,7 +202,7 @@ public class StoreViewController {
 	public void setNoDiscountProducts() {
 		
 		GridPane productPane2 = new GridPane();
-		productPane2.setVgap(5);
+		productPane2.setVgap(6);
 		productPane2.setPadding(new Insets(0, 0, 18, 24));
 		
 		for (int i = 0 ; i < noDiscountProducts.size() ; i++) {
@@ -208,7 +210,8 @@ public class StoreViewController {
 			productPane2.getColumnConstraints().add(new ColumnConstraints(200));
 			
 			Label nameLabel = new Label(noDiscountProducts.get(i).getDescription());
-			nameLabel.setFont(Font.font("Arial Black", 16));
+			nameLabel.setFont(Font.font("Arial Black", 17));
+			nameLabel.setUnderline(true);
 			productPane2.add(nameLabel, i, 0);
 			
 			Label creditLabel = new Label(Double.toString(noDiscountProducts.get(i).getCreditAmount()));
@@ -225,12 +228,12 @@ public class StoreViewController {
 		    if (noDiscountProducts.get(i).getCoinAmount() != 0) { 
 				
 				Label coinLabel = new Label(Integer.toString(noDiscountProducts.get(i).getCoinAmount()));
-				coinLabel.setFont(Font.font(14));
+				coinLabel.setFont(Font.font("System", FontWeight.BOLD, 15));
 				productPane2.add(coinLabel, i, 2);
 			    ImageView coinIV = new ImageView(coin);
 			    coinIV.setFitWidth(26);
 			    //Asetetaan kuva merkkijonon pituuden mukaan, jotta tulee sopivasti jonon "jatkeeksi"
-			    coinIV.setTranslateX(coinLabel.getText().length() * 9); 
+			    coinIV.setTranslateX(coinLabel.getText().length() * 10); 
 			    coinIV.setPreserveRatio(true);
 			    productPane2.add(coinIV, i, 2);
 				
@@ -245,7 +248,8 @@ public class StoreViewController {
 			
 			Button buyBtn = new Button();
 			buyBtn.setText(texts.getString("buy.button"));
-			buyBtn.setFont(Font.font("Arial Black", FontWeight.BOLD, 18));
+			buyBtn.setFont(Font.font("System", FontWeight.BOLD, 17));
+			buyBtn.setStyle("-fx-background-color: white");
 			productPane2.add(buyBtn, i, 4);
 			
 			Product p = noDiscountProducts.get(i);		
@@ -264,19 +268,20 @@ public class StoreViewController {
 	}
 	
 	/**
-	 * Asettaa choice boxiin neljä krediittiarvoa, joita käyttäjä pystyy kolikoilla ostamaan.
+	 * Asettaa choice boxiin neljä kolikkoarvoa, joita käyttäjä pystyy vaihtamaan krediiteiksi
 	 */	
 	public void setChoiceBoxItems() {
-		buyWithCoinsChoiceBox.getItems().add(0.1);
-		buyWithCoinsChoiceBox.getItems().add((double) 1);
-		buyWithCoinsChoiceBox.getItems().add((double) 10);
-		buyWithCoinsChoiceBox.getItems().add((double) 100);
+		buyWithCoinsChoiceBox.getItems().add(100);
+		buyWithCoinsChoiceBox.getItems().add(1000);
+		buyWithCoinsChoiceBox.getItems().add(10000);
+		buyWithCoinsChoiceBox.getItems().add(100000);
 		
 		buyWithCoinsChoiceBox.setOnAction((e) -> {	
-			double creditAmount = buyWithCoinsChoiceBox.getSelectionModel().getSelectedItem();
-		    int coinAmount = (int) (1000 * creditAmount);
+			int coinAmount = buyWithCoinsChoiceBox.getSelectionModel().getSelectedItem();
+		    double creditAmount = coinAmount / 1000.0;
 			
-			buyWithCoinsPriceLabel.setText(texts.getString("price") + String.valueOf(coinAmount));
+			buyWithCoinsPriceLabel.setText(texts.getString("you.get") + String.valueOf(creditAmount));
+			buyWithCoinsBtn.setText(texts.getString("exchange"));	
 			buyWithCoinsPriceLabel.setVisible(true);
 			buyWithCoinsBtn.setVisible(true);
 			coinImage.setVisible(true);

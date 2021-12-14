@@ -124,11 +124,11 @@
             <Insets />
          </BorderPane.margin>
          <children>
-            <Label fx:id="buyWithCoinsLabel" layoutX="93.0" layoutY="122.0" prefHeight="30.0" prefWidth="205.0" text="Maksa kolikoilla:" textFill="GOLD" underline="true">
+            <Label fx:id="buyWithCoinsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="93.0" layoutY="122.0" prefHeight="30.0" prefWidth="199.0" text="Maksa kolikoilla:" textFill="GOLD" underline="true">
                <font>
                   <Font name="Arial Black" size="20.0" />
                </font></Label>
-            <GridPane layoutX="-3.0" layoutY="175.0" minWidth="382.0" prefHeight="414.0" prefWidth="384.0">
+            <GridPane layoutX="5.0" layoutY="174.0" minWidth="382.0" prefHeight="414.0" prefWidth="384.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -140,7 +140,7 @@
                 <RowConstraints maxHeight="253.7332824707031" minHeight="10.0" prefHeight="234.39998779296874" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="buyWithCoinsBtn" mnemonicParsing="false" text="OSTA!" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                  <Button fx:id="buyWithCoinsBtn" mnemonicParsing="false" style="-fx-background-color: white;" text="Vaihda!" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
@@ -148,23 +148,23 @@
                         <Insets />
                      </GridPane.margin>
                   </Button>
-                  <Label fx:id="chooseAmountLabel" text="Valitse määrä:" textFill="GOLD" GridPane.halignment="CENTER">
+                  <Label fx:id="chooseAmountLabel" text="Valitse määrä:" textFill="WHITE" GridPane.halignment="CENTER">
                      <font>
                         <Font name="Arial Black" size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="buyWithCoinsPriceLabel" text="Hinta:" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <Label fx:id="buyWithCoinsPriceLabel" text="Hinta:" textFill="WHITE" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font name="Arial Black" size="15.0" />
                      </font>
                   </Label>
                   <ChoiceBox fx:id="buyWithCoinsChoiceBox" prefWidth="88.0" style="-fx-background-color: white;" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <ImageView fx:id="coinImage" fitHeight="80.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                  <ImageView fx:id="coinImage" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                      <GridPane.margin>
-                        <Insets right="104.0" />
+                        <Insets right="84.0" />
                      </GridPane.margin>
                      <image>
-                        <Image url="@/coin_1.png" />
+                        <Image url="@/credit_1.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="buyWithCoinsSuccessLabel" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP">
@@ -175,12 +175,12 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="92.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                      <image>
-                        <Image url="@/credit_1.png" />
+                        <Image url="@/coin_1.png" />
                      </image>
                      <GridPane.margin>
-                        <Insets right="104.0" />
+                        <Insets right="90.0" />
                      </GridPane.margin>
                   </ImageView>
                </children>
