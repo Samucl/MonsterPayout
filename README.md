@@ -24,4 +24,4 @@ Ohjelmointikielenä on Java. Projektityökaluna Apache Maven, jonka standardien 
 
 3.  Käyttäessä ohjelmaa tarvitset Metropolian-VPN yhteyden.
   
-4.  Ohjelma suoritetaan Main.java luokasta (src/main/java/default  package).
+4.  Ohjelma suoritetaan Launcher.java luokasta (src/main/java/monsterpayout.app).
