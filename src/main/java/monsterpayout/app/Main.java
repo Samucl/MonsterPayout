@@ -1,3 +1,4 @@
+package monsterpayout.app;
 import model.Session;
 
 public class Main {

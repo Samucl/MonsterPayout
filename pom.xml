@@ -10,10 +10,10 @@
   		<maven.target.source>7.0</maven.target.source>
   		
   		<launcherclass>${mainclass.package}/${launcherclass.name}</launcherclass>
-  <launcherclass.name>org.otpr11.itassetmanagementapp.Launcher</launcherclass.name>
-  <mainclass>${mainclass.package}/${mainclass.name}</mainclass>
-  <!--<mainclass.package></mainclass.package>-->
-  <mainclass.name>Main</mainclass.name>
+  		<launcherclass.name>monsterpayout.app.Launch</launcherclass.name>
+  		<mainclass>${mainclass.package}/${mainclass.name}</mainclass>
+  		<mainclass.package>monsterpayout.app</mainclass.package>
+  		<mainclass.name>Main</mainclass.name>
 	</properties>
     
   <build>

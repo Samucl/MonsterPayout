@@ -1,4 +1,4 @@
-
+package monsterpayout.app;
 public class Launch {
 
 	public static void main(String[] args) {
