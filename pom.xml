@@ -8,6 +8,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>7.0</maven.compiler.source>
   		<maven.target.source>7.0</maven.target.source>
+  		
+  		<launcherclass>${mainclass.package}/${launcherclass.name}</launcherclass>
+  <launcherclass.name>org.otpr11.itassetmanagementapp.Launcher</launcherclass.name>
+  <mainclass>${mainclass.package}/${mainclass.name}</mainclass>
+  <!--<mainclass.package></mainclass.package>-->
+  <mainclass.name>Main</mainclass.name>
 	</properties>
     
   <build>
@@ -50,11 +56,60 @@
             </configuration>
         </plugin>
         
+        <plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-jar-plugin</artifactId>
+  <version>3.2.0</version>
+  <configuration>
+    <archive>
+      <manifest>
+        <addClasspath>true</addClasspath>
+        <mainClass>${launcherclass.name}</mainClass>
+      </manifest>
+    </archive>
+  </configuration>
+</plugin>
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-shade-plugin</artifactId>
+  <executions>
+    <execution>
+      <goals>
+        <goal>shade</goal>
+      </goals>
+      <configuration>
+        <shadedArtifactAttached>true</shadedArtifactAttached>
+        <transformers>
+          <transformer implementation=
+            "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+            <mainClass>${launcherclass.name}</mainClass>
+          </transformer>
+        </transformers>
+      </configuration>
+    </execution>
+  </executions>
+</plugin>
+        
     </plugins>
     
   </build>
   
   <dependencies>
+  
+	  <dependency>
+	  <groupId>org.apache.maven.plugins</groupId>
+	  <artifactId>maven-jar-plugin</artifactId>
+	  <version>3.2.0</version>
+	  <type>maven-plugin</type>
+	  <scope>provided</scope>
+	</dependency>
+	<dependency>
+	  <groupId>org.apache.maven.plugins</groupId>
+	  <artifactId>maven-shade-plugin</artifactId>
+	  <version>3.2.4</version>
+	  <type>maven-plugin</type>
+	  <scope>provided</scope>
+		</dependency>
   
   		<!-- JavaFX -->
 	<dependency>
