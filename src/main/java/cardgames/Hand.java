@@ -3,30 +3,30 @@ package cardgames;
 import java.util.ArrayList;
 
 public class Hand {
-	private ArrayList<Card> hand = new ArrayList<Card>();
-	
+	private ArrayList<Card> hand = new ArrayList<>();
+
 	public void clearHand() {
-		hand = new ArrayList<Card>();
+		hand = new ArrayList<>();
 	}
-	
+
 	public void addCard(Card card) {
 		hand.add(card);
 	}
-	
+
 	public int revealOnlyOne() {
 		if(hand.size()>0)
 			return hand.get(0).getRank();
 		return 0;
 	}
-	
+
 	public int calculateTotalBlackjack() {
 		int total = 0;
-		
+
 		/*
 		 * Ensiksi lasketaan summa niin, että ässä (1) on arvoltaan 11
 		 */
-		for(int i = 0; i < hand.size(); i++) {
-			int value = hand.get(i).getRank();
+		for (Card element : hand) {
+			int value = element.getRank();
 			/*
 			 * Kuvalliset kortit ovat arvoltaan 10
 			 */
@@ -38,13 +38,13 @@ public class Hand {
 			total+=value;
 		}
 		/*
-		 * Jos summa ylittää rajan 21 niin lasketaan summa uudestaan niin, että 
+		 * Jos summa ylittää rajan 21 niin lasketaan summa uudestaan niin, että
 		 * ässä (1) on arvoltaan 1
 		 */
 		if(total > 21) {
 			total = 0;
-			for(int i = 0; i < hand.size(); i++) {
-				int value = hand.get(i).getRank();
+			for (Card element : hand) {
+				int value = element.getRank();
 				/*
 				 * Kuvalliset kortit ovat arvoltaan 10
 				 */
@@ -53,14 +53,14 @@ public class Hand {
 				total+=value;
 			}
 		}
-		
+
 		return total;
 	}
-	
+
 	public ArrayList<Card> getCards(){
 		return hand;
 	}
-	
+
 	public boolean isBlackjack() {
 		/*
 		 * Jos kortteja on vain 2 ja niiden yhteisarvo on 21 niin toteutuu blackjack

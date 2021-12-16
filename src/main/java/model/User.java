@@ -19,7 +19,7 @@ public class User {
 	private static String account_number; //Tilinumero
 	private static int login_streak;
 	private static int status; // 1 = admin, 0 = normaali käyttäjä
-	
+
 	public static void setUserData(int id, String username, String password,String firstname, String lastname, String email, String account_number, int accountId, int coins, double credits, int login_streak, int status) {
 		User.id = id;
 		User.username = username;
@@ -34,22 +34,23 @@ public class User {
 		User.login_streak = login_streak;
 		User.status = status;
 	}
-	
+
 	public static void setCoins(int coins) {
 		User.coins = coins;
 	}
 	public static void setCredits(double credits) {
 		User.credits = credits;
 	}
-	
+
 	public static int getCoins() {
 		return User.coins;
 	}
-	
+
 	public static double getCredits() {
 		return User.credits;
 	}
-	
+
+	@Override
 	public String toString() {
 		return User.firstname + " " + User.lastname + ", " + User.email + ", " + User.password;
 	}
@@ -93,45 +94,45 @@ public class User {
 	public static void setEmail(String email) {
 		User.email = email;
 	}
-	
+
 	public static int getAccountId() {
 		return accountId;
 	}
-	
+
 	public static void setAccountId(int id) {
 		User.accountId = id;
 	}
-	
+
 	public static void setUsername(String username) {
 		User.username = username;
 	}
-	
+
 	public static String getUsername() {
 		return username;
 	}
-	
+
 	public static void setAccountNumber(String account_number) {
 		User.account_number = account_number;
 	}
-	
+
 	public static String getAccountNumber() {
 		if(User.account_number==null)
 			return "";
 		return User.account_number;
 	}
-	
+
 	public static void setLoginStreak(int login_streak) {
 		User.login_streak = login_streak;
 	}
-	
+
 	public static int getLoginStreak() {
 		return User.login_streak;
 	}
-	
+
 	public static int isAdmin() {
 		return status;
 	}
-	
+
 	public static void logout() {
 		id = 0;
 		username = null;
@@ -142,6 +143,6 @@ public class User {
 		accountId = 0;
 		account_number = null;
 	}
-	
-	
+
+
 }

@@ -3,14 +3,17 @@ package cardgames;
 import java.util.ArrayList;
 
 import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import model.ICoinGame;
 import model.Database;
+import model.ICoinGame;
 
+
+/**
+ * Toimii Model luokkana Arcade Blackjack pelille
+ * @author Eljas Hirvelä
+ */
 public class Arcade_Blackjack_1 implements ICoinGame {
 	/*
-	 * Tehdään view joka kutsuu tämän luokan metodeja, sekä 
+	 * Tehdään view joka kutsuu tämän luokan metodeja, sekä
 	 * visualisoi pelin kulkua
 	 */
 
@@ -26,32 +29,32 @@ public class Arcade_Blackjack_1 implements ICoinGame {
 	private boolean gameOver = true;
 	private boolean playersTurn = false;
 	private boolean playerWin = false;
-	
+
 	private AudioClip shuffleSound = new AudioClip("file:./src/main/resources/sounds/sekoitus1.wav");
 	private AudioClip dealSound = new AudioClip("file:./src/main/resources/sounds/jako1.wav");
-	
+
 	public Arcade_Blackjack_1() {
 	}
-	
+
 	public boolean startGame(int bet) {
-		
+
 		/*
 		 * Jos panos on pienempi kuin 0, niin peliä ei pelata
 		 */
 		if(bet < 0)
 			return false;
 		this.bet = bet;
-		
+
 		/*
-		 * Jos tietokannasta ei voida hakea käyttäjältä tarpeeksi 
+		 * Jos tietokannasta ei voida hakea käyttäjältä tarpeeksi
 		 * kolikoita pelaamiseen, niin peliä ei pelata
 		 */
 		if(useCoins(this.bet)<this.bet) {
 			return false;
 		}
-		
+
 		/*
-		 * Jos korttipakkaa ei ole vielä määritetty tai siitä on jo puolet 
+		 * Jos korttipakkaa ei ole vielä määritetty tai siitä on jo puolet
 		 * käytetty niin tehdään uusi pakka
 		 */
 		if(cardDeck == null || cardDeck.size() < (deck_count * 52)/2) {
@@ -66,7 +69,7 @@ public class Arcade_Blackjack_1 implements ICoinGame {
 		dealCards();
 		return true;
 	}
-	
+
 	private void dealCards() {
 		playersHand.clearHand();
 		dealersHand.clearHand();
@@ -85,11 +88,11 @@ public class Arcade_Blackjack_1 implements ICoinGame {
 		} else {
 			if(playersHand.calculateTotalBlackjack()<21)
 				playersTurn = true;
-			else 
+			else
 				gameOver = true;
 		}
 	}
-	
+
 	public void dealersTurn() {
 		if(isDealersTurn()) {
 			int loop = 0;
@@ -118,7 +121,7 @@ public class Arcade_Blackjack_1 implements ICoinGame {
 			}
 		}
 	}
-	
+
 	public boolean playerHit() {
 		if(playersTurn) {
 			dealSound.play();
@@ -134,7 +137,7 @@ public class Arcade_Blackjack_1 implements ICoinGame {
 		}
 		return false;
 	}
-	
+
 	private void playerDraw() {
 		win = bet;
 		playerWin = true;
@@ -142,12 +145,12 @@ public class Arcade_Blackjack_1 implements ICoinGame {
 		gameOver = true;
 		addCoinBalance(win);
 	}
-	
+
 	private void playerLoose() {
 		playersTurn = false;
 		gameOver = true;
 	}
-	
+
 	private void playerWin() {
 		win = bet * 2;
 		playerWin = true;
@@ -155,64 +158,64 @@ public class Arcade_Blackjack_1 implements ICoinGame {
 		gameOver = true;
 		addCoinBalance(win);
 	}
-	
+
 	public void playerStay() {
 		playersTurn = false;
 		dealersTurn();
 	}
-	
+
 	public boolean isDealersTurn() {
 		return !playersTurn && !gameOver;
 	}
-	
+
 	public boolean isGameOver() {
 		return gameOver;
 	}
-	
+
 	public boolean isPlayersTurn() {
 		return playersTurn;
 	}
-	
+
 	public Hand getPlayersHand(){
 		return playersHand;
 	}
-	
+
 	public Hand getDealersHand() {
 		return dealersHand;
 	}
-	
+
 	public int getWinnings() {
 		return win;
 	}
-	
+
 	public ArrayList<Card> getPlayersCards(){
 		return playersHand.getCards();
 	}
-	
+
 	public ArrayList<Card> getDealersCards(){
 		return dealersHand.getCards();
 	}
-	
+
 	public boolean playerBlackjack() {
 		return playersHand.isBlackjack();
 	}
-	
+
 	private void newDeck() {
 		cardDeck = new DeckOfCards(deck_count);
 	}
-	
+
 	public int playerHandTotal() {
 		return playersHand.calculateTotalBlackjack();
 	}
-	
+
 	public int dealersHandTotal() {
 		return dealersHand.calculateTotalBlackjack();
 	}
-	
+
 	public int dealersHandFirstCard() {
 		return dealersHand.revealOnlyOne();
 	}
-	
+
 	@Override
 	public int useCoins(int bet) {
 		return Database.decreaseCoinBalance(bet);

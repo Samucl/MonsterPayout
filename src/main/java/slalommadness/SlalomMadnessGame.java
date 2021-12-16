@@ -1,39 +1,26 @@
 package slalommadness;
 
-import moneyrain.Item;
-import view.MainApplication;
-
 import java.io.FileInputStream;
 import java.io.IOException;
-
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-
+import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -42,21 +29,23 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Database;
 import model.Session;
+import moneyrain.Item;
+import view.MainApplication;
 
 /*
  * Slalom Madness-peliä pyörittävä luokka.
- * 
+ *
  * @author Jukka Hallikainen
  */
 
 public class SlalomMadnessGame extends Application {
-	
+
 	private int timeInMillis;
 	private int poleCount;
 	private long startTime;
 	private long finishTime;
 	private Timeline tl;
-	
+
 	private static final int polesBeforeFinishLine = 10; //Pelin pituus
 	private static final int width = 920;
 	private static final int height = 780;
@@ -64,7 +53,7 @@ public class SlalomMadnessGame extends Application {
 	private static final int PLAYER_HEIGHT = 60;
 	private static final int boundLeft = PLAYER_WIDTH * 4;
 	private static final int boundRight = PLAYER_WIDTH * 4;
-	
+
 	private Image skier;
 	private Image leftPole;
 	private Image rightPole;
@@ -73,43 +62,44 @@ public class SlalomMadnessGame extends Application {
 	private Image stone2;
 	private Image finish;
 	private Image coin;
-	
+
 	private int points = 0;
 	private int coinReward = 0;
 	private int speed = 1;
 	private boolean dead = false;
 	private boolean finished = false;
 	private boolean sprucesOnStartCreated = false;
-	
+
 	private double playerXPos = (width/2-PLAYER_WIDTH/2); //Keskelle ruutua pelin alussa
 	private double playerYPos = (height/4 - PLAYER_HEIGHT);
-	
+
 	private List<Item> items = new ArrayList<>();
-	
+
 	private boolean running = false, goFaster = false, goSlower = false, goLeft = false, goRight = false;
-	
+
 	private ResourceBundle texts = Session.getLanguageBundle();
-	
+
 	private Canvas canvas;
 	private GraphicsContext gc;
-	
+
 	public SlalomMadnessGame(Stage stage) {
 		this.timeInMillis = 0;
 		this.poleCount = 0;
-		
+
 		try {
 			start(stage);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}   
-	
+	}
+
 	/*
 	 * Tekee alustukset pelin käynnistämiselle.
 	 */
+	@Override
 	public void start(Stage stage) throws Exception {
 		stage.setTitle("Slalom Madness");
-		
+
 		skier = new Image(new FileInputStream("./src/main/resources/slalommadness/skier.png"));
 		leftPole = new Image(new FileInputStream("./src/main/resources/slalommadness/leftPole.png"));
 		rightPole = new Image(new FileInputStream("./src/main/resources/slalommadness/rightPole.png"));
@@ -118,28 +108,28 @@ public class SlalomMadnessGame extends Application {
 		stone2 = new Image(new FileInputStream("./src/main/resources/slalommadness/stone2.png"));
 		finish = new Image(new FileInputStream("./src/main/resources/slalommadness/finish.png"));
 		coin = new Image(new FileInputStream("./src/main/resources/coin_1.png"));
-		
+
 		canvas = new Canvas(width, height);
 		gc = canvas.getGraphicsContext2D();
 		tl = new Timeline(new KeyFrame(Duration.millis(10), e -> run(gc)));
-		tl.setCycleCount(Timeline.INDEFINITE);
-		
+		tl.setCycleCount(Animation.INDEFINITE);
+
 		canvas.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
-					case ENTER: 
+					case ENTER:
 						if (!running && !dead && !finished) {
-							running = true; 
+							running = true;
 							startTime = System.currentTimeMillis();
-							
+
 						} else if (dead || finished) {
 							stage.close();
 							toSlalomMadnessMenu();
-							
-						}	
-						break;	
-						
+
+						}
+						break;
+
 					case UP: if (running) {
 						goSlower = true;
 					} break;
@@ -157,7 +147,7 @@ public class SlalomMadnessGame extends Application {
 				}
 			}
 		});
-		
+
 		canvas.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent e) {
@@ -180,39 +170,39 @@ public class SlalomMadnessGame extends Application {
 				}
 			}
 		});
-		
+
 		stage.setScene(new Scene(new StackPane(canvas)));
 		stage.setResizable(false);
 		stage.show();
 		canvas.requestFocus(); //Tarvitaan, jotta ohjelma reagoisi keyEventeihin
 		tl.play(); //run()
 	}
-	
+
 	/*
 	 * Käynnistää pelin.
 	 */
 	private void run(GraphicsContext gc) {
-		
+
 		if (running) {
-			
+
 			//Laskuri jolla seurataan pelissä käytettyä aikaa
-			timeInMillis += speed * 10; 
-			
+			timeInMillis += speed * 10;
+
 			 //Tyhjennetään näyttö
 			gc.clearRect(0, 0, width, height);
 			gc.drawImage(skier, playerXPos , playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
-			
+
 			//Pelaajan liikuttaminen ruudulla
 			if (goLeft && !(playerXPos-2 < boundLeft - PLAYER_WIDTH)) { //Liikkumisrajoitus vasemmalla
 				gc.clearRect(playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT); //Tyhjennetään pelaajan kokoinen alue pelaajan koordinaateilla
 				playerXPos-=2;
 				gc.drawImage(skier, playerXPos , playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
-			}  
+			}
 			if (goRight && !(playerXPos+2 > width - boundRight)) { //Liikkumisrajoitus oikealla
 				gc.clearRect(playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 				playerXPos+=2;
 				gc.drawImage(skier, playerXPos , playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
-			}  
+			}
 			if (goFaster && !(playerYPos-1 > height)) { //Liikkumisrajoitus alhaalla
 				if (timeInMillis % 20 == 10) {//Nopeutta ei voida tuplata sillä hetkellä kun aikaa kulunut esim. 10 ms, koska silloin laskuri menisi -> 10-30-50-70-90 jne. eikä saavuttaisi koskaan tasalukua, jonka välein itemit spawnaavat.
 					timeInMillis+= 10;
@@ -223,7 +213,7 @@ public class SlalomMadnessGame extends Application {
 					gc.clearRect(playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 					gc.drawImage(skier, playerXPos , playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 				}
-			}  
+			}
 			if (goSlower && !(playerYPos-1 < PLAYER_HEIGHT)) { //Liikkumisrajoitus ylhäällä
 				speed = 1;
 				if (timeInMillis % 20 == 0) //Siirretään hahmoa ruudulla ylös hitaammin kuin objektit liikkuvat (objektit liikkuvat 10 ms välein), jotta ei näytä siltä, että hahmo pysähtyisi kokonaan.
@@ -231,34 +221,34 @@ public class SlalomMadnessGame extends Application {
 				gc.clearRect(playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 				gc.drawImage(skier, playerXPos , playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 			}
-						
+
 			/*
 			Objektien luonti tietyin aikavälein.
-			*/	
+			*/
 			if (timeInMillis % 3000 == 0 && !(timeInMillis % 6000 == 0) && poleCount < polesBeforeFinishLine) {
 				createPoleLeft();
 			}
-			
+
 			if (timeInMillis % 6000 == 0 && poleCount < polesBeforeFinishLine) {
 				createPoleRight();
 			}
-			
+
 			if (timeInMillis % 180 == 0 && poleCount < polesBeforeFinishLine) {
 				createObject();
 			}
-			
+
 			if (timeInMillis % 200 == 0 || timeInMillis == 10) {
 				createSprucesOnSides(2);
 			}
-			
+
 			if (poleCount == polesBeforeFinishLine && timeInMillis == 6000 * polesBeforeFinishLine + 3000) {
 				createFinishLine();
 			}
-			
+
 			//-----------------------------------
-			
+
 			items.forEach(item -> {
-				
+
 				if (item.getName().equals("leftPole")) {
 					if (playerYPos-PLAYER_HEIGHT/2 < item.getYPos() && playerYPos-PLAYER_HEIGHT/2 > item.getYPos() - item.getHeight() / 2) { //Jos pelihahmo on kepin kanssa samalla korkeudella
 						if (playerXPos+PLAYER_WIDTH < (item.getXPos() + item.getWidth())) { //Jos hahmo on kepin vasemmalla puolella
@@ -266,8 +256,8 @@ public class SlalomMadnessGame extends Application {
 								points++;
 								item.isCollected();
 							}
-						}			
-					} 
+						}
+					}
 				} else if (item.getName().equals("rightPole")) {
 					if (playerYPos-PLAYER_HEIGHT/2 < item.getYPos() && playerYPos-PLAYER_HEIGHT/2 > item.getYPos() - item.getHeight() / 2) {
 						if ((playerXPos) > (item.getXPos() + item.getWidth()/2)) {
@@ -275,114 +265,114 @@ public class SlalomMadnessGame extends Application {
 								points++;
 								item.isCollected();
 							}
-						} 
+						}
 					}
 				//Jos pelaaja törmää vaaralliseen objektiin
 				} else if (item.isDangerous()) {
-					if ((item.getYPos() + item.getHeight() - item.getHeight()/5 <= playerYPos + PLAYER_HEIGHT) 
+					if ((item.getYPos() + item.getHeight() - item.getHeight()/5 <= playerYPos + PLAYER_HEIGHT)
 							&& (item.getYPos() + item.getHeight() >= playerYPos + PLAYER_HEIGHT / 1.5)) {
 						if (item.getXPos() + item.getWidth() / 2 <= playerXPos + PLAYER_WIDTH && item.getXPos() + item.getWidth() / 2 >= playerXPos) {
 							dead = true;
 							running = false;
 						}
 					}
-					
-				} else if (item.getName().equals("finish")) {	
-					if (playerYPos > item.getYPos() + item.getHeight()) {	
+
+				} else if (item.getName().equals("finish")) {
+					if (playerYPos > item.getYPos() + item.getHeight()) {
 						long time = System.currentTimeMillis();
 						finishTime = time - startTime;
 						finished = true;
 						running = false;
 					}
 				}
-				
-				
+
+
 				gc.clearRect(item.getXPos(), item.getYPos(), item.getWidth(), item.getHeight());
 				item.ascend(speed); //Laitetaan item liikkumaan vertikaalisesti
-				
+
 				gc.drawImage(skier, playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
-				
+
 				if (item.getYPos() < 0) { //Jos item häviää kuvaruudusta niin poistetaan
 					item = null;
 				}
-	
+
 			});
-			
+
 			//Kolmiulotteisuuden tuntua lisäävä koodi
 			items.forEach(item -> {
 				gc.drawImage(item.getImg(), item.getXPos(), item.getYPos(), item.getWidth(), item.getHeight()); //Piirretään item päällimmäiseksi, eli pelaaja jää esim. kuusen taakse...
-				
+
 				if (item.getYPos() + item.getHeight() > playerYPos - PLAYER_HEIGHT / 2        //...Mutta jos pelaajan koordinaatit ovat tarpeeksi alhaalla itemiin nähden, niin pelaaja piirtyy sen päälle
 						&& item.getYPos() + item.getHeight() / 2.7 < playerYPos) {
 					gc.drawImage(skier, playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 				}
 			});
-			
+
 			updateTimeAndPoints();
-			
+
 		//Jos peli ei vielä käynnissä
-		} else if (!running && !finished && !dead) { 
-			
+		} else if (!running && !finished && !dead) {
+
 			gc.setTextAlign(TextAlignment.CENTER);
 	        gc.setTextBaseline(VPos.CENTER);
 	        gc.setFont(Font.font ("Arial Black", 30));
 	        gc.fillText(
 	        	texts.getString("press.enter"),
-	            Math.round(canvas.getWidth()  / 2), 
+	            Math.round(canvas.getWidth()  / 2),
 	            Math.round(canvas.getHeight() / 2)
 	        );
 
 			gc.drawImage(skier, playerXPos , playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
-			
+
 			if (!sprucesOnStartCreated) {
 				createSprucesOnSidesOnStart(60);
 				items.forEach(item -> {
 					gc.drawImage(item.getImg(), item.getXPos(), item.getYPos(), item.getWidth(), item.getHeight());
 				});
 			}
-			
+
 		//Jos maaliin on tultu
-		} else if (!running && finished) { 
-			
+		} else if (!running && finished) {
+
 			gc.setTextAlign(TextAlignment.CENTER);
 	        gc.setTextBaseline(VPos.CENTER);
 			gc.setFont(Font.font ("Arial Black", 30));
-		
+
 			double score;
-			
+
 			if (points < poleCount * 2) { //Jos on tullut ohilaskuja
 				int missedPoles = poleCount * 2 - points;
 				score = (finishTime / 1000.0 + missedPoles * 2);
-				
+
 				gc.setFill(Color.RED);
 				gc.fillText(
 					texts.getString("sanction") + missedPoles + " " + texts.getString("missed.poles") + missedPoles * 2 + " s",
-			        Math.round(canvas.getWidth()  / 2), 
+			        Math.round(canvas.getWidth()  / 2),
 			        Math.round(canvas.getHeight() / 4)
 			    );
-				
+
 				gc.setFill(Color.BLACK);
 				gc.fillText(
 					texts.getString("time") + score + " s",
-				    Math.round(canvas.getWidth()  / 2), 
+				    Math.round(canvas.getWidth()  / 2),
 				    Math.round(canvas.getHeight() / 3)
 				);
-				
+
 			} else {
 				score = finishTime / 1000.0;
 				gc.fillText(texts.getString("time") + score + " s", 350, 220);
 			}
-			
+
 			if (Database.getHighScoreTime("Slalom Madness") == 0 || Database.getHighScoreTime("Slalom Madness") > score) {
 				gc.setFill(Color.DARKGREEN);
 				gc.setFont(Font.font ("Arial Black", 24));
 				gc.fillText(
 					texts.getString("new.personal.best"),
-					Math.round(canvas.getWidth()  / 2), 
+					Math.round(canvas.getWidth()  / 2),
 					Math.round(canvas.getHeight() / 2.5)
 				);
 			}
-			
+
 			if (score > 60) {
 				coinReward = 1;
 			} else if (score > 55) {
@@ -403,73 +393,73 @@ public class SlalomMadnessGame extends Application {
 				coinReward = 8;
 			} else {
 				coinReward = 10;
-			}		
-			
+			}
+
 			try {TimeUnit.SECONDS.sleep(1);} catch (InterruptedException e) {e.printStackTrace();}
-			
+
 			gc.setFill(Color.BLACK);
 			gc.fillText(
 				texts.getString("coin.reward") + String.valueOf(coinReward),
-				Math.round(canvas.getWidth()  / 2), 
+				Math.round(canvas.getWidth()  / 2),
 				Math.round(canvas.getHeight() / 1.1)
 			);
 			gc.drawImage(coin, 588, Math.round(canvas.getHeight() / 1.1 - 18), 35, 35);
 
 			Database.setHighScoreTime(score, "Slalom Madness");
 			Database.increaseCoinBalance(coinReward);
-			
+
 
 			try {TimeUnit.SECONDS.sleep(1);} catch (InterruptedException e) {e.printStackTrace();}
-			
+
 			gc.setFill(Color.BLACK);
 			gc.setFont(Font.font ("Arial Black", 24));
 			gc.fillText(texts.getString("return.to.menu"), 294, 8000);
-			
+
 			tl.stop();
-			
-		//Jos pelaaja törmännyt esteeseen	
+
+		//Jos pelaaja törmännyt esteeseen
 		} else if (dead) {
 			tl.stop();
-			
+
 			gc.setTextAlign(TextAlignment.CENTER);
 	        gc.setTextBaseline(VPos.CENTER);
 			gc.setFont(Font.font ("Arial Black", 30));
 			gc.setFill(Color.RED);
 			gc.fillText(
 				texts.getString("game.over"),
-				Math.round(canvas.getWidth()  / 2), 
+				Math.round(canvas.getWidth()  / 2),
 				Math.round(canvas.getHeight() / 3)
 			);
 			gc.setFill(Color.BLACK);
 			gc.setFont(Font.font ("Arial Black", 24));
 			gc.fillText(
 				texts.getString("return.to.menu"),
-				Math.round(canvas.getWidth()  / 2), 
+				Math.round(canvas.getWidth()  / 2),
 				Math.round(canvas.getHeight() / 2.3)
 			);
 		}
 	}
-	
+
 	/*
 	 * Päivittää aika- ja pistelaskurin tulostuksen ruudun yläosaan.
 	 */
 	private void updateTimeAndPoints() {
-		
+
 		gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
         gc.setFont(Font.font ("Arial Black", 20));
         gc.fillText(
         	texts.getString("points") + points,
-            Math.round(canvas.getWidth()  / 2.5), 
+            Math.round(canvas.getWidth()  / 2.5),
             30
         );
         gc.fillText(
 	        	texts.getString("time") + String.valueOf((System.currentTimeMillis() - startTime) / 1000.0),
-	            Math.round(canvas.getWidth()  / 1.75), 
+	            Math.round(canvas.getWidth()  / 1.75),
 	            30
 	    );
 	}
-	
+
 	/*
 	 * Luo kuusia oikeaan ja vasempaan laitaan (enimmäkseen pelialueen ulkopuolella) pelin ollessa käynnissä.
 	 */
@@ -480,16 +470,16 @@ public class SlalomMadnessGame extends Application {
 		int spruceHeight = (int) (sizeMultiplier * PLAYER_HEIGHT);
 		Item spruceItem = new Item("spruce", spruce, spruceWidth, spruceHeight, xPos, height, true, false);
 		items.add(spruceItem);
-		
+
 		int xPos2 = new Random().nextInt(boundRight - boundRight/3) + width - boundRight; //Randomoitu sijainti x-akselilla
 		double sizeMultiplier2 = new Random().nextDouble() + 1; //Arvotaan objektin "kokokerroin"
 		int spruceWidth2 = (int) (sizeMultiplier2 * 0.618 * PLAYER_HEIGHT);
 		int spruceHeight2 = (int) (sizeMultiplier2 * PLAYER_HEIGHT);
 		Item spruceItem2 = new Item("spruce", spruce, spruceWidth2, spruceHeight2, xPos2, height, true, false);
 		items.add(spruceItem2);
-		
+
 	}
-	
+
 	/*
 	 * Luo kuusia aloitusnäytön oikeaan ja vasempaan laitaan.
 	 */
@@ -503,7 +493,7 @@ public class SlalomMadnessGame extends Application {
 			Item spruceItem = new Item("spruce", spruce, spruceWidth, spruceHeight, xPos, yPos, true, false);
 			items.add(spruceItem);
 		}
-		
+
 		for (int i = 0 ; i < number/2 ; i++) {
 			int xPos = new Random().nextInt(boundRight - boundRight/3) + width - boundRight; //Randomoitu sijainti x-akselilla
 			double sizeMultiplier = new Random().nextDouble() + 1; //Arvotaan objektin "kokokerroin"
@@ -512,8 +502,8 @@ public class SlalomMadnessGame extends Application {
 			int yPos = new Random().nextInt(height - spruceHeight);
 			Item spruceItem = new Item("spruce", spruce, spruceWidth, spruceHeight, xPos, yPos, true, false);
 			items.add(spruceItem);
-		} 
-		
+		}
+
 		sprucesOnStartCreated = true;
 	}
 
@@ -522,40 +512,40 @@ public class SlalomMadnessGame extends Application {
 	 */
 	public void createPoleLeft() {
 		int xPos = new Random().nextInt((width / 3)) + (boundLeft + PLAYER_WIDTH); //Randomoitu sijainti x-akselilla
-		int poleWidth = (int) PLAYER_WIDTH / 2;
-		int poleHeight = (int) PLAYER_HEIGHT;
+		int poleWidth = PLAYER_WIDTH / 2;
+		int poleHeight = PLAYER_HEIGHT;
 		Item item = new Item("leftPole", leftPole, poleWidth, poleHeight, xPos, height, false, false);
 		items.add(item);
 	}
-	
+
 	/*
 	 * Luo oikealta kierrettävän kepin.
 	 */
 	public void createPoleRight() {
 		int xPos = new Random().nextInt((width / 3)) + (width - (width/3 + boundLeft + PLAYER_WIDTH)); //Randomoitu sijainti x-akselilla
-		int poleWidth = (int) PLAYER_WIDTH / 2;
-		int poleHeight = (int) PLAYER_HEIGHT;
+		int poleWidth = PLAYER_WIDTH / 2;
+		int poleHeight = PLAYER_HEIGHT;
 		Item item = new Item("rightPole", rightPole, poleWidth, poleHeight, xPos, height, false, false);
 		items.add(item);
 		poleCount++;
 	}
-	
+
 	/*
 	 * Luo maalin.
 	 */
 	private void createFinishLine() {
-		int lineWidth = (int) width/2;
-		int lineHeight = (int) PLAYER_HEIGHT * 3;
+		int lineWidth = width/2;
+		int lineHeight = PLAYER_HEIGHT * 3;
 		int xPos = width / 4;
 		Item item = new Item("finish", finish, lineWidth, lineHeight, xPos, height, false, false);
 		items.add(item);
 	}
-	
+
 	/*
 	 * Arpoo luotavan objektin, sekä sen sijainnin ja koon. Luo arvotun objektin.
 	 */
 	public void createObject() {
-		
+
 		if (new Random().nextInt(3) == 1) {
 			switch (new Random().nextInt(3)) {
 				case 0: //Kuusi
@@ -586,7 +576,7 @@ public class SlalomMadnessGame extends Application {
 		}
 
 	}
-	
+
 	public void toSlalomMadnessMenu() {
 		try {
             FXMLLoader loader = new FXMLLoader();
@@ -607,11 +597,11 @@ public class SlalomMadnessGame extends Application {
             iOE.printStackTrace();
         }
 	}
-	
+
 	public Timeline getTl() {
 		return tl;
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}

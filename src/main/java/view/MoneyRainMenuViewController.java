@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import moneyrain.MoneyRain;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,6 +21,7 @@ import javafx.stage.Stage;
 import model.Database;
 import model.Session;
 import model.User;
+import moneyrain.MoneyRain;
 
 /**
  * Luokka toimii kontrollerina MoneyRain arcadepelin valikkonäkymälle
@@ -38,7 +38,7 @@ public class MoneyRainMenuViewController implements Initializable {
 	private Stage window;
 	private String[] top10List;
 	private ResourceBundle texts;
-	
+
 	private void init() {
 		texts = Session.getLanguageBundle();
 		nameLabel.setText(User.getUsername());
@@ -59,7 +59,7 @@ public class MoneyRainMenuViewController implements Initializable {
 		setTop10(top9, 8);
 		setTop10(top10, 9);
 	}
-	
+
 	/**
 	 * Peliohje-ikkunan luonti
 	 */
@@ -67,34 +67,34 @@ public class MoneyRainMenuViewController implements Initializable {
 		try {
         	Stage dialog = new Stage();
         	dialog.setTitle("MoneyRain - " + texts.getString("instructions"));
-            
+
             VBox vbox = new VBox(4);
             vbox.setPadding(new Insets(16, 16, 16, 16));
-            
+
             vbox.setBackground(new Background(new BackgroundFill(Color.rgb(82, 52, 34), CornerRadii.EMPTY, Insets.EMPTY)));
             Label instLabel = new Label();
             Label rewardsLabel = new Label();
-            
+
             instLabel.setText(texts.getString("MoneyRain.inst"));
-            
+
             rewardsLabel.setText(texts.getString("MoneyRain.rewards"));
-            
+
             instLabel.setFont(Font.font("Ariel Black", FontWeight.NORMAL, 13));
             instLabel.setTextFill(Color.WHITE);
             rewardsLabel.setFont(Font.font("Ariel Black", FontWeight.NORMAL, 13));
             rewardsLabel.setTextFill(Color.WHITE);
-            
+
             vbox.getChildren().addAll(instLabel, rewardsLabel);
-            
+
             Scene dialogScene = new Scene(vbox, 460, 220);
             dialog.setScene(dialogScene);
             dialog.showAndWait();
-            
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 	}
-	
+
 	/**
 	 * Haetaan top10 lista tietokannasta asetetaan Labeliin näkyviin
 	 */
@@ -107,12 +107,12 @@ public class MoneyRainMenuViewController implements Initializable {
 		else
 			top.setText("-");
 	}
-	
+
 	public void play(ActionEvent e) {
 		window = (Stage) playButton.getScene().getWindow();
 		new MoneyRain(window);
 	}
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		init();

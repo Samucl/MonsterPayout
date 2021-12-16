@@ -1,7 +1,12 @@
 package model;
 
 import java.nio.charset.StandardCharsets;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -14,13 +19,13 @@ import com.google.common.hash.Hashing;
  * Näin myös metodikutsut yms. muista luokista onnistuu helpommin.
  */
 public class Database {
-	
+
 	final static String URL = "jdbc:mariadb://10.114.32.22:3306/kasino";
 	final static String USERNAME = "remote";
 	final static String PASSWORD = "remote";
 	private static Connection connection;
 	private static Database instance = null;
-	
+
 	private Database() {
 		try {
 			connection = DriverManager.getConnection(
@@ -33,34 +38,34 @@ public class Database {
 			} while (e.getNextException() != null);
 		}
 	}
-	
+
 	public static Database getInstance() {
 		if(instance==null)
 			instance = new Database();
 		return instance;
 	}
-	
+
 	private static boolean loggedIn = false;
-	
+
 	public static void logout() {
 		User.logout();
 		loggedIn = false;
 	}
-	
+
 	public static boolean testConnection() {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		try {
 			Connection con = connection;
-			
+
 			Statement stmt = con.createStatement();
-			
+
 			return true;
-			
+
 		} catch (SQLException e) {
 			do {
 				System.err.println("Viesti: "+e.getMessage());
@@ -68,10 +73,10 @@ public class Database {
 				System.err.println("SQL-tilakoodi: "+e.getSQLState());
 			} while (e.getNextException() != null);
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Tarkistaa löytyykö tietokannasta parametrinä annettu tunnus-/salasanapari.
 	 * Jos löytyy, asettaa tämän tiedot User-luokkaan ja asettaa loggedIn-arvoksi "true".
@@ -85,33 +90,33 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		/*
 		 * Luodaan käyttäjän istunto. Samalla haetaan alustavasti kaikki käyttäjän tilaukset yms.
 		 */
 		try {
-			
+
 			Connection con = connection;
-			
+
 			Statement stmt = con.createStatement();
-			
+
 			String passwordHash = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
-			
+
 			//Tehdään SQL haku kutsu ja haetaan Testikäyttäjä/käyttäjät
 			String query = "SELECT KayttajaID, Kayttajanimi, Sahkoposti, Tilinumero, TiliID, Firstname, Lastname, Login_streak, Last_login, Status "
 					+ "FROM Kayttaja WHERE Kayttajanimi = '"+ username +"' AND Salasana = '"+ passwordHash +"'";
-			
+
 			ResultSet rs = stmt.executeQuery(query);
-			
+
 			if(rs.next())
 				if(rs.getString("Kayttajanimi") != null) {
-					
+
 					/*
-					 * Katsotaan milloin käyttäjä on viimeksi kirjautunut, 
+					 * Katsotaan milloin käyttäjä on viimeksi kirjautunut,
 					 * sekä suoritetaan sen vaatimat toimenpiteet
 					 */
 					lastLogin(rs);
-					
+
 					int tId = rs.getInt("KayttajaID");
 					String tUsername = rs.getString("Kayttajanimi");
 					String tFirstname = rs.getString("Firstname");
@@ -135,10 +140,10 @@ public class Database {
 						Session.setOrders(Database.getOrders());
 						return loggedIn;
 					}
-					
+
 				}
-		
-			
+
+
 		} catch (SQLException e) {
 			do {
 				System.err.println("Viesti: "+e.getMessage());
@@ -146,10 +151,10 @@ public class Database {
 				System.err.println("SQL-tilakoodi: "+e.getSQLState());
 			} while (e.getNextException() != null);
 		}
-		
+
 		return loggedIn = false;
 	}
-	
+
 	/**
 	 * Tarkistaa onko käyttäjä kirjautunut viimeksi edellisenä päivänä.
 	 * Jos on, kasvattaa "Login_streak"-rivin arvoa yhdellä.
@@ -161,15 +166,15 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
-		
+
+
 		try {
 			Connection con = connection;
 			Statement stmt = con.createStatement();
 			Date last_login = rs.getDate("Last_login");
-			
+
 			if(last_login != null) {
-				
+
 				/*
 				 * Jos viime kerta on sama kuin nykyinen päivä niin poistutaan metodista
 				 */
@@ -179,9 +184,9 @@ public class Database {
 						last_login.getDay()==Instant.now().atZone(ZoneId.systemDefault()).getDayOfMonth()
 						) {
 					return;
-					
+
 				}
-				
+
 				/*
 				 * Verrataan viime kertaa eiliseen päivään, jos on niin tehdään vaadittavat toimenpiteet
 				 */
@@ -194,13 +199,13 @@ public class Database {
 					String query = "Update Kayttaja SET Login_streak = Login_streak + 1 "
 							+ "WHERE Kayttajanimi = '"+rs.getString("Kayttajanimi")+"'";
 					stmt.executeUpdate(query);
-					
+
 				} else {
 					String query = "Update Kayttaja SET Login_streak = 0 "
 							+ "WHERE Kayttajanimi = '"+rs.getString("Kayttajanimi")+"'";
 					stmt.executeUpdate(query);
 				}
-				
+
 			} else {
 				String query = "Update Kayttaja SET Login_streak = 0 "
 						+ "WHERE Kayttajanimi = '"+rs.getString("Kayttajanimi")+"'";
@@ -217,7 +222,7 @@ public class Database {
 			} while (e.getNextException() != null);
 		}
 	}
-	
+
 	/**
 	 * Palauttaa kaikki tietokannasta löytyvät tuotteet.
 	 * @return
@@ -228,16 +233,16 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		try {
 			Connection con = connection;
-			
+
 			Statement stmt = con.createStatement();
-			
-			
+
+
 			//SQL syöttökutsu, tehdään Kayttaja tauluun uusi rivi
 			String query = "SELECT * FROM Tuote";
-			
+
 			ResultSet rs = stmt.executeQuery(query);
 			int size = 0;
 			if (rs.last()) {
@@ -261,12 +266,12 @@ public class Database {
 						  rs.getInt("KolikoidenMaara"),
 						  rs.getDouble("Alennuskerroin"),
 						  rs.getBoolean("Myynnissa"));
-						  
+
 				}
 			  return products;
 			}
-			
-			
+
+
 		} catch (SQLException e) {
 			do {
 				System.err.println("Viesti: "+e.getMessage());
@@ -276,8 +281,8 @@ public class Database {
 		}
 		return null;
 	}
-			
-	
+
+
 	/**
 	 * Palauttaa kirjautuneen käyttäjän ostohistorian.
 	 * @return
@@ -288,27 +293,27 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
-				
+
 				Statement stmt = con.createStatement();
-				
-				
+
+
 				//SQL syöttökutsu, tehdään Kayttaja tauluun uusi rivi
 				String query = "SELECT KayttajaID FROM Kayttaja WHERE Kayttajanimi = '"
 									+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
-						
-						
-						
+
+
+
 						//"SELECT * FROM Tilaus WHERE KayttajaID = " + kayttajaID;
-				
+
 				ResultSet rs = stmt.executeQuery(query);
 				if(rs.next()) {
 					String kayttajaID = rs.getString("KayttajaID");
 					query = "SELECT * FROM Tilaus WHERE KayttajaID = " + kayttajaID;
-					
+
 					rs = stmt.executeQuery(query);
 					int size = 0;
 					if (rs.last()) {
@@ -326,9 +331,9 @@ public class Database {
 					  return orders;
 					}
 				}
-				
-				
-				
+
+
+
 			} catch (SQLException e) {
 				do {
 					System.err.println("Viesti: "+e.getMessage());
@@ -339,7 +344,7 @@ public class Database {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Lisää uuden käyttäjän tiedot tietokantaan.
 	 * @param username
@@ -355,32 +360,32 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		/*
 		 * Jos rekisteröinti onnistuu palauttaa metodi boolean arvon true, muuten false
 		 */
-		
+
 		try {
 			Connection con = connection;
-			
+
 			Statement stmt = con.createStatement();
-			
+
 			/*
 			 * Jos käyttäjänimi on vapaa siirrytään if-lausekkeen sisään.
 			 */
 			if(checkUsername(username)) {
 				/*
-				 * Ennen uuden käyttäjän luomista luodaan uusi tili, 
+				 * Ennen uuden käyttäjän luomista luodaan uusi tili,
 				 * joka linkitetään uuteen käyttäjään.
 				 */
 				String query = "INSERT INTO Tili (KolikkoSaldo, KrediittiSaldo) "
 						+ "VALUES (0,0)";
 				/*
-				 * Tehdään uuden tilin SQL-kutsu if lauseen sisällä. Jos 
-				 * uuden tilin luonti onnistuu palauttaa executeUpdate uusien 
+				 * Tehdään uuden tilin SQL-kutsu if lauseen sisällä. Jos
+				 * uuden tilin luonti onnistuu palauttaa executeUpdate uusien
 				 * rivien määrän. Jos luonti epäonnistuu uusia rivejä on 0
 				 */
-				
+
 				if(stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS) > 0) {
 					ResultSet rs = stmt.getGeneratedKeys();
 					if(rs.next()) {
@@ -389,8 +394,8 @@ public class Database {
 						query = "INSERT INTO Kayttaja (Kayttajanimi, Salasana, TiliID, Sahkoposti, Firstname, Lastname) "
 								+ "values ('"+username+"', SHA2('"+password+"',256),'"+ tiliID +"', '"+email+"', '"+firstname+"', '"+lastname+"')";
 						/*
-						 * Ylempää if-lauseen perjaatetta jatkaen lähetetään käyttäjän luonnin SQL-kutsu 
-						 * uuden if-lauseen sisällä ja jos käyttäjän luonti onnistuu palauttaa 
+						 * Ylempää if-lauseen perjaatetta jatkaen lähetetään käyttäjän luonnin SQL-kutsu
+						 * uuden if-lauseen sisällä ja jos käyttäjän luonti onnistuu palauttaa
 						 * executeUpdate metodi 0 suuremman luvun
 						 */
 						if(stmt.executeUpdate(query) > 0)
@@ -398,7 +403,7 @@ public class Database {
 					}
 				}
 			}
-			
+
 		} catch (SQLException e) {
 			do {
 				System.err.println("Viesti: "+e.getMessage());
@@ -406,10 +411,10 @@ public class Database {
 				System.err.println("SQL-tilakoodi: "+e.getSQLState());
 			} while (e.getNextException() != null);
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Tarkistaa onko parametrinä annetulla käyttäjänimellä olemassa käyttäjää.
 	 * @param username
@@ -421,22 +426,22 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		try {
 			Connection con = connection;
-			
+
 			Statement stmt = con.createStatement();
-			
+
 			//SQL syöttökutsu, tehdään Kayttaja tauluun uusi rivi
 			String query = "SELECT * FROM Kayttaja WHERE Kayttajanimi LIKE '"+username+"' LIMIT 1";
-			
+
 			stmt.executeQuery(query);
-			
+
 			ResultSet rs = stmt.executeQuery(query);
-			
+
 			if(rs.next())
 				return false;
-			
+
 		} catch (SQLException e) {
 			do {
 				System.err.println("Viesti: "+e.getMessage());
@@ -446,8 +451,8 @@ public class Database {
 		}
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Vähentää kirjautuneen käyttäjän kolikkosaldoa.
 	 * @param amount
@@ -459,37 +464,37 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
-		
+
+
 		/*
-		 * Metodi ottaa parametreina Kayttaja-luokan joka sisältää 
-		 * käyttäjän tiedot, jolloin voidaan varmistaa uudestaan, että 
-		 * käyttäjällä on oikeat kirjautumis tunnukset ennen tiliin 
+		 * Metodi ottaa parametreina Kayttaja-luokan joka sisältää
+		 * käyttäjän tiedot, jolloin voidaan varmistaa uudestaan, että
+		 * käyttäjällä on oikeat kirjautumis tunnukset ennen tiliin
 		 * käsiksi pääsyä.
-		 * 
-		 * Jos tililtä onnistutaan vähentämään pyydetyn määrän saldoa palauttaa 
+		 *
+		 * Jos tililtä onnistutaan vähentämään pyydetyn määrän saldoa palauttaa
 		 * metodi tämän saldon määrän. Muuten 0.
 		 */
-		
+
 		/*
-		 * Jos vähennettävä saldo on 0 tai pienempi niin 
+		 * Jos vähennettävä saldo on 0 tai pienempi niin
 		 * lopetetaan metodin suorittaminen tähän ja palautetaan arvo 0
 		 */
 		if(amount <= 0)
 			return 0;
-		
+
 		if(Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
-				
+
 				Statement stmt = con.createStatement();
-				
+
 				//Tehdään SQL haku kutsu ja haetaan Testikäyttäjä/käyttäjät
 				String query = "SELECT TiliID "
 						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
 
 				ResultSet rs = stmt.executeQuery(query);
-				
+
 				/*
 				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä
 				 */
@@ -504,8 +509,8 @@ public class Database {
 					if(rs.next()) {
 						int saldo = rs.getInt("KolikkoSaldo");
 						/*
-						 * Verrataan käyttäjän tilin saldoa vähennettävään määrään. 
-						 * Jos käyttäjän saldo riittää niin vähennetään tietokannasta 
+						 * Verrataan käyttäjän tilin saldoa vähennettävään määrään.
+						 * Jos käyttäjän saldo riittää niin vähennetään tietokannasta
 						 * amount-muuttujan verran kolikko saldoa
 						 */
 						if(saldo >= amount) {
@@ -518,9 +523,9 @@ public class Database {
 							rs = stmt.executeQuery(query);
 							if(rs.next())
 								User.setCoins(rs.getInt("KolikkoSaldo"));
-							
+
 							/*
-							 * Jos SQL-kutsu muokkasi vähintään 1-riviä, 
+							 * Jos SQL-kutsu muokkasi vähintään 1-riviä,
 							 * niin saldon vähennys kutsu on onnistunut.
 							 */
 							if(updatedRows > 0)
@@ -528,7 +533,7 @@ public class Database {
 						}
 					}
 				}
-				
+
 			} catch (SQLException e) {
 				do {
 					System.err.println("Viesti: "+e.getMessage());
@@ -539,7 +544,7 @@ public class Database {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Vähentää kirjautuneen käyttäjän krediittisaldoa.
 	 * @param amount
@@ -551,22 +556,22 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		if(amount <= 0)
 			return 0;
-		
+
 		if(Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
-				
+
 				Statement stmt = con.createStatement();
-				
+
 				//Tehdään SQL haku kutsu ja haetaan Testikäyttäjä/käyttäjät
 				String query = "SELECT TiliID "
 						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
 
 				ResultSet rs = stmt.executeQuery(query);
-				
+
 				/*
 				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä
 				 */
@@ -581,8 +586,8 @@ public class Database {
 					if(rs.next()) {
 						double saldo = rs.getDouble("KrediittiSaldo");
 						/*
-						 * Verrataan käyttäjän tilin saldoa vähennettävään määrään. 
-						 * Jos käyttäjän saldo riittää niin vähennetään tietokannasta 
+						 * Verrataan käyttäjän tilin saldoa vähennettävään määrään.
+						 * Jos käyttäjän saldo riittää niin vähennetään tietokannasta
 						 * amount-muuttujan verran krediitti saldoa
 						 */
 						if(saldo >= amount) {
@@ -595,9 +600,9 @@ public class Database {
 							rs = stmt.executeQuery(query);
 							if(rs.next())
 								User.setCredits(rs.getDouble("KrediittiSaldo"));
-							
+
 							/*
-							 * Jos SQL-kutsu muokkasi vähintään 1-riviä, 
+							 * Jos SQL-kutsu muokkasi vähintään 1-riviä,
 							 * niin saldon vähennys kutsu on onnistunut.
 							 */
 							if(updatedRows > 0)
@@ -605,7 +610,7 @@ public class Database {
 						}
 					}
 				}
-				
+
 			} catch (SQLException e) {
 				do {
 					System.err.println("Viesti: "+e.getMessage());
@@ -616,7 +621,7 @@ public class Database {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Lisää kirjautuneen käyttäjän kolikkosaldoa.
 	 * @param amount
@@ -628,20 +633,20 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
-			
+
+
 			if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
-				
+
 				try {
 					Connection con = connection;
-					
+
 					Statement stmt = con.createStatement();
-					
+
 					String query = "SELECT TiliID "
 							+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
-	
+
 					ResultSet rs = stmt.executeQuery(query);
-					
+
 					/*
 					 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä
 					 */
@@ -652,16 +657,16 @@ public class Database {
 								+ "SET KolikkoSaldo = KolikkoSaldo + " + amount
 										+ " WHERE TiliID = " + tiliID;
 						int updatedRows = stmt.executeUpdate(query); // Tallennetaan palautusta varten päivitettyjen alkioiden lkm (1 jos onnistui, 0 jos ei)
-						
+
 						query = "SELECT KolikkoSaldo FROM Tili "
 								+ "WHERE TiliID = "+tiliID;
 						rs = stmt.executeQuery(query);
 						if(rs.next())
 							User.setCoins(rs.getInt("KolikkoSaldo"));
-						
+
 						return updatedRows;
 					}
-					
+
 				} catch (SQLException e) {
 					do {
 						System.err.println("Viesti: "+e.getMessage());
@@ -671,9 +676,9 @@ public class Database {
 				}
 			}
 			return 0;
-			
+
 		}
-	
+
 	/**
 	 * Siirtää tuotteen sisältämät pelivaluutat käyttäjän tilille tietokantaan.
 	 * Tallentaa tilauksen tiedot tietokantaan.
@@ -682,28 +687,28 @@ public class Database {
 	 * @return Kertoo onko tietokantaa päivitetty
 	 */
 	public static boolean buyProduct(Product product) {
-		
+
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		/*
 		 * Toteutetaan käyttäjän tekemä tilaus ja samalla päivitetään Session-luokkaan tilaukset
 		 */
 		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
-			
+
 			try {
 				Connection con = connection;
-				
+
 				Statement stmt = con.createStatement();
-				
+
 				String query = "SELECT TiliID, KayttajaID "
 						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
 
 				ResultSet rs = stmt.executeQuery(query);
-				
+
 				/*
 				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä
 				 */
@@ -715,29 +720,29 @@ public class Database {
 							+ "SET KrediittiSaldo = KrediittiSaldo + " + product.getCreditAmount()
 									+ ", KolikkoSaldo = KolikkoSaldo + " + product.getCoinAmount() + " WHERE TiliID = " + tiliID;
 					int updatedRows = stmt.executeUpdate(query); // Tallennetaan palautusta varten päivitettyjen alkioiden lkm (1 jos onnistui, 0 jos ei)
-					
+
 					query = "INSERT INTO Tilaus (Summa, Paivamaara, KayttajaID, Tuotekuvaus, KrediittienMaara) VALUES "
 							+ "("+product.getPrice()+","
 									+ "current_timestamp(),"
 							+kayttajaID+",'"
 									+product.getDescription()+"',"
 							+product.getCreditAmount()+")";
-					
+
 					stmt.executeQuery(query);
-					
+
 					query = "SELECT KrediittiSaldo, KolikkoSaldo FROM Tili "
 							+ "WHERE TiliID = "+tiliID;
 					rs = stmt.executeQuery(query);
 					if(rs.next()) {
 						User.setCredits(rs.getDouble("KrediittiSaldo"));
 						User.setCoins(rs.getInt("KolikkoSaldo"));
-					}	
-					
+					}
+
 					Session.setOrders(Database.getOrders());
-					
+
 					return true;
 				}
-				
+
 			} catch (SQLException e) {
 				do {
 					System.err.println("Viesti: "+e.getMessage());
@@ -748,7 +753,7 @@ public class Database {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Lisää krediittisaldoa kirjautuneen käyttäjän tilille.
 	 * @param amount
@@ -760,20 +765,20 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
-		
+
+
 		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
-			
+
 			try {
 				Connection con = connection;
-				
+
 				Statement stmt = con.createStatement();
-				
+
 				String query = "SELECT TiliID "
 						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
 
 				ResultSet rs = stmt.executeQuery(query);
-				
+
 				/*
 				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä
 				 */
@@ -784,16 +789,16 @@ public class Database {
 							+ "SET KrediittiSaldo = KrediittiSaldo + " + amount
 									+ " WHERE TiliID = " + tiliID;
 					int updatedRows = stmt.executeUpdate(query); // Tallennetaan palautusta varten päivitettyjen alkioiden lkm (1 jos onnistui, 0 jos ei)
-					
+
 					query = "SELECT KrediittiSaldo FROM Tili "
 							+ "WHERE TiliID = "+tiliID;
 					rs = stmt.executeQuery(query);
 					if(rs.next())
 						User.setCredits(rs.getDouble("KrediittiSaldo"));
-					
+
 					return updatedRows;
 				}
-				
+
 			} catch (SQLException e) {
 				do {
 					System.err.println("Viesti: "+e.getMessage());
@@ -803,9 +808,9 @@ public class Database {
 			}
 		}
 		return 0;
-		
+
 	}
-	
+
 	/**
 	 * Tarkistaa onko käyttäjällä oikeutta muokata tietokantaa.
 	 * Jos on, luo tietokantaan uuden tuotteen.
@@ -818,18 +823,18 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		if(Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
-				
+
 				Statement stmt = con.createStatement();
-				
+
 				String query = "SELECT Status "
 						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
 
 				ResultSet rs = stmt.executeQuery(query);
-				
+
 				/*
 				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä statuksella 1 (admin)
 				 */
@@ -843,12 +848,12 @@ public class Database {
 						 */
 						if(rs.next()) {
 							return true;
-								
+
 						}
 					}
-					
+
 				}
-				
+
 			} catch (SQLException e) {
 				do {
 					System.err.println("Viesti: "+e.getMessage());
@@ -859,7 +864,7 @@ public class Database {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Päivittää tuotteen tiedot tietokantaan.
 	 * @param product
@@ -871,24 +876,24 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		if(Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
-				
+
 				Statement stmt = con.createStatement();
-				
+
 				String query = "SELECT Status "
 						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
 
 				ResultSet rs = stmt.executeQuery(query);
-				
+
 				/*
 				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä statuksella 1 (admin)
 				 */
 				if(rs.next()) {
 					if(rs.getInt("Status")==1) {
-						
+
 						query = "UPDATE Tuote SET "
 								+ "Kuvaus = '"+product.getDescription()+"', "
 								+ "Hinta = "+product.getPrice()+", "
@@ -896,9 +901,9 @@ public class Database {
 								+ "KolikoidenMaara = "+product.getCoinAmount()+", "
 								+ "Alennuskerroin = "+product.getSaleMultiplier()+", "
 								+ "Myynnissa = "+product.getForSaleStatus()+" "
-								
+
 								+ "WHERE Tuotenumero = "+product.getId();
-						
+
 						int updatedRows = stmt.executeUpdate(query); // Tallennetaan palautusta varten päivitettyjen alkioiden lkm (1 jos onnistui, 0 jos ei)
 
 						/*
@@ -906,11 +911,11 @@ public class Database {
 						 */
 						if(updatedRows > 0) {
 							return true;
-								
+
 						}
 					}
 				}
-				
+
 			} catch (SQLException e) {
 				do {
 					System.err.println("Viesti: "+e.getMessage());
@@ -921,7 +926,7 @@ public class Database {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Poistaa tuotteen tietokannasta.
 	 * @param productNumber
@@ -933,18 +938,18 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		if(Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
-				
+
 				Statement stmt = con.createStatement();
-				
+
 				String query = "SELECT Status "
 						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
 
 				ResultSet rs = stmt.executeQuery(query);
-				
+
 				/*
 				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjä statuksella 1 (admin)
 				 */
@@ -958,12 +963,12 @@ public class Database {
 						 */
 						if(updatedRows > 0) {
 							return true;
-								
+
 						}
 					}
-					
+
 				}
-				
+
 			} catch (SQLException e) {
 				do {
 					System.err.println("Viesti: "+e.getMessage());
@@ -974,10 +979,10 @@ public class Database {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Päivittää kirjautuneen käyttäjän profiilitiedot tietokantaan.
-	 * 
+	 *
 	 * @return Kertoo onko tietokantaa päivitetty
 	 */
 	public static boolean saveProfileChanges() {
@@ -986,18 +991,18 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		if(Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
-				
+
 				Statement stmt = con.createStatement();
-				
+
 				String query = "SELECT KayttajaID "
 						+ "FROM Kayttaja WHERE Kayttajanimi = '"+ User.getUsername() +"' AND Salasana = SHA2('"+ User.getPassword() +"',256)";
 
 				ResultSet rs = stmt.executeQuery(query);
-				
+
 				/*
 				 * Jos löytyy seuraava tulosjoukko on tietokannasta löytynyt käyttäjän id
 				 */
@@ -1017,9 +1022,9 @@ public class Database {
 						if(updatedRows > 0) {
 							return true;
 						}
-					
+
 				}
-				
+
 			} catch (SQLException e) {
 				do {
 					System.err.println("Viesti: "+e.getMessage());
@@ -1030,7 +1035,7 @@ public class Database {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Palauttaa kirjautuneen käyttäjän ennätyspisteet jossakin pelissä.
 	 * @param game Peli, jonka ennätyspisteitä haetaan
@@ -1042,23 +1047,23 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
-				
+
 				Statement stmt = con.createStatement();
-				
+
 				String query = "SELECT HighScore "
 						+ "FROM Saavuttaa WHERE KayttajaID = '"+ User.getId() +"' AND PelinNimi = '"+ game +"'";
-				
+
 				ResultSet rs = stmt.executeQuery(query);
-				
+
 				if(rs.next()) {
 					int highscore = rs.getInt("HighScore");
 					return highscore;
 				}
-				
+
 			} catch (SQLException e) {
 				do {
 					System.err.println("Viesti: "+e.getMessage());
@@ -1069,25 +1074,25 @@ public class Database {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Tarkistaa, onko kirjautuneen käyttäjän saavuttama pistetulos parempi kuin hänen henkilökohtainen ennätyksensä.
 	 * Jos on, päivittää tietokannan siltä osin.
 	 * @param highScore Pelaajan saavuttama pistetulos
 	 * @param peli Peli, jossa pistetulos on saavutettu
 	 * @return Kertoo onko tietokantaa päivitetty
-	 */	
+	 */
 	public static boolean setHighScore(int highScore, String peli) {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
-				
+
 				Statement stmt = con.createStatement();
 				if(getHighScore(peli) < highScore) {
 					/*
@@ -1098,10 +1103,10 @@ public class Database {
 						stmt.executeQuery(query);
 					}
 					String query = "INSERT INTO Saavuttaa (HighScore, KayttajaID, PelinNimi) VALUES ('"+ highScore +"', '"+ User.getId() +"', '" + peli + "')";
-					stmt.executeQuery(query);	
+					stmt.executeQuery(query);
 					return true;
 				}
-				
+
 			} catch (SQLException e) {
 				do {
 					System.err.println("Viesti: "+e.getMessage());
@@ -1112,7 +1117,7 @@ public class Database {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Palauttaa globaalin top10-listan String-taulukkona.
 	 * @param game Peli, jonka top-listaa haetaan.
@@ -1124,19 +1129,19 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		boolean isSpeedGame = false;
 		if (game.equals("Slalom Madness")) {
 			isSpeedGame = true;
 		}
-		
+
 		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
-				
+
 				Statement stmt = con.createStatement();
 				String query;
-				
+
 				if (!isSpeedGame) {
 					/*
 					 * Haetaan Saavuttaa taulusta 10 isointa highScorea ja Kayttaja taulusta vastaavia kayttajanimiä.
@@ -1148,16 +1153,16 @@ public class Database {
 					query = "SELECT Saavuttaa.AikaScore, Kayttaja.Kayttajanimi"
 							+ " FROM Saavuttaa INNER JOIN Kayttaja ON Saavuttaa.KayttajaID = Kayttaja.KayttajaID"
 							+ " WHERE PelinNimi = '" + game + "' ORDER BY AikaScore ASC LIMIT 10;";
-				} 
-				
+				}
+
 				ResultSet rs = stmt.executeQuery(query);
-				
+
 				int size = 0;
 				if (rs.last()) {
 				  size = rs.getRow();
 				  rs.beforeFirst();
 				  String[] top10 = new String[size];
-				  
+
 				  if (!isSpeedGame) {
 					  while(rs.next()) {
 						  top10[rs.getRow()-1] = rs.getString("Kayttajanimi") + ": " + rs.getInt("HighScore");
@@ -1169,7 +1174,7 @@ public class Database {
 				  }
 				  return top10;
 				}
-				
+
 			} catch (SQLException e) {
 				do {
 					System.err.println("Viesti: "+e.getMessage());
@@ -1180,7 +1185,7 @@ public class Database {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Palauttaa kirjautuneen käyttäjän ennätysajan jossakin pelissä.
 	 * @param game Peli, jonka ennätysaikaa haetaan
@@ -1192,23 +1197,23 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
-				
+
 				Statement stmt = con.createStatement();
-				
+
 				String query = "SELECT AikaScore "
 						+ "FROM Saavuttaa WHERE KayttajaID = '"+ User.getId() +"' AND PelinNimi = '"+ game +"'";
-				
+
 				ResultSet rs = stmt.executeQuery(query);
-				
+
 				if(rs.next()) {
 					double highscore = rs.getDouble("AikaScore");
 					return highscore;
 				}
-				
+
 			} catch (SQLException e) {
 				do {
 					System.err.println("Viesti: "+e.getMessage());
@@ -1219,11 +1224,11 @@ public class Database {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Tarkistaa onko kirjautuneen käyttäjän saavuttama aika jossakin pelissä parempi kuin hänen ennätyksensä.
 	 * Jos on, päivittää tietokannan siltä osalta.
-	 * 
+	 *
 	 * @param time Aika, jonka pelaaja on saavuttanut pelissä
 	 * @param game Peli, jossa pelaaja on saavuttanut ajan
 	 * @return Kertoo onko tietokantaa päivitetty
@@ -1234,29 +1239,29 @@ public class Database {
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		if (Database.isLogged() && User.getUsername() != null && User.getPassword() != null) {
 			try {
 				Connection con = connection;
-				
+
 				Statement stmt = con.createStatement();
 				if(getHighScoreTime(game) > time && getHighScoreTime(game) != 0) {
-					
+
 					String query = "DELETE FROM Saavuttaa WHERE KayttajaID = '" + User.getId() + "'";
 					stmt.executeQuery(query);
 					query = "INSERT INTO Saavuttaa (AikaScore, KayttajaID, PelinNimi) "
 							+ "VALUES ('"+ time +"', '"+ User.getId() +"', '" + game + "')";
-					stmt.executeQuery(query);	
+					stmt.executeQuery(query);
 					return true;
-					
+
 				} else if (getHighScoreTime(game) == 0) {
 
 					String query = "INSERT INTO Saavuttaa (AikaScore, KayttajaID, PelinNimi) "
 							+ "VALUES ('"+ time +"', '"+ User.getId() +"', '" + game + "')";
-					stmt.executeQuery(query);	
+					stmt.executeQuery(query);
 					return true;
 				}
-				
+
 			} catch (SQLException e) {
 				do {
 					System.err.println("Viesti: "+e.getMessage());
@@ -1267,48 +1272,48 @@ public class Database {
 		}
 		return false;
 	}
-	
-	
+
+
 	public static boolean isLogged() {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		/*
 		 * Tarkistetaan onko käyttäjä kirjautunut sisään
 		 */
 		return loggedIn;
 	}
-	
+
 	public static boolean deleteTestUser() {
 		/*
 		 * Varmistetaan jokaisessa kutsussa, että Tietokanta luokasta
 		 * on luotu ilmentymä
 		 */
 		getInstance();
-		
+
 		try {
 			Connection con = connection;
-			
+
 			Statement stmt = con.createStatement();
-			
+
 			//Tehdään SQL haku kutsu ja haetaan Testikäyttäjä/käyttäjät
 			String query = "DELETE FROM Kayttaja WHERE Kayttajanimi = 'testikäyttäjä123'";
-			
+
 			/*
-			 * Jos löytyi tili nimellä 'testikäyttäjä123' niin se poistetaan 
-			 * ja executeUpdate palauttaa kuinka monta riviä poistettiin 
+			 * Jos löytyi tili nimellä 'testikäyttäjä123' niin se poistetaan
+			 * ja executeUpdate palauttaa kuinka monta riviä poistettiin
 			 * 0 - jos tämän nimistä käyttäjää ei ole
 			 * 1 - jos tällä nimellä löytyi
 			 * x - luku määärä kuinka monta löytyi ja poistettin
 			 */
 			if(stmt.executeUpdate(query)>0)
 				return true;
-			
-			
-			
+
+
+
 		} catch (SQLException e) {
 			do {
 				System.err.println("Viesti: "+e.getMessage());

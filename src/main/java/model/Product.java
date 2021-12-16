@@ -4,7 +4,7 @@ package model;
  * Tämä luokka edustaa virtuaalikaupan ja tietokannan tuotepaketteja.
  * Luokka implementoi Comparable-rajapintaa, jotta tuotteet saadaan kauppasivulle järjestyksessä alennuksen mukaan.
  */
-public class Product implements Comparable<Product> { 
+public class Product implements Comparable<Product> {
 	private int id;
 	private String description;
 	private double price;
@@ -12,7 +12,7 @@ public class Product implements Comparable<Product> {
 	private int coinAmount;
 	private double saleMultiplier;
 	private boolean forSale;
-	
+
 	public Product(String description, double creditAmount, int coinAmount, double saleMultiplier, double price, boolean forSale) {
 		this.description = description;
 		this.price = price;
@@ -21,7 +21,7 @@ public class Product implements Comparable<Product> {
 		this.saleMultiplier = saleMultiplier;
 		this.forSale = forSale;
 	}
-	
+
 	public Product(int number, String description, double price
 			, double creditAmount, int coinAmount, double saleMultiplier, boolean forSale) {
 		this.id = number;
@@ -32,8 +32,8 @@ public class Product implements Comparable<Product> {
 		this.saleMultiplier = saleMultiplier;
 		this.forSale = forSale;
 	}
-	
-    @Override 
+
+    @Override
     public int compareTo(Product p){
         return (int) ((int)(this.saleMultiplier * 100) - (p.getSaleMultiplier() * 100)); //K
     }
@@ -57,10 +57,10 @@ public class Product implements Comparable<Product> {
 	public void setSaleMultiplier(double saleMultiplier) {
 		this.saleMultiplier = saleMultiplier;
 	}
-	
+
 	public void setForSaleStatus(boolean b) {
 		this.forSale = b;
-		
+
 	}
 
 	public int getId() {
@@ -74,7 +74,7 @@ public class Product implements Comparable<Product> {
 	public double getPrice() {
 		return price;
 	}
-	
+
 	public boolean getForSaleStatus() {
 		return forSale;
 	}
@@ -90,5 +90,5 @@ public class Product implements Comparable<Product> {
 	public int getCoinAmount() {
 		return coinAmount;
 	}
-	
+
 }

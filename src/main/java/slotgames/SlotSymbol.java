@@ -7,26 +7,26 @@ import javafx.scene.image.Image;
 
 public class SlotSymbol {
 	/*
-	 * Kaikki pelit, jotka käyttävät näitä symbooleja 
+	 * Kaikki pelit, jotka käyttävät näitä symbooleja
 	 * sisältävät enintään 5 vaaka riviä
 	 * (myöhemmin ehkä muokataan joustavammaksi)
 	 */
 	Double[] multipliers = new Double[5];
-	
+
 	private String name;
 	private boolean isWild = false;
 	private boolean isBonus = false;
 	private boolean isScatter = false;
-	
+
 	private Image image = null;
 	private String imageURL = null;
-	
+
 	/*
-	 * Mitä isompi luku on probabilityssä, sitä suuremmalla todennäköisyydellä 
+	 * Mitä isompi luku on probabilityssä, sitä suuremmalla todennäköisyydellä
 	 * symbooli tulee
 	 */
 	private int probability = 0;
-	
+
 	/*
 	 * Luotaessa symboolia, annetaan numero
 	 * joka kertoo luokalle millaiset kertoimet
@@ -45,7 +45,7 @@ public class SlotSymbol {
 		setMultipliers(type);
 	}
 	*/
-	
+
 	/*
 	 * Perus symboolin constructor
 	 */
@@ -60,14 +60,14 @@ public class SlotSymbol {
 		setMultipliers(type);
 	}
 	*/
-	
-	
+
+
 	/*
-	 * 
+	 *
 	 * -----------------Käytetään kuviin urllää, eikä suoraan javafx Imagea
-	 * 
+	 *
 	 */
-	
+
 	/*
 	 * Luotaessa symboolia, annetaan numero
 	 * joka kertoo luokalle millaiset kertoimet
@@ -84,7 +84,7 @@ public class SlotSymbol {
 			imageURL = symbolURL;
 		setMultipliers(type);
 	}
-	
+
 	/*
 	 * Perus symboolin constructor
 	 */
@@ -97,10 +97,10 @@ public class SlotSymbol {
 			imageURL = symbolURL;
 		setMultipliers(type);
 	}
-	
-	
-	
-	
+
+
+
+
 	private void setMultipliers(int type) {
 		/*
 		 * default tekee symboolista huonoimman "perus" symboolin
@@ -137,39 +137,39 @@ public class SlotSymbol {
 				break;
 		}
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public boolean isBonus() {
 		return isBonus;
 	}
-	
+
 	public boolean isWild() {
 		return isWild;
 	}
-	
+
 	public boolean isScatter() {
 		return isScatter;
 	}
-	
+
 	public Double[] getMultipliers() {
 		return multipliers;
 	}
-	
+
 	public int getProbability() {
 		return probability;
 	}
-	
+
 	public double getMaxMultiplier() {
 		return multipliers[multipliers.length-1];
 	}
-	
+
 	public Image getImage() {
 		return image;
 	}
-	
+
 	public Image getNewImage() {
 		try {
 			return new Image(new FileInputStream(imageURL));

@@ -1,24 +1,29 @@
 package slotgames;
 
-import java.util.*;
+import java.util.Random;
 
+/**
+ * Toimii model luokkana LuckySpins pelille
+ * @author Johannes Mäkinen
+ *
+ */
 public class SlotMachine {
 	private int[] reel = new int[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4 ,4, 5, 5, 5, 6, 6, 6};
 	private int[] winnings = new int[] {0, 10, 20, 30, 60, 120, 200};
 	private int[] outcome = new int[3];
-	
+
 	public SlotMachine(){}
-	
+
 	public SlotMachine(int[] reel, int[] winnings) {
 		this.reel = reel;
 		this.winnings = winnings;
 	}
-	
+
 	// Pelataan kierros slotteja
 	public void play() {
 		spin();
 	}
-	
+
 	// Pyöräytetään yksi kierros numeroita koneesta
 	public void spin() {
 		Random rand = new Random();
@@ -26,7 +31,7 @@ public class SlotMachine {
 			outcome[i] = reel[rand.nextInt(reel.length)];
 		}
 	}
-	
+
 	// Tarkistetaan onko voittoja
 	public boolean checkWin() {
 		if ((outcome[0] == outcome[1] && outcome[0] == outcome[2]) || (outcome[0] == 6 && outcome[1] == outcome[2]) || (outcome[1] == 6 && outcome[0] == outcome[2]) || (outcome[2] == 6 && outcome[0] == outcome[1]) ||
@@ -35,13 +40,13 @@ public class SlotMachine {
 		}
 		return false;
 	}
-	
+
 	// Maksetaan voitot
 	public int payout() {
-		for(int i = 0; i < outcome.length; i++) {
-			if(outcome[i] != 6) {
-				return winnings[outcome[i]]; // Jos kaikki rivit on 6 eli "wild"
-			}	
+		for (int element : outcome) {
+			if(element != 6) {
+				return winnings[element]; // Jos kaikki rivit on 6 eli "wild"
+			}
 		}
 		return winnings[outcome[0]];
 	}

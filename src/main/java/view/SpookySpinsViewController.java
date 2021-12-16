@@ -54,9 +54,9 @@ public class SpookySpinsViewController implements Initializable {
 	private NumberFormat numberFormat;
 	private double bet = 1;
 	private boolean isTurbo = false;
-	
+
 	private AbstractSlotgame1 game = new Slotgame1_Spooky_Spins();
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
@@ -65,7 +65,7 @@ public class SpookySpinsViewController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void init() throws FileNotFoundException {
 		numberFormat = Session.getNumberFormatter();
 		texts = Session.getLanguageBundle();
@@ -81,13 +81,13 @@ public class SpookySpinsViewController implements Initializable {
 		game.insertBet(bet);
 		setBackground();
 	}
-	
+
 	private void setBackground() throws FileNotFoundException {
 		Image img = new Image(new FileInputStream("./src/main/resources/slot_icons/SpookySpins/bg.jpg"));
 		BackgroundImage bg = new BackgroundImage(img,BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT,BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
 		rootPane.setBackground(new Background(bg));
 	}
-	
+
 	private void setLanguage() {
 		betButton.setText(texts.getString("bet.button") + ": " + (int)bet);
 		toMenu = new Button(texts.getString("exit.button"));
@@ -96,14 +96,14 @@ public class SpookySpinsViewController implements Initializable {
 		balanceLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
 		paylinesLabel.setText(texts.getString("paylines"));
 	}
-	
+
 	public void fireSpin(ActionEvent e) throws FileNotFoundException {
 		if(isTurbo)
 			spin(100);
 		else
 			spin(1000);
 	}
-	
+
 	/**
 	 * Aloittaa slottipelin ja pyörittää rullia
 	 */
@@ -138,7 +138,7 @@ public class SpookySpinsViewController implements Initializable {
 			winLabel.setText(texts.getString("good.luck") + "!");
 		} catch (Exception e1) {}
 	}
-	
+
 	/**
 	 * Pysäyttää pyörivät rullat ja asettaa iconit paikoilleen.
 	 * @param symbols
@@ -153,14 +153,14 @@ public class SpookySpinsViewController implements Initializable {
 				imageViews[i].setImage(symbols[i]);
 		}
 	}
-	
+
 	private void disableButtons(Boolean b) {
 		spinButton.setDisable(b);
 		toMenu.setDisable(b);
 		betButton.setDisable(b);
 		turboButton.setDisable(b);
 	}
-	
+
 	/**
 	 * Asettaa jokaiseen rullaan pyörimisanimaation.
 	 */
@@ -175,7 +175,7 @@ public class SpookySpinsViewController implements Initializable {
 			imageViews[i].setImage(spin3);
 		}
 	}
-	
+
 	public void setBet(ActionEvent e) {
 		bet = bet + bet/2;
 		bet = Math.round(bet);
@@ -184,7 +184,7 @@ public class SpookySpinsViewController implements Initializable {
 		game.insertBet(bet);
 		betButton.setText(texts.getString("bet.button") + ": " + ((int)bet));
 	}
-	
+
 	public void setTurbo(ActionEvent e) {
 		isTurbo = !isTurbo;
 		if(isTurbo)
@@ -192,7 +192,7 @@ public class SpookySpinsViewController implements Initializable {
 		else
 			turboButton.setStyle("-fx-background-color:  BLACK");
 	}
-	
+
 	public void showPaylines(ActionEvent e) {
 		isPaylines = !isPaylines;
 		if(isPaylines)
@@ -200,15 +200,15 @@ public class SpookySpinsViewController implements Initializable {
 		else
 			setPaylineVisibility(false);
 	}
-	
+
 	private void setPaylineVisibility(Boolean b) {
 		paylinesImg.setVisible(b);
 		paylinesLabel.setVisible(b);
-		for(int i = 0; i < imageViews.length; i++)
-			imageViews[i].setVisible(!b);
+		for (ImageView imageView : imageViews)
+			imageView.setVisible(!b);
 	}
-	
-	
+
+
 	public void toMenu(ActionEvent e) {
 		try {
             FXMLLoader loader = new FXMLLoader();
@@ -217,7 +217,7 @@ public class SpookySpinsViewController implements Initializable {
             Scene mainScene = new Scene(mainView);
 			Stage window = (Stage) spinButton.getScene().getWindow();
 			window.setScene(mainScene);
-			
+
         } catch (IOException iOE) {
             iOE.printStackTrace();
         }

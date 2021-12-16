@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
+
 import cardgames.Card;
 import cardgames.Fast_poker;
 import javafx.event.ActionEvent;
@@ -27,7 +28,7 @@ import model.User;
  * @version 12.12.2021
  */
 public class Fast_pokerViewController implements Initializable{
-	
+
 	private ResourceBundle texts;
 	private NumberFormat numberFormat;
 	@FXML private ImageView card1;
@@ -53,7 +54,7 @@ public class Fast_pokerViewController implements Initializable{
 	Fast_poker game;
 	Card[] cards = new Card[6];
 	Card[] winningCards = new Card[5];
-	
+
 	public void init() throws FileNotFoundException {
 		numberFormat = Session.getNumberFormatter();
 		setLanguage();
@@ -63,7 +64,7 @@ public class Fast_pokerViewController implements Initializable{
 		game = new Fast_poker();
 		setWinLabel();
 	}
-	
+
 	private void setLanguage() {
 		texts = Session.getLanguageBundle();
 		setPokerCardNames(pair, 0, texts.getString("pair") + " 10-A");
@@ -85,7 +86,7 @@ public class Fast_pokerViewController implements Initializable{
 		doubleButton.setText(texts.getString("double.button"));
 		toMenu.setText(texts.getString("exit.button"));
 	}
-	
+
 	private void setPokerCardNames(Label pokerHand, int i, String key) {
 		winningTable[i] = key;
 		pokerHand.setText(key);
@@ -94,7 +95,7 @@ public class Fast_pokerViewController implements Initializable{
 	public void clickCard2() {
 		doublesResult(1, card2);
 	}
-	
+
 	public void clickCard3() {
 		if(game.isPlay()) {	//Ensin asetetaan loput korteista näkyviin.
 			cards[3] = null;
@@ -134,7 +135,7 @@ public class Fast_pokerViewController implements Initializable{
 		game.setPlay(false);
 		highlightCards();
 	}
-	
+
 	/**
 	 * Metodi tuo ruudulle tiedon mahdollisesta voitosta
 	 */
@@ -154,11 +155,11 @@ public class Fast_pokerViewController implements Initializable{
 			recoverButton.setDisable(false);
 		}
 	}
-	
+
 	public void clickCard5() {
 		doublesResult(4, card5);
 	}
-	
+
 	/**
 	 * Metodi aloittaa pelin. Tarkistetaan pelaajan saldo ja vähennetään siitä panoksen verran.
 	 * Luodaan korttipakka ja asetetaan kortit näkyviin pelipöydälle.
@@ -185,7 +186,7 @@ public class Fast_pokerViewController implements Initializable{
 		else
 			errorLabel.setVisible(true);
 	}
-	
+
 	/**
 	 * Metodi jolla saadaan pelaajan voitot talteen, jos pelaaja ei halua tuplata enempää.
 	 * Toisin sanoen metodin suorittaminen lopettaa pelikerran.
@@ -202,7 +203,7 @@ public class Fast_pokerViewController implements Initializable{
 		playButton.setDisable(false);
 		betButton.setDisable(false);
 	}
-	
+
 	/**
 	 * Metodi panoksen asettamiselle.
 	 */
@@ -217,7 +218,7 @@ public class Fast_pokerViewController implements Initializable{
 		setWinLabel();
 		betButton.setText(texts.getString("bet.button") + ": " + bet);
 	}
-	
+
 	/**
 	 * Metodi asettaa pelaajalle näkyviin kaikki mahdolliset pokerikäsien voittosummat.
 	 */
@@ -232,7 +233,7 @@ public class Fast_pokerViewController implements Initializable{
 		winLabel8.setText((int)coinsTable[1] * (int)bet + "");
 		winLabel9.setText((int)coinsTable[0] * (int)bet + "");
 	}
-	
+
 	/**
 	 * Metodi tuplauken alottamiselle.
 	 * @throws FileNotFoundException
@@ -248,7 +249,7 @@ public class Fast_pokerViewController implements Initializable{
 		winLabel.setText(texts.getString("win"));
 		hideButtons();
 	}
-	
+
 	/**
 	 * Metodilla tarkistetaan tuplauksen tulos.
 	 */
@@ -272,7 +273,7 @@ public class Fast_pokerViewController implements Initializable{
 			highlightCards();
 		}
 	}
-	
+
 	private void hideCards() throws FileNotFoundException {
 		card1.setImage(new Image(new FileInputStream("./src/main/resources/card_deck_1/taka.png")));
 		card2.setImage(new Image(new FileInputStream("./src/main/resources/card_deck_1/taka.png")));
@@ -280,14 +281,14 @@ public class Fast_pokerViewController implements Initializable{
 		card4.setImage(new Image(new FileInputStream("./src/main/resources/card_deck_1/taka.png")));
 		card5.setImage(new Image(new FileInputStream("./src/main/resources/card_deck_1/taka.png")));
 	}
-	
+
 	private void hideButtons() {
 		recoverButton.setDisable(true);
 		doubleButton.setDisable(true);
 		playButton.setDisable(true);
 		betButton.setDisable(true);
 	}
-	
+
 	/**
 	 * Asetetaan halutuille korteille tyylejä
 	 */
@@ -302,14 +303,14 @@ public class Fast_pokerViewController implements Initializable{
 			card4.setTranslateY(-20);
 			card5.setTranslateY(-20);
 			card2.setEffect(ds);
-			card3.setEffect(ds);			
+			card3.setEffect(ds);
 			card4.setEffect(ds);
 			card5.setEffect(ds);
 		}
 		else if(game.isPlay()) {
 			card3.setTranslateY(-20);
 			card4.setTranslateY(-20);
-			card3.setEffect(ds);			
+			card3.setEffect(ds);
 			card4.setEffect(ds);
 		}
 		else {
@@ -321,18 +322,18 @@ public class Fast_pokerViewController implements Initializable{
 			card4.setTranslateY(0);
 			card5.setTranslateY(0);
 			card2.setEffect(ds);
-			card3.setEffect(ds);			
+			card3.setEffect(ds);
 			card4.setEffect(ds);
 			card5.setEffect(ds);
 		}
-			
+
 	}
-	
+
 	public void toMainView(ActionEvent e) {
 		Stage window = (Stage) toMenu.getScene().getWindow();
 		Navigator.toMainView(window);
 	}
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try {

@@ -1,7 +1,7 @@
 package model;
 
-import java.time.LocalDate;
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  * Tämä luokka edustaa virtuaalikaupassa tehtyjä tilauksia eli ostettuja tuotteita.
@@ -14,17 +14,17 @@ public class Order {
 	private String description;
 	private double price;
 	private double credits;
-	
+
 	private LocalDate dateSeparated;
 	private String timeSeparated;
-	
+
 	public Order(int id, String date, String description, double price, double credits) {
 		this.orderId = id;
 		this.date = date;
 		this.description = description;
 		this.price = price;
 		this.credits = credits;
-		
+
 		try {
 			String[] strings = date.split(" ");
 			dateSeparated = Date.valueOf(strings[0]).toLocalDate();
@@ -34,11 +34,11 @@ public class Order {
 			timeSeparated = "";
 		}
 	}
-	
+
 	public LocalDate getDateAsLocalDate() {
 		return dateSeparated;
 	}
-	
+
 	public String getTimeString() {
 		return timeSeparated;
 	}
@@ -82,10 +82,11 @@ public class Order {
 	public void setCredits(double credits) {
 		this.credits = credits;
 	}
-	
+
+	@Override
 	public String toString(){
 		return date + " - " + description + " - " + price +"€"+"   -   "+credits+" krediittiä";
 	}
-	
-	
+
+
 }

@@ -1,6 +1,7 @@
 package view;
 
 import java.io.IOException;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -16,7 +17,7 @@ import moneyrain.MoneyRain;
  */
 
 public class Navigator {
-	
+
 	public static void toMainView(Stage stage) {
 		try {
             FXMLLoader loader = new FXMLLoader();
@@ -25,12 +26,12 @@ public class Navigator {
             Scene mainScene = new Scene(mainView);
 			Stage window = stage;
 			window.setTitle("MonsterPayout");
-			window.setScene(mainScene);		
+			window.setScene(mainScene);
         } catch (IOException iOE) {
             iOE.printStackTrace();
         }
 	}
-	
+
 	public static void toArcadeBlackjack1(Stage stage) {
 		try {
             FXMLLoader loader = new FXMLLoader();
@@ -44,7 +45,7 @@ public class Navigator {
             iOE.printStackTrace();
         }
 	}
-	
+
 	public static void toCasinoBlackjack1(Stage stage) {
 		try {
             FXMLLoader loader = new FXMLLoader();
@@ -58,7 +59,7 @@ public class Navigator {
             iOE.printStackTrace();
         }
 	}
-	
+
 	public static void toMoneyRain() {
 		try {
             FXMLLoader loader = new FXMLLoader();
@@ -79,7 +80,7 @@ public class Navigator {
             iOE.printStackTrace();
         }
 	}
-	
+
 	public static void toSlalomMadness() {
 		try {
             FXMLLoader loader = new FXMLLoader();
@@ -95,7 +96,7 @@ public class Navigator {
             iOE.printStackTrace();
         }
 	}
-	
+
 	public static void toFastPoker(Stage stage) {
 		try {
             FXMLLoader loader = new FXMLLoader();
@@ -109,7 +110,7 @@ public class Navigator {
             iOE.printStackTrace();
         }
 	}
-	
+
 	public static void toLuckySpins(Stage stage) {
 		try {
             FXMLLoader loader = new FXMLLoader();
@@ -123,7 +124,7 @@ public class Navigator {
             iOE.printStackTrace();
         }
 	}
-	
+
 	public static void toSpookySpins(Stage stage) {
 		try {
             FXMLLoader loader = new FXMLLoader();
@@ -137,7 +138,7 @@ public class Navigator {
             iOE.printStackTrace();
         }
 	}
-	
+
 	public static void toUserInfo(Stage stage) {
 		try {
             FXMLLoader loader = new FXMLLoader();
@@ -150,8 +151,8 @@ public class Navigator {
         } catch (IOException iOE) {
             iOE.printStackTrace();
         }
-	} 
-	
+	}
+
 	public static void toStore(Stage stage) {
 		try {
             FXMLLoader loader = new FXMLLoader();
@@ -165,8 +166,8 @@ public class Navigator {
             iOE.printStackTrace();
         }
 	}
-	
-	public static void toLogin(Stage stage) {	
+
+	public static void toLogin(Stage stage) {
 		try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("LoginView.fxml"));
@@ -179,7 +180,7 @@ public class Navigator {
             iOE.printStackTrace();
         }
 	}
-	
+
 	public static void toSignUp(Stage stage) {
 		try {
             FXMLLoader loader = new FXMLLoader();
@@ -193,7 +194,7 @@ public class Navigator {
             iOE.printStackTrace();
         }
 	}
-	
+
 	public static void toStoreManagement(Stage stage) {
 		try {
             FXMLLoader loader = new FXMLLoader();
@@ -207,7 +208,7 @@ public class Navigator {
             iOE.printStackTrace();
         }
 	}
-	
+
 	public static void logout(Stage stage) {
         try {
             FXMLLoader loader = new FXMLLoader();

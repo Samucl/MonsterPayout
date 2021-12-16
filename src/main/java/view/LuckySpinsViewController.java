@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -29,7 +30,7 @@ import slotgames.SlotMachine;
  * @version 12.12.2021
  */
 public class LuckySpinsViewController implements Initializable{
-	
+
 	private static final String[] icons = new String[] {"strawberry", "spade", "clover", "diamond", "seven", "wild"};
 	@FXML Button toMenu;
 	@FXML ImageView gif1, gif2, gif3, gif4, gif5, gif6, gif7, gif8, gif9;
@@ -59,7 +60,7 @@ public class LuckySpinsViewController implements Initializable{
 	private int paylinesSelected = 1;
 	private ResourceBundle texts;
 	private NumberFormat numberFormat;
-	
+
 	private void init() throws FileNotFoundException {
 		numberFormat = Session.getNumberFormatter();
 		setLanguage();
@@ -70,7 +71,7 @@ public class LuckySpinsViewController implements Initializable{
 		spin2 = new Image(new FileInputStream("./src/main/resources/slot_icons/spin2.gif"));
 		spin3 = new Image(new FileInputStream("./src/main/resources/slot_icons/spin3.gif"));
 	}
-	
+
 	private void setLanguage() {
 		texts = Session.getLanguageBundle();
 		balanceLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
@@ -85,13 +86,13 @@ public class LuckySpinsViewController implements Initializable{
 		payline2.setText(texts.getString("payline") + " 2");
 		payline3.setText(texts.getString("payline") + " 3");
 	}
-	
+
 	public void toMainView(ActionEvent e) {
 		autoSpins = 0;
         Stage window = (Stage) toMenu.getScene().getWindow();
 		Navigator.toMainView(window);
 	}
-	
+
 	/**
 	 * Aloittaa slottipelin ja pyörittää rullia
 	 * @throws FileNotFoundException
@@ -107,7 +108,7 @@ public class LuckySpinsViewController implements Initializable{
 			else
 				manualSpin(1000);
 	}
-	
+
 	/**
 	 * Metodi mahdollistaa manuaalisen pyöräytyksen esimerkiksi, jos asettaa pelin pyörittämään peliä istenäisesti
 	 * @param timeInMillis
@@ -118,7 +119,7 @@ public class LuckySpinsViewController implements Initializable{
 			winLabel.setText(texts.getString("not.enough.credits"));
 			return;
 		}
-		
+
 		Timeline tl = new Timeline(new KeyFrame(Duration.millis(timeInMillis), ea -> {
 				try {
 					game1.play();
@@ -156,14 +157,14 @@ public class LuckySpinsViewController implements Initializable{
 		spinAnimation();
 		winLabel.setText(texts.getString("good.luck") + "!");
 	}
-	
+
 	private void setButtonsDisable(Boolean bool) {
 		spinButton.setDisable(bool);
 		setSpinsButton.setDisable(bool);
 		betButton.setDisable(bool);
 		turboButton.setDisable(bool);
 	}
-	
+
 	/**
 	 * Tarkistetaan voitto jokaisesta pyöritetystä pelistä
 	 * @param game1
@@ -174,7 +175,7 @@ public class LuckySpinsViewController implements Initializable{
 	private boolean isWin(SlotMachine game1, SlotMachine game2, SlotMachine game3) {
 		return (game1.checkWin() && payline1.isSelected())  || (game2.checkWin() && payline2.isSelected())  || (game3.checkWin() && payline3.isSelected());
 	}
-	
+
 	public void paylinePress1(ActionEvent e) {
 		paylineColor(payline1);
 	}
@@ -196,7 +197,7 @@ public class LuckySpinsViewController implements Initializable{
 		rectangle3.setVisible(true);
 		payline3.setOnMouseExited(m->{rectangle3.setVisible(false);});
 	}
-	
+
 	/**
 	 * Metodi mahdollistaa voittorivien tyylien vaihtelun
 	 * @param payline
@@ -222,7 +223,7 @@ public class LuckySpinsViewController implements Initializable{
 			winLabel.setText("");
 		}
 	}
-	
+
 	/**
 	 * Asettaa jokaiseen rullaan pyörimisanimaation.
 	 * @throws FileNotFoundException
@@ -238,7 +239,7 @@ public class LuckySpinsViewController implements Initializable{
 		gif6.setImage(spin2);
 		gif9.setImage(spin3);
 	}
-	
+
 	/**
 	 * Pysäyttää pyörivät rullat ja asettaa iconit paikoilleen.
 	 * @param outcome1
@@ -263,7 +264,7 @@ public class LuckySpinsViewController implements Initializable{
 		gif6.setImage(gifs[outcome2[2]-1]);
 		gif9.setImage(gifs[outcome3[2]-1]);
 	}
-	
+
 	public void setSpins(ActionEvent e) {
 		if(!isSetSpin) {
 			rectangle.setTranslateY(-50);
@@ -276,7 +277,7 @@ public class LuckySpinsViewController implements Initializable{
 			isSetSpin = false;
 		}
 	}
-	
+
 	private void setSpinsElements(Boolean bool) {
 		setSpins1.setVisible(bool);
 		setSpins2.setVisible(bool);
@@ -286,7 +287,7 @@ public class LuckySpinsViewController implements Initializable{
 		setSpinsLabel.setVisible(bool);
 		winLabel.setVisible(!bool);
 	}
-	
+
 	public void setSpinsButton1(ActionEvent e) {
 		autoSpins += 10;
 		setAutoSpins();
@@ -307,9 +308,9 @@ public class LuckySpinsViewController implements Initializable{
 		autoSpins += 100;
 		setAutoSpins();
 	}
-	
+
 	/**
-	 * Metodi mahdollistaa autospin toiminnon. 
+	 * Metodi mahdollistaa autospin toiminnon.
 	 * (Peli pyörii itsenäisesti tietyn määrän).
 	 */
 	private void setAutoSpins() {
@@ -369,7 +370,7 @@ public class LuckySpinsViewController implements Initializable{
 			tl.play();
 		} catch (Exception e1) {}
 	}
-	
+
 	public void setBet(ActionEvent e) {
 		bet = bet + bet/2;
 		bet = Math.round(bet);
@@ -377,7 +378,7 @@ public class LuckySpinsViewController implements Initializable{
 			bet = 1;
 		betButton.setText(texts.getString("bet.button") + ": " + ((int)bet*paylinesSelected));
 	}
-	
+
 	public void setTurbo(ActionEvent e) {
 		isTurbo = !isTurbo;
 		if(isTurbo)
@@ -385,7 +386,7 @@ public class LuckySpinsViewController implements Initializable{
 		else
 			turboButton.setStyle("-fx-background-color:  #693b80");
 	}
-	
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -395,5 +396,5 @@ public class LuckySpinsViewController implements Initializable{
 			e.printStackTrace();
 		}
 	}
-	
+
 }

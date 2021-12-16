@@ -1,38 +1,34 @@
 package view;
 
-import java.awt.Toolkit;
 import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.Stage;
-import model.Database;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class MainApplication extends Application {
-	
+
     private Stage primaryStage;
-	
+
     /**
 	* start-metodissa kaikki ohjelman avautuessa suoritettavat toiminnot
 	*/
 	@Override
 	public void start(Stage primaryStage) {
-		
+
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("MonsterPayout");
-        
+
         //Ohjelman iconin asettaminen
         this.primaryStage.getIcons().add(new Image("file:./src/main/resources/smallLogo.png"));
-        
+
         showLoginView();
 
 	}
-    
+
 	/**
 	* Metodi jolla asetetaan loginView primaryStageen heti ohjelman avautuessa
 	*/
@@ -48,7 +44,7 @@ public class MainApplication extends Application {
             e.printStackTrace();
         }
     }
-    
+
 	public static void main(String[] args) {
 		launch(args);
 	}

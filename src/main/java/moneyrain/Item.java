@@ -17,7 +17,7 @@ public class Item {
 	private boolean isDangerous;
 	private boolean givesHp;
 	private boolean isCollected = false;
-	
+
 	public Item(Image img, int width, int height, int xPos, int yPos, boolean isDangerous, boolean givesHp) {
 		this.img = img;
 		this.width = width;
@@ -27,7 +27,7 @@ public class Item {
 		this.isDangerous = isDangerous;
 		this.givesHp = givesHp;
 	}
-	
+
 	public Item(String name, Image img, int width, int height, int xPos, int yPos, boolean isDangerous, boolean givesHp) {
 		this.name = name;
 		this.img = img;
@@ -42,7 +42,7 @@ public class Item {
 	public Image getImg() {
 		return img;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -58,33 +58,33 @@ public class Item {
 	public int getXPos() {
 		return xPos;
 	}
-	
+
 	public int getYPos() {
 		return yPos;
 	}
-	
+
 	public void fall() {
 		yPos+=1;
 	}
-	
+
 	public void ascend(int speed) {
 		yPos = yPos - speed;
 	}
-	
+
 	public boolean isDangerous() {
 		return isDangerous;
 	}
-	
+
 	public boolean isGivesHp() {
 		return givesHp;
 	}
-	
+
 	public void isCollected() {
 		isCollected = true;
 	}
-	
+
 	public boolean checkCollected() {
 		return isCollected;
 	}
-	
+
 }

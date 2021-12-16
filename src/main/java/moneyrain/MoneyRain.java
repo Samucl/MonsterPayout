@@ -8,14 +8,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
+
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-import model.Session;
-import view.MainApplication;
-import view.MoneyRainDeadViewController;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -25,6 +22,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import model.Session;
+import view.MainApplication;
+import view.MoneyRainDeadViewController;
 
 /**
  * Luokka sisältää kaiken logiikan MoneyRain peliin
@@ -32,7 +34,7 @@ import javafx.scene.text.TextAlignment;
  * @version 16.11.2021
  */
 public class MoneyRain extends Canvas {
-	
+
 	private Stage stage;
 	private static Timeline tl;
 	private int timeInMillis;
@@ -61,7 +63,7 @@ public class MoneyRain extends Canvas {
 	private boolean dead = false;
 	private List<Item> items = new ArrayList<>();
 	private ResourceBundle texts;
-	
+
 	public MoneyRain(Stage stage) {
 		try {
 			texts = Session.getLanguageBundle();
@@ -70,7 +72,7 @@ public class MoneyRain extends Canvas {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void start(Stage stage) throws Exception{
 		this.stage = stage;
 		this.stage.setTitle("MoneyRain");
@@ -91,13 +93,13 @@ public class MoneyRain extends Canvas {
 				e2.printStackTrace();
 			}
 		}));
-		tl.setCycleCount(Timeline.INDEFINITE);
-		
+		tl.setCycleCount(Animation.INDEFINITE);
+
 		/*
 		 * Pelaajan controlleri
 		 */
 		canvas.setOnMouseMoved(e -> {
-			
+
 			//Pelaajan kuvaa vaihdetaan riippuen siitä liiktaanko vasemmalle tai oikealle
 			try {
 				if(e.getX() - (PLAYER_WIDTH/2) < playerXPos)
@@ -108,7 +110,7 @@ public class MoneyRain extends Canvas {
 				e1.printStackTrace();
 			}
 
-			
+
 			//Asetetaan pelaaja seuraamaan hiirtä ja rajoitukset kuinka pikälle pelaaja voi siirtyä ruudulla
 			//PLAYER_WIDTH/2, jotta hiiri olisi pelaaja-kuvan keskellä, eikä pelaaja-kuvan vasemmalla
 			if(e.getX() < playableAreaLeft)
@@ -117,7 +119,7 @@ public class MoneyRain extends Canvas {
 				playerXPos = playableAreaRight - (PLAYER_WIDTH/2);
 			else
 				playerXPos = e.getX() - (PLAYER_WIDTH/2);
-			
+
 		});
 
 
@@ -151,12 +153,12 @@ public class MoneyRain extends Canvas {
 				}
 			}
 		});
-		
+
 		this.stage.setScene(new Scene(new StackPane(canvas)));
 		this.stage.show();
 		tl.play();
 	}
-	
+
 	private void run(GraphicsContext gc) throws FileNotFoundException {
 		gc.drawImage(bg, 0, 0);
 		if(collectedCash == 5) {
@@ -164,7 +166,7 @@ public class MoneyRain extends Canvas {
 		}
 		gc.setFont(Font.font(25));
 		gc.setTextAlign(TextAlignment.LEFT);
-		
+
 		//Mitä tapahtuu pelin aikana
 		if(gameStarted) {
 			timeInMillis += 10; //Laskuri jolla seurataan pelissä käytettyä aikaa
@@ -173,7 +175,7 @@ public class MoneyRain extends Canvas {
 			gc.drawImage(player, playerXPos, playerYPos, PLAYER_WIDTH, PLAYER_HEIGHT);
 			gc.setFont(Font.font ("Arial Black", 20));
 			gc.fillText(texts.getString("points") + ": " +  points + "    " + texts.getString("cash.in.hand") + ": " + collectedCash + "/5      " + texts.getString("time.left") + ": " + gameTime/1000 + "s", 10, 30);
-			
+
 			if(health == 3)
 				gc.drawImage(heart3, 630, 10);
 			else if(health == 2)
@@ -184,20 +186,20 @@ public class MoneyRain extends Canvas {
 			//Tehdään asioita kerran per 1s
 			if(timeInMillis % 1000 == 0)
 				createBill();
-			
+
 			//Tehdään asioita kerran per 2s
 			if(timeInMillis % 2000 == 0)
 				createPoison();
-			
+
 			//Tehdään asioita kerran per 20s
 			if(timeInMillis % 20000 == 0)
 				createMegis();
-			
+
 			if(gameTime <= 0)
 				dead = true;
-			
+
 			items.forEach(item -> {
-				
+
 				//Jos item osuu pelaajaan / Box collider
 				if(item.getYPos() > playerYPos - item.getHeight() &&
 					(item.getXPos() >= playerXPos && item.getXPos() <= PLAYER_WIDTH + playerXPos ||
@@ -217,7 +219,7 @@ public class MoneyRain extends Canvas {
 				item.fall(); //Laitetaan item tippumaan
 				gc.drawImage(item.getImg(), item.getXPos(), item.getYPos(), item.getWidth(), item.getHeight()); //Tulostetaan item
 			});
-			
+
 			if(dead) {
 				tl.stop();
 				try {
@@ -238,14 +240,14 @@ public class MoneyRain extends Canvas {
 						e.printStackTrace();
 					}
 			}
-			
+
 			//Poistetaan tippuva item
-			items.removeIf(item -> 
+			items.removeIf(item ->
 				//Jos item tippuu ruudulta pois
 				item.getYPos() > height ||
-				
+
 				//Jos item osuu pelaajaan kummalta puolelta tahansa
-				item.getYPos() > playerYPos - item.getHeight() && (item.getXPos() >= playerXPos && item.getXPos() <= PLAYER_WIDTH + playerXPos && item.checkCollected() || 
+				item.getYPos() > playerYPos - item.getHeight() && (item.getXPos() >= playerXPos && item.getXPos() <= PLAYER_WIDTH + playerXPos && item.checkCollected() ||
 				item.getWidth() + item.getXPos() >= playerXPos && item.getWidth() + item.getXPos() <= PLAYER_WIDTH + playerXPos && item.checkCollected())
 			);
 
@@ -261,7 +263,7 @@ public class MoneyRain extends Canvas {
 			gc.setTextAlign(TextAlignment.LEFT);
 		}
 	}
-	
+
 	/**
 	 * Luodaan Bill olioita
 	 */
@@ -270,7 +272,7 @@ public class MoneyRain extends Canvas {
 		Item item = new Item(bill, 69, 33, xPos, 0, false, false);
 		items.add(item);
 	}
-	
+
 	/**
 	 * Luodaan Poison olioita
 	 */
@@ -279,7 +281,7 @@ public class MoneyRain extends Canvas {
 		Item item = new Item(poison, 24, 48, xPos, 0, true, false);
 		items.add(item);
 	}
-	
+
 	/**
 	 * Luodaan Megis olioita
 	 */
@@ -288,7 +290,7 @@ public class MoneyRain extends Canvas {
 		Item item = new Item(megis, 25, 57, xPos, 0, false, true);
 		items.add(item);
 	}
-	
+
 	public static Timeline getTl() {
 		return tl;
 	}

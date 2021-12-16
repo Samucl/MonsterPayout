@@ -2,6 +2,7 @@ package view;
 
 import java.io.IOException;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,14 +20,14 @@ import model.Session;
  * @version 12.12.2021
  */
 public class MoneyRainDeadViewController{
-	
+
 	@FXML private Button toMenu;
 	@FXML private Label pointsLabel;
 	@FXML private Label coinsWonLabel;
 	@FXML private Label deadLabel;
 	private int points;
-	
-	
+
+
 	public void toMenu(ActionEvent e) {
 		try {
 		     FXMLLoader loader = new FXMLLoader();
@@ -58,7 +59,7 @@ public class MoneyRainDeadViewController{
 			Database.increaseCoinBalance(coinsToGive);
 		}
 	}
-	
+
 	public int getPoints() {
 		return points;
 	}

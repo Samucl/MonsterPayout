@@ -3,6 +3,7 @@ import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,9 +19,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.Database;
 import model.Order;
 import model.Session;
-import model.Database;
 import model.User;
 
 public class UserInfoViewController implements Initializable {
@@ -32,7 +33,7 @@ public class UserInfoViewController implements Initializable {
 	@FXML Tab profileTab, editProfileTab, purchaseHistoryTab;
 	@FXML TabPane editProfileTabPane;
 	@FXML ListView<String> purchase_history;
-	@FXML Button save_button, cancel_button;;
+	@FXML Button save_button, cancel_button;
 	@FXML Button home_button, logoutButton, toStoreButton;
 	@FXML Label profilePictureLabel, usernameLabel2, firstnameLabel2, lastnameLabel, emailLabel, accountNumberLabel;
 	@FXML Label errorLabel;
@@ -43,7 +44,7 @@ public class UserInfoViewController implements Initializable {
 	private int selectedImage;
 	private ResourceBundle texts;
 	private NumberFormat numberFormat;
-	
+
 	private void init() {
 		numberFormat = Session.getNumberFormatter();
 		texts = Session.getLanguageBundle();
@@ -54,19 +55,19 @@ public class UserInfoViewController implements Initializable {
 		profileInit();
 		updateLanguage();
 	}
-	
+
     public void toEnglish(ActionEvent e) {
     	texts = ResourceBundle.getBundle("lang.language",new Locale("en", "US"));
     	Session.setLanguageBundle(texts);
     	updateLanguage();
     }
-    
+
     public void toFinnish(ActionEvent e) {
     	texts = ResourceBundle.getBundle("lang.language",new Locale("fi", "FI"));
     	Session.setLanguageBundle(texts);
     	updateLanguage();
     }
-    
+
     private void updateLanguage() {
     	profileTab.setText(texts.getString("profile"));
     	editProfileTab.setText(texts.getString("edit") + " " + texts.getString("profile.partitive").toLowerCase());
@@ -89,7 +90,7 @@ public class UserInfoViewController implements Initializable {
     	logoutButton.setText(texts.getString("logout"));
     	toStoreButton.setText(texts.getString("store"));
     }
-    
+
 	private void setImages() {
 		images[0] = profile_picture0;
 		images[1] = profile_picture1;
@@ -98,7 +99,7 @@ public class UserInfoViewController implements Initializable {
 		images[4] = profile_picture4;
 		images[5] = profile_picture5;
 	}
-	
+
 	public void saveChanges() {
 		errorLabel.setVisible(false);
 		errorLabel.setEffect(setDropShadow(20, Color.RED));
@@ -110,7 +111,7 @@ public class UserInfoViewController implements Initializable {
 		String newLastname = lastname.getText().replaceAll("\\s", "");
 		String newEmail = email.getText().replaceAll("\\s", "");
 		String newAccountNumber = account_number.getText().replaceAll("\\s", "");
-		
+
 		/*
 		 * Jos käyttäjä ei ole muokannut mitään tekstejä niin poistutaan metodista
 		 */
@@ -120,13 +121,13 @@ public class UserInfoViewController implements Initializable {
 			errorLabel.setText(texts.getString(""));
 			return;
 		}
-		
+
 		/*
 		 * Etunimi max 20-merkkiä
 		 * Sukunimi max 20-merkkiä
 		 * Sähköposti max 40-merkkiä
 		 * Tilinumero max 25-merkkiä
-		 * 
+		 *
 		 */
 		if(newFirstname.length() > 20) {
 			errorLabel.setVisible(true);
@@ -152,7 +153,7 @@ public class UserInfoViewController implements Initializable {
 			errorLabel.setText(texts.getString("account.number") + " " + texts.getString("too.long").toLowerCase() + " (max 25-" + texts.getString("characters").toLowerCase() + ")");
 			return;
 		}
-		
+
 		User.setFirstname(newFirstname);
 		User.setLastname(newLastname);
 		User.setEmail(newEmail);
@@ -169,20 +170,20 @@ public class UserInfoViewController implements Initializable {
 		}
 		profileInit();
 	}
-	
+
 	public void cancelChanges() {
 		errorLabel.setVisible(false);
 		setTexts();
 	}
-	
+
 	private void profileInit() {
 		profile_username.setText(User.getUsername());
 		//profile_image;
-		profile_kredits.setText(texts.getString("credits") + " " + numberFormat.format(User.getCredits()));;
-		profile_coins.setText(texts.getString("coins") + " " + String.valueOf(User.getCoins()));;
+		profile_kredits.setText(texts.getString("credits") + " " + numberFormat.format(User.getCredits()));
+		profile_coins.setText(texts.getString("coins") + " " + String.valueOf(User.getCoins()));
 		profile_firstname.setText(User.getFirstname());
 	}
-	
+
 	private void setTexts() {
 		username.setText(User.getUsername());
 		firstname.setText(User.getFirstname());
@@ -191,7 +192,7 @@ public class UserInfoViewController implements Initializable {
 		account_number.setText(User.getAccountNumber());
 		login_streak.setText(Integer.toString(User.getLoginStreak()));
 	}
-	
+
 	private void setOrders() {
 		Order[] orders = Session.getOrders();
 		/*
@@ -199,20 +200,20 @@ public class UserInfoViewController implements Initializable {
 		 */
 		if(orders == null)
 			return;
-		
+
 		for(int i = orders.length - 1; i >= 0; i--) {
 			purchase_history.getItems().add(orders[i].toString());
 		}
 	}
-	
+
 	public void loadProfilePicture() {
 		profile_image.setImage(Session.getAvatar(0));
 	}
-	
+
 	public void editProfile(ActionEvent e) {
 		editProfileTabPane.getSelectionModel().select(1);
 	}
-	
+
 	public void selectImage0() {
 		removeEffects();
 		images[0].setEffect(setDropShadow(50, Color.LIGHTSKYBLUE));
@@ -243,11 +244,11 @@ public class UserInfoViewController implements Initializable {
 		images[5].setEffect(setDropShadow(50, Color.LIGHTSKYBLUE));
 		selectedImage = 5;
 	}
-	
+
 	private void removeEffects() {
 		images[selectedImage].setEffect(null);
 	}
-	
+
 	private DropShadow setDropShadow(int intensity, Color color) {
 		DropShadow ds = new DropShadow();
 		ds.setColor(color);
@@ -255,22 +256,22 @@ public class UserInfoViewController implements Initializable {
 		ds.setWidth(intensity);
 		return ds;
 	}
-	
+
 	public void toMainView(ActionEvent e) {
 		Stage window = (Stage) home_button.getScene().getWindow();
-		Navigator.toMainView(window);	
+		Navigator.toMainView(window);
 	}
-	
+
 	public void logout(ActionEvent e) {
         Stage window = (Stage) logoutButton.getScene().getWindow();
 		Navigator.logout(window);
 	}
-	
+
 	public void toStore(ActionEvent e) {
 		Stage window = (Stage) toStoreButton.getScene().getWindow();
 		Navigator.toStore(window);
 	}
-	
+
 	@Override
     public void initialize(URL location, ResourceBundle resources)
     {

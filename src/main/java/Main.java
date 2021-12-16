@@ -6,10 +6,10 @@ public class Main {
 		 * Haetaan resursseista kaikki profiilikuvat sessioon
 		 */
 		Session.initialization();
-		
+
 		/*
 		 * Käynnistetään ohjelma
 		 */
-		view.MainApplication.main(args); 
+		view.MainApplication.main(args);
 	}
 }
