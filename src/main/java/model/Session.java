@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,8 +35,12 @@ public class Session {
 	private static Locale userLocale;
 
 	private static String userPropertiesPath = "./src/main/resources/properties/user.properties";
-
+	
 	private Session() {
+	}
+	
+	public static InputStream getFile(String file) {
+		return Session.class.getClassLoader().getResourceAsStream(file);
 	}
 
 	public static void initialization() {
@@ -217,8 +222,8 @@ public class Session {
 
 	public static void loadAvatarImages() {
 		//File path = new File("./src/main/resources/avatars");
-		File path = new File("./src/main/resources/avatars");
-		System.out.println(path);
+		//File path = new File("./src/main/resources/avatars");
+		File path = new File(Session.class.getClassLoader().getResource("avatars").getFile());
 		File[] allAvatarFiles = path.listFiles();
 		/*
 		 * Lajitellaan sijainnin tiedostot aakkos järjestykseen

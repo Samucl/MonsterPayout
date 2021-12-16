@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>monsterpayout</groupId>
   <artifactId>monsterpayout</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>16.12.2021</version>
   
   <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -57,18 +57,18 @@
         </plugin>
         
         <plugin>
-  <groupId>org.apache.maven.plugins</groupId>
-  <artifactId>maven-jar-plugin</artifactId>
-  <version>3.2.0</version>
-  <configuration>
-    <archive>
-      <manifest>
-        <addClasspath>true</addClasspath>
-        <mainClass>${launcherclass.name}</mainClass>
-      </manifest>
-    </archive>
-  </configuration>
-</plugin>
+		  <groupId>org.apache.maven.plugins</groupId>
+		  <artifactId>maven-jar-plugin</artifactId>
+		  <version>3.2.0</version>
+		  <configuration>
+		    <archive>
+		      <manifest>
+		        <addClasspath>true</addClasspath>
+		        <mainClass>${launcherclass.name}</mainClass>
+		      </manifest>
+		    </archive>
+		  </configuration>
+		</plugin>
 <plugin>
   <groupId>org.apache.maven.plugins</groupId>
   <artifactId>maven-shade-plugin</artifactId>
