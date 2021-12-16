@@ -20,6 +20,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Database;
+import model.ICreditGame;
 import model.Session;
 import model.User;
 import slotgames.SlotMachine;
@@ -29,7 +30,7 @@ import slotgames.SlotMachine;
  * @author Samuel Laisaar
  * @version 12.12.2021
  */
-public class LuckySpinsViewController implements Initializable{
+public class LuckySpinsViewController implements Initializable, ICreditGame{
 
 	private static final String[] icons = new String[] {"strawberry", "spade", "clover", "diamond", "seven", "wild"};
 	@FXML Button toMenu;
@@ -125,7 +126,7 @@ public class LuckySpinsViewController implements Initializable{
 					game1.play();
 					game2.play();
 					game3.play();
-					Database.decreaseCreditBalance((int)bet * paylinesSelected);
+					useCredits(bet * paylinesSelected);
 					balanceLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
 					winning = 0;
 					if(game1.checkWin() && payline1.isSelected())
@@ -135,7 +136,7 @@ public class LuckySpinsViewController implements Initializable{
 					if(game3.checkWin() && payline3.isSelected())
 						winning += game3.payout();
 					if(isWin(game1,game2,game3))
-						Database.increaseCreditBalance(winning * bet);
+						addCreditBalance(winning * bet);
 					showIcons(game1.getOutcome(),game2.getOutcome(),game3.getOutcome());
 					if(spinsLeft>1) {
 						spinsLeftLabel.setText(texts.getString("spins") + ": " + (--spinsLeft));
@@ -334,7 +335,7 @@ public class LuckySpinsViewController implements Initializable{
 						game1.play();
 						game2.play();
 						game3.play();
-						Database.decreaseCreditBalance((int)bet * paylinesSelected);
+						useCredits(bet * paylinesSelected);
 						balanceLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
 						winning = 0;
 						spinAnimation();
@@ -346,7 +347,7 @@ public class LuckySpinsViewController implements Initializable{
 						if(game3.checkWin() && payline3.isSelected())
 							winning += game3.payout();
 						if(isWin(game1,game2,game3))
-							Database.increaseCreditBalance(winning * bet);
+							addCreditBalance(winning * bet);
 						showIcons(game1.getOutcome(),game2.getOutcome(),game3.getOutcome());
 						if(spinsLeft>1) {
 							spinsLeftLabel.setText(texts.getString("spins") + ": " + (--spinsLeft));
@@ -395,6 +396,18 @@ public class LuckySpinsViewController implements Initializable{
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public double useCredits(double amount) {
+		return Database.decreaseCreditBalance(amount);
+	}
+
+	@Override
+	public boolean addCreditBalance(double amount) {
+		if(Database.increaseCreditBalance(amount)>0)
+			return true;
+		return false;
 	}
 
 }

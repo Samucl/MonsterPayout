@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Database;
+import model.ICoinGame;
 import model.Session;
 
 /**
@@ -19,7 +20,7 @@ import model.Session;
  * @author Samuel Laisaar
  * @version 12.12.2021
  */
-public class MoneyRainDeadViewController{
+public class MoneyRainDeadViewController implements ICoinGame{
 
 	@FXML private Button toMenu;
 	@FXML private Label pointsLabel;
@@ -56,11 +57,24 @@ public class MoneyRainDeadViewController{
 		int coinsToGive = points/20; //Pelaajan kolikot on pelin pisteet/20, eli esim 200 pistettä pelistä on 10 kolikkoa
 		if(points > 100) { //Pelaajalla on oltava ainakin 100 pistettä jotta ansaitsee kolikoita
 			coinsWonLabel.setText(texts.getString("you.won") + " " + coinsToGive + " " + texts.getString("coins").substring(0,1).toLowerCase() + texts.getString("coins.partitive").substring(1) + "!");
-			Database.increaseCoinBalance(coinsToGive);
+			addCoinBalance(coinsToGive);
 		}
 	}
 
 	public int getPoints() {
 		return points;
+	}
+
+	@Override
+	public int useCoins(int amount) {
+		//Pelissä ei käytetä kolikoita
+		return 0;
+	}
+
+	@Override
+	public boolean addCoinBalance(int amount) {
+		if(Database.increaseCoinBalance(amount)>0)
+			return true;
+		return false;
 	}
 }

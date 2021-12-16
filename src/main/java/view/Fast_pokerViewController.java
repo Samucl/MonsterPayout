@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Database;
+import model.ICreditGame;
 import model.Session;
 import model.User;
 
@@ -27,7 +28,7 @@ import model.User;
  * @author Samuel
  * @version 12.12.2021
  */
-public class Fast_pokerViewController implements Initializable{
+public class Fast_pokerViewController implements Initializable, ICreditGame{
 
 	private ResourceBundle texts;
 	private NumberFormat numberFormat;
@@ -168,7 +169,7 @@ public class Fast_pokerViewController implements Initializable{
 	public void play(ActionEvent e) throws FileNotFoundException {
 		if(User.getCredits() >= bet) {
 			hideButtons();
-			Database.decreaseCreditBalance((int)bet);
+			useCredits(bet);
 			winLabel.setText(texts.getString("win"));
 			handLabel.setText(texts.getString("hand"));
 			game.setPlay(true);
@@ -196,7 +197,7 @@ public class Fast_pokerViewController implements Initializable{
 		winLabel.setText(texts.getString("win"));
 		handLabel.setText(texts.getString("hand"));
 		hideCards();
-		Database.increaseCreditBalance((int)win * (int)bet);
+		addCreditBalance(win * bet);
 		balanceLabel.setText(texts.getString("credits") + ": " + numberFormat.format(User.getCredits()));
 		recoverButton.setDisable(true);
 		doubleButton.setDisable(true);
@@ -341,5 +342,17 @@ public class Fast_pokerViewController implements Initializable{
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public double useCredits(double amount) {
+		return Database.decreaseCreditBalance(amount);
+	}
+
+	@Override
+	public boolean addCreditBalance(double amount) {
+		if(Database.increaseCreditBalance(amount)>0)
+			return true;
+		return false;
 	}
 }
