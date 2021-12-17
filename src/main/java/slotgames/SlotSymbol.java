@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import javafx.scene.image.Image;
+import model.Session;
 
 public class SlotSymbol {
 	/*
@@ -172,8 +173,8 @@ public class SlotSymbol {
 
 	public Image getNewImage() {
 		try {
-			return new Image(new FileInputStream(imageURL));
-		} catch (FileNotFoundException e) {
+			return new Image(Session.getFile(imageURL));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;

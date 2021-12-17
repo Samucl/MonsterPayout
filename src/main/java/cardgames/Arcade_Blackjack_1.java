@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.scene.media.AudioClip;
 import model.Database;
 import model.ICoinGame;
+import model.Session;
 
 
 /**
@@ -30,8 +31,8 @@ public class Arcade_Blackjack_1 implements ICoinGame {
 	private boolean playersTurn = false;
 	private boolean playerWin = false;
 
-	private AudioClip shuffleSound = new AudioClip("file:./src/main/resources/sounds/sekoitus1.wav");
-	private AudioClip dealSound = new AudioClip("file:./src/main/resources/sounds/jako1.wav");
+	//private AudioClip shuffleSound = new AudioClip("file:./src/main/resources/sounds/sekoitus1.wav");
+	//private AudioClip dealSound = new AudioClip("file:./src/main/resources/sounds/jako1.wav");
 
 	public Arcade_Blackjack_1() {
 	}
@@ -73,7 +74,7 @@ public class Arcade_Blackjack_1 implements ICoinGame {
 	private void dealCards() {
 		playersHand.clearHand();
 		dealersHand.clearHand();
-		shuffleSound.play();
+		//shuffleSound.play();
 		for(int i = 0; i < 2; i++) {
 			playersHand.addCard(cardDeck.takeCard());
 			dealersHand.addCard(cardDeck.takeCard());
@@ -124,7 +125,7 @@ public class Arcade_Blackjack_1 implements ICoinGame {
 
 	public boolean playerHit() {
 		if(playersTurn) {
-			dealSound.play();
+			//dealSound.play();
 			playersHand.addCard(cardDeck.takeCard());
 			ArrayList<Card> hand = playersHand.getCards();
 			if(playersHand.calculateTotalBlackjack()>21) {

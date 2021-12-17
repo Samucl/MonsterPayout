@@ -3,10 +3,12 @@ package cardgames;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import javafx.scene.image.Image;
+import model.Session;
 
 /*
  * Tavallisten pelikorttien pakka
@@ -27,19 +29,18 @@ public class DeckOfCards {
 	 */
 	public DeckOfCards() {
 		cards = new ArrayList<>();
-		String filepath = "./src/main/resources/"+deck_name;
+		String filepath = deck_name;
 
 		for (String suit : suits) {
 			for (int rank : ranks) {
 				Card newCard = new Card(suit, rank);
-				File image = new File(filepath+"/"+suit+rank+".png");
+				InputStream image = Session.getFile(filepath+"/"+suit+rank+".png");
 				System.out.println(filepath+"/"+suit+rank);
-				if(image.exists())
-					try {
-						newCard.setImage(new Image(new FileInputStream(image)));
-					} catch (FileNotFoundException e) {
-						e.printStackTrace();
-					}
+				try {
+					newCard.setImage(new Image(image));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				cards.add(newCard);
 			}
 		}
@@ -59,18 +60,19 @@ public class DeckOfCards {
 		if(numberOfDecks<=0)
 			return;
 		for(int k = 0; k < numberOfDecks; k++) {
-			String filepath = "./src/main/resources/"+deck_name;
+			String filepath = deck_name;
 
 			for (String suit : suits) {
 				for (int rank : ranks) {
 					Card newCard = new Card(suit, rank);
-					File image = new File(filepath+"/"+suit+rank+".png");
-					if(image.exists())
-						try {
-							newCard.setImage(new Image(new FileInputStream(image)));
-						} catch (FileNotFoundException e) {
-							e.printStackTrace();
-						}
+					//File image = new File(filepath+"/"+suit+rank+".png");
+					InputStream image = Session.getFile(filepath+"/"+suit+rank+".png");
+					System.out.println(filepath+"/"+suit+rank);
+					try {
+						newCard.setImage(new Image(image));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					cards.add(newCard);
 				}
 			}

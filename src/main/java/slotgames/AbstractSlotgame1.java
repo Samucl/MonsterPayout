@@ -27,7 +27,8 @@ public abstract class AbstractSlotgame1 {
 	private final int bonus_symbols = 3;
 	private final int scatter_symbols = 3;
 	private final int[] scatter_freespins = {5,10,15};
-	protected final String resourcePath = "./src/main/resources/slot_icons/";
+	//protected final String resourcePath = "./src/main/resources/slot_icons/";
+	protected final String resourcePath = "slot_icons/";
 	/*
 	 * Symboolien määrä. Tässä otetaan sama määrä kuin Veikkauksen
 	 * Kulta-Jaska 2 pelissä ja matkitaan symboolejen arvoa

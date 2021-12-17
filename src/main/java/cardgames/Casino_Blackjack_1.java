@@ -25,8 +25,8 @@ public class Casino_Blackjack_1 implements ICreditGame {
 	private boolean playersTurn = false;
 	private boolean playerWin = false;
 
-	private AudioClip shuffleSound = new AudioClip("file:./src/main/resources/sounds/sekoitus1.wav");
-	private AudioClip dealSound = new AudioClip("file:./src/main/resources/sounds/jako1.wav");
+	//private AudioClip shuffleSound = new AudioClip("file:./src/main/resources/sounds/sekoitus1.wav");
+	//private AudioClip dealSound = new AudioClip("file:./src/main/resources/sounds/jako1.wav");
 
 	public Casino_Blackjack_1() {
 	}
@@ -68,7 +68,7 @@ public class Casino_Blackjack_1 implements ICreditGame {
 	private void dealCards() {
 		playersHand.clearHand();
 		dealersHand.clearHand();
-		shuffleSound.play();
+		//shuffleSound.play();
 		for(int i = 0; i < 2; i++) {
 			playersHand.addCard(cardDeck.takeCard());
 			dealersHand.addCard(cardDeck.takeCard());
@@ -119,7 +119,7 @@ public class Casino_Blackjack_1 implements ICreditGame {
 
 	public boolean playerHit() {
 		if(playersTurn) {
-			dealSound.play();
+			//dealSound.play();
 			playersHand.addCard(cardDeck.takeCard());
 			ArrayList<Card> hand = playersHand.getCards();
 			if(playersHand.calculateTotalBlackjack()>21) {

@@ -76,6 +76,8 @@ public class MoneyRain extends Canvas {
 	public void start(Stage stage) throws Exception{
 		this.stage = stage;
 		this.stage.setTitle("MoneyRain");
+		String path = "moneyrain/";
+		/*
 		bg = new Image(new FileInputStream("./src/main/resources/moneyrain/bg.jpg"));
 		heart1 = new Image(new FileInputStream("./src/main/resources/moneyrain/heart1.png"));
 		heart2 = new Image(new FileInputStream("./src/main/resources/moneyrain/heart2.png"));
@@ -84,6 +86,15 @@ public class MoneyRain extends Canvas {
 		poison = new Image(new FileInputStream("./src/main/resources/moneyrain/poison.png"));
 		megis = new Image(new FileInputStream("./src/main/resources/moneyrain/megis.png"));
 		player = new Image(new FileInputStream("./src/main/resources/moneyrain/playerRight.png"));
+		*/
+		bg = new Image(Session.getFile(path+"bg.jpg"));
+		heart1 = new Image(Session.getFile(path+"heart1.png"));
+		heart2 = new Image(Session.getFile(path+"heart2.png"));
+		heart3 = new Image(Session.getFile(path+"heart3.png"));
+		bill = new Image(Session.getFile(path+"bill.png"));
+		poison = new Image(Session.getFile(path+"poison.png"));
+		megis = new Image(Session.getFile(path+"megis.png"));
+		player = new Image(Session.getFile(path+"playerRight.png"));
 		Canvas canvas = new Canvas(width, height);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		tl = new Timeline(new KeyFrame(Duration.millis(10), e -> {

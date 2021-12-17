@@ -61,6 +61,7 @@ public class LuckySpinsViewController implements Initializable, ICreditGame{
 	private int paylinesSelected = 1;
 	private ResourceBundle texts;
 	private NumberFormat numberFormat;
+	private String path = "slot_icons/";
 
 	private void init() throws FileNotFoundException {
 		numberFormat = Session.getNumberFormatter();
@@ -68,9 +69,9 @@ public class LuckySpinsViewController implements Initializable, ICreditGame{
 		payline1.setSelected(false);
 		payline2.setSelected(true);
 		payline3.setSelected(false);
-		spin1 = new Image(new FileInputStream("./src/main/resources/slot_icons/spin1.gif"));
-		spin2 = new Image(new FileInputStream("./src/main/resources/slot_icons/spin2.gif"));
-		spin3 = new Image(new FileInputStream("./src/main/resources/slot_icons/spin3.gif"));
+		spin1 = new Image(Session.getFile(path+"spin1.gif"));
+		spin2 = new Image(Session.getFile(path+"spin2.gif"));
+		spin3 = new Image(Session.getFile(path+"spin3.gif"));
 	}
 
 	private void setLanguage() {
@@ -249,12 +250,12 @@ public class LuckySpinsViewController implements Initializable, ICreditGame{
 	 * @throws FileNotFoundException
 	 */
 	private void showIcons(int[] outcome1, int[] outcome2 ,int[] outcome3) throws FileNotFoundException {
-		gifs[0] = new Image(new FileInputStream("./src/main/resources/slot_icons/" + icons[0] + ".gif"));
-		gifs[1] = new Image(new FileInputStream("./src/main/resources/slot_icons/" + icons[1] + ".gif"));
-		gifs[2] = new Image(new FileInputStream("./src/main/resources/slot_icons/" + icons[2] + ".gif"));
-		gifs[3] = new Image(new FileInputStream("./src/main/resources/slot_icons/" + icons[3] + ".gif"));
-		gifs[4] = new Image(new FileInputStream("./src/main/resources/slot_icons/" + icons[4] + ".gif"));
-		gifs[5] = new Image(new FileInputStream("./src/main/resources/slot_icons/" + icons[5] + ".gif"));
+		gifs[0] = new Image(Session.getFile(path+ icons[0] + ".gif"));
+		gifs[1] = new Image(Session.getFile(path+ icons[1] + ".gif"));
+		gifs[2] = new Image(Session.getFile(path+ icons[2] + ".gif"));
+		gifs[3] = new Image(Session.getFile(path+ icons[3] + ".gif"));
+		gifs[4] = new Image(Session.getFile(path+ icons[4] + ".gif"));
+		gifs[5] = new Image(Session.getFile(path+ icons[5] + ".gif"));
 		gif1.setImage(gifs[outcome1[0]-1]);
 		gif4.setImage(gifs[outcome2[0]-1]);
 		gif7.setImage(gifs[outcome3[0]-1]);

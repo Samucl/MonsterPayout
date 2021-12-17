@@ -100,6 +100,8 @@ public class SlalomMadnessGame extends Application {
 	public void start(Stage stage) throws Exception {
 		stage.setTitle("Slalom Madness");
 
+		String path = "slalommadness/";
+		/*
 		skier = new Image(new FileInputStream("./src/main/resources/slalommadness/skier.png"));
 		leftPole = new Image(new FileInputStream("./src/main/resources/slalommadness/leftPole.png"));
 		rightPole = new Image(new FileInputStream("./src/main/resources/slalommadness/rightPole.png"));
@@ -108,6 +110,15 @@ public class SlalomMadnessGame extends Application {
 		stone2 = new Image(new FileInputStream("./src/main/resources/slalommadness/stone2.png"));
 		finish = new Image(new FileInputStream("./src/main/resources/slalommadness/finish.png"));
 		coin = new Image(new FileInputStream("./src/main/resources/coin_1.png"));
+		*/
+		skier = new Image(Session.getFile(path+"skier.png"));
+		leftPole = new Image(Session.getFile(path+"leftPole.png"));
+		rightPole = new Image(Session.getFile(path+"rightPole.png"));
+		spruce = new Image(Session.getFile(path+"spruce.png"));
+		stone1 = new Image(Session.getFile(path+"stone1.png"));
+		stone2 = new Image(Session.getFile(path+"stone2.png"));
+		finish = new Image(Session.getFile(path+"finish.png"));
+		coin = new Image(Session.getFile("coin_1.png"));
 
 		canvas = new Canvas(width, height);
 		gc = canvas.getGraphicsContext2D();
