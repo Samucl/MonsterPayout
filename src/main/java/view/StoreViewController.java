@@ -326,8 +326,11 @@ public class StoreViewController {
 		Product[] allProducts = Database.getProducts();
 		discountProducts = new ArrayList<>();
 		noDiscountProducts = new ArrayList<>();
+		
+		if(allProducts == null) {
+			return;
+		}
 
-		int i = 0;
 		for (Product p : allProducts) {
 			if (p.getForSaleStatus()) { //Jos tuote on myynnissä
 				if (p.getSaleMultiplier() < 0.99) {

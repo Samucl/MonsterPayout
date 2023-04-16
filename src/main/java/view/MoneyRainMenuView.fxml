@@ -129,9 +129,9 @@
             <Font name="Calibri Light" size="15.0" />
          </font>
       </Label>
-      <Button fx:id="instructionButton" layoutX="125.0" layoutY="312.0" mnemonicParsing="false" onAction="#showInstruction" style="-fx-background-color: BLACK;" text="Instructions">
+      <Button fx:id="instructionButton" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="125.0" layoutY="312.0" mnemonicParsing="false" onAction="#showInstruction" prefHeight="38.0" prefWidth="189.0" style="-fx-background-color: BLACK;" text="Instructions" textAlignment="CENTER">
          <font>
-            <Font name="Arial Black" size="17.0" />
+            <Font name="Arial Black" size="12.0" />
          </font>
          <textFill>
             <LinearGradient endX="1.0" endY="1.0">

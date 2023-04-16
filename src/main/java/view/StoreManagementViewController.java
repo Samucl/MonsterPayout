@@ -96,7 +96,7 @@ public class StoreManagementViewController {
 		if (!(nameTF.getText().isEmpty()) && !(creditTF.getText().isEmpty()) && !(coinTF.getText().isEmpty()) && !(priceTF.getText().isEmpty()) ) {
 			String name = nameTF.getText();
 			double credits = Double.parseDouble(creditTF.getText());
-			int coins = Integer.parseInt(coinTF.getText());
+			double coins = Double.parseDouble(coinTF.getText());
 			double price = Double.parseDouble(priceTF.getText());
 			Product p = new Product(name, credits, coins, 1, price, false);
 

@@ -9,11 +9,11 @@ public class Product implements Comparable<Product> {
 	private String description;
 	private double price;
 	private double creditAmount;
-	private int coinAmount;
+	private double coinAmount;
 	private double saleMultiplier;
 	private boolean forSale;
 
-	public Product(String description, double creditAmount, int coinAmount, double saleMultiplier, double price, boolean forSale) {
+	public Product(String description, double creditAmount, double coinAmount, double saleMultiplier, double price, boolean forSale) {
 		this.description = description;
 		this.price = price;
 		this.creditAmount = creditAmount;
@@ -23,7 +23,7 @@ public class Product implements Comparable<Product> {
 	}
 
 	public Product(int number, String description, double price
-			, double creditAmount, int coinAmount, double saleMultiplier, boolean forSale) {
+			, double creditAmount, double coinAmount, double saleMultiplier, boolean forSale) {
 		this.id = number;
 		this.description = description;
 		this.price = price;
@@ -87,7 +87,7 @@ public class Product implements Comparable<Product> {
 		return saleMultiplier;
 	}
 
-	public int getCoinAmount() {
+	public double getCoinAmount() {
 		return coinAmount;
 	}
 

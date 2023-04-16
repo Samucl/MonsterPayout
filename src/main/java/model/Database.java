@@ -10,7 +10,9 @@ import java.sql.Statement;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 import com.google.common.hash.Hashing;
 
 /**
@@ -19,17 +21,26 @@ import com.google.common.hash.Hashing;
  * Näin myös metodikutsut yms. muista luokista onnistuu helpommin.
  */
 public class Database {
-
-	final static String URL = "jdbc:mariadb://10.114.32.22:3306/kasino";
-	final static String USERNAME = "remote";
-	final static String PASSWORD = "remote";
+	
 	private static Connection connection;
 	private static Database instance = null;
 
 	private Database() {
+		
+		Properties prop = new Properties();
+	    try {
+	        prop.load(new FileInputStream("./config.properties"));
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    String dbUsername = prop.getProperty("db.username");
+        String dbPassword = prop.getProperty("db.password");
+        String dbURL = prop.getProperty("db.URL");
+	    
 		try {
 			connection = DriverManager.getConnection(
-					URL + "?user=" + USERNAME + "&password=" + PASSWORD);
+					dbURL + "?user=" + dbUsername + "&password=" + dbPassword);
 		} catch (SQLException e) {
 			do {
 				System.err.println("Viesti: "+e.getMessage());

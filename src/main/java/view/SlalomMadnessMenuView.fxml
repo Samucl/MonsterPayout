@@ -131,7 +131,7 @@
       </Label>
       <Button fx:id="instructionBtn" defaultButton="true" layoutX="161.0" layoutY="343.0" mnemonicParsing="false" onAction="#showInstructions" prefHeight="52.0" prefWidth="190.0" style="-fx-background-color: rgba(0, 0, 0, 0.7);" text="Ohje" textFill="WHITE">
          <font>
-            <Font name="Berlin Sans FB" size="29.0" />
+            <Font name="Berlin Sans FB" size="18.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />

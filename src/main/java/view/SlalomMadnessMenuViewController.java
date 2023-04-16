@@ -57,20 +57,22 @@ public class SlalomMadnessMenuViewController implements Initializable {
 		if (top10List == null) {
 			top10List = new String[10];
 		}
-
-		for (int i = 0 ; i < top10List.length ; i++) {
-			String[] parts = top10List[i].split(": ");
-			String part1 = parts[0];
-			String part2 = parts[1];
-			Label userLabel = new Label(part1);
-			Label scoreLabel = new Label(part2);
-			userLabel.setFont(Font.font("Ariel Black", FontWeight.BOLD, 12));
-			scoreLabel.setFont(Font.font("Ariel Black", FontWeight.BOLD, 12));
-			userLabel.setTextFill(Color.WHITE);
-			scoreLabel.setTextFill(Color.WHITE);
-			top10GridPane.add(userLabel, 0, i);
-			top10GridPane.add(scoreLabel, 1, i);
+		else {
+			for (int i = 0 ; i < top10List.length ; i++) {
+				String[] parts = top10List[i].split(": ");
+				String part1 = parts[0];
+				String part2 = parts[1];
+				Label userLabel = new Label(part1);
+				Label scoreLabel = new Label(part2);
+				userLabel.setFont(Font.font("Ariel Black", FontWeight.BOLD, 12));
+				scoreLabel.setFont(Font.font("Ariel Black", FontWeight.BOLD, 12));
+				userLabel.setTextFill(Color.WHITE);
+				scoreLabel.setTextFill(Color.WHITE);
+				top10GridPane.add(userLabel, 0, i);
+				top10GridPane.add(scoreLabel, 1, i);
+			}
 		}
+		
 	}
 
 	/*
